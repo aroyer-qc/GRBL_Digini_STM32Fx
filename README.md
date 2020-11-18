@@ -1,4 +1,4 @@
-![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Digini.png)
+![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Digini.png)![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Grbl.png)
 
 # GRBL_Digini_STM32Fx
 
