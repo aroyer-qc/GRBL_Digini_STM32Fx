@@ -4,16 +4,16 @@
 
   ## Note(s):
   
-    * GRBL is a great application for me to develop the graphic DIGINI platform.
-    * Widget are easy to add in digini
+>   * GRBL is a great application for me to develop the graphic DIGINI platform.
+>   * Widget are easy to add in Digini.
     
   ## Feature:
 
->  code is C++ (following embedded rules found on IAR C++ document Inefficiencies of C++: Fact or Fiction?).
->  Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay)
->  Digini graphics run parallel and independant of the main application, all graphics are handles via service.
->  Data are display by hooking to variables, input are also done via variables. no graphic code exist in application.
->  Control over the application can be done via state machine and/or message at the discretion of the application user.
+>  `* Code is C++ (following embedded rules found on IAR C++ document Inefficiencies of C++: Fact or Fiction?).
+>   * Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay)
+>   * Digini graphics run parallel and independant of the main application, all graphics are handles via service.
+>   * Data are display by hooking to variables, input are also done via variables. no graphic code exist in application.
+>   * Control over the application can be done via state machine and/or message at the discretion of the application user.
   
   ## Widget list so far:
   
