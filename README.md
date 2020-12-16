@@ -16,22 +16,23 @@
   Control over the application can be done via state machine and/or message at the discretion of the application user.
   
   Widget list so far:
-    * Background widget to display background layer.
-    * Basic box.
-    * Basic button with text (no graphic).
-    * Basic rectangle.
-    * Button with text, icon and support for multiple graphic so button can have different state. ( EX. normal, pressed, gray out)
-    * Exchange is a non grahical special widget to exchange data between graphic page.
-    * Gif to display gif as animation.
-    * Icon support for multiple graphic to display different state.
-    * Label to display static/formatted label. also support for different language.
-    * Label list, like label but with a list different label according to state.
-    * Meter, WIP.
-    * Panel, can add touch zone with graphics under other widget.
-    * Progress bar.
-    * Spectrum analyser display (Use data from application, no processing).
-    * Terminal basic terminal screen.
-    * Virtual is a non grahical special widget to decide whart page to display according to application setting.
-    * Virtual windows (WIP).
+  
+>    * Background widget to display background layer.
+>    * Basic box.
+>    * Basic button with text (no graphic).
+>    * Basic rectangle.
+>    * Button with text, icon and support for multiple graphic so button can have different state. ( EX. normal, pressed, gray out)
+>    * Exchange is a non grahical special widget to exchange data between graphic page.
+>    * Gif to display gif as animation.
+>    * Icon support for multiple graphic to display different state.
+>    * Label to display static/formatted label. also support for different language.
+>    * Label list, like label but with a list different label according to state.
+>    * Meter, WIP.
+>    * Panel, can add touch zone with graphics under other widget.
+>    * Progress bar.
+>    * Spectrum analyser display (Use data from application, no processing).
+>    * Terminal basic terminal screen.
+>    * Virtual is a non grahical special widget to decide whart page to display according to application setting.
+>    * Virtual windows (WIP).
   
 ![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
