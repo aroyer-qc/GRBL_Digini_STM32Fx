@@ -9,13 +9,13 @@
     
   ## Feature:
 
-  code is C++ (following embedded rules found on IAR C++ document Inefficiencies of C++: Fact or Fiction?)
-  Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay)
-  Digini graphics run parallel and independant of the main application, all graphics are handles via service.
-  Data are display by hooking to variables, input are also done via variables. no graphic code exist in application.
-  Control over the application can be done via state machine and/or message at the discretion of the application user.
+>  code is C++ (following embedded rules found on IAR C++ document Inefficiencies of C++: Fact or Fiction?).
+>  Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay)
+>  Digini graphics run parallel and independant of the main application, all graphics are handles via service.
+>  Data are display by hooking to variables, input are also done via variables. no graphic code exist in application.
+>  Control over the application can be done via state machine and/or message at the discretion of the application user.
   
-  Widget list so far:
+  ## Widget list so far:
   
 >    * Background widget to display background layer.
 >    * Basic box.
