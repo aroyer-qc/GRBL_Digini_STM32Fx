@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Skin>
+  <Endian>
+    <State>Little</State>
+  </Endian>
+  <Image>
+    <File>diamond-plate.jpg</File>
+    <File>Grbl Logo 250px.png</File>
+    <File>OrangeSquare.png</File>
+    <File>OrangeSquarePress.png</File>
+    <File>GraySquare.png</File>
+    <File>MenuNormal.png</File>
+    <File>MenuPress.png</File>
+    <File>MenuGray.png</File>
+    <File>Ok_30_30.png</File>
+    <File>Ok gray_30_30.png</File>
+    <File>Cancel_30_30.png</File>
+    <File>Cancel gray _30_30.png</File>
+    <File>return.png</File>
+    <File>limit.png</File>
+    <File>Measure.png</File>
+    <File>module.png</File>
+    <File>Range.png</File>
+    <File>reference.png</File>
+    <File>Warning.png</File>
+    <File>info.png</File>
+    <File>diagnostic.png</File>
+    <File>TopLeft.png</File>
+    <File>TopRight.png</File>
+    <File>BottomLeft.png</File>
+    <File>bottomRight.png</File>
+    <File>horizontal.png</File>
+    <File>Vertical.png</File>
+    <File>led_red_on_16x16.png</File>
+    <File>led_red_off_16x16.png</File>
+    <File>led_green_on_16x16.png</File>
+    <File>led_green_off_16x16.png</File>
+    <File>led_yellow_on_16x16.png</File>
+    <File>led_yellow_off_16x16.png</File>
+    <File>led_gray_off.png</File>
+    <File>Sphere.png</File>
+    <File>SpherePressed.png</File>
+    <File>SphereInactive.png</File>
+    <File>A.png</File>
+    <File>A2.png</File>
+    <File>B.png</File>
+    <File>C.png</File>
+    <File>C2.png</File>
+    <File>XY.png</File>
+    <File>ZX.png</File>
+    <File>Z.png</File>
+    <File>tools.png</File>
+    <File>check_box.png</File>
+    <File>check_box_pr.png</File>
+    <File>check_box - gray.png</File>
+    <File>BT_yellow.png</File>
+    <File>BT_yellow_pr.png</File>
+    <File>BT_yellow_gr.png</File>
+    <File>bt_yellow_std.png</File>
+    <File>bt_yellow_std_pr.png</File>
+    <File>bt_yellow_std - gray.png</File>
+    <File>bt_yellow_long.png</File>
+    <File>bt_yellow_long_pr.png</File>
+    <File>bt_yellow_long - gray.png</File>
+    <File>up.png</File>
+    <File>down.png</File>
+  </Image>
+  <Font>
+    <Family fontdescription="DS-Digital,16,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Option>38</Option>
+    <Family fontdescription="DS-Digital,24,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Option>39</Option>
+    <Family fontdescription="DS-Digital,36,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Option>38</Option>
+    <Family fontdescription="DS-Digital,48,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Option>38</Option>
+    <Family fontdescription="DS-Digital,64,-1,5,75,1,0,0,0,0,Bold"/>
+    <Option>38</Option>
+    <Family fontdescription="Arial Black,10,-1,5,87,0,0,0,0,0,Regular"/>
+    <Option>31</Option>
+    <Family fontdescription="Arial Black,16,-1,5,87,0,0,0,0,0,Regular"/>
+    <Option>31</Option>
+    <Family fontdescription="Arial Black,24,-1,5,87,0,0,0,0,0,Regular"/>
+    <Option>7</Option>
+    <Family fontdescription="Terminal,6,-1,5,50,0,0,0,0,0"/>
+    <Option>7</Option>
+  </Font>
+</Skin>

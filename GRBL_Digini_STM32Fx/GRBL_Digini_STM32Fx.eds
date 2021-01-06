@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_debug_session>
+	<debuggerLastSession>
+		<watches>
+			<watch key="*pServiceState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="pExchange[SubService]-&gt;pValue" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="Buffer" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="*((float*)pExchange[SubService]-&gt;pValue)" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="((ServiceType4_t*)pService)-&gt;pString[0]" format="5" array="1" start="0" count="11" expanded="1" live="0" />
+			<watch key="pString" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+		</watches>
+	</debuggerLastSession>
+</EmBitz_debug_session>

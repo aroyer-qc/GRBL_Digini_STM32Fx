@@ -4,3 +4,4 @@ STM32F746_Digini_Mp3/obj/
 *.depend
 /module
 
+/App/lwip
