@@ -11,6 +11,8 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
   
 >   * GRBL is a great application for me to develop the graphic DIGINI platform.
 >   * Widget are easy to add in Digini.
+>   * The Skin file is in the ressource folder, file -> grbl.skn
+>   * Just put the skin onto an SD card.
     
   ## Feature:
 
@@ -56,3 +58,10 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >    * SERV_ID_XCHG    Service to exchange data via structure between page. (title, min, max, value, edit type)
   
 ![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
+
+  ## Known issues
+  
+>    * Stepper not yet working, I need to test the STM32 timer and integrate them into the GRBL code.
+>    * Spindle not yet working, PWM need to be tested ans integrated.
+>    * Cross exchange GRBL <-> GUI to be done..
+>    * A lot of graphic page to fix/complete
