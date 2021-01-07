@@ -270,10 +270,6 @@ const PageWidget_t PageMainDisplayXYZT  [] =  { {   BACK_DIAMOND,            INV
                                                 {   INVALID_WIDGET,          INVALID_LINK        }
                                               };
 
-//ICON_LED_LIMIT_X_5T
-//ICON_LED_LIMIT_Y_5T
-//ICON_LED_LIMIT_Z_5T
-
 const PageWidget_t PageTerminal         [] =  { {   BACK_DIAMOND,            INVALID_LINK        },      // Background
                                                 {   BTN_RETURN,              LINK_MAIN_HUB       },      // Button to go to setting menu
                                                 {   TERM_GCODE_FULL,         INVALID_LINK        },      // LED coolant active
@@ -335,12 +331,10 @@ const PageWidget_t PageSpindle          [] =  { {   BACK_DIAMOND,            INV
                                                 {   LABEL_SPIN_SPEED,        INVALID_LINK        },      // Actual spindle speed
                                                 {   LABEL_RPM,               INVALID_LINK        },      // Fix label 'RPM' for spindle unit
                                                 {   BTN_RETURN,              LINK_MAIN_HUB       },
-//                                                {   LABEL_RPM_MIN,           INVALID_LINK        },
                                                 {   BTN_BOX_MIN,             LINK_INPUT_DATA     },      // Min RPM to edit
                                                 {   BTN_DOWN_MIN,            INVALID_LINK        },
                                                 {   BTN_UP_MIN,              INVALID_LINK        },
                                                 {   BTN_DOWN_MAX,            INVALID_LINK        },
-//                                                {   LABEL_RPM_MAX,           INVALID_LINK        },
                                                 {   BTN_BOX_MAX,             LINK_INPUT_DATA     },      // Max RPM to edit
                                                 {   BTN_UP_MAX,              INVALID_LINK        },
                                                 {   ICON_LED_SPINDLE,        INVALID_LINK        },      // LED enable for spindle
@@ -401,7 +395,7 @@ const PageWidget_t InputTestMenu        [] =  { {   BACK_DIAMOND,            INV
                                                 {   BTN_INPUT_2,             LINK_INPUT_DATA     },
                                                 {   BTN_INPUT_3,             LINK_INPUT_DATA_HEX },
                                                 {   BTN_INPUT_4,             LINK_INPUT_DATA     },
-                                                {   BTN_RETURN,              LINK_MAIN_HUB       },
+                                                {   BTN_RETURN,              LINK_MAIN_MENU      },
                                                 {   INVALID_WIDGET,          INVALID_LINK        }
 
           };

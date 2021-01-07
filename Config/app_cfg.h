@@ -69,6 +69,7 @@
 // Memory block 1:      general all around block
 // Memory block 2:      general all around block
 // Memory block 3:      general all around block
+// Memory block 4:      general all around block
 
 //                                      Enum ID             Memory Group Name   Allocation Group Name   Nb of block 	Size of block
 #define MEM_BLOCK_DEF   X_MEM_BLOCK(	MEM_BLOCK,          Block,              AllocBlock,             32,            16U				)\

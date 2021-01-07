@@ -3,5 +3,9 @@ STM32F746_Digini_Mp3/bin/
 STM32F746_Digini_Mp3/obj/
 *.depend
 /module
-
+*.d
+*.o
+*.elf
+*.hex
+*.map
 /App/lwip

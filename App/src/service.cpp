@@ -59,7 +59,11 @@ Service type 7 - Return data to override position of a widget (Must be a memory 
 #define AXIS_COORD_SYSTEM_REL       1       // Relative position
 #define AXIS_COORD_SYSTEM_MAC       2       // Machine position
 #define AXIS_COORD_SYSTEM_TOOL      3       // Tool length offset position
+#define SERVICE_PRINT_BUFFER_SIZE   80
 
+//-------------------------------------------------------------------------------------------------
+// Variable(s)
+//-------------------------------------------------------------------------------------------------`
 
 
 uint32_t    CoordinateSystem[5]       = {AXIS_COORD_SYSTEM_ABS, AXIS_COORD_SYSTEM_REL, AXIS_COORD_SYSTEM_MAC, AXIS_COORD_SYSTEM_ABS, AXIS_COORD_SYSTEM_MAC};
@@ -85,81 +89,100 @@ bool        IsTerminalEnabled         = false;
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
-    ServiceReturn_t* pService = nullptr;
-    float            Coordinate = 0;
-    char             Buffer [20];
+    static char*     pBuffer               = nullptr;
+    static bool      IsItFirstServiceStart = true;
+    ServiceReturn_t* pService              = nullptr;
+    float            Coordinate            = 0;
     uint16_t         SubOffset;
     s32_t            Color;
     bool             IsItBlank;
 
-    SubOffset = SubService % 10;
-    SubService %= 20;
-    IsItBlank = true;
-
-    if(SubService < 10) // 23 and 24 are for sign color on axis so we modulo to 20 to get color check from 3 to 4 (rotary axis)
+    // Handling of memory allocation while service is active (Shared for all active SERV_AXIS SubService)
+    if(*pServiceState == SERVICE_START)
     {
-        if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_MAC)
+        if(IsItFirstServiceStart == true)
         {
-            Coordinate = gc_state.coord_system[SubOffset];
-            Color = GFX_ColorTable[LIGHT_GREEN];
+            IsItFirstServiceStart = false;
+            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
-        else if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_ABS)
-        {
-            Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
-            Color = GFX_ColorTable[LIGHT_RED];
-        }
-        else // if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_REL)
-        {
-            Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
-            Color = GFX_ColorTable[LIGHT_YELLOW];
-        }
+    }
 
-        IsItBlank = false;
+    if(*pServiceState == SERVICE_FINALIZE)
+    {
+        if(IsItFirstServiceStart == false)
+        {
+            IsItFirstServiceStart = true;
+            pMemory->Free((void**)&pBuffer);
+        }
     }
     else
     {
-        if(CoordinateSystem[SubOffset] != AXIS_COORD_SYSTEM_MAC) // Only display little axis info if not set as machine on big axis information
+        SubOffset = SubService % 10;
+        SubService %= 20;
+        IsItBlank = true;
+
+        if(SubService < 10) // 23 and 24 are for sign color on axis so we modulo to 20 to get color check from 3 to 4 (rotary axis)
         {
-            Coordinate = gc_state.coord_system[SubOffset];
-            Color = GFX_ColorTable[LIGHT_GREEN];
+            if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_MAC)
+            {
+                Coordinate = gc_state.coord_system[SubOffset];
+                Color = GFX_ColorTable[LIGHT_GREEN];
+            }
+            else if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_ABS)
+            {
+                Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
+                Color = GFX_ColorTable[LIGHT_RED];
+            }
+            else // if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_REL)
+            {
+                Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
+                Color = GFX_ColorTable[LIGHT_YELLOW];
+            }
+
             IsItBlank = false;
         }
-    }
-
-//     if(SubService == TOOL_LENGTH_OFFSET_AXIS)
-//    {
-//         Coordinate += gc_state.tool_length_offset;
-//     }
-
-    if(IsItBlank == false)
-    {
-        if(SubOffset < 3)  // linear axis
+        else
         {
-            if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+            if(CoordinateSystem[SubOffset] != AXIS_COORD_SYSTEM_MAC) // Only display little axis info if not set as machine on big axis information
             {
-                snprintf(&Buffer[0], 20, "%c%6lX%8." N_DECIMAL_COORD_INCH_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate * INCH_PER_MM);
-            }
-            else
-            {
-                snprintf(&Buffer[0], 20, "%c%6lX%8." N_DECIMAL_COORD_MM_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate);
+                Coordinate = gc_state.coord_system[SubOffset];
+                Color = GFX_ColorTable[LIGHT_GREEN];
+                IsItBlank = false;
             }
         }
-        else if(SubOffset <= 5)  // rotationnal axis
-        {
-            snprintf(&Buffer[0], 20, "%c%6lX%7.2f%c%2X°", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate, ASCII_SINGLE_FONT_OVERRIDE, FT_ARIAL_16);
-        }
-    }
-    else
-    {
-        Buffer[0] = '\0';
-    }
 
-    if(*pServiceState != SERVICE_FINALIZE)
-    {
+    //     if(SubService == TOOL_LENGTH_OFFSET_AXIS)
+    //    {
+    //         Coordinate += gc_state.tool_length_offset;
+    //     }
+
+        if(IsItBlank == false)
+        {
+            if(SubOffset < 3)  // linear axis
+            {
+                if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+                {
+                    snprintf(pBuffer, 20, "%c%6lX%8." N_DECIMAL_COORD_INCH_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate * INCH_PER_MM);
+                }
+                else
+                {
+                    snprintf(pBuffer, 20, "%c%6lX%8." N_DECIMAL_COORD_MM_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate);
+                }
+            }
+            else if(SubOffset <= 5)  // rotationnal axis
+            {
+                snprintf(pBuffer, 20, "%c%6lX%7.2f%c%2X°", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate, ASCII_SINGLE_FONT_OVERRIDE, FT_ARIAL_16);
+            }
+        }
+        else
+        {
+            *pBuffer = '\0';
+        }
+
         pService = GetServiceStruct(SERVICE_RETURN_TYPE4);
         if(pService != nullptr)
         {
-            ((ServiceType4_t*)pService)->pString[0] = &Buffer[0];
+            ((ServiceType4_t*)pService)->pString[0] = pBuffer;
             *pServiceState = SERVICE_REFRESH;
         }
     }
@@ -182,41 +205,59 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_COOR(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
+    static char*     pBuffer               = nullptr;
+    static bool      IsItFirstServiceStart = true;
+    ServiceReturn_t* pService              = nullptr;
     uint16_t         Sub;
-    char             Buffer [5];
 
-    Sub = SubService;
-    SubService %= 10;
-
-    ServiceReturn_t* pService = nullptr;
-
-    if(Sub >= 10)
+    // Handling of memory allocation while service is active (Shared for all active SERV_COOR SubService)
+    if(*pServiceState == SERVICE_START)
     {
-        if(CoordinateSystem[SubService] != AXIS_COORD_SYSTEM_MAC)
+        if(IsItFirstServiceStart == true)
         {
-            snprintf(&Buffer[0], 5, "mac");
+            IsItFirstServiceStart = false;
+            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+        }
+    }
+
+    if(*pServiceState == SERVICE_FINALIZE)
+    {
+        if(IsItFirstServiceStart == false)
+        {
+            IsItFirstServiceStart = true;
+            pMemory->Free((void**)&pBuffer);
+        }
+    }
+    else
+    {
+        Sub = SubService;
+        SubService %= 10;
+
+        if(Sub >= 10)
+        {
+            if(CoordinateSystem[SubService] != AXIS_COORD_SYSTEM_MAC)
+            {
+                snprintf(pBuffer, 5, "mac");
+            }
+            else
+            {
+                *pBuffer = '\0';
+            }
         }
         else
         {
-            Buffer[0] = '\0';
+            switch(CoordinateSystem[SubService])
+            {
+                case AXIS_COORD_SYSTEM_ABS: snprintf(pBuffer, 5, "abs"); break;
+                case AXIS_COORD_SYSTEM_REL: snprintf(pBuffer, 5, "rel"); break;
+                case AXIS_COORD_SYSTEM_MAC: snprintf(pBuffer, 5, "mac"); break;
+            }
         }
-    }
-	else
-    {
-        switch(CoordinateSystem[SubService])
-        {
-            case AXIS_COORD_SYSTEM_ABS: snprintf(&Buffer[0], 5, "abs"); break;
-            case AXIS_COORD_SYSTEM_REL: snprintf(&Buffer[0], 5, "rel"); break;
-            case AXIS_COORD_SYSTEM_MAC: snprintf(&Buffer[0], 5, "mac"); break;
-        }
-    }
 
-    if(*pServiceState != SERVICE_FINALIZE)
-    {
         pService = GetServiceStruct(SERVICE_RETURN_TYPE4);
         if(pService != nullptr)
         {
-            ((ServiceType4_t*)pService)->pString[0] = &Buffer[0];
+            ((ServiceType4_t*)pService)->pString[0] = pBuffer;
             *pServiceState = SERVICE_REFRESH;
         }
     }
@@ -239,11 +280,9 @@ static ServiceReturn_t* SERV_ENBL(ServiceEvent_e* pServiceState, uint16_t SubSer
 {
     static uint32_t count = 0;
 
-
     count++;
 
     if (count > 30) count =0;
-
 
 
     ServiceReturn_t* pService = nullptr;
@@ -281,31 +320,53 @@ static ServiceReturn_t* SERV_ENBL(ServiceEvent_e* pServiceState, uint16_t SubSer
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_GCOD(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
-    static uint32_t Count = 0;
-    static uint32_t LineCount = 0;
-    char            Buffer[80];
+    static char*     pBuffer               = nullptr;
+    static bool      IsItFirstServiceStart = true;
+    ServiceReturn_t* pService              = nullptr;
+    static uint32_t  Count = 0;
+    static uint32_t  LineCount = 0;
 
-    // TODO (Alain#1#) SERV_GCOD
-    VAR_UNUSED(SubService);
-    ServiceReturn_t* pService = nullptr;
-
-    Count++;
-
-    if(*pServiceState == SERVICE_RELEASED)
+    // Handling of memory allocation while service is active (Shared for all active SERV_GCOD SubService)
+    if(*pServiceState == SERVICE_START)
     {
-        pService = GetServiceStruct(SERVICE_RETURN);
-    }
-    else if(*pServiceState != SERVICE_FINALIZE)
-    {
-        if(Count >= 1)
+        if(IsItFirstServiceStart == true)
         {
-            Count = 0;
+            IsItFirstServiceStart = false;
+            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+        }
+    }
 
-            LineCount++;
-            if((pService = GetServiceStruct(SERVICE_RETURN_TYPE4)) != nullptr)
+    if(*pServiceState == SERVICE_FINALIZE)
+    {
+        if(IsItFirstServiceStart == false)
+        {
+            IsItFirstServiceStart = true;
+            pMemory->Free((void**)&pBuffer);
+        }
+    }
+    else
+    {
+        // TODO (Alain#1#) SERV_GCOD
+        VAR_UNUSED(SubService);
+
+        Count++;
+
+        if(*pServiceState == SERVICE_RELEASED)
+        {
+            pService = GetServiceStruct(SERVICE_RETURN);
+        }
+        else
+        {
+            if(Count >= 1)
             {
-                sprintf(&Buffer[0], "Test:line number %lu", LineCount);
-                ((ServiceType4_t*)pService)->pString[0] = &Buffer[0];
+                Count = 0;
+
+                LineCount++;
+                if((pService = GetServiceStruct(SERVICE_RETURN_TYPE4)) != nullptr)
+                {
+                    sprintf(pBuffer, "Test:line number %lu", LineCount);
+                    ((ServiceType4_t*)pService)->pString[0] = pBuffer;
+                }
             }
         }
     }
@@ -326,28 +387,47 @@ static ServiceReturn_t* SERV_GCOD(ServiceEvent_e* pServiceState, uint16_t SubSer
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
-    char             Buffer [5];
-    ServiceReturn_t* pService = nullptr;
+    static char*     pBuffer               = nullptr;
+    static bool      IsItFirstServiceStart = true;
+    ServiceReturn_t* pService              = nullptr;
 
-    if(SubService == 0) // Subservice 0 is for word Inch or MM
+    // Handling of memory allocation while service is active (Shared for all active SERV_INCH SubService)
+    if(*pServiceState == SERVICE_START)
     {
-        if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+        if(IsItFirstServiceStart == true)
         {
-            snprintf(&Buffer[0], 5, "Inch");
-        }
-        else
-        {
-            snprintf(&Buffer[0], 5,  "mm");
+            IsItFirstServiceStart = false;
+            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
-    if(*pServiceState != SERVICE_FINALIZE)
+    if(*pServiceState == SERVICE_FINALIZE)
     {
+        if(IsItFirstServiceStart == false)
+        {
+            IsItFirstServiceStart = true;
+            pMemory->Free((void**)&pBuffer);
+        }
+    }
+    else
+    {
+        if(SubService == 0) // Subservice 0 is for word Inch or MM
+        {
+            if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+            {
+                snprintf(pBuffer, 5, "Inch");
+            }
+            else
+            {
+                snprintf(pBuffer, 5,  "mm");
+            }
+        }
+
         if(SubService == 0) // Subservice 0 is for word Inch or MM
         {
             if((pService = GetServiceStruct(SERVICE_RETURN_TYPE4)) != nullptr)
             {
-                ((ServiceType4_t*)pService)->pString[0] = &Buffer[0];
+                ((ServiceType4_t*)pService)->pString[0] = pBuffer;
                 *pServiceState = SERVICE_REFRESH;
             }
         }
@@ -377,25 +457,44 @@ static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubSer
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
-    char             Buffer[24];
-    ServiceReturn_t* pService = nullptr;
+    static char*     pBuffer               = nullptr;
+    static bool      IsItFirstServiceStart = true;
+    ServiceReturn_t* pService              = nullptr;
 
-    if(*pServiceState != SERVICE_FINALIZE)
+    // Handling of memory allocation while service is active (Shared for all active SERV_INFO SubService)
+    if(*pServiceState == SERVICE_START)
+    {
+        if(IsItFirstServiceStart == true)
+        {
+            IsItFirstServiceStart = false;
+            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+        }
+    }
+
+    if(*pServiceState == SERVICE_FINALIZE)
+    {
+        if(IsItFirstServiceStart == false)
+        {
+            IsItFirstServiceStart = true;
+            pMemory->Free((void**)&pBuffer);
+        }
+    }
+    else
     {
         if((pService = GetServiceStruct(SERVICE_RETURN_TYPE4)) != nullptr)
         {
             switch(SubService)
             {
-                case 0: snprintf(&Buffer[0], 24, "%s", OUR_FIRMWARE_NAME);        break;
-                case 1: snprintf(&Buffer[0], 24, "%s", OUR_FIRMWARE_VERSION);     break;
-                case 2: snprintf(&Buffer[0], 24, "%s", OUR_FIRMWARE_GUI_NAME);    break;
-                case 3: snprintf(&Buffer[0], 24, "%s", OUR_FIRMWARE_GUI_VERSION); break;
-                case 4: snprintf(&Buffer[0], 24, "%s", OUR_MODEL_NAME);           break;
-                case 5: snprintf(&Buffer[0], 24, "%s", OUR_SERIAL_NUMBER);        break;
-                case 6: snprintf(&Buffer[0], 24, "%s", OUR_BUILD_DATE);           break;
+                case 0: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_NAME);        break;
+                case 1: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_VERSION);     break;
+                case 2: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_NAME);    break;
+                case 3: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_VERSION); break;
+                case 4: snprintf(pBuffer, 24, "%s", OUR_MODEL_NAME);           break;
+                case 5: snprintf(pBuffer, 24, "%s", OUR_SERIAL_NUMBER);        break;
+                case 6: snprintf(pBuffer, 24, "%s", OUR_BUILD_DATE);           break;
             }
 
-            ((ServiceType4_t*)pService)->pString[0] = &Buffer[0];
+            ((ServiceType4_t*)pService)->pString[0] = pBuffer;
             *pServiceState = SERVICE_REFRESH;
         }
     }
@@ -878,7 +977,7 @@ static ServiceReturn_t* SERV_SPIN(ServiceEvent_e* pServiceState, uint16_t SubSer
 ServiceReturn_t* ServiceCallApp(Service_t* pService, ServiceEvent_e* pServiceState)
 {
     ServiceReturn_t* pServiceReturn = nullptr;
-    s32_t           ServiceRange;
+    s32_t            ServiceRange;
 
     ServiceRange.u_32 = pService->ID;
 
@@ -937,7 +1036,7 @@ ServiceReturn_t* ServiceCallApp(Service_t* pService, ServiceEvent_e* pServiceSta
         {
             switch(pService->ID)
             {
-                case SERV_ID_MHUB:  pServiceReturn = SERV_MHUB(pServiceState);  break;
+                case SERV_ID_MHUB:  pServiceReturn = SERV_MHUB(pServiceState);                   break;
                 case SERV_ID_MACH:  pServiceReturn = SERV_MACH(pServiceState, pService->SubID);  break;
             }
             break;

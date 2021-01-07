@@ -90,8 +90,8 @@ InputFloat_t InputSpindleMin_Cfg
     LBL_MIN_SPINDLE,
     &settings.rpm_min,                      // Variables to take data from, and deposit after edit
     LBL_SPEED_FLOAT,
-    0,                                      // Minimum value for edit
-    500,                                    // Maximum value for edit to evaluate
+    RPM_MIN,                                // Minimum value for edit
+    RPM_MAX,                                // Maximum value for edit to evaluate
 };
 
 InputFloat_t InputSpindleMax_Cfg
