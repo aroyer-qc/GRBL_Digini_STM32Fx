@@ -1,0 +1,107 @@
+;
+; Copyright (c) 2014-2015 Jim Tremblay
+;
+; This Source Code Form is subject to the terms of the Mozilla Public
+; License, v. 2.0. If a copy of the MPL was not distributed with this
+; file, You can obtain one at http://mozilla.org/MPL/2.0/.
+;
+
+    .SECTION    program,CODE,ALIGN
+
+    .GLB        __GetIPL
+    .GLB        $_SetIPL
+    .GLB        _nOS_SwitchContextHandler
+    .GLB        _nOS_SwitchContextFromIsrHandler
+
+    .GLB        _nOS_runningThread
+    .GLB        _nOS_highPrioThread
+
+__GetIPL:
+    ; Copy FLG register into working register
+    STC     FLG,    R0
+
+    ; Move 4 high-order bits to 4 low-order bits
+    MOVHL   R0H,    R0L
+
+    ; Keep only IPL bits from FLG register
+    AND.B   #7, R0L
+
+    ; Return from subroutine
+    RTS
+    NOP
+
+$_SetIPL:
+    ; Transfer working register
+    MOV.B   R1L,    R0L
+
+    ; Copy FLG register into working register
+    STC     FLG,    R1
+
+    ; Clear IPL bits from FLG register
+    MOV.B   #0,     R1H
+
+    ; Move 4 low-order bits to 4 high-order bits
+    MOVLH   R0L,    R1H
+
+    ; Copy working register into FLG register
+    LDC     R1,     FLG
+    NOP
+
+    ; Return from subroutine
+    RTS
+    NOP
+
+_nOS_SwitchContextHandler:
+    ; Push all registers on thread stack
+    PUSHM   R0,R1,R2,R3,A0,A1,SB,FB
+
+    ; Save SP to nOS_Thread object of current running thread
+    MOV.W   _nOS_runningThread,     A0
+    STC     SP,                     [A0]
+
+    ; Copy nOS_highPrioThread to nOS_runningThread
+    MOV.W   _nOS_highPrioThread,    _nOS_runningThread
+
+    ; Restore SP from nOS_Thread object of high prio thread
+    MOV.W   _nOS_highPrioThread,    A0
+    LDC     [A0],                   SP
+
+    ; Pop all registers from thread stack
+    POPM    R0,R1,R2,R3,A0,A1,SB,FB
+
+    ; Return from interrupt
+    REIT
+    NOP
+
+_nOS_SwitchContextFromIsrHandler:
+    ; Push all registers on thread stack
+    PUSHM   R0,R1,R2,R3,A0,A1,SB,FB
+
+    ; Move PC and FLG from ISTACK to USTACK
+    STC     ISP,                    A0
+    MOV.W   0[A0],                  16[SP]
+    MOV.W   2[A0],                  18[SP]
+
+    ; Adjust ISTACK (remove PC and FLG)
+    ADD.W   #4,                     A0
+    LDC     A0,                     ISP
+
+    ; Save SP to nOS_Thread object of current running thread
+    MOV.W   _nOS_runningThread,     A0
+    STC     SP,                     [A0]
+
+    ; Copy nOS_highPrioThread to nOS_runningThread
+    MOV.W   _nOS_highPrioThread,    _nOS_runningThread
+
+    ; Restore SP from nOS_Thread object of high prio thread
+    MOV.W   _nOS_highPrioThread,    A0
+    LDC     [A0],                   SP
+
+    ; Pop all registers from thread stack
+    POPM    R0,R1,R2,R3,A0,A1,SB,FB
+
+    ; Return from interrupt
+    REIT
+    NOP
+
+    .END

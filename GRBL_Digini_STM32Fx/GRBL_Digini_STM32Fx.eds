@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<EmBitz_debug_session>
-	<debuggerLastSession>
-		<watches>
-			<watch key="pService-&gt;IndexState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-		</watches>
-	</debuggerLastSession>
-</EmBitz_debug_session>
