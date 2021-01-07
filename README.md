@@ -15,10 +15,11 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
   ## Feature:
 
 >   * Code is C++ (following embedded rules found on IAR C++ document Inefficiencies of C++: Fact or Fiction?).
->   * Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay)
+>   * Run on nOS from Jim Tremblay. See [RTOS for microcontrollers](https://github.com/jimtremblay/nOS)
 >   * Digini graphics run parallel and independant of the main application, all graphics are handles via service.
 >   * Data are display by hooking to variables and/or by calling function(s), input are also done via variables and/or function(s). no graphic code exist in application.
 >   * Control over the application can be done via state machine and/or message at the discretion of the application user.
+>   * Skin data is loaded from SD card via a skin file (.skn). to build a skin file you can used my application [SkinGUI_Builder](https://github.com/aroyer-qc/SkinGUI_Builder)
   
   ## Widget list so far:
   
