@@ -44,10 +44,10 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
   ## Standard service provided in library
   
 >    * SERV_ID_BACK    Service to copy background to background layer.
->    * SERV_ID_BDEF    Service to handle button used only to jump to other page like, Ex. Setting, Back, Ok, etc... (same as NONE, but might change)
->    * SERV_ID_DATE    Service to return the date of the system into a formatted string (can handle all format defined by user).
->    * SERV_ID_DAYS    Service to return the days of the system into a formatted string (can handle all languages or acronyms set by user).
->    * SERV_ID_INPT    Service to input data via a generic page. format can be, (so far int32_t, float) in decimal or hexa.
+>    * SERV_ID_BDEF    Service to handle button used only to jump to other page link. Ex. Setting, Back, Ok, etc...
+>    * SERV_ID_DATE    Service to return the date of the system into a formatted string.
+>    * SERV_ID_DAYS    Service to return the days of the system into a formatted string.
+>    * SERV_ID_INPT    Service to input data via a generic page in decimal or hexa.
 >    * SERV_ID_INPS    Service to input string via a generic page. (WIP).
 >    * SERV_ID_NONE    Service to return default state
 >    * SERV_ID_RFSH    Service to display static widget
