@@ -55,7 +55,7 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >    * SERV_ID_RFSH    Service to display static widget
 >    * SERV_ID_SKLD    Service to return percentage of the skin loading progression
 >    * SERV_ID_TIME    Service to return the timeof the system into a formatted string (can handle all format defined by user).
->    * SERV_ID_XCHG    Service to exchange data via structure between page. (title, min, max, value, edit type)
+>    * SERV_ID_XCHG    Service to exchange data via structure between page. (title, min, max, value, edit type).
   
 ![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
 
@@ -64,4 +64,5 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >    * Stepper not yet working, I need to test the STM32 timer and integrate them into the GRBL code.
 >    * Spindle not yet working, PWM need to be tested ans integrated.
 >    * Cross exchange GRBL <-> GUI to be done..
->    * A lot of graphic page to fix/complete
+>    * A lot of graphic page to fix/complete.
+>    * Add sound capability to get some aptic feedback.
