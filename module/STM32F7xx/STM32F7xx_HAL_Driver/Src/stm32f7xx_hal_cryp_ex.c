@@ -5901,7 +5901,7 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
      }
 #else
   /* Software workaround applied to GCM encryption only */
-  if ((hcryp->Init.GCMCMACPhase == CRYP_GCM_PAYLOAD_PHASE) &&		
+  if ((hcryp->Init.GCMCMACPhase == CRYP_GCM_PAYLOAD_PHASE) &&        
       (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT))
   {
     /* Change the mode configured in CHMOD bits of CR register to select CTR mode */   
@@ -5928,10 +5928,10 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
   {
     hcryp->Instance->DINR = 0;
   } 
-		
+        
   if (polling == CRYP_POLLING_ON)
   {
-		if(CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)  
+        if(CRYP_WaitOnCCFlag(hcryp, CRYP_CCF_TIMEOUTVALUE) != HAL_OK)  
     { 
         hcryp->State = HAL_CRYP_STATE_READY;        
         __HAL_UNLOCK(hcryp);
@@ -5941,10 +5941,10 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
     /* Clear CCF Flag */
     __HAL_CRYP_CLEAR_FLAG(CRYP_CCF_CLEAR);
   }
-		
-	/* if payload */
+        
+    /* if payload */
   if (hcryp->Init.GCMCMACPhase == CRYP_GCM_PAYLOAD_PHASE)
-	{		
+    {        
        
     /* Retrieve intermediate data */
     for(index=0; index < 4; index ++)
@@ -6007,11 +6007,11 @@ static void CRYP_Padding(CRYP_HandleTypeDef *hcryp, uint32_t difflength, uint32_
       {
         intermediate_data[index] = hcryp->Instance->DOUTR;        
       }  
-		
-	  } /* if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) */
+        
+      } /* if (hcryp->Init.OperatingMode == CRYP_ALGOMODE_ENCRYPT) */
 #endif  /* !defined(AES_CR_NPBLB) */     
-	}   /* if (hcryp->Init.GCMCMACPhase == CRYP_GCM_PAYLOAD_PHASE) */
-		
+    }   /* if (hcryp->Init.GCMCMACPhase == CRYP_GCM_PAYLOAD_PHASE) */
+        
 }
 
 /**

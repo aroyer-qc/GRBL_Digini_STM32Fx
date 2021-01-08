@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_abs_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_abs_q15.c    
 *    
-* Description:	Q15 vector absolute value.    
+* Description:    Q15 vector absolute value.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -130,7 +130,7 @@ void arm_abs_q15(
     blkCnt--;
   }
   pDst = (q15_t *)simd;
-	
+    
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
    ** No loop unrolling is used. */
   blkCnt = blockSize % 0x4u;

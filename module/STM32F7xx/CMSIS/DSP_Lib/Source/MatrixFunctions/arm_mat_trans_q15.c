@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_trans_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_mat_trans_q15.c    
 *    
-* Description:	Q15 matrix transpose.    
+* Description:    Q15 matrix transpose.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -53,7 +53,7 @@
  * @brief Q15 matrix transpose.    
  * @param[in]  *pSrc points to the input matrix    
  * @param[out] *pDst points to the output matrix    
- * @return 	The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>    
+ * @return     The function returns either  <code>ARM_MATH_SIZE_MISMATCH</code>    
  * or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.    
  */
 
@@ -79,7 +79,7 @@ arm_status arm_mat_trans_q15(
 
   q15_t in;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
@@ -179,7 +179,7 @@ arm_status arm_mat_trans_q15(
 
 #endif /*    #ifndef ARM_MATH_BIG_ENDIAN    */
 
-#else	 
+#else     
         /* Read one element from the row */
         in = *pSrcA++;
 
@@ -213,7 +213,7 @@ arm_status arm_mat_trans_q15(
         /* Store one element in the destination */
         *pOut = in;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
         /* Update the pointer pOut to point to the next row of the transposed matrix */
         pOut += nRows;

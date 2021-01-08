@@ -599,8 +599,8 @@ USBH_Status USBH_HandleControl (USB_OTG_CORE_HANDLE *pdev, USBH_HOST *phost)
   case CTRL_SETUP:
     /* send a SETUP packet */
     USBH_CtlSendSetup     (pdev, 
-	                   phost->Control.setup.d8 , 
-	                   phost->Control.hc_num_out);  
+                       phost->Control.setup.d8 , 
+                       phost->Control.hc_num_out);  
     phost->Control.state = CTRL_SETUP_WAIT;  
     break; 
     

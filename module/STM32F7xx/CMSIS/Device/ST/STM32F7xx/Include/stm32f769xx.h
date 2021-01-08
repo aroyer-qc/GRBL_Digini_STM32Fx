@@ -172,10 +172,10 @@ typedef enum
   I2C4_ER_IRQn                = 96,     /*!< I2C4 Error Interrupt                                              */
   SPDIF_RX_IRQn               = 97,     /*!< SPDIF-RX global Interrupt                                         */
   DSI_IRQn                    = 98,     /*!< DSI global Interrupt                                              */
-  DFSDM1_FLT0_IRQn	          = 99,     /*!< DFSDM1 Filter 0 global Interrupt                                  */
-  DFSDM1_FLT1_IRQn	          = 100,    /*!< DFSDM1 Filter 1 global Interrupt                                  */
-  DFSDM1_FLT2_IRQn	          = 101,    /*!< DFSDM1 Filter 2 global Interrupt                                  */
-  DFSDM1_FLT3_IRQn	          = 102,    /*!< DFSDM1 Filter 3 global Interrupt                                  */
+  DFSDM1_FLT0_IRQn              = 99,     /*!< DFSDM1 Filter 0 global Interrupt                                  */
+  DFSDM1_FLT1_IRQn              = 100,    /*!< DFSDM1 Filter 1 global Interrupt                                  */
+  DFSDM1_FLT2_IRQn              = 101,    /*!< DFSDM1 Filter 2 global Interrupt                                  */
+  DFSDM1_FLT3_IRQn              = 102,    /*!< DFSDM1 Filter 3 global Interrupt                                  */
   SDMMC2_IRQn                 = 103,    /*!< SDMMC2 global Interrupt                                           */
   CAN3_TX_IRQn                = 104,    /*!< CAN3 TX Interrupt                                                 */
   CAN3_RX0_IRQn               = 105,    /*!< CAN3 RX0 Interrupt                                                */
@@ -21169,7 +21169,7 @@ typedef struct
 /******************************* CAN Instances ********************************/
 #define IS_CAN_ALL_INSTANCE(__INSTANCE__) (((__INSTANCE__) == CAN1) || \
                                            ((__INSTANCE__) == CAN2) || \
-									       ((__INSTANCE__) == CAN3))
+                                           ((__INSTANCE__) == CAN3))
 /******************************* CRC Instances ********************************/
 #define IS_CRC_ALL_INSTANCE(__INSTANCE__) ((__INSTANCE__) == CRC)
 
@@ -21597,7 +21597,7 @@ typedef struct
      ((__INSTANCE__) == TIM6)    || \
      ((__INSTANCE__) == TIM7)    || \
      ((__INSTANCE__) == TIM8))
-	 
+     
 /****************** TIM Instances : supporting clock division *****************/
 #define IS_TIM_CLOCK_DIVISION_INSTANCE(__INSTANCE__)   (((__INSTANCE__) == TIM1)    || \
                                                     ((__INSTANCE__) == TIM2)    || \
@@ -21644,7 +21644,7 @@ typedef struct
                                                          
 /****************** TIM Instances : supporting commutation event generation ***/
 #define IS_TIM_COMMUTATION_EVENT_INSTANCE(__INSTANCE__) (((__INSTANCE__) == TIM1)   || \
-                                                         ((__INSTANCE__) == TIM8)) 	 
+                                                         ((__INSTANCE__) == TIM8))      
 
 /******************** USART Instances : Synchronous mode **********************/
 #define IS_USART_INSTANCE(__INSTANCE__) (((__INSTANCE__) == USART1) || \

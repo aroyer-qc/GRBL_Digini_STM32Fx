@@ -51,7 +51,7 @@ void                DrawDLine                   (float X1, float Y1, float X2, f
 void                DrawBox                     (Box_t* pBox, uint16_t Thickness = 1);
 void                DrawBox                     (uint16_t PosX, uint16_t PosY, uint16_t Width, uint16_t Height, uint16_t Thickness = 1);
 void                DrawCircle                  (Circle_t* pCircle, PolygonMode_e PolygonMode);
-void        	    DrawCircle      			(uint16_t PosX, uint16_t PosY, uint16_t Radius, PolygonMode_e PolygonMode);
+void                DrawCircle                  (uint16_t PosX, uint16_t PosY, uint16_t Radius, PolygonMode_e PolygonMode);
 void                DrawPie                     (Skin_e Image, Pie_t* pPie, BlendMode_e BlendMode);
 void                DrawPie                     (Skin_e Image, Cartesian_t Position, uint16_t Radius, uint16_t StartAngle, uint16_t EndAngle, BlendMode_e BlendMode);
 void                DrawPixel                   (uint16_t X, uint16_t Y);

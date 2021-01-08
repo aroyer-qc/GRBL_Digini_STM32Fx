@@ -24,20 +24,20 @@ void SED1330_GotoMemory(int nAddress);
 // define(s)
 //-------------------------------------------------------------------------------------------------
 
-        #define SED1330_RD					p3_3
-        #define SED1330_WR 				    p3_4
+        #define SED1330_RD                    p3_3
+        #define SED1330_WR                     p3_4
         #define SED1330_A0                  p3_5
-        #define SED1330_RESET			    p3_4
-        #define SED1330_READ_PORT  		  	p10
-        #define SED1330_WRITE_PORT		  	p10
-        #define SED1330_DATA			    1
-        #define SED1330_COMMAND			    0
-        #define SED1330_PARAMETER    	    0
-        #define SED1330_ENABLE			    0
-        #define SED1330_DISABLE 		    1
+        #define SED1330_RESET                p3_4
+        #define SED1330_READ_PORT                p10
+        #define SED1330_WRITE_PORT              p10
+        #define SED1330_DATA                1
+        #define SED1330_COMMAND                0
+        #define SED1330_PARAMETER            0
+        #define SED1330_ENABLE                0
+        #define SED1330_DISABLE             1
 
-		#define SED1330_X_SIZE      		256
-		#define SED1330_Y_SIZE      		128
+        #define SED1330_X_SIZE              256
+        #define SED1330_Y_SIZE              128
 
 
 //-------------------------------------------------------------------------------------------------
@@ -55,18 +55,18 @@ static void     DRV_u16_Write                       (uint16_t Data);
 static void     DRV__DrawRectangle                  (Box_t* pBox, uint8_t Mode);
 
 
-void 		DRV_Clear			(void);
+void         DRV_Clear            (void);
 
 
 // from c file
 
-uint8_t 	SED1330_ReadByte		(void);
-uint16_t 	SED1330_ReadWord		(void);
-void 		SED1330_Pixel			(uint8_t X, uint8_t Y, uint16_t Color);
-void 		SED1330_PutMaskByte		(uint8_t X, uint8_t Y, uint8_t Data);
-void 		SED1330_PutMaskWord		(uint8_t X, uint8_t Y, uint16_t Data);
-void 		SED1330_Put_u8			(uint8_t X, uint8_t Y, uint8_t Data);
-void 		SED1330_Put_u16			(uint8_t X, uint8_t Y, uint16_t Data);
+uint8_t     SED1330_ReadByte        (void);
+uint16_t     SED1330_ReadWord        (void);
+void         SED1330_Pixel            (uint8_t X, uint8_t Y, uint16_t Color);
+void         SED1330_PutMaskByte        (uint8_t X, uint8_t Y, uint8_t Data);
+void         SED1330_PutMaskWord        (uint8_t X, uint8_t Y, uint16_t Data);
+void         SED1330_Put_u8            (uint8_t X, uint8_t Y, uint8_t Data);
+void         SED1330_Put_u16            (uint8_t X, uint8_t Y, uint16_t Data);
 
 //-------------------------------------------------------------------------------------------------
 // private const(s)
@@ -201,55 +201,55 @@ static void DRV_IO_Initialize(void)
 //-------------------------------------------------------------------------------------------------
 static void DRV_LCD_ControllerInitialize(void)
 {
-	SED1330_RD = SED1330_DISABLE;
-	SED1330_WR = SED1330_DISABLE;
-	
-	// System Control
-	DRV_WriteCommand(SED1330_SYSTEM_SET);
-	DRV_u8_Write(0x30);				//P1	IV=1 W/S=0 M2=0 M1=0 M0=0
-	DRV_u8_Write(0x87);				//P2	W/F=1 FX=7
-	DRV_u8_Write(0x07);				//P3    FY=7
-	DRV_u8_Write(0x1F);				//P4	C/R=(32)-1 = 0x1F
-	DRV_u8_Write(0x24);				//P5	T/CR=C/R+4 = 0x24
-	DRV_u8_Write(0x7F);				//P6	Height in Line Of LCD
-	DRV_u8_Write(SED1330_LINE_LENGTH);	//P7    Address Range virtual Screen (LCD = 42,Virtual = 48)	
-	DRV_u8_Write(0x00);				//P8
+    SED1330_RD = SED1330_DISABLE;
+    SED1330_WR = SED1330_DISABLE;
+    
+    // System Control
+    DRV_WriteCommand(SED1330_SYSTEM_SET);
+    DRV_u8_Write(0x30);                //P1    IV=1 W/S=0 M2=0 M1=0 M0=0
+    DRV_u8_Write(0x87);                //P2    W/F=1 FX=7
+    DRV_u8_Write(0x07);                //P3    FY=7
+    DRV_u8_Write(0x1F);                //P4    C/R=(32)-1 = 0x1F
+    DRV_u8_Write(0x24);                //P5    T/CR=C/R+4 = 0x24
+    DRV_u8_Write(0x7F);                //P6    Height in Line Of LCD
+    DRV_u8_Write(SED1330_LINE_LENGTH);    //P7    Address Range virtual Screen (LCD = 42,Virtual = 48)    
+    DRV_u8_Write(0x00);                //P8
 
-	// Set Device memory Map
-	DRV_WriteCommand(SED1330_SCROLL);
-	DRV_u8_Write(SED1330_TEXT_LOW);	//P1	Text Area Layer 1 Start Address
-	DRV_u8_Write(SED1330_TEXT_HIGH);	//P2	SAD1 = 0x0000
-	DRV_u8_Write(0x80);				//P3	SL1  = 0x80
-	DRV_u8_Write(SED1330_GRAPH_LOW);	//P4	Graphic Area Layer 2 Start Address
-	DRV_u8_Write(SED1330_GRAPH_HIGH);	//P5	SAD2 = 0x0800
-	DRV_u8_Write(0x80);				//P6	SL2  = 0x80
-	DRV_u8_Write(SED1330_TEXT_LOW);	//P7	Text Area Layer 1 Start Address
-	DRV_u8_Write(SED1330_TEXT_HIGH);	//P8	SAD2 = 0x0000
-	
-	// Set CG Ram Address
-	DRV_WriteCommand(SED1330_CARGEN_ADDRESS);
-	DRV_u8_Write(SED1330_CGRAM_LOW);			//P1	Address Set To 0x300
-	DRV_u8_Write(SED1330_CGRAM_HIGH);			//P2			
-	
-	// Set Horizontal Shift
-	DRV_WriteCommand(SED1330_SET_HORIZONTAL_SCROLL);
-	DRV_u8_Write(0x00);				//P1	No Horizontal Pixel Shift
+    // Set Device memory Map
+    DRV_WriteCommand(SED1330_SCROLL);
+    DRV_u8_Write(SED1330_TEXT_LOW);    //P1    Text Area Layer 1 Start Address
+    DRV_u8_Write(SED1330_TEXT_HIGH);    //P2    SAD1 = 0x0000
+    DRV_u8_Write(0x80);                //P3    SL1  = 0x80
+    DRV_u8_Write(SED1330_GRAPH_LOW);    //P4    Graphic Area Layer 2 Start Address
+    DRV_u8_Write(SED1330_GRAPH_HIGH);    //P5    SAD2 = 0x0800
+    DRV_u8_Write(0x80);                //P6    SL2  = 0x80
+    DRV_u8_Write(SED1330_TEXT_LOW);    //P7    Text Area Layer 1 Start Address
+    DRV_u8_Write(SED1330_TEXT_HIGH);    //P8    SAD2 = 0x0000
+    
+    // Set CG Ram Address
+    DRV_WriteCommand(SED1330_CARGEN_ADDRESS);
+    DRV_u8_Write(SED1330_CGRAM_LOW);            //P1    Address Set To 0x300
+    DRV_u8_Write(SED1330_CGRAM_HIGH);            //P2            
+    
+    // Set Horizontal Shift
+    DRV_WriteCommand(SED1330_SET_HORIZONTAL_SCROLL);
+    DRV_u8_Write(0x00);                //P1    No Horizontal Pixel Shift
 
-	// Set Layer Behavior
-	DRV_WriteCommand(SED1330_OVERLAY);
-//	DRV_u8_Write(TWO_LAYER | TEXT_MODE | OR_LOGIC);												//P1
-	DRV_u8_Write(SED1330_TWO_LAYER | SED1330_OR_LOGIC);												//P1
+    // Set Layer Behavior
+    DRV_WriteCommand(SED1330_OVERLAY);
+//    DRV_u8_Write(TWO_LAYER | TEXT_MODE | OR_LOGIC);                                                //P1
+    DRV_u8_Write(SED1330_TWO_LAYER | SED1330_OR_LOGIC);                                                //P1
 
-	DRV_WriteCommand(SED1330_DISPLAY_OFF);
-	g_LayerDefinition = SED1330_CURSOR_BLANK | SED1330_BLOCK_1_STEADY | SED1330_BLOCK_2_STEADY | SED1330_BLOCK_3_STEADY;
-	DRV_u8_Write(g_LayerDefinition);	//P1
+    DRV_WriteCommand(SED1330_DISPLAY_OFF);
+    g_LayerDefinition = SED1330_CURSOR_BLANK | SED1330_BLOCK_1_STEADY | SED1330_BLOCK_2_STEADY | SED1330_BLOCK_3_STEADY;
+    DRV_u8_Write(g_LayerDefinition);    //P1
 
-	// Clear display
-	DRV_Clear();
+    // Clear display
+    DRV_Clear();
 
-	// Set cursor form and put Display ON
-	DRV_SetCursor(SED1330_BLOCK, SED1330_CURSOR_BLANK);
-	DRV_WriteCommand(SED1330_CURSOR_RIGHT);
+    // Set cursor form and put Display ON
+    DRV_SetCursor(SED1330_BLOCK, SED1330_CURSOR_BLANK);
+    DRV_WriteCommand(SED1330_CURSOR_RIGHT);
 }
 
 
@@ -286,9 +286,9 @@ static void DRV_LAYER_Initialize(void)
 //-------------------------------------------------------------------------------------------------
 static void DRV_WriteCommand(uint8_t Command)
 {
-   	SED1330_A0 = SED1330_COMMAND;
+       SED1330_A0 = SED1330_COMMAND;
     DRV_u8_Write(Command);
-	SED1330_A0 = SED1330_DATA;			// There is almost all the time DATA following Command
+    SED1330_A0 = SED1330_DATA;            // There is almost all the time DATA following Command
 }
 
 
@@ -306,13 +306,13 @@ static void DRV_WriteCommand(uint8_t Command)
 //-------------------------------------------------------------------------------------------------
 uint8_t DRV_u8_Read()
 {
-	uint8_t Data;
+    uint8_t Data;
 
-	SED1330_RD = SED1330_ENABLE;
-	DelayUs(1);
-	Data = SED1330_READ_PORT;
-	SED1330_RD = SED1330_DISABLE;
-	return Data;
+    SED1330_RD = SED1330_ENABLE;
+    DelayUs(1);
+    Data = SED1330_READ_PORT;
+    SED1330_RD = SED1330_DISABLE;
+    return Data;
 }
 
 
@@ -341,7 +341,7 @@ WORD DRV_u16_Read()
     DelayUs(1);
     Data |= SED1330_READ_PORT;
     SED1330_RD = SED1330_DISABLE;
-	return Data;
+    return Data;
 }
 
 
@@ -359,10 +359,10 @@ WORD DRV_u16_Read()
 //-------------------------------------------------------------------------------------------------
 static void DRV_u8_Write(uint8_t Data)
 {
-	SED1330_WRITE_PORT = Data;
-	SED1330_WR = SED1330_ENABLE;
-	DelayUs(1);
-	SED1330_WR = SED1330_DISABLE;
+    SED1330_WRITE_PORT = Data;
+    SED1330_WR = SED1330_ENABLE;
+    DelayUs(1);
+    SED1330_WR = SED1330_DISABLE;
 }
 
 
@@ -396,13 +396,13 @@ static void DRV_u16_Write(uint16_t Data)
 //-----------------------------------------------------------------------------
 void SED1330_SetCursor(uint8_t Type, uint8_t Behavior)
 {
-	DRV_WriteCommand(SED1330_CURSOR_FORM);
-	DRV_u8_Write(0x07);							// P1			Width Of Cursor
-	DRV_u8_Write(0x07 | Type);				    // P2			Height Of Cursor + Cursor Mode	
-	
-	DRV_WriteCommand(SED1330_DISPLAY_ON);
-	g_LayerDefinition = (g_LayerDefinition & 0xFC) | Behavior;
-	DRV_u8_Write(g_LayerDefinition);		    // P1
+    DRV_WriteCommand(SED1330_CURSOR_FORM);
+    DRV_u8_Write(0x07);                            // P1            Width Of Cursor
+    DRV_u8_Write(0x07 | Type);                    // P2            Height Of Cursor + Cursor Mode    
+    
+    DRV_WriteCommand(SED1330_DISPLAY_ON);
+    g_LayerDefinition = (g_LayerDefinition & 0xFC) | Behavior;
+    DRV_u8_Write(g_LayerDefinition);            // P1
 }
 
 
@@ -413,9 +413,9 @@ void SED1330_SetCursor(uint8_t Type, uint8_t Behavior)
 //-----------------------------------------------------------------------------
 static void DRV_GotoMemory(int Address)
 {
-	DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
-	DRV_u8_Write((uint8_t)Address);					//P1
-	DRV_u8_Write((uint8_t)(Address >> 8));			//P2
+    DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
+    DRV_u8_Write((uint8_t)Address);                    //P1
+    DRV_u8_Write((uint8_t)(Address >> 8));            //P2
 }
 
 
@@ -426,9 +426,9 @@ static void DRV_GotoMemory(int Address)
 //-----------------------------------------------------------------------------
 static void SED1330_PutByte(int Address, uint8_t Byte)
 {
-	DRV_GotoMemory(SED1330_GRAPHIC_MEMORY + Address);
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	DRV_u8_Write(Byte);
+    DRV_GotoMemory(SED1330_GRAPHIC_MEMORY + Address);
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    DRV_u8_Write(Byte);
 }
 
 
@@ -437,7 +437,7 @@ static void SED1330_PutByte(int Address, uint8_t Byte)
 //   Function name: DRV__DrawRectangle
 //
 //   Parameter(s):  Box_t*  pBox
-//  				uint8_t Mode
+//                  uint8_t Mode
 //   Return value:  None
 //
 //   Description:   Draw a box or a rectangle
@@ -528,12 +528,12 @@ void DRV_Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPi
 //-------------------------------------------------------------------------------------------------
 void DRV_GotoXY(uint8_t PosX, uint8_t PosY)
 {
-	int Offset;
-	
-	DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
-	Offset = (SED1330_LINE_LENGTH * PosY) + PosX;
-	DRV_u8_Write((uint8_t)Offset);					    // P1
-	DRV_u8_Write((uint8_t)(Offset >> 8));			    // P2
+    int Offset;
+    
+    DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
+    Offset = (SED1330_LINE_LENGTH * PosY) + PosX;
+    DRV_u8_Write((uint8_t)Offset);                        // P1
+    DRV_u8_Write((uint8_t)(Offset >> 8));                // P2
 }
 
 
@@ -652,15 +652,15 @@ void DRV_DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height,
 void DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
 {
 //void SED1330_Pixel(BYTE byPosX, BYTE byPosY, BYTE byMode)
-	int nOffset;
-	uint8_t Byte;
-		
-	nOffset = (SED1330_LINE_LENGTH * PosY) + (PosX >> 3);
-	PosX = 7 - (PosX & 0x07);
+    int nOffset;
+    uint8_t Byte;
+        
+    nOffset = (SED1330_LINE_LENGTH * PosY) + (PosX >> 3);
+    PosX = 7 - (PosX & 0x07);
 
-	DRV_GotoMemory(nOffset + SED1330_GRAPHIC_MEMORY);
-	DRV_WriteCommand(SED1330_MEMORY_READ);
-	Byte = SED1330_ReadByte();
+    DRV_GotoMemory(nOffset + SED1330_GRAPHIC_MEMORY);
+    DRV_WriteCommand(SED1330_MEMORY_READ);
+    Byte = SED1330_ReadByte();
 
     switch(Mode)
     {
@@ -670,8 +670,8 @@ void DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
     }
 
     DRV_GotoMemory(nOffset + SED1330_GRAPHIC_MEMORY);
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	DRV_u8_Write(Byte);
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    DRV_u8_Write(Byte);
 
 }
 
@@ -854,23 +854,23 @@ void DRV_DisplayOff(void)
 //-------------------------------------------------------------------------------------------------
 void DRV_Clear(void)
 {
-	int i;
+    int i;
 
-	// Clear Text Area
-	DRV_GotoMemory(SED1330_TEXT_MEMORY);
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	for(i = 0; i < SED1330_TEXT_SIZE; i++)
-	{
-		DRV_u8_Write(ASCII_SPACE);				
-	}
+    // Clear Text Area
+    DRV_GotoMemory(SED1330_TEXT_MEMORY);
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    for(i = 0; i < SED1330_TEXT_SIZE; i++)
+    {
+        DRV_u8_Write(ASCII_SPACE);                
+    }
 
-	// Clear Graphic Area
-	DRV_GotoMemory(SED1330_GRAPHIC_MEMORY);
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	for(i = 0; i < SED1330_GRAPHIC_SIZE; i++)
-	{
-		DRV_u8_Write(0x00);				
-	}
+    // Clear Graphic Area
+    DRV_GotoMemory(SED1330_GRAPHIC_MEMORY);
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    for(i = 0; i < SED1330_GRAPHIC_SIZE; i++)
+    {
+        DRV_u8_Write(0x00);                
+    }
 }
 
 
@@ -882,20 +882,20 @@ void DRV_Clear(void)
 //-----------------------------------------------------------------------------
 void DRV_SetCustomFont(uint8_t Number, const char* pString)
 {
-	uint8_t Count = 8;
-		
-	DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
-	Number &= 0x3F;								// no value over 63
-	DRV_u8_Write(Number << 8);					// P1    ??????????  envoie 0 alors le clown!!
-	DRV_u8_Write(Number >> 5);					// P2
-	
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	do
-	{
-		Count--;	
-		DRV_u8_Write(pString[Count]);
-	}
-	while(Count != 0);
+    uint8_t Count = 8;
+        
+    DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
+    Number &= 0x3F;                                // no value over 63
+    DRV_u8_Write(Number << 8);                    // P1    ??????????  envoie 0 alors le clown!!
+    DRV_u8_Write(Number >> 5);                    // P2
+    
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    do
+    {
+        Count--;    
+        DRV_u8_Write(pString[Count]);
+    }
+    while(Count != 0);
 }
 
 
@@ -906,15 +906,15 @@ void DRV_SetCustomFont(uint8_t Number, const char* pString)
 //-----------------------------------------------------------------------------
 void DRV_Puts(const char* pString)
 {
-	uint8_t i;
-	
+    uint8_t i;
+    
     i = 0;
     DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	
-	while(sString[i] != ASCII_NULL)
-	{
-		DRV_u8_Write(pString[i++]);
-	}
+    
+    while(sString[i] != ASCII_NULL)
+    {
+        DRV_u8_Write(pString[i++]);
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -924,8 +924,8 @@ void DRV_Puts(const char* pString)
 //-----------------------------------------------------------------------------
 void DRV_Putc(char Character)
 {
-	DRV_WriteCommand(SED1330_MEMORY_WRITE);
-	DRV_u8_Write(Character);
+    DRV_WriteCommand(SED1330_MEMORY_WRITE);
+    DRV_u8_Write(Character);
 }
 
 

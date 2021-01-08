@@ -41,7 +41,7 @@
 //
 //  Function:       DMA_ClearFlag
 //
-//  Parameter(s):   pDMA		DMA stream to modify
+//  Parameter(s):   pDMA        DMA stream to modify
 //                  Flag        to clear
 //  Return:         None
 //
@@ -81,7 +81,7 @@ void DMA_ClearFlag(DMA_Stream_TypeDef* pDMA, uint32_t Flag)
 //
 //  Function:       DMA_CheckFlag
 //
-//  Parameter(s):   pDMA		DMA stream to modify
+//  Parameter(s):   pDMA        DMA stream to modify
 //                  Flag        To check
 //  Return:         None
 //
@@ -127,7 +127,7 @@ uint32_t DMA_CheckFlag(DMA_Stream_TypeDef* pDMA, uint32_t Flag)
 //
 //  Function:       DMA_Enable
 //
-//  Parameter(s):   pDMA		DMA stream to enable
+//  Parameter(s):   pDMA        DMA stream to enable
 //  Return:         None
 //
 //  Description:    Enable a specific DMA stream.
@@ -141,7 +141,7 @@ void DMA_Enable(DMA_Stream_TypeDef* pDMA)
 //
 //  Function:       DMA_Disable
 //
-//  Parameter(s):   pDMA		DMA stream to enable
+//  Parameter(s):   pDMA        DMA stream to enable
 //  Return:         None
 //
 //  Description:    Disable a specific DMA stream.
@@ -155,7 +155,7 @@ void DMA_Disable(DMA_Stream_TypeDef* pDMA)
 //
 //  Function:       DMA_EnableTransmitCompleteInterrupt
 //
-//  Parameter(s):   pDMA		DMA stream to enable
+//  Parameter(s):   pDMA        DMA stream to enable
 //  Return:         None
 //
 //  Description:    Enable the transmit complete interrupt for a specific DMA stream.
@@ -169,7 +169,7 @@ void DMA_EnableTransmitCompleteInterrupt(DMA_Stream_TypeDef* pDMA)
 //
 //  Function:       DMA_DisableTransmitCompleteInterrupt
 //
-//  Parameter(s):   pDMA		DMA stream to enable
+//  Parameter(s):   pDMA        DMA stream to enable
 //  Return:         None
 //
 //  Description:    Disable the transmit complete interrupt for a specific DMA stream.

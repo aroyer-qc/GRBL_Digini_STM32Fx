@@ -123,8 +123,8 @@ HAL_StatusTypeDef HAL_LTDC_StructInitFromAdaptedCommandConfig(LTDC_HandleTypeDef
   
   /* The following polarities are inverted:
                      LTDC_DEPOLARITY_AL <-> LTDC_DEPOLARITY_AH
-	                   LTDC_VSPOLARITY_AL <-> LTDC_VSPOLARITY_AH
-	                   LTDC_HSPOLARITY_AL <-> LTDC_HSPOLARITY_AH)*/
+                       LTDC_VSPOLARITY_AL <-> LTDC_VSPOLARITY_AH
+                       LTDC_HSPOLARITY_AL <-> LTDC_HSPOLARITY_AH)*/
   
   /* Note 1 : Code in line w/ Current LTDC specification */
   hltdc->Init.DEPolarity = (CmdCfg->DEPolarity == DSI_DATA_ENABLE_ACTIVE_HIGH) ? LTDC_DEPOLARITY_AL : LTDC_DEPOLARITY_AH;

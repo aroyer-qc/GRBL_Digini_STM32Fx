@@ -5,7 +5,7 @@
 * $Revision:     V1.4.0
 *
 * Project:       CMSIS DSP Library
-* Title:	     arm_fft_bin_example_f32.c
+* Title:         arm_fft_bin_example_f32.c
 *
 * Description:   Example code demonstrating calculation of Max energy bin of
 *                frequency domain of input signal.

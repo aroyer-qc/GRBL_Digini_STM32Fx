@@ -57,7 +57,7 @@
 /** @addtogroup PWR_Private_Constants
   * @{
   */
-	
+    
 /** @defgroup PWR_PVD_Mode_Mask PWR PVD Mode Mask
   * @{
   */     
@@ -142,7 +142,7 @@ void HAL_PWR_EnableBkUpAccess(void)
 void HAL_PWR_DisableBkUpAccess(void)
 {
   /* Disable access to RTC and backup registers */
-	CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
+    CLEAR_BIT(PWR->CR1, PWR_CR1_DBP);
 }
 
 /**
@@ -319,7 +319,7 @@ void HAL_PWR_ConfigPVD(PWR_PVDTypeDef *sConfigPVD)
 void HAL_PWR_EnablePVD(void)
 {
   /* Enable the power voltage detector */
-	SET_BIT(PWR->CR1, PWR_CR1_PVDE);
+    SET_BIT(PWR->CR1, PWR_CR1_PVDE);
 }
 
 /**
@@ -329,7 +329,7 @@ void HAL_PWR_EnablePVD(void)
 void HAL_PWR_DisablePVD(void)
 {
   /* Disable the power voltage detector */
-	CLEAR_BIT(PWR->CR1, PWR_CR1_PVDE);
+    CLEAR_BIT(PWR->CR1, PWR_CR1_PVDE);
 }
 
 /**
@@ -355,7 +355,7 @@ void HAL_PWR_EnableWakeUpPin(uint32_t WakeUpPinPolarity)
   
   /* Enable wake-up pin */
   SET_BIT(PWR->CSR2, (PWR_EWUP_MASK & WakeUpPinPolarity));
-	
+    
   /* Specifies the Wake-Up pin polarity for the event detection
     (rising or falling edge) */
   MODIFY_REG(PWR->CR2, (PWR_EWUP_MASK & WakeUpPinPolarity), (WakeUpPinPolarity >> 0x06));

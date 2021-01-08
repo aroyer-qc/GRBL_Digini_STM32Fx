@@ -26,9 +26,9 @@ extern "C" {
  *  global definitions                                                 *
  *---------------------------------------------------------------------*/
 
-#define BUFFER_SIZE		((uint16_t)512*64)
-#define USH_USR_FS_INIT	((uint8_t)0x00)
-#define USH_USR_FS_LOOP	((uint8_t)0x01)
+#define BUFFER_SIZE        ((uint16_t)512*64)
+#define USH_USR_FS_INIT    ((uint8_t)0x00)
+#define USH_USR_FS_LOOP    ((uint8_t)0x01)
 
 /*---------------------------------------------------------------------*
  *  type declarations                                                  *

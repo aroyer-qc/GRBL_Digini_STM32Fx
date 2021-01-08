@@ -1538,9 +1538,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
 {
   /* Compare match interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMPM) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_CMPM) !=RESET)
-		{
+        {
       /* Clear Compare match flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMPM);
       /* Compare match Callback */
@@ -1554,9 +1554,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Autoreload match interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARRM) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARRM) !=RESET)
-		{
+        {
       /* Clear Autoreload match flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_ARRM);
       /* Autoreload match Callback */
@@ -1570,9 +1570,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Trigger detected interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_EXTTRIG) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_EXTTRIG) !=RESET)
-		{
+        {
       /* Clear Trigger detected flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_EXTTRIG);
       /* Trigger detected callback */
@@ -1586,9 +1586,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Compare write interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_CMPOK) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_FLAG_CMPM) !=RESET)
-		{
+        {
       /* Clear Compare write flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMPOK);
       /* Compare write Callback */
@@ -1602,9 +1602,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Autoreload write interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_ARROK) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_ARROK) !=RESET)
-		{
+        {
       /* Clear Autoreload write flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_ARROK);
       /* Autoreload write Callback */
@@ -1618,9 +1618,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Direction counter changed from Down to Up interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_UP) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_UP) !=RESET)
-		{
+        {
       /* Clear Direction counter changed from Down to Up flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_UP);
       /* Direction counter changed from Down to Up Callback */
@@ -1634,9 +1634,9 @@ void HAL_LPTIM_IRQHandler(LPTIM_HandleTypeDef *hlptim)
   
   /* Direction counter changed from Up to Down interrupt */
   if(__HAL_LPTIM_GET_FLAG(hlptim, LPTIM_FLAG_DOWN) != RESET)
-	{
+    {
     if(__HAL_LPTIM_GET_IT_SOURCE(hlptim, LPTIM_IT_DOWN) !=RESET)
-		{
+        {
       /* Clear Direction counter changed from Up to Down flag */
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DOWN);
       /* Direction counter changed from Up to Down Callback */

@@ -51,7 +51,7 @@ void GRAFX_DRV_Copy(void* pSrc, sBox* pBox, sCartesian* pDstPos, ePixelFormat So
     AreaConfig.u_16.u0 = pBox->Size.Height;
 
 // specific processor code
-	
+    
 }
 
 
@@ -121,7 +121,7 @@ void GRAFX_DRV_DrawRectangle(sBox* pBox)
     AreaConfig.u_16.u1 = pBox->Size.Width;
     AreaConfig.u_16.u0 = pBox->Size.Height;
 
-	// specific processor code
+    // specific processor code
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -181,7 +181,7 @@ void GRAFX_DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
     Address        = pLayer->GetAddress() + (((PosY * GRAFX_SIZE_X) + PosX) * (uint32_t)PixelSize);
     Color          = pLayer->GetColor();
 
-	// specific processor code
+    // specific processor code
 }
 
 
@@ -304,7 +304,7 @@ void GRAFX_DRV_DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t 
         AreaConfig.u_16.u0 = Length;
     }
 
-	// specific processor code
+    // specific processor code
 }
 
 
@@ -336,7 +336,7 @@ void DRV_PrintFont(sFontDescriptor* pDescriptor, sCartesian* pPos)
     AreaConfig.u_16.u1 = pDescriptor->Size.Width;
     AreaConfig.u_16.u0 = pDescriptor->Size.Height;
 
-	// specific processor code
+    // specific processor code
 }
 
 

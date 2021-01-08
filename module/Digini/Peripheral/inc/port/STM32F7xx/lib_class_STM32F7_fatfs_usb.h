@@ -37,9 +37,9 @@
 
 class USB_FatFS
 {
-	public:
+    public:
 
-                    USB_FatFS          	(USB_HostInterface* pUSB);
+                    USB_FatFS              (USB_HostInterface* pUSB);
 
 // TODO might need to add function for the passing of instance to
 
@@ -51,11 +51,11 @@ class USB_FatFS
         DRESULT     IO_Control          (uint8_t Control, void *pBuffer);
         #endif
 
-	private:
+    private:
 
-		bool 					m_Initialize;
-		USB_HostInterface*	    m_pUSB;
-        DSTATUS      			m_Status;
+        bool                     m_Initialize;
+        USB_HostInterface*        m_pUSB;
+        DSTATUS                  m_Status;
 };
 
 //-------------------------------------------------------------------------------------------------

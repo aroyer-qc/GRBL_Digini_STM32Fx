@@ -8,7 +8,7 @@
 
 class CFatFS_USB
 {
-	public:
+    public:
 
                     CFatFS_USB          (void);
                    ~CFatFS_USB          (void);
@@ -21,7 +21,7 @@ class CFatFS_USB
         DRESULT     IO_Control          (uint8_t Control, void *pBuffer);
         #endif
 
-	private:
+    private:
 
         DSTATUS      m_Status;
 };

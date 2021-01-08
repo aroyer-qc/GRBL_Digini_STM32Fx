@@ -95,21 +95,21 @@ typedef struct {
   */ 
 typedef struct
 {
-  uint32_t OffStateRunMode;	    /*!< TIM off state in run mode.
+  uint32_t OffStateRunMode;        /*!< TIM off state in run mode.
                                        This parameter can be a value of @ref TIM_OSSR_Off_State_Selection_for_Run_mode_state */
-  uint32_t OffStateIDLEMode;	    /*!< TIM off state in IDLE mode.
+  uint32_t OffStateIDLEMode;        /*!< TIM off state in IDLE mode.
                                        This parameter can be a value of @ref TIM_OSSI_Off_State_Selection_for_Idle_mode_state */
-  uint32_t LockLevel;	 	        /*!< TIM Lock level.
+  uint32_t LockLevel;                 /*!< TIM Lock level.
                                        This parameter can be a value of @ref TIM_Lock_level */                             
-  uint32_t DeadTime;	 	        /*!< TIM dead Time.
+  uint32_t DeadTime;                 /*!< TIM dead Time.
                                        This parameter can be a number between Min_Data = 0x00 and Max_Data = 0xFF */
-  uint32_t BreakState;	 	        /*!< TIM Break State.
+  uint32_t BreakState;                 /*!< TIM Break State.
                                        This parameter can be a value of @ref TIM_Break_Input_enable_disable */
   uint32_t BreakPolarity;           /*!< TIM Break input polarity.
                                        This parameter can be a value of @ref TIM_Break_Polarity */
   uint32_t BreakFilter;             /*!< Specifies the break input filter.
                                        This parameter can be a number between Min_Data = 0x0 and Max_Data = 0xF */  
-  uint32_t Break2State;	 	        /*!< TIM Break2 State 
+  uint32_t Break2State;                 /*!< TIM Break2 State 
                                        This parameter can be a value of @ref TIMEx_Break2_Input_enable_disable */
   uint32_t Break2Polarity;          /*!< TIM Break2 input polarity 
                                        This parameter can be a value of @ref TIMEx_Break2_Polarity */
@@ -196,7 +196,7 @@ typedef struct {
 #define TIM_TIM11_MCO1                         (0x00000003U)
 /**
   * @}
-  */	
+  */    
 
 /** @defgroup TIMEx_ClearInput_Source TIMEx Clear Input Source
   * @{
@@ -235,26 +235,26 @@ typedef struct {
 /**
   * @}
   */
-	
+    
 /** @defgroup TIMEx_Master_Mode_Selection_2 TIMEx Master Mode Selection 2 (TRGO2)
   * @{
   */  
-#define	TIM_TRGO2_RESET                          ((uint32_t)0x00000000U)             
-#define	TIM_TRGO2_ENABLE                         ((uint32_t)(TIM_CR2_MMS2_0))          
-#define	TIM_TRGO2_UPDATE                         ((uint32_t)(TIM_CR2_MMS2_1))
-#define	TIM_TRGO2_OC1                            ((uint32_t)(TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
-#define	TIM_TRGO2_OC1REF                         ((uint32_t)(TIM_CR2_MMS2_2))           
-#define	TIM_TRGO2_OC2REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_0))          
-#define	TIM_TRGO2_OC3REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1))           
-#define	TIM_TRGO2_OC4REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))  
-#define	TIM_TRGO2_OC5REF                         ((uint32_t)(TIM_CR2_MMS2_3))   
-#define	TIM_TRGO2_OC6REF                         ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_0))   
-#define	TIM_TRGO2_OC4REF_RISINGFALLING           ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_1))   
-#define	TIM_TRGO2_OC6REF_RISINGFALLING           ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
-#define	TIM_TRGO2_OC4REF_RISING_OC6REF_RISING    ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2))   
-#define	TIM_TRGO2_OC4REF_RISING_OC6REF_FALLING   ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 | TIM_CR2_MMS2_0))   
-#define	TIM_TRGO2_OC5REF_RISING_OC6REF_RISING    ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 |TIM_CR2_MMS2_1))   
-#define	TIM_TRGO2_OC5REF_RISING_OC6REF_FALLING   ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
+#define    TIM_TRGO2_RESET                          ((uint32_t)0x00000000U)             
+#define    TIM_TRGO2_ENABLE                         ((uint32_t)(TIM_CR2_MMS2_0))          
+#define    TIM_TRGO2_UPDATE                         ((uint32_t)(TIM_CR2_MMS2_1))
+#define    TIM_TRGO2_OC1                            ((uint32_t)(TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
+#define    TIM_TRGO2_OC1REF                         ((uint32_t)(TIM_CR2_MMS2_2))           
+#define    TIM_TRGO2_OC2REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_0))          
+#define    TIM_TRGO2_OC3REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1))           
+#define    TIM_TRGO2_OC4REF                         ((uint32_t)(TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))  
+#define    TIM_TRGO2_OC5REF                         ((uint32_t)(TIM_CR2_MMS2_3))   
+#define    TIM_TRGO2_OC6REF                         ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_0))   
+#define    TIM_TRGO2_OC4REF_RISINGFALLING           ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_1))   
+#define    TIM_TRGO2_OC6REF_RISINGFALLING           ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
+#define    TIM_TRGO2_OC4REF_RISING_OC6REF_RISING    ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2))   
+#define    TIM_TRGO2_OC4REF_RISING_OC6REF_FALLING   ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 | TIM_CR2_MMS2_0))   
+#define    TIM_TRGO2_OC5REF_RISING_OC6REF_RISING    ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 |TIM_CR2_MMS2_1))   
+#define    TIM_TRGO2_OC5REF_RISING_OC6REF_FALLING   ((uint32_t)(TIM_CR2_MMS2_3 | TIM_CR2_MMS2_2 | TIM_CR2_MMS2_1 | TIM_CR2_MMS2_0))   
 /**
   * @}
   */ 
@@ -558,7 +558,7 @@ HAL_TIM_StateTypeDef HAL_TIMEx_HallSensor_GetState(TIM_HandleTypeDef* htim);
                                                 ((CHANNEL) == TIM_CHANNEL_2) || \
                                                 ((CHANNEL) == TIM_CHANNEL_3))
 #define IS_TIM_PWM_MODE(MODE) (((MODE) == TIM_OCMODE_PWM1)               || \
-	                       ((MODE) == TIM_OCMODE_PWM2)               || \
+                           ((MODE) == TIM_OCMODE_PWM2)               || \
                                ((MODE) == TIM_OCMODE_COMBINED_PWM1)      || \
                                ((MODE) == TIM_OCMODE_COMBINED_PWM2)      || \
                                ((MODE) == TIM_OCMODE_ASSYMETRIC_PWM1)    || \
@@ -572,7 +572,7 @@ HAL_TIM_StateTypeDef HAL_TIMEx_HallSensor_GetState(TIM_HandleTypeDef* htim);
                              ((MODE) == TIM_OCMODE_FORCED_INACTIVE)    || \
                              ((MODE) == TIM_OCMODE_RETRIGERRABLE_OPM1) || \
                              ((MODE) == TIM_OCMODE_RETRIGERRABLE_OPM2))
-#define IS_TIM_REMAP(__TIM_REMAP__)	 (((__TIM_REMAP__) == TIM_TIM2_TIM8_TRGO)||\
+#define IS_TIM_REMAP(__TIM_REMAP__)     (((__TIM_REMAP__) == TIM_TIM2_TIM8_TRGO)||\
                                       ((__TIM_REMAP__) == TIM_TIM2_ETH_PTP)||\
                                       ((__TIM_REMAP__) == TIM_TIM2_USBFS_SOF)||\
                                       ((__TIM_REMAP__) == TIM_TIM2_USBHS_SOF)||\

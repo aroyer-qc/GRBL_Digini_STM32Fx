@@ -32,31 +32,31 @@ class CS43L22 : public AudioInterface
 {
     public:
 
-		SystemState_e 		Initialize					(void* pArgControl, void* pArgData);;
-	    //SystemState_e 	DeInitialize				(void);
-		uint16_t			ReadID						(void);
-		SystemState_e		Reset						(void);
+        SystemState_e         Initialize                    (void* pArgControl, void* pArgData);;
+        //SystemState_e     DeInitialize                (void);
+        uint16_t            ReadID                        (void);
+        SystemState_e        Reset                        (void);
 
-		SystemState_e 		Play						(uint16_t* pBuffer, uint16_t Size);
-		SystemState_e 		Stop						(uint32_t CodecPdwnMode);
-		SystemState_e 		Pause						(void);
-		SystemState_e 		Resume						(void);
+        SystemState_e         Play                        (uint16_t* pBuffer, uint16_t Size);
+        SystemState_e         Stop                        (uint32_t CodecPdwnMode);
+        SystemState_e         Pause                        (void);
+        SystemState_e         Resume                        (void);
 
-		SystemState_e 		SetVolume					(uint8_t Volume);
-		SystemState_e 		SetFrequency				(uint32_t AudioFrequency);
-		SystemState_e 		SetMute						(uint32_t Command);
-		SystemState_e 		SetOutputMode				(uint8_t Mode);
+        SystemState_e         SetVolume                    (uint8_t Volume);
+        SystemState_e         SetFrequency                (uint32_t AudioFrequency);
+        SystemState_e         SetMute                        (uint32_t Command);
+        SystemState_e         SetOutputMode                (uint8_t Mode);
 
     private:
 
-		SystemState_e 		Write						(uint8_t Register, uint8_t Data);
+        SystemState_e         Write                        (uint8_t Register, uint8_t Data);
 
-		uint8_t				m_DeviceAddress;
-		uint8_t 			m_OutputConfig;
-		bool 				m_IsItStopped;
+        uint8_t                m_DeviceAddress;
+        uint8_t             m_OutputConfig;
+        bool                 m_IsItStopped;
 
-		I2C*				m_pI2C;
-		I2S*				m_pI2S;
+        I2C*                m_pI2C;
+        I2S*                m_pI2S;
 };
 
 //-------------------------------------------------------------------------------------------------

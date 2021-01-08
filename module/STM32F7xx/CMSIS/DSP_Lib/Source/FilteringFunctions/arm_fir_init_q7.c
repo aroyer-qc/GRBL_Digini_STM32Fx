@@ -2,9 +2,9 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
+* Project:         CMSIS DSP Library    
 * Title:        arm_fir_init_q7.c    
 *    
 * Description:  Q7 FIR filter initialization function.    
@@ -50,11 +50,11 @@
  */
 /**    
  * @param[in,out] *S points to an instance of the Q7 FIR filter structure.    
- * @param[in] 	  numTaps  Number of filter coefficients in the filter.    
- * @param[in] 	  *pCoeffs points to the filter coefficients buffer.    
+ * @param[in]       numTaps  Number of filter coefficients in the filter.    
+ * @param[in]       *pCoeffs points to the filter coefficients buffer.    
  * @param[in]     *pState points to the state buffer.    
  * @param[in]     blockSize number of samples that are processed per call.    
- * @return     	  none    
+ * @return           none    
  *    
  * <b>Description:</b>    
  * \par    

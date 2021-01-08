@@ -37,7 +37,7 @@
 #define Toggle(A)                       (A = (uint8_t)(1 - A))
 #define CheckOption(A,B)                (((B) & (A)) > 0)
 #define sizearray(A)                    (sizeof(A) / sizeof(A[0]))
-#define ABS(X)  					    ((X) > 0 ? (X) : -(X))
+#define ABS(X)                          ((X) > 0 ? (X) : -(X))
 
 #define swap8(A)                        ((A << 4) | (A >> 4))
 #define swap16(A)                       ((A << 8) | (A >> 8))
@@ -78,5 +78,5 @@
 
 #define CVT_HOUR_TO_SECOND(H)           ((H) * 3600)
 
-//#define POLY_Y(Z)          			((int32_t)((Points + Z)->X))
-//#define POLY_X(Z)          			((int32_t)((Points + Z)->Y))
+//#define POLY_Y(Z)                      ((int32_t)((Points + Z)->X))
+//#define POLY_X(Z)                      ((int32_t)((Points + Z)->Y))

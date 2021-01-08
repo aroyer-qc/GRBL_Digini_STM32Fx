@@ -79,7 +79,7 @@ class LCD_Driver : public GRAFX_Interface
         void            WriteData               (uint16_t Data);
         void            Line                    (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
         void            DrawRectangle           (Box_t* pBox, uint8_t Mode = SSD1779_NO_FILL);
-        void 		    Clear			        (void);
+        void             Clear                    (void);
 
         IO_PinDriver    m_RegSelect;
         IO_PinDriver    m_Reset;

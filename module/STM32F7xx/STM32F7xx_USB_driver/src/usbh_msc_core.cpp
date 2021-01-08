@@ -170,7 +170,7 @@ void USBH_MSC_ErrorHandle(uint8_t status);
   */
 static USBH_Status USBH_MSC_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev, 
                                         void *phost)
-{	 
+{     
   USBH_HOST *pphost = phost;
   
   if((pphost->device_prop.Itf_Desc[0].bInterfaceClass == MSC_CLASS) && \
@@ -239,7 +239,7 @@ static USBH_Status USBH_MSC_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev,
   */
 void USBH_MSC_InterfaceDeInit ( USB_OTG_CORE_HANDLE *pdev,
                                 void *phost)
-{	
+{    
   if ( MSC_Machine.hc_num_out)
   {
     USB_OTG_HC_Halt(pdev, MSC_Machine.hc_num_out);

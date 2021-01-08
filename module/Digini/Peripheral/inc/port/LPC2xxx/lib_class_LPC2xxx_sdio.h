@@ -102,9 +102,9 @@ typedef struct SDIO_s
 
 class CSDIO : public CSD_CardInterface
 {
-	public:
-                            CSDIO    	            (sSDIO* pSDIO);
-                            ~CSDIO	                ();
+    public:
+                            CSDIO                    (sSDIO* pSDIO);
+                            ~CSDIO                    ();
 
         eSystemState        GetResponse             (uint32_t* pResponse);
         uint32_t            GetTransfertStatus      ();
@@ -115,13 +115,13 @@ class CSDIO : public CSD_CardInterface
         void                SetBusSize              (eBusSize BusSize)
         void                SetSpeed                (eDeviceSpeed DeviceSpeed);
         void                TickHook                ();
-        void                TransmitCommand  	    (uint8_t Command, uint32_t Argument, eResponseType ResponseType);
+        void                TransmitCommand          (uint8_t Command, uint32_t Argument, eResponseType ResponseType);
         void                StartBlockTransfert     (const uint8_t *pBuffer, uint32_t Count, uint32_t TransfertDir);
         eSystemState        WaitBlockTransfertEnd   ();
         void                SDIO_IRQHandler         ();
         void                DMA_StreamIRQHandler    ();
 
-	private:
+    private:
 
         void                SDIO_DataInit           (uint32_t TransfertDir, size_t Size);
         void                DMA_Config              (uint32_t* pBuffer, size_t BufferSize, uint32_t Direction);

@@ -841,7 +841,7 @@ HAL_StatusTypeDef HAL_ADC_Stop_IT(ADC_HandleTypeDef* hadc)
   /* Check if ADC is effectively disabled */
   if(HAL_IS_BIT_CLR(hadc->Instance->CR2, ADC_CR2_ADON))
   {
-  	/* Disable ADC end of conversion interrupt for regular group */
+      /* Disable ADC end of conversion interrupt for regular group */
     __HAL_ADC_DISABLE_IT(hadc, (ADC_IT_EOC | ADC_IT_OVR));
 
     /* Set ADC state */
@@ -1250,7 +1250,7 @@ __weak void HAL_ADC_ErrorCallback(ADC_HandleTypeDef *hadc)
   */
   
 /** @defgroup ADC_Exported_Functions_Group3 Peripheral Control functions
- *  @brief   	Peripheral Control functions 
+ *  @brief       Peripheral Control functions 
  *
 @verbatim   
  ===============================================================================
@@ -1285,23 +1285,23 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef* hadc, ADC_ChannelConf
   
   /* Process locked */
   __HAL_LOCK(hadc);
-			
-	/* if ADC_Channel_10 ... ADC_Channel_18 is selected */
-	if (sConfig->Channel > ADC_CHANNEL_9)
-	{
-		/* Clear the old sample time */
-		hadc->Instance->SMPR1 &= ~ADC_SMPR1(ADC_SMPR1_SMP10, sConfig->Channel);
+            
+    /* if ADC_Channel_10 ... ADC_Channel_18 is selected */
+    if (sConfig->Channel > ADC_CHANNEL_9)
+    {
+        /* Clear the old sample time */
+        hadc->Instance->SMPR1 &= ~ADC_SMPR1(ADC_SMPR1_SMP10, sConfig->Channel);
 
-		if (sConfig->Channel == ADC_CHANNEL_TEMPSENSOR)
-		{
-			/* Set the new sample time */
-			hadc->Instance->SMPR1 |= ADC_SMPR1(sConfig->SamplingTime, ADC_CHANNEL_18);
-		}
-	  else
-	  {	
-		  /* Set the new sample time */
-		  hadc->Instance->SMPR1 |= ADC_SMPR1(sConfig->SamplingTime, sConfig->Channel);
-	  }
+        if (sConfig->Channel == ADC_CHANNEL_TEMPSENSOR)
+        {
+            /* Set the new sample time */
+            hadc->Instance->SMPR1 |= ADC_SMPR1(sConfig->SamplingTime, ADC_CHANNEL_18);
+        }
+      else
+      {    
+          /* Set the new sample time */
+          hadc->Instance->SMPR1 |= ADC_SMPR1(sConfig->SamplingTime, sConfig->Channel);
+      }
   }
   else /* ADC_Channel include in ADC_Channel_[0..9] */
   {
@@ -1386,7 +1386,7 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef* hadc, ADC_ChannelConf
   *         the configuration information for the specified ADC.
   * @param  AnalogWDGConfig  pointer to an ADC_AnalogWDGConfTypeDef structure 
   *         that contains the configuration information of ADC analog watchdog.
-  * @retval HAL status	  
+  * @retval HAL status      
   */
 HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef* hadc, ADC_AnalogWDGConfTypeDef* AnalogWDGConfig)
 {

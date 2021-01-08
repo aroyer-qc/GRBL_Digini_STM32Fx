@@ -45,20 +45,20 @@
 
 RawArray::RawArray(void)
 {
-	m_Size    = 0;
-	m_pBuffer = nullptr;
+    m_Size    = 0;
+    m_pBuffer = nullptr;
 }
 
 RawArray::RawArray(void* pBuffer)
 {
-	m_Size    = 0;
-	m_pBuffer = (uint8_t*)pBuffer;
+    m_Size    = 0;
+    m_pBuffer = (uint8_t*)pBuffer;
 }
 
 RawArray::RawArray(void* pBuffer, size_t Size)
 {
-	m_Size    = Size;
-	m_pBuffer = (uint8_t*)pBuffer;
+    m_Size    = Size;
+    m_pBuffer = (uint8_t*)pBuffer;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ void RawArray::append(uint32_t data)
 
 uint8_t RawArray::at(uint32_t Index)
 {
-	return *(m_pBuffer + Index);
+    return *(m_pBuffer + Index);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ uint8_t RawArray::at(uint32_t Index)
 
 void RawArray::clear(void)
 {
-	m_Size = 0;
+    m_Size = 0;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void RawArray::clear(void)
 
 uint8_t* RawArray::data(void)
 {
-	return m_pBuffer;
+    return m_pBuffer;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -167,10 +167,10 @@ void RawArray::insert(uint32_t Index, uint8_t data)
 //-------------------------------------------------------------------------------------------------
 void RawArray::fill(uint8_t data)
 {
-	for(size_t i = 0; i < m_Size; i++)
-	{
-		*(m_pBuffer + i) = data;
-	}
+    for(size_t i = 0; i < m_Size; i++)
+    {
+        *(m_pBuffer + i) = data;
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -206,10 +206,10 @@ uint32_t RawArray::uint32_Last(void)
 
 void RawArray::remove(uint32_t Index)
 {
-	for(uint32_t i = Index; i < (m_Size - 1); i++)
-	{
-		*(m_pBuffer + i) = *(m_pBuffer + i + 1);
-	}
+    for(uint32_t i = Index; i < (m_Size - 1); i++)
+    {
+        *(m_pBuffer + i) = *(m_pBuffer + i + 1);
+    }
     m_Size--;
 }
 
@@ -223,40 +223,40 @@ void RawArray::remove(uint32_t Index)
 //-------------------------------------------------------------------------------------------------
 bool RawArray::replace(uint32_t Index, uint8_t data)
 {
-	bool bStatus = false;
+    bool bStatus = false;
 
-	if(Index < m_Size)
-	{
-		*(m_pBuffer + Index) = data;
+    if(Index < m_Size)
+    {
+        *(m_pBuffer + Index) = data;
         bStatus              = true;
-	}
-	return bStatus;
+    }
+    return bStatus;
 }
 
 bool RawArray::replace(uint32_t Index, uint16_t data)
 {
-	bool bStatus = false;
+    bool bStatus = false;
 
-	if((Index + 1) < m_Size)
-	{
+    if((Index + 1) < m_Size)
+    {
         this->replace(Index++, (uint8_t)(data >> 8));
         this->replace(Index++, (uint8_t)data);
-	}
-	return bStatus;
+    }
+    return bStatus;
 }
 
 bool RawArray::replace(uint32_t Index, uint32_t data)
 {
-	bool bStatus = false;
+    bool bStatus = false;
 
-	if((Index + 3) < m_Size)
-	{
+    if((Index + 3) < m_Size)
+    {
         this->replace(Index++, (uint8_t)(data >> 24));
         this->replace(Index++, (uint8_t)(data >> 16));
         this->replace(Index++, (uint8_t)(data >> 8));
         this->replace(Index++, (uint8_t)data);
-	}
-	return bStatus;
+    }
+    return bStatus;
 }
 
 
@@ -295,7 +295,7 @@ void RawArray::setBuffer(uint8_t* pBuffer)
 //-------------------------------------------------------------------------------------------------
 size_t RawArray::size(void)
 {
-	return m_Size;
+    return m_Size;
 }
 
 

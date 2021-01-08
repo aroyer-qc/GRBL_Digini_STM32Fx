@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_cfft_init_f32.c   
+* Project:         CMSIS DSP Library    
+* Title:        arm_cfft_init_f32.c   
 *    
-* Description:	Split Radix Decimation in Frequency CFFT Floating point processing function   
+* Description:    Split Radix Decimation in Frequency CFFT Floating point processing function   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -58,7 +58,7 @@
 *   
 * \par Description:  
 * \par   
-* The parameter <code>fftLen</code>	Specifies length of RFFT/CIFFT process. Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.   
+* The parameter <code>fftLen</code>    Specifies length of RFFT/CIFFT process. Supported FFT Lengths are 32, 64, 128, 256, 512, 1024, 2048, 4096.   
 * \par   
 * This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.   
 */
@@ -84,50 +84,50 @@ arm_status arm_rfft_fast_init_f32(
     /*  Initialise the bit reversal table pointer */
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable2048;
     /*  Initialise the Twiddle coefficient pointers */
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_2048;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_4096;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_2048;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_4096;
     break;
   case 1024u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE1024_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable1024;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_1024;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_2048;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_1024;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_2048;
     break;
   case 512u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE_512_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable512;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_512;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_1024;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_512;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_1024;
     break;
   case 256u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE_256_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable256;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_256;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_512;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_256;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_512;
     break;
   case 128u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE_128_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable128;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_128;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_256;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_128;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_256;
     break;
   case 64u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE__64_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable64;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_64;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_128;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_64;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_128;
     break;
   case 32u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE__32_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable32;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_32;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_64;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_32;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_64;
     break;
   case 16u:
     Sint->bitRevLength = ARMBITREVINDEXTABLE__16_TABLE_LENGTH;
     Sint->pBitRevTable = (uint16_t *)armBitRevIndexTable16;
-		Sint->pTwiddle     = (float32_t *) twiddleCoef_16;
-		S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_32;
+        Sint->pTwiddle     = (float32_t *) twiddleCoef_16;
+        S->pTwiddleRFFT    = (float32_t *) twiddleCoef_rfft_32;
     break;
   default:
     /*  Reporting argument error if fftSize is not valid value */

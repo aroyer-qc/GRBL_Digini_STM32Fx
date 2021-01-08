@@ -815,7 +815,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint3
   tickstart = HAL_GetTick();
 
   while(__HAL_RTC_TIMESTAMP_GET_FLAG(hrtc, RTC_FLAG_TSF) == RESET)
-  {	        
+  {            
     if(Timeout != HAL_MAX_DELAY)
     {
       if((Timeout == 0)||((HAL_GetTick() - tickstart ) > Timeout))
@@ -825,7 +825,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint3
       }
     }
   }
-	
+    
   if(__HAL_RTC_TIMESTAMP_GET_FLAG(hrtc, RTC_FLAG_TSOVF) != RESET)
   {
     /* Clear the TIMESTAMP OverRun Flag */
@@ -836,7 +836,7 @@ HAL_StatusTypeDef HAL_RTCEx_PollForTimeStampEvent(RTC_HandleTypeDef *hrtc, uint3
       
     return HAL_ERROR; 
    }
-	
+    
   /* Change RTC state */
   hrtc->State = HAL_RTC_STATE_READY; 
   

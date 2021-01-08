@@ -140,7 +140,7 @@
 
 #define SD_DETECT_GPIO_PORT             GPIOC
 #define SD_DETECT_GPIO_CLOCK            RCC_AHB1ENR_GPIOCEN
-#define SD_DETECT_PIN             		GPIO_PIN_MASK_13
+#define SD_DETECT_PIN                     GPIO_PIN_MASK_13
 
 #define SD_WIDE_BUS_SUPPORT             ((uint32_t)0x00040000)
 #define SD_SINGLE_BUS_SUPPORT           ((uint32_t)0x00010000)
@@ -328,9 +328,9 @@ SystemState_e SDIO_Driver::GetStatus(void)
 //-------------------------------------------------------------------------------------------------
 DSTATUS SDIO_Driver::FatFS_DiskStatus(void)
 {
-	// Check SDCARD status
-	m_CardStatus = (this->GetStatus() == SYS_READY) ? SYS_READY : STA_NOINIT;
-	return (DSTATUS)m_CardStatus;
+    // Check SDCARD status
+    m_CardStatus = (this->GetStatus() == SYS_READY) ? SYS_READY : STA_NOINIT;
+    return (DSTATUS)m_CardStatus;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -351,8 +351,8 @@ DSTATUS SDIO_Driver::FatFS_Initialize(void)
 
     this->PowerOFF();
 
-	// Check if SD card is present
-	if(this->IsDetected() == SYS_DEVICE_NOT_PRESENT)
+    // Check if SD card is present
+    if(this->IsDetected() == SYS_DEVICE_NOT_PRESENT)
     {
         return STA_NOINIT;
     }
@@ -373,16 +373,16 @@ DSTATUS SDIO_Driver::FatFS_Initialize(void)
         }
     }
 
-	// Configure SD Bus width
-	if(State == SYS_READY)
-	{
-		// Enable wide operation
-		State = this->SetBusWidth(SD_BUS_WIDE_4B);
-	}
+    // Configure SD Bus width
+    if(State == SYS_READY)
+    {
+        // Enable wide operation
+        State = this->SetBusWidth(SD_BUS_WIDE_4B);
+    }
 
-	// Configure the SDCARD device
-	m_CardStatus = (State == SYS_READY) ? SYS_READY : STA_NOINIT;
-	return (DSTATUS)m_CardStatus;
+    // Configure the SDCARD device
+    m_CardStatus = (State == SYS_READY) ? SYS_READY : STA_NOINIT;
+    return (DSTATUS)m_CardStatus;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -401,7 +401,7 @@ DSTATUS SDIO_Driver::FatFS_Initialize(void)
 //-------------------------------------------------------------------------------------------------
 DRESULT SDIO_Driver::FatFS_Read(uint8_t* pBuffer, uint32_t Sector, uint8_t NumberOfBlocks)
 {
-	// Prepare the DMA Transfer
+    // Prepare the DMA Transfer
     this->StartBlockTransfert(DMA2_Stream3, (uint32_t *)pBuffer, BLOCK_SIZE, NumberOfBlocks);
 
     // Read block(s) in DMA transfer mode
@@ -414,7 +414,7 @@ DRESULT SDIO_Driver::FatFS_Read(uint8_t* pBuffer, uint32_t Sector, uint8_t Numbe
         }
     }
 
-	return RES_ERROR;
+    return RES_ERROR;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -446,15 +446,15 @@ DRESULT SDIO_Driver::FatFS_Write(const uint8_t* pBuffer, uint32_t Sector, uint8_
         }
     }
 
-	return RES_ERROR;
+    return RES_ERROR;
 }
 
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: FatFS_IO_Control
 //
-//   Parameter(s):  uint8_t    Control		Control code
-//	                void*      pBuffer		Buffer to send/receive control data
+//   Parameter(s):  uint8_t    Control        Control code
+//                    void*      pBuffer        Buffer to send/receive control data
 //   Return value:  DRESULT
 //
 //   Description:   Control
@@ -493,24 +493,24 @@ DRESULT SDIO_Driver::FatFS_IO_Control(uint8_t Control, void *pBuffer)
         // Get number of sectors on the disk (uint32_t)
         case GET_SECTOR_COUNT:
         {
-			this->GetCardInfo();
-			*(DWORD *)pBuffer = m_CardCapacity / BLOCK_SIZE;
-			Result = RES_OK;
+            this->GetCardInfo();
+            *(DWORD *)pBuffer = m_CardCapacity / BLOCK_SIZE;
+            Result = RES_OK;
             break;
         }
 
         // Get sectors on the disk (uint16_t)
         case GET_SECTOR_SIZE:
         {
-			*(WORD *)pBuffer = BLOCK_SIZE;
-			Result = RES_OK;
+            *(WORD *)pBuffer = BLOCK_SIZE;
+            Result = RES_OK;
             break;
         }
 
         // Get erase block size in unit of sectors (uint32_t)
         case GET_BLOCK_SIZE:
         {
-			*(DWORD*)pBuffer = BLOCK_SIZE;
+            *(DWORD*)pBuffer = BLOCK_SIZE;
             break;
         }
 
@@ -622,9 +622,9 @@ DRESULT SDIO_Driver::FatFS_IO_Control(uint8_t Control, void *pBuffer)
 //-------------------------------------------------------------------------------------------------
 FRESULT SDIO_Driver::FatFS_GetDriveSize(char* pDriveName, FatFS_Size_t* SizeStruct)
 {
-	FATFS*  pFS;
+    FATFS*  pFS;
     DWORD   FreeCluster;
-	FRESULT Result;
+    FRESULT Result;
 
     // Get volume information and free clusters of drive
     if((Result = f_getfree(pDriveName, &FreeCluster, &pFS)) == FR_OK)
@@ -763,8 +763,8 @@ SystemState_e SDIO_Driver::SetBusWidth(uint32_t WideMode)
 //   Function name: TransmitCommand
 //
 //   Parameter(s):  uint8_t         Command
-//	                uint32_t        Argument
-//	                ResponseType_e  ResponseType
+//                    uint32_t        Argument
+//                    ResponseType_e  ResponseType
 //   Return value:  SystemState_e
 //
 //   Description:   Send command to the SD Card
@@ -830,8 +830,8 @@ SystemState_e SDIO_Driver::CheckOCR_Response(uint32_t Response_R1)
 //   Function name: CmdResponse
 //
 //   Parameter(s):  uint8_t             Command
-//	                uint32_t            Argument
-//	                SD_ResponseType_e   ResponseType
+//                    uint32_t            Argument
+//                    SD_ResponseType_e   ResponseType
 //   Return value:  SystemState_e
 //
 //   Description:   Checks for error conditions for any response.

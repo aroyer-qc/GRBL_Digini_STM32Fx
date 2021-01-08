@@ -83,7 +83,7 @@ typedef struct
 {
   RNG_TypeDef                 *Instance;    /*!< Register base address   */
 
-  uint32_t                    RandomNumber; /*!< Last Generated random number */	
+  uint32_t                    RandomNumber; /*!< Last Generated random number */    
   
   HAL_LockTypeDef             Lock;         /*!< RNG locking object      */
   

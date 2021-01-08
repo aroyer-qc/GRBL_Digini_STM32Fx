@@ -61,24 +61,24 @@ struct I2C_PortInfo_t
 
 class I2C_Driver
 {
-	public:
+    public:
 
-						I2C_Driver		    (const I2C_PortInfo_t* pPort);
+                        I2C_Driver            (const I2C_PortInfo_t* pPort);
 
-        SystemState_e   LockToDevice   		(uint8_t Device);       // Set I2C to this device and lock
-        SystemState_e   UnlockFromDevice 	(uint8_t Device);       // Unlock I2C from device
-        SystemState_e   GetStatus       	(void);
+        SystemState_e   LockToDevice           (uint8_t Device);       // Set I2C to this device and lock
+        SystemState_e   UnlockFromDevice     (uint8_t Device);       // Unlock I2C from device
+        SystemState_e   GetStatus           (void);
 
         SystemState_e   ReadRegister        (uint8_t Register, const void* pRxBuffer, size_t RxSize);
         SystemState_e   ReadRegister        (uint8_t Register, const void* pRxBuffer, size_t RxSize, uint8_t Device);
         SystemState_e   Transfer            (uint32_t Address, uint32_t AddressSize, const void* pTxBuffer, size_t TxSize, const void* pRxBuffer, size_t RxSize);
         SystemState_e   Transfer            (uint32_t Address, uint32_t AddressSize, const void* pTxBuffer, size_t TxSize, const void* pRxBuffer, size_t RxSize, uint8_t Device);
 
-		void            Initialize 			(void);
+        void            Initialize             (void);
         void            ER_IRQHandler       (void);
         void            EV_IRQHandler       (void);
 
-	private:
+    private:
 
         void            ClearBus            (void);
         uint32_t        CalculateBitMask    (uint8_t Mask, uint16_t BitConfig);
@@ -89,20 +89,20 @@ class I2C_Driver
         nOS_Mutex                       m_Mutex;
         int16_t                         m_Device;
 
-        volatile bool					m_IsItInitialize;
-        volatile uint32_t				m_Address;
-        volatile size_t				    m_AddressSize;
-        volatile size_t				    m_TxSize;
-        volatile size_t				    m_RxSize;
+        volatile bool                    m_IsItInitialize;
+        volatile uint32_t                m_Address;
+        volatile size_t                    m_AddressSize;
+        volatile size_t                    m_TxSize;
+        volatile size_t                    m_RxSize;
         volatile uint8_t*               m_pTxBuffer;
         volatile uint8_t*               m_pRxBuffer;
 
         volatile uint8_t*               m_pAddressInDevice;
         volatile uint8_t*               m_pDataAddress;
-        volatile size_t				    m_Size;
-        volatile size_t		            m_AddressLengthCount;
+        volatile size_t                    m_Size;
+        volatile size_t                    m_AddressLengthCount;
 
-        volatile SystemState_e		    m_Status;
+        volatile SystemState_e            m_Status;
         volatile uint8_t                m_Timeout;
 };
 

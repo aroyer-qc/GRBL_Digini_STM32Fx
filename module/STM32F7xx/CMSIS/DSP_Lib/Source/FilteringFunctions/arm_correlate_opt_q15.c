@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_correlate_opt_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_correlate_opt_q15.c    
 *    
-* Description:	Correlation of Q15 sequences.  
+* Description:    Correlation of Q15 sequences.  
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  
@@ -61,7 +61,7 @@
  *    
  * \par Restrictions    
  *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE    
- *	In this case input, output, scratch buffers should be aligned by 32-bit    
+ *    In this case input, output, scratch buffers should be aligned by 32-bit    
  *     
  * @details    
  * <b>Scaling and Overflow Behavior:</b>    
@@ -103,7 +103,7 @@ void arm_correlate_opt_q15(
 
   q15_t a, b;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
   /* The algorithm implementation is based on the lengths of the inputs. */
   /* srcB is always made to slide across srcA. */
@@ -210,7 +210,7 @@ void arm_correlate_opt_q15(
     j--;
   }
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -252,7 +252,7 @@ void arm_correlate_opt_q15(
     j--;
   }
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
   /* Temporary pointer for scratch2 */
   py = pIn2;
@@ -327,25 +327,25 @@ void arm_correlate_opt_q15(
 
       acc3 = __SMLALDX(x3, y2, acc3);
 
-#else	 
+#else     
 
       /* Read four samples from smaller buffer */
-	  a = *pIn2;
-	  b = *(pIn2 + 1);
+      a = *pIn2;
+      b = *(pIn2 + 1);
 
 #ifndef ARM_MATH_BIG_ENDIAN
       y1 = __PKHBT(a, b, 16);
 #else
       y1 = __PKHBT(b, a, 16);
 #endif
-	  
-	  a = *(pIn2 + 2);
-	  b = *(pIn2 + 3);
+      
+      a = *(pIn2 + 2);
+      b = *(pIn2 + 3);
 #ifndef ARM_MATH_BIG_ENDIAN
       y2 = __PKHBT(a, b, 16);
 #else
       y2 = __PKHBT(b, a, 16);
-#endif				
+#endif                
 
       acc0 = __SMLALD(x1, y1, acc0);
 
@@ -359,8 +359,8 @@ void arm_correlate_opt_q15(
 
       acc1 = __SMLALDX(x3, y1, acc1);
 
-	  a = *pScr;
-	  b = *(pScr + 1);
+      a = *pScr;
+      b = *(pScr + 1);
 
 #ifndef ARM_MATH_BIG_ENDIAN
       x1 = __PKHBT(a, b, 16);
@@ -382,8 +382,8 @@ void arm_correlate_opt_q15(
 
       acc1 = __SMLALDX(x3, y2, acc1);
 
-	  a = *(pScr + 2);
-	  b = *(pScr + 3);
+      a = *(pScr + 2);
+      b = *(pScr + 3);
 
 #ifndef ARM_MATH_BIG_ENDIAN
       x2 = __PKHBT(a, b, 16);
@@ -399,7 +399,7 @@ void arm_correlate_opt_q15(
 
       acc3 = __SMLALDX(x3, y2, acc3);
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
       pIn2 += 4u;
 

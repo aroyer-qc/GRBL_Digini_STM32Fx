@@ -18,8 +18,8 @@
 //-------------------------------------------------------------------------------------------------
 // define(s)
 //-------------------------------------------------------------------------------------------------
-//#define C_GLCD_REFRESH_FREQ	50
-//#define C_GLCD_H_PULSE	2
+//#define C_GLCD_REFRESH_FREQ    50
+//#define C_GLCD_H_PULSE    2
 //#define C_GLCD_V_PULSE 2
 
 //-------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@
 
 // Horizontal configuration
 #define GRAFX_HSYNC                                 40
-#define GRAFX_HBP                                   40	// from internet
+#define GRAFX_HBP                                   40    // from internet
 #define GRAFX_HFP                                   10  // from internet
 
 // Vertical configuration

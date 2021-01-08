@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_cfft_q31.c   
+* Project:         CMSIS DSP Library    
+* Title:        arm_cfft_q31.c   
 *    
-* Description:	Combined Radix Decimation in Frequency CFFT fixed point processing function
+* Description:    Combined Radix Decimation in Frequency CFFT fixed point processing function
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -182,7 +182,7 @@ void arm_cfft_radix4by2_q31(
     arm_radix4_butterfly_q31( pSrc, n2, (q31_t*)pCoef, 2u);
     // second col
     arm_radix4_butterfly_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2u);
-			
+            
     for (i = 0; i < fftLen >> 1; i++)
     {
         p0 = pSrc[4*i+0];
@@ -242,7 +242,7 @@ void arm_cfft_radix4by2_inverse_q31(
     arm_radix4_butterfly_inverse_q31( pSrc, n2, (q31_t*)pCoef, 2u);
     // second col
     arm_radix4_butterfly_inverse_q31( pSrc + fftLen, n2, (q31_t*)pCoef, 2u);
-			
+            
     for (i = 0; i < fftLen >> 1; i++)
     {
         p0 = pSrc[4*i+0];

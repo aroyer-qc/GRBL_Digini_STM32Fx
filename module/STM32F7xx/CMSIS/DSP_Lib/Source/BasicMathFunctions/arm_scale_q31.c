@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_scale_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_scale_q31.c    
 *    
-* Description:	Multiplies a Q31 vector by a scalar.    
+* Description:    Multiplies a Q31 vector by a scalar.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -196,40 +196,40 @@ void arm_scale_q31(
 
   if(sign == 0)
   {
-	  while(blkCnt > 0u)
-	  {
-		/* C = A * scale */
-		/* Scale the input and then store the result in the destination buffer. */
-		in = *pSrc++;
-		in = ((q63_t) in * scaleFract) >> 32;
+      while(blkCnt > 0u)
+      {
+        /* C = A * scale */
+        /* Scale the input and then store the result in the destination buffer. */
+        in = *pSrc++;
+        in = ((q63_t) in * scaleFract) >> 32;
 
-		out = in << kShift;
-		
-		if(in != (out >> kShift))
-			out = 0x7FFFFFFF ^ (in >> 31);
+        out = in << kShift;
+        
+        if(in != (out >> kShift))
+            out = 0x7FFFFFFF ^ (in >> 31);
 
-		*pDst++ = out;
+        *pDst++ = out;
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	  }
+        /* Decrement the loop counter */
+        blkCnt--;
+      }
   }
   else
   {
-	  while(blkCnt > 0u)
-	  {
-		/* C = A * scale */
-		/* Scale the input and then store the result in the destination buffer. */
-		in = *pSrc++;
-		in = ((q63_t) in * scaleFract) >> 32;
+      while(blkCnt > 0u)
+      {
+        /* C = A * scale */
+        /* Scale the input and then store the result in the destination buffer. */
+        in = *pSrc++;
+        in = ((q63_t) in * scaleFract) >> 32;
 
-		out = in >> -kShift;
+        out = in >> -kShift;
 
-		*pDst++ = out;
+        *pDst++ = out;
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	  }
+        /* Decrement the loop counter */
+        blkCnt--;
+      }
   
   }
 }

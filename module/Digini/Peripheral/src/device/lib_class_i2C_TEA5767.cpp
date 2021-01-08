@@ -21,7 +21,7 @@
 // ----- Definitions for the Wire communication
 
 // might be define BSP
-//#define TEA5767_I2C_ADR		0x60
+//#define TEA5767_I2C_ADR        0x60
 
 // ----- Radio chip specific definitions including the registers
 
@@ -115,7 +115,7 @@ bool TEA5767::Initialize()
     m_Registers[REG_4] = REG_4_XTAL | REG_4_SMUTE;
     m_Registers[REG_5] = REG_5_DTC; // 75 ms Europe setup
 
-	this-SaveRegisters(REG_0, 5);
+    this-SaveRegisters(REG_0, 5);
 
     return true;
 }
@@ -123,7 +123,7 @@ bool TEA5767::Initialize()
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	SetMono
+//  Name:             SetMono
 //
 //  Parameter(s):   bool SwitchOn
 //
@@ -195,11 +195,11 @@ void TEA5767::SetBand(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	GetFrequency
+//  Name:             GetFrequency
 //
 //  Parameter(s):   None
 //
-//  Return:         TEA5767_Freq 	The current frequency.
+//  Return:         TEA5767_Freq     The current frequency.
 //
 //  Description:    Retrieve the real frequency from the chip after automatic tuning.
 //
@@ -219,9 +219,9 @@ TEA5767_Freq_t TEA5767::GetFrequency(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	SetFrequency
+//  Name:             SetFrequency
 //
-//  Parameter(s):   TEA5767_Freq	newF
+//  Parameter(s):   TEA5767_Freq    newF
 //
 //  Return:         None
 //
@@ -234,7 +234,7 @@ void TEA5767::SetFrequency(TEA5767_Freq_t newF)
 {
     uint16_t frequencyB;
 
-	m_Freq = newF;
+    m_Freq = newF;
 
     frequencyB = 4 * (newF * 10000L + FILTER) / QUARTZ;
 
@@ -246,9 +246,9 @@ void TEA5767::SetFrequency(TEA5767_Freq_t newF)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	SetFrequency
+//  Name:             SetFrequency
 //
-//  Parameter(s):   TEA5767_Freq	newF
+//  Parameter(s):   TEA5767_Freq    newF
 //
 //  Return:         None
 //
@@ -268,7 +268,7 @@ void TEA5767::GetRadioInfo(TEA5767_Info_t* Info)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	ReadRegisters
+//  Name:             ReadRegisters
 //
 //  Parameter(s):   None
 //
@@ -287,7 +287,7 @@ void TEA5767::ReadRegisters(int Register, size_t Size)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:         	SaveRegisters
+//  Name:             SaveRegisters
 //
 //  Parameter(s):   None
 //

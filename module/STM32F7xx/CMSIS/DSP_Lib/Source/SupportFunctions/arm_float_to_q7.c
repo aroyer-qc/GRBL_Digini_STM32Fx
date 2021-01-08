@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_float_to_q7.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_float_to_q7.c    
 *    
-* Description:	Converts the elements of the floating-point vector to Q7 vector.   
+* Description:    Converts the elements of the floating-point vector to Q7 vector.   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -60,7 +60,7 @@
  * \par   
  * The equation used for the conversion process is:    
  * <pre>    
- * 	pDst[n] = (q7_t)(pSrc[n] * 128);   0 <= n < blockSize.    
+ *     pDst[n] = (q7_t)(pSrc[n] * 128);   0 <= n < blockSize.    
  * </pre>    
  * \par Scaling and Overflow Behavior:    
  * \par    

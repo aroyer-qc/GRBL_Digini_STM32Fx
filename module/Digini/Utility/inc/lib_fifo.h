@@ -38,10 +38,10 @@
 
 class CFIFO
 {
-	public:
-                        CFIFO				    ();
+    public:
+                        CFIFO                    ();
                         CFIFO                   (uint16_t Size);
-                        ~CFIFO				    ();
+                        ~CFIFO                    ();
         void            Init                    (uint16_t Size);
         bool            IsEmpty                 ();
         bool            IsFull                  ();
@@ -49,7 +49,7 @@ class CFIFO
         bool            Push                    (uint8_t Data);
         uint16_t        Count                   ();
 
-	private:
+    private:
 
         uint16_t                                m_PushIndex;
         uint16_t                                m_PopIndex;

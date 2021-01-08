@@ -178,7 +178,7 @@ HAL_StatusTypeDef HAL_CEC_Init(CEC_HandleTypeDef *hcec)
   /* Write to CEC Control Register */
   hcec->Instance->CFGR = hcec->Init.SignalFreeTime | hcec->Init.Tolerance | hcec->Init.BRERxStop|\
                          hcec->Init.BREErrorBitGen | hcec->Init.LBPEErrorBitGen | hcec->Init.BroadcastMsgNoErrorBitGen |\
-			 hcec->Init.SignalFreeTimeOption |((uint32_t)(hcec->Init.OwnAddress)<<16U) |\
+             hcec->Init.SignalFreeTimeOption |((uint32_t)(hcec->Init.OwnAddress)<<16U) |\
                          hcec->Init.ListenMode;
   
   /* Enable the following CEC Transmission/Reception interrupts as
@@ -421,7 +421,7 @@ HAL_StatusTypeDef HAL_CEC_Transmit_IT(CEC_HandleTypeDef *hcec, uint8_t Initiator
     hcec->Instance->TXDR = ((uint8_t)(InitiatorAddress << CEC_INITIATOR_LSB_POS) |(uint8_t) DestinationAddress);
     /* Set TX Start of Message  (TXSOM) bit */
     __HAL_CEC_FIRST_BYTE_TX_SET(hcec);
-	    
+        
     /* Process Unlocked */
     __HAL_UNLOCK(hcec); 
   
@@ -514,7 +514,7 @@ void HAL_CEC_IRQHandler(CEC_HandleTypeDef *hcec)
       hcec->Instance->TXDR = *hcec->pTxBuffPtr++;
     }
     else
-    {	
+    {    
       hcec->Instance->TXDR = *hcec->pTxBuffPtr++;
       hcec->TxXferCount--;
     }  
@@ -524,7 +524,7 @@ void HAL_CEC_IRQHandler(CEC_HandleTypeDef *hcec)
   
   /* CEC TX end interrupt ------------------------------------------------*/
   if((reg & CEC_FLAG_TXEND) != RESET) 
-  {	
+  {    
     __HAL_CEC_CLEAR_FLAG(hcec, CEC_FLAG_TXEND);
     
     /* Tx process is ended, restore hcec->gState to Ready */     
@@ -545,15 +545,15 @@ void HAL_CEC_IRQHandler(CEC_HandleTypeDef *hcec)
     
     if((reg & (CEC_ISR_RXOVR|CEC_ISR_BRE|CEC_ISR_SBPE|CEC_ISR_LBPE|CEC_ISR_RXACKE)) != RESET)
     {
-      hcec->Init.RxBuffer-=hcec->RxXferSize;	
+      hcec->Init.RxBuffer-=hcec->RxXferSize;    
       hcec->RxXferSize = 0; 
       hcec->RxState = HAL_CEC_STATE_READY;
     }
     else if (((reg & (CEC_ISR_TXUDR|CEC_ISR_TXERR|CEC_ISR_TXACKE)) != RESET) && ((reg & CEC_ISR_ARBLST) == RESET))
-    {	
+    {    
       /* Set the CEC state ready to be able to start again the process */
       hcec->gState = HAL_CEC_STATE_READY;
-    }	
+    }    
     
     /* Error  Call Back */    
     HAL_CEC_ErrorCallback(hcec);
@@ -618,7 +618,7 @@ __weak void HAL_CEC_RxCpltCallback(CEC_HandleTypeDef *hcec, uint32_t RxFrameSize
     [..]
     This subsection provides a set of functions allowing to control the CEC.
      (+) HAL_CEC_GetState() API can be helpful to check in run-time the state of the CEC peripheral. 
-	 (+) HAL_CEC_GetError() API can be helpful to check in run-time the error of the CEC peripheral. 
+     (+) HAL_CEC_GetError() API can be helpful to check in run-time the error of the CEC peripheral. 
 @endverbatim
   * @{
   */

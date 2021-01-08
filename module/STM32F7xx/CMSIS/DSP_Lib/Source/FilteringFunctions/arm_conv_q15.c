@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.   
 *   
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *   
-* Project: 	    CMSIS DSP Library   
-* Title:		arm_conv_q15.c   
+* Project:         CMSIS DSP Library   
+* Title:        arm_conv_q15.c   
 *   
-* Description:	Convolution of Q15 sequences.     
+* Description:    Convolution of Q15 sequences.     
 *   
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -306,7 +306,7 @@ void arm_conv_q15(
       x0 = *__SIMD32(px);
       /* read x[1], x[2] samples */
       x1 = _SIMD32_OFFSET(px+1);
-	  px+= 2u;
+      px+= 2u;
 
 
       /* Apply loop unrolling and compute 4 MACs simultaneously. */
@@ -352,7 +352,7 @@ void arm_conv_q15(
 
         /* Read x[5], x[6] */
         x1 = _SIMD32_OFFSET(px+3);
-		px += 4u;
+        px += 4u;
 
         /* acc2 +=  x[4] * y[srcBLen - 3] + x[5] * y[srcBLen - 4] */
         acc2 = __SMLALDX(x0, c0, acc2);
@@ -385,7 +385,7 @@ void arm_conv_q15(
 #endif /*      #ifdef  ARM_MATH_BIG_ENDIAN     */
         /* Read x[7] */
         x3 = *__SIMD32(px);
-		px++;
+        px++;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALD(x0, c0, acc0);
@@ -404,7 +404,7 @@ void arm_conv_q15(
 
         /* Read x[9] */
         x2 = _SIMD32_OFFSET(px+1);
-		px += 2u;
+        px += 2u;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALDX(x0, c0, acc0);
@@ -430,7 +430,7 @@ void arm_conv_q15(
         acc2 = __SMLALDX(x3, c0, acc2);
         acc3 = __SMLALDX(x2, c0, acc3);
 
-		c0 = *(py-1);
+        c0 = *(py-1);
 
 #ifdef  ARM_MATH_BIG_ENDIAN
 
@@ -441,7 +441,7 @@ void arm_conv_q15(
 #endif /*      #ifdef  ARM_MATH_BIG_ENDIAN     */
         /* Read x[10] */
         x3 =  _SIMD32_OFFSET(px+2);
-		px += 3u;
+        px += 3u;
 
         /* Perform the multiply-accumulates */
         acc0 = __SMLALDX(x1, c0, acc0);

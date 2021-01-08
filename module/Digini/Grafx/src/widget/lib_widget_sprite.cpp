@@ -40,7 +40,7 @@
 //
 //  Constructor:    CSprite
 //
-//  Parameter(s):   Sprite_t	pSprite       			Pointer to Sprite_t structure
+//  Parameter(s):   Sprite_t    pSprite                   Pointer to Sprite_t structure
 //
 //  Description:    Initialize widget's service and build widget.
 //

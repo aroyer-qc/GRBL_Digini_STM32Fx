@@ -2,9 +2,9 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
+* Project:         CMSIS DSP Library    
 * Title:        arm_fir_fast_q15.c    
 *    
 * Description:  Q15 Fast FIR filter processing function.    
@@ -288,7 +288,7 @@ void arm_fir_fast_q15(
     {
 
       acc0 += (q31_t) * px++ * *pb++;
-	  acc0 += (q31_t) * px++ * *pb++;
+      acc0 += (q31_t) * px++ * *pb++;
 
       tapCnt--;
     }

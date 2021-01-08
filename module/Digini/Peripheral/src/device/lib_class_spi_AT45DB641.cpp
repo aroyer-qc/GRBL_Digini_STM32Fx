@@ -266,8 +266,8 @@ DRESULT CSPI_FLash::Write(const uint8_t* pBuffer, uint32_t Sector, uint8_t Count
 //
 //   Function name: IO_Control
 //
-//   Parameter(s):  uint8_t    Control		Control code
-//	                void*      pBuffer		Buffer to send/receive control data
+//   Parameter(s):  uint8_t    Control        Control code
+//                    void*      pBuffer        Buffer to send/receive control data
 //   Return value:  DRESULT
 //
 //   Description:   Control

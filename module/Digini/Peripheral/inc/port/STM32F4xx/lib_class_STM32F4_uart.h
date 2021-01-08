@@ -137,7 +137,7 @@ struct UART_DMA_Info_t
     uint32_t            DMA_ChannelRX;
     uint32_t            FlagRX;
     DMA_Stream_TypeDef* DMA_StreamRX;
-	uint32_t            DMA_ChannelTX;
+    uint32_t            DMA_ChannelTX;
     uint32_t            FlagTX;
     DMA_Stream_TypeDef* DMA_StreamTX;
     IRQn_Type           Tx_IRQn;
@@ -170,9 +170,9 @@ typedef void    (* UART_CallBack_t)           (void* pContext);
 
 class UART_Driver
 {
-	public:
+    public:
 
-                            UART_Driver    	                (UART_ID_e UartID);
+                            UART_Driver                        (UART_ID_e UartID);
         void                SetConfig                       (UART_Config_e Config, UART_Baud_e BaudID);
         void                SetBaudRate                     (UART_Baud_e BaudID);
         uint32_t            GetBaudRate                     (void);
@@ -221,7 +221,7 @@ class UART_Driver
         void            VirtualUartTX_IRQHandler            (void);
       #endif
 
-	private:
+    private:
 
         void            ClearAutomaticFlag                  (void);
 

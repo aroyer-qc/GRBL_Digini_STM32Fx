@@ -631,16 +631,16 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
 /** @defgroup TIM_Clock_Source  TIM Clock Source
   * @{
   */
-#define	TIM_CLOCKSOURCE_ETRMODE2    (TIM_SMCR_ETPS_1) 
-#define	TIM_CLOCKSOURCE_INTERNAL    (TIM_SMCR_ETPS_0) 
-#define	TIM_CLOCKSOURCE_ITR0        ((uint32_t)0x0000U)
-#define	TIM_CLOCKSOURCE_ITR1        (TIM_SMCR_TS_0)
-#define	TIM_CLOCKSOURCE_ITR2        (TIM_SMCR_TS_1)
-#define	TIM_CLOCKSOURCE_ITR3        (TIM_SMCR_TS_0 | TIM_SMCR_TS_1)
-#define	TIM_CLOCKSOURCE_TI1ED       (TIM_SMCR_TS_2)
-#define	TIM_CLOCKSOURCE_TI1         (TIM_SMCR_TS_0 | TIM_SMCR_TS_2)
-#define	TIM_CLOCKSOURCE_TI2         (TIM_SMCR_TS_1 | TIM_SMCR_TS_2)
-#define	TIM_CLOCKSOURCE_ETRMODE1    (TIM_SMCR_TS)
+#define    TIM_CLOCKSOURCE_ETRMODE2    (TIM_SMCR_ETPS_1) 
+#define    TIM_CLOCKSOURCE_INTERNAL    (TIM_SMCR_ETPS_0) 
+#define    TIM_CLOCKSOURCE_ITR0        ((uint32_t)0x0000U)
+#define    TIM_CLOCKSOURCE_ITR1        (TIM_SMCR_TS_0)
+#define    TIM_CLOCKSOURCE_ITR2        (TIM_SMCR_TS_1)
+#define    TIM_CLOCKSOURCE_ITR3        (TIM_SMCR_TS_0 | TIM_SMCR_TS_1)
+#define    TIM_CLOCKSOURCE_TI1ED       (TIM_SMCR_TS_2)
+#define    TIM_CLOCKSOURCE_TI1         (TIM_SMCR_TS_0 | TIM_SMCR_TS_2)
+#define    TIM_CLOCKSOURCE_TI2         (TIM_SMCR_TS_1 | TIM_SMCR_TS_2)
+#define    TIM_CLOCKSOURCE_ETRMODE1    (TIM_SMCR_TS)
 /**
   * @}
   */
@@ -691,7 +691,7 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
 /** @defgroup TIM_OSSR_Off_State_Selection_for_Run_mode_state TIM OSSR OffState Selection for Run mode state
   * @{
   */  
-#define TIM_OSSR_ENABLE 	      (TIM_BDTR_OSSR)
+#define TIM_OSSR_ENABLE           (TIM_BDTR_OSSR)
 #define TIM_OSSR_DISABLE          ((uint32_t)0x0000U)
 /**
   * @}
@@ -700,7 +700,7 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
 /** @defgroup TIM_OSSI_Off_State_Selection_for_Idle_mode_state TIM OSSI OffState Selection for Idle mode state
   * @{
   */
-#define TIM_OSSI_ENABLE	 	    (TIM_BDTR_OSSI)
+#define TIM_OSSI_ENABLE             (TIM_BDTR_OSSI)
 #define TIM_OSSI_DISABLE            ((uint32_t)0x0000U)
 /**
   * @}
@@ -709,7 +709,7 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
 /** @defgroup TIM_Lock_level  TIM Lock level
   * @{
   */
-#define TIM_LOCKLEVEL_OFF	   ((uint32_t)0x0000U)
+#define TIM_LOCKLEVEL_OFF       ((uint32_t)0x0000U)
 #define TIM_LOCKLEVEL_1            (TIM_BDTR_LOCK_0)
 #define TIM_LOCKLEVEL_2            (TIM_BDTR_LOCK_1)
 #define TIM_LOCKLEVEL_3            (TIM_BDTR_LOCK)
@@ -738,7 +738,7 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
   * @{
   */
 #define TIM_AUTOMATICOUTPUT_ENABLE           (TIM_BDTR_AOE)
-#define	TIM_AUTOMATICOUTPUT_DISABLE          ((uint32_t)0x0000U)
+#define    TIM_AUTOMATICOUTPUT_DISABLE          ((uint32_t)0x0000U)
 /**
   * @}
   */  
@@ -746,14 +746,14 @@ typedef  void (*pTIM_CallbackTypeDef)(TIM_HandleTypeDef * htim); /*!< pointer to
 /** @defgroup TIM_Master_Mode_Selection TIM Master Mode Selection
   * @{
   */  
-#define	TIM_TRGO_RESET            ((uint32_t)0x0000U)             
-#define	TIM_TRGO_ENABLE           (TIM_CR2_MMS_0)           
-#define	TIM_TRGO_UPDATE           (TIM_CR2_MMS_1)             
-#define	TIM_TRGO_OC1              ((TIM_CR2_MMS_1 | TIM_CR2_MMS_0))    
-#define	TIM_TRGO_OC1REF           (TIM_CR2_MMS_2)           
-#define	TIM_TRGO_OC2REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_0))          
-#define	TIM_TRGO_OC3REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_1))           
-#define	TIM_TRGO_OC4REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_1 | TIM_CR2_MMS_0))   
+#define    TIM_TRGO_RESET            ((uint32_t)0x0000U)             
+#define    TIM_TRGO_ENABLE           (TIM_CR2_MMS_0)           
+#define    TIM_TRGO_UPDATE           (TIM_CR2_MMS_1)             
+#define    TIM_TRGO_OC1              ((TIM_CR2_MMS_1 | TIM_CR2_MMS_0))    
+#define    TIM_TRGO_OC1REF           (TIM_CR2_MMS_2)           
+#define    TIM_TRGO_OC2REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_0))          
+#define    TIM_TRGO_OC3REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_1))           
+#define    TIM_TRGO_OC4REF           ((TIM_CR2_MMS_2 | TIM_CR2_MMS_1 | TIM_CR2_MMS_0))   
 /**
   * @}
   */ 
@@ -1249,7 +1249,7 @@ mode.
                            TIM_RESET_CAPTUREPOLARITY((__HANDLE__), (__CHANNEL__));               \
                            TIM_SET_CAPTUREPOLARITY((__HANDLE__), (__CHANNEL__), (__POLARITY__)); \
                          }while(0)
-											 
+                                             
 /**
   * @}
   */

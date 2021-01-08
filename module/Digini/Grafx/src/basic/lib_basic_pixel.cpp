@@ -37,7 +37,7 @@
 //
 //   Function Name: DrawPixel
 //
-//   Parameter(s):  uint16_t 	wX
+//   Parameter(s):  uint16_t     wX
 //                  uint16_t    wY
 //   Return Value:  none
 //

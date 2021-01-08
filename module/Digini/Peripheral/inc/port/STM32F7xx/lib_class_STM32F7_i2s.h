@@ -51,25 +51,25 @@ struct I2S_PortInfo_t
 
 class I2S
 {
-	public:
+    public:
 
-                        I2S				    (I2S_PortInfo_t* pPort);
-                        ~I2S				();
+                        I2S                    (I2S_PortInfo_t* pPort);
+                        ~I2S                ();
 
-        //SystemState_e   LockToDevice   		(uint8_t Device);       // Set I2S to this device and lock
-        //SystemState_e   UnlockFromDevice 	(uint8_t Device);       // Unlock I2S from device
-        SystemState_e   GetStatus       	(void);
+        //SystemState_e   LockToDevice           (uint8_t Device);       // Set I2S to this device and lock
+        //SystemState_e   UnlockFromDevice     (uint8_t Device);       // Unlock I2S from device
+        SystemState_e   GetStatus           (void);
 
         SystemState_e   ReadRegister        (uint8_t Register, void* pRxBuffer, size_t RxSize);
         SystemState_e   ReadRegister        (uint8_t Register, void* pRxBuffer, size_t RxSize, uint8_t Device);
         SystemState_e   Transfer            (void* pTxBuffer, size_t TxSize, void* pRxBuffer, size_t RxSize);
         SystemState_e   Transfer            (void* pTxBuffer, size_t TxSize, void* pRxBuffer, size_t RxSize, uint8_t Device);
 
-		void            Initialize 			(void);
+        void            Initialize             (void);
         void            ER_IRQHandler       (void);
         void            EV_IRQHandler       (void);
 
-	private:
+    private:
 
         void            ClearBus            (void);
         uint32_t        CalculateBitMask    (uint8_t Mask, uint16_t BitConfig);
@@ -80,17 +80,17 @@ class I2S
         nOS_Mutex                       m_Mutex;
         int16_t                         m_Device;
 
-        volatile size_t				    m_TxSize;
-        volatile size_t				    m_RxSize;
+        volatile size_t                    m_TxSize;
+        volatile size_t                    m_RxSize;
         volatile uint8_t*               m_pTxBuffer;
         volatile uint8_t*               m_pRxBuffer;
 
         volatile uint8_t*               m_pAddressInDevice;
         volatile uint8_t*               m_pDataAddress;
-        volatile size_t				    m_Size;
-        volatile size_t		            m_AddressLengthCount;
+        volatile size_t                    m_Size;
+        volatile size_t                    m_AddressLengthCount;
 
-        volatile SystemState_e		    m_Status;
+        volatile SystemState_e            m_Status;
         volatile uint8_t                m_Timeout;
 
 };

@@ -20,8 +20,8 @@
 enum ResponseType_e
 {
     NO_RESPONSE,
-	SHORT_RESPONSE,
-	LONG_RESPONSE,
+    SHORT_RESPONSE,
+    LONG_RESPONSE,
     R1_RESPONSE,
     R1_RESPONSE_B,
     R2_RESPONSE,
@@ -87,7 +87,7 @@ class CSD_CARD_Interface
         virtual void                PowerOn                 (void)                                                                               = 0;
         virtual void                PowerOff                (void)                                                                               = 0;
         virtual void                TickHook                (void)                                                                               = 0;
-        virtual void                TransmitCommand  	    (uint8_t Command, uint32_t Argument, ResponseType_e ResponseType)                    = 0;
+        virtual void                TransmitCommand          (uint8_t Command, uint32_t Argument, ResponseType_e ResponseType)                    = 0;
         virtual void                SetSpeed                (DeviceSpeed_e DeviceSpeed)                                                          = 0;
         virtual void                SetBusWidth             (BusSize_e BusSize)                                                                  = 0;
         virtual void                StartBlockTransfert     (const uint8_t *pBuffer, size_t Size, SD_TransferType_e TransfertDir)                = 0;

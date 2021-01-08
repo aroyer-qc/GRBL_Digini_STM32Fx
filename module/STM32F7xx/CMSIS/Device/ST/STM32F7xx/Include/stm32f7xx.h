@@ -74,7 +74,7 @@
   */
 #if !defined (STM32F756xx) && !defined (STM32F746xx) && !defined (STM32F745xx) && !defined (STM32F767xx) && \
     !defined (STM32F769xx) && !defined (STM32F777xx) && !defined (STM32F779xx) && !defined (STM32F722xx) && \
-	!defined (STM32F723xx) && !defined (STM32F732xx) && !defined (STM32F733xx)
+    !defined (STM32F723xx) && !defined (STM32F732xx) && !defined (STM32F733xx)
   /* #define STM32F756xx */   /*!< STM32F756VG, STM32F756ZG, STM32F756ZG, STM32F756IG, STM32F756BG,
                                    STM32F756NG Devices */
   /* #define STM32F746xx */   /*!< STM32F746VE, STM32F746VG, STM32F746ZE, STM32F746ZG, STM32F746IE, STM32F746IG,

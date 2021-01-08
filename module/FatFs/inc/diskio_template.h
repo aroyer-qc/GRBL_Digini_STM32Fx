@@ -65,7 +65,7 @@ typedef enum __DiskMedia_e
 #define GET_SECTOR_COUNT                1       // Mandatory for only f_mkfs()
 #define GET_SECTOR_SIZE                 2
 #define GET_BLOCK_SIZE                  3       // Mandatory for only f_mkfs()
-#define CTRL_ERASE_SECTOR               4	    // Force erased a block of sectors (for only _USE_ERASE)
+#define CTRL_ERASE_SECTOR               4        // Force erased a block of sectors (for only _USE_ERASE)
 
 //-------------------------------------------------------------------------------------------------
 // Type definition(s) and structure(s)

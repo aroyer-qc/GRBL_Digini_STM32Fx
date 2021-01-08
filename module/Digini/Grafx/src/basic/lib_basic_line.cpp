@@ -61,21 +61,21 @@ static float ipart(float x)
 
 static int round(float x)
 {
-	return ipart(x + 0.5f);
+    return ipart(x + 0.5f);
 }
 
 //-------------------------------------------------------------------------------------------------
 
 static float fpart(float x)
 {
-	return x - ipart(x);
+    return x - ipart(x);
 }
 
 //-------------------------------------------------------------------------------------------------
 
 static float rfpart(float x)
 {
-	return 1 - fpart(x);
+    return 1 - fpart(x);
 }
 
 //-------------------------------------------------------------------------------------------------

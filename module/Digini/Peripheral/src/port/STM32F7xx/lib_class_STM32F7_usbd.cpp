@@ -68,28 +68,28 @@ extern "C" void DeviceUSBD_Wrapper(void* pvParameters)
 //-------------------------------------------------------------------------------------------------
 void DeviceUSB::Initialize(class USB_Application* pUSB)
 {
-	m_pUSB = pUSB;
+    m_pUSB = pUSB;
 
-	// Initialize IO, clocks, etc...
-	m_pUSB->Initialize();
+    // Initialize IO, clocks, etc...
+    m_pUSB->Initialize();
 
-	// Create USB Host Queue
-	nOS_QueueCreate(&this->m_Q_Msg, &this->m_MsgArray[0], sizeof(uint16_t), USB_NUMBER_OF_MSG);
+    // Create USB Host Queue
+    nOS_QueueCreate(&this->m_Q_Msg, &this->m_MsgArray[0], sizeof(uint16_t), USB_NUMBER_OF_MSG);
 
-	// Create USB Host Task
-	nOS_ThreadCreate(&this->m_Handle,
-					 DeviceUSB_Wrapper,
-					 this,
-					 &this->m_Stack[0],
-					USBD_STACK_SIZE,
-					USBD_PRIO);
+    // Create USB Host Task
+    nOS_ThreadCreate(&this->m_Handle,
+                     DeviceUSB_Wrapper,
+                     this,
+                     &this->m_Stack[0],
+                    USBD_STACK_SIZE,
+                    USBD_PRIO);
 
-	// todo
+    // todo
 
 }
 //-------------------------------------------------------------------------------------------------
 //
-//   Function:		RegisterClass
+//   Function:        RegisterClass
 //
 //   Parameter(s):
 //   Return Value:
@@ -101,12 +101,12 @@ void DeviceUSB::Initialize(class USB_Application* pUSB)
 //-------------------------------------------------------------------------------------------------
 SystemState_e DeviceUSB::RegisterClass(USBH_ClassTypeDef *pClass)
 {
-	return SYSTEM_OK;
+    return SYSTEM_OK;
 }
 
 //-------------------------------------------------------------------------------------------------
 //
-//   Function:		Start
+//   Function:        Start
 //
 //   Parameter(s):
 //   Return Value:
@@ -118,15 +118,15 @@ SystemState_e DeviceUSB::RegisterClass(USBH_ClassTypeDef *pClass)
 //-------------------------------------------------------------------------------------------------
 void DeviceUSB::Start(void)
 {
-	  /* Start the low level driver  */
-	//__HAL_LOCK(hhcd);
-	USB_OTG_FS->GAHBCFG |= USB_OTG_GAHBCFG_GINT;
+      /* Start the low level driver  */
+    //__HAL_LOCK(hhcd);
+    USB_OTG_FS->GAHBCFG |= USB_OTG_GAHBCFG_GINT;
 
-	USB_DriveVbus(USB_OTG_FS, 1);
-	//__HAL_UNLOCK(hhcd);
+    USB_DriveVbus(USB_OTG_FS, 1);
+    //__HAL_UNLOCK(hhcd);
 
 
-	 m_pUSB->DriverVBUS(true);		// Activate VBUS on the port
+     m_pUSB->DriverVBUS(true);        // Activate VBUS on the port
 
 }
 
@@ -144,16 +144,16 @@ void DeviceUSB::Start(void)
 //-------------------------------------------------------------------------------------------------
 void DeviceUSB::Run(void)
 {
-	USBH_HandleTypeDef Event;
+    USBH_HandleTypeDef Event;
     
-	for(;;)
+    for(;;)
     {
-		nOS_QueueRead(&this->m_Q_Msg, &Event, NOS_WAIT_INFINITE);
-		
-		if(Event.status == osEventMessage)
-		{
-			USBH_Process(&m_USB_Host);
-		}
+        nOS_QueueRead(&this->m_Q_Msg, &Event, NOS_WAIT_INFINITE);
+        
+        if(Event.status == osEventMessage)
+        {
+            USBH_Process(&m_USB_Host);
+        }
     }
 }
 
@@ -173,7 +173,7 @@ void DeviceUSB::Run(void)
 USB_MSC_HostStatus_e DeviceUSB::GetStatus(void)
 {
 
-	/*
+    /*
     if(HCD_IsDeviceConnected(&m_OTG_Core) && (m_MSC_HostStatus == USB_MSC_DEV_CONNECTED))
     {
         return m_MSC_HostStatus;
@@ -202,12 +202,12 @@ USB_MSC_HostStatus_e DeviceUSB::Process(void)
 
 
 /*
-	if(m_MSC_HostStatus != USB_MSC_DEV_NOT_SUPPORTED)
-	{
-		USBH_Process(&m_OTG_Core, &m_Host);
-	}
+    if(m_MSC_HostStatus != USB_MSC_DEV_NOT_SUPPORTED)
+    {
+        USBH_Process(&m_OTG_Core, &m_Host);
+    }
 */
-	return m_MSC_HostStatus;
+    return m_MSC_HostStatus;
 }
 
 

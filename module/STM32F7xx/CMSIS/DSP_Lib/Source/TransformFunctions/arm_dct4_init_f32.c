@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_dct4_init_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_dct4_init_f32.c    
 *    
-* Description:	Initialization function of DCT-4 & IDCT4 F32    
+* Description:    Initialization function of DCT-4 & IDCT4 F32    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -16436,7 +16436,7 @@ static const float32_t cos_factors_8192[8192] = {
  * @param[in,out] *S         points to an instance of floating-point DCT4/IDCT4 structure.   
  * @param[in]     *S_RFFT    points to an instance of floating-point RFFT/RIFFT structure.   
  * @param[in]     *S_CFFT    points to an instance of floating-point CFFT/CIFFT structure.   
- * @param[in]     N			 length of the DCT4.   
+ * @param[in]     N             length of the DCT4.   
  * @param[in]     Nby2       half of the length of the DCT4.   
  * @param[in]     normalize  normalizing factor.   
  * @return        arm_status function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported transform length.   

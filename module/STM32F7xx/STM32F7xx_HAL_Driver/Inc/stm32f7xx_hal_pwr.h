@@ -184,7 +184,7 @@ typedef struct
                                                             /* Delay after an RCC peripheral clock enabling */  \
                                                             tmpreg = READ_BIT(PWR->CR1, PWR_CR1_VOS);           \
                                                             UNUSED(tmpreg);                                     \
-				                                                	} while(0)
+                                                                    } while(0)
 
 /** @brief  Check PWR flag is set or not.
   * @param  __FLAG__ specifies the flag to check.

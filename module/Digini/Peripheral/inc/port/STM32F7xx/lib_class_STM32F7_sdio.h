@@ -75,8 +75,8 @@ struct SD_CardIO_t
 // FATFS size structure
 struct FatFS_Size_t
 {
-	uint32_t Total; // Total size of memory
-	uint32_t Free;  // Free size of memory
+    uint32_t Total; // Total size of memory
+    uint32_t Free;  // Free size of memory
 };
 
 
@@ -198,8 +198,8 @@ enum SD_Operation_e
 
 class SDIO_Driver
 {
-	public:
-                            SDIO_Driver	            ();
+    public:
+                            SDIO_Driver                ();
 
         DRESULT             Read                    (uint8_t* pBuffer, uint32_t Sector, uint8_t NumberOfBlocks);
         void                TickHook                (void);
@@ -221,7 +221,7 @@ class SDIO_Driver
        #endif
 
 
-	private:
+    private:
 
 
         SystemState_e       InitializeCard          (void);
@@ -233,7 +233,7 @@ class SDIO_Driver
         SystemState_e       GetStatus               (void);
 
         void                DataInit                (uint32_t Size, uint32_t DataBlockSize, bool IsItReadFromCard);
-        SystemState_e       TransmitCommand  	    (uint8_t Command, uint32_t Argument, int32_t Response);
+        SystemState_e       TransmitCommand          (uint8_t Command, uint32_t Argument, int32_t Response);
         SystemState_e       CmdResponse             (uint8_t Command, int32_t ResponseType);
         SystemState_e       GetResponse             (uint32_t* pResponse);
         SystemState_e       CheckOCR_Response       (uint32_t Response_R1);

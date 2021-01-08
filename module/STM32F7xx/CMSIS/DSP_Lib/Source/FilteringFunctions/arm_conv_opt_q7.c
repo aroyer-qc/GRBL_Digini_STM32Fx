@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_conv_opt_q7.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_conv_opt_q7.c    
 *    
-* Description:	Convolution of Q7 sequences.  
+* Description:    Convolution of Q7 sequences.  
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -62,7 +62,7 @@
  *    
  * \par Restrictions    
  *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE    
- *	In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit     
+ *    In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit     
  *       
  * @details    
  * <b>Scaling and Overflow Behavior:</b>    

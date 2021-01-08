@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_fir_sparse_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_fir_sparse_q31.c    
 *    
-* Description:	Q31 sparse FIR filter processing function.   
+* Description:    Q31 sparse FIR filter processing function.   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -238,63 +238,63 @@ void arm_fir_sparse_q31(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
-	/* Compute last tap without the final read of pTapDelay */
-	
-	/* Working pointer for state buffer is updated */
-	py = pState;
+    
+    /* Compute last tap without the final read of pTapDelay */
+    
+    /* Working pointer for state buffer is updated */
+    py = pState;
 
-	/* blockSize samples are read from the state buffer */
-	arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
-											 (int32_t *) pb, (int32_t *) pb, blockSize, 1,
-											 blockSize);
+    /* blockSize samples are read from the state buffer */
+    arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
+                                             (int32_t *) pb, (int32_t *) pb, blockSize, 1,
+                                             blockSize);
 
-	/* Working pointer for the scratch buffer of state values */
-	px = pb;
+    /* Working pointer for the scratch buffer of state values */
+    px = pb;
 
-	/* Working pointer for scratch buffer of output values */
-	pOut = pDst;
+    /* Working pointer for scratch buffer of output values */
+    pOut = pDst;
 
-	/* Loop over the blockSize. Unroll by a factor of 4.    
-	 * Compute 4 MACS at a time. */
-	blkCnt = blockSize >> 2;
+    /* Loop over the blockSize. Unroll by a factor of 4.    
+     * Compute 4 MACS at a time. */
+    blkCnt = blockSize >> 2;
 
-	while(blkCnt > 0u)
-	{
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+    while(blkCnt > 0u)
+    {
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
-	/* If the blockSize is not a multiple of 4,    
-	 * compute the remaining samples */
-	blkCnt = blockSize % 0x4u;
+    /* If the blockSize is not a multiple of 4,    
+     * compute the remaining samples */
+    blkCnt = blockSize % 0x4u;
 
-	while(blkCnt > 0u)
-	{
-		/* Perform Multiply-Accumulate */
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+    while(blkCnt > 0u)
+    {
+        /* Perform Multiply-Accumulate */
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}	
+        /* Decrement the loop counter */
+        blkCnt--;
+    }    
 
   /* Working output pointer is updated */
   pOut = pDst;
@@ -407,35 +407,35 @@ void arm_fir_sparse_q31(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
-	/* Compute last tap without the final read of pTapDelay */	
-	
-	/* Working pointer for state buffer is updated */
-	py = pState;
+    
+    /* Compute last tap without the final read of pTapDelay */    
+    
+    /* Working pointer for state buffer is updated */
+    py = pState;
 
-	/* blockSize samples are read from the state buffer */
-	arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
-											 (int32_t *) pb, (int32_t *) pb, blockSize, 1,
-											 blockSize);
+    /* blockSize samples are read from the state buffer */
+    arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
+                                             (int32_t *) pb, (int32_t *) pb, blockSize, 1,
+                                             blockSize);
 
-	/* Working pointer for the scratch buffer of state values */
-	px = pb;
+    /* Working pointer for the scratch buffer of state values */
+    px = pb;
 
-	/* Working pointer for scratch buffer of output values */
-	pOut = pDst;
+    /* Working pointer for scratch buffer of output values */
+    pOut = pDst;
 
-	blkCnt = blockSize;
+    blkCnt = blockSize;
 
-	while(blkCnt > 0u)
-	{
-		/* Perform Multiply-Accumulate */
-		out = *pOut;
-		out += ((q63_t) * px++ * coeff) >> 32;
-		*pOut++ = (q31_t) (out);
+    while(blkCnt > 0u)
+    {
+        /* Perform Multiply-Accumulate */
+        out = *pOut;
+        out += ((q63_t) * px++ * coeff) >> 32;
+        *pOut++ = (q31_t) (out);
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
   /* Working output pointer is updated */
   pOut = pDst;

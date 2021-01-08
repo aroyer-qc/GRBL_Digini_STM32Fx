@@ -47,9 +47,9 @@
 
 class CSPI_SD_Card : public CSPI
 {
-	public:
+    public:
 
-                                    CSPI_SD_Card	   		(SPI_PortInfo_t* pPort);
+                                    CSPI_SD_Card               (SPI_PortInfo_t* pPort);
                                     ~CSPI_SD_Card           ();
 
         DSTATUS                     Initialize              ();
@@ -61,7 +61,7 @@ class CSPI_SD_Card : public CSPI
         void                        TickHook                ();
         uint8_t                     SendCommand             (uint8_t Command, uint32_t Argument, uint16_t *pRCA);
 
-	private:
+    private:
 
         void                        ChipSelect              (ChipSelect_e Select);
         SystemState_e               WaitReadyAndChipSelect  (ChipSelect_e Select);

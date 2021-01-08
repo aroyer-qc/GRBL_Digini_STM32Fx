@@ -551,31 +551,31 @@ uint32_t              HAL_DCMI_GetError(DCMI_HandleTypeDef *hdcmi);
   */
 #define IS_DCMI_CAPTURE_MODE(MODE)(((MODE) == DCMI_MODE_CONTINUOUS) || \
                                    ((MODE) == DCMI_MODE_SNAPSHOT))
-																			 
+                                                                             
 #define IS_DCMI_SYNCHRO(MODE)(((MODE) == DCMI_SYNCHRO_HARDWARE) || \
                               ((MODE) == DCMI_SYNCHRO_EMBEDDED))
-																	
+                                                                    
 #define IS_DCMI_PCKPOLARITY(POLARITY)(((POLARITY) == DCMI_PCKPOLARITY_FALLING) || \
                                       ((POLARITY) == DCMI_PCKPOLARITY_RISING))
-																					
+                                                                                    
 #define IS_DCMI_VSPOLARITY(POLARITY)(((POLARITY) == DCMI_VSPOLARITY_LOW) || \
                                      ((POLARITY) == DCMI_VSPOLARITY_HIGH))
-																				 
+                                                                                 
 #define IS_DCMI_HSPOLARITY(POLARITY)(((POLARITY) == DCMI_HSPOLARITY_LOW) || \
                                      ((POLARITY) == DCMI_HSPOLARITY_HIGH))
-																				 
+                                                                                 
 #define IS_DCMI_MODE_JPEG(JPEG_MODE)(((JPEG_MODE) == DCMI_JPEG_DISABLE) || \
                                      ((JPEG_MODE) == DCMI_JPEG_ENABLE))
-																				 
+                                                                                 
 #define IS_DCMI_CAPTURE_RATE(RATE) (((RATE) == DCMI_CR_ALL_FRAME)         || \
                                     ((RATE) == DCMI_CR_ALTERNATE_2_FRAME) || \
                                     ((RATE) == DCMI_CR_ALTERNATE_4_FRAME))
-																				
+                                                                                
 #define IS_DCMI_EXTENDED_DATA(DATA)(((DATA) == DCMI_EXTEND_DATA_8B)  || \
                                     ((DATA) == DCMI_EXTEND_DATA_10B) || \
                                     ((DATA) == DCMI_EXTEND_DATA_12B) || \
                                     ((DATA) == DCMI_EXTEND_DATA_14B))
-																				
+                                                                                
 #define IS_DCMI_WINDOW_COORDINATE(COORDINATE) ((COORDINATE) <= DCMI_WINDOW_COORDINATE)
 
 #define IS_DCMI_WINDOW_HEIGHT(HEIGHT) ((HEIGHT) <= DCMI_WINDOW_HEIGHT)

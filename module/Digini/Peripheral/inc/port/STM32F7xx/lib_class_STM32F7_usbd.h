@@ -35,31 +35,31 @@
 
 class DeviceUSB : public USB_????_Interface
 {
-	public:
-							//	DeviceUSB	   		    ();
-                            // ~DeviceUSB		        ();
+    public:
+                            //    DeviceUSB                   ();
+                            // ~DeviceUSB                ();
 
     void                        Initialize              (class USB_Application* pUSB);
-    SystemState_e               RegisterClass			(USBH_ClassTypeDef *pclass);
-    void         				Start 					(void);
+    SystemState_e               RegisterClass            (USBH_ClassTypeDef *pclass);
+    void                         Start                     (void);
 
 
-    void         				Run 					(void);
+    void                         Run                     (void);
 
-    //void      					GetStatus           	(void)					    {};
-	//void      					ReadData				(void) 					    {};
-	//void      					WriteData				(void) 						{};
+    //void                          GetStatus               (void)                        {};
+    //void                          ReadData                (void)                         {};
+    //void                          WriteData                (void)                         {};
 
-    	nOS_Queue               m_Q_Msg;
+        nOS_Queue               m_Q_Msg;
 
 
-	private:
+    private:
 
-		nOS_Thread      		m_Handle;
-	    nOS_Stack       		m_Stack[USB_OTG_STACK_SIZE];
+        nOS_Thread              m_Handle;
+        nOS_Stack               m_Stack[USB_OTG_STACK_SIZE];
         uint16_t                m_MsgArray[USB_NUMBER_OF_MSG];
-    	USBD_HandleTypeDef 		m_USB_Device;
-    	class USB_Application*  m_pUSB;
+        USBD_HandleTypeDef         m_USB_Device;
+        class USB_Application*  m_pUSB;
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -130,10 +130,10 @@
 #define QSPI_SR_WRITE_MASK_BIT              0x42                                   // Do not protect block or status register...
 
 #define QSPI_MAX_DELAY                      5000
-#define QSPI_TIMEOUT_DEFAULT_VALUE          5000                        	        // 5 Sec
-#define QSPI_TIMEOUT_SHORT_TIMEOUT_VALUE    2                        	            // 2 mSec
-#define QSPI_TIMEOUT_READ_COMMAND           20                       	            // 20 mSec
-#define QSPI_TIMEOUT_DMA_ABORT              5                           	        // 5 mSec
+#define QSPI_TIMEOUT_DEFAULT_VALUE          5000                                    // 5 Sec
+#define QSPI_TIMEOUT_SHORT_TIMEOUT_VALUE    2                                        // 2 mSec
+#define QSPI_TIMEOUT_READ_COMMAND           20                                       // 20 mSec
+#define QSPI_TIMEOUT_DMA_ABORT              5                                       // 5 mSec
 #define QSPI_SECTOR_ERASE_TIME
 #define QSPI_AUTOMATIC_POLLING_INTERVAL
 
@@ -201,7 +201,7 @@ const QSPI_Command_t QSPI_Driver::m_Cmd[QSPI_NB_OF_CMD] =
 //
 //   Note(s):
 //
-//					QSPI_InitStruct: pointer to a QSPI_InitTypeDef structure that contains
+//                    QSPI_InitStruct: pointer to a QSPI_InitTypeDef structure that contains
 //                  the configuration information for the specified QSPI peripheral.
 //
 //-------------------------------------------------------------------------------------------------
@@ -241,9 +241,9 @@ SystemState_e QSPI_Driver::Initialize(void)
 
     if(m_IsItInitialize == false)
     {
-    	m_IsItInitialize = true;
-    	Error = nOS_MutexCreate(&m_Mutex, NOS_MUTEX_RECURSIVE, NOS_MUTEX_PRIO_INHERIT);
-    	VAR_UNUSED(Error);
+        m_IsItInitialize = true;
+        Error = nOS_MutexCreate(&m_Mutex, NOS_MUTEX_RECURSIVE, NOS_MUTEX_PRIO_INHERIT);
+        VAR_UNUSED(Error);
     }
 
   #if (QSPI_SUPPORT_FLASH_RESET_PIN == DEF_ENABLED)

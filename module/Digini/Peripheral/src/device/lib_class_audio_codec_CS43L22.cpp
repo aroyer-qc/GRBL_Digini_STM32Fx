@@ -2,7 +2,7 @@
 //
 //  File : lib_class_audio_codec_CS43L22.cpp
 //
-//	Note(s) This file provides a set of functions needed to drive the CS43L22 audio codec.
+//    Note(s) This file provides a set of functions needed to drive the CS43L22 audio codec.
 //
 //*************************************************************************************************
 
@@ -73,46 +73,46 @@
 // uint32_t cs43l22_Init(uint16_t DeviceAddr, uint16_t OutputMode, uint8_t Volume, uint32_t AudioFreq)
 SystemState_e C43L22::Initialize(void* pArg)
 {
-	bool Status = true;
+    bool Status = true;
 
-	m_pI2C = (I2C*)pArg;
+    m_pI2C = (I2C*)pArg;
 
-	// Initialize I2C link
-	m_pI2C->Initialize();
+    // Initialize I2C link
+    m_pI2C->Initialize();
 
-	// Initialize the Control interface of the Audio Codec
-	AUDIO_IO_Init();
+    // Initialize the Control interface of the Audio Codec
+    AUDIO_IO_Init();
 
-	m_IsItStopped = true;
+    m_IsItStopped = true;
 
-	Status &= Write(CS43L22_REG_POWER_CTL1,     0x01);	 			// Keep Codec powered OFF
-	Status &= SetOutputMode(OutputMode);							// Save Output device for mute ON/OFF procedure
-	Status &= Write(CS43L22_REG_POWER_CTL2,     OutputMode);
-	Status &= Write(CS43L22_REG_CLOCKING_CTL,   0x81);				// Clock configuration: Auto detection
-	Status &= Write(CS43L22_REG_INTERFACE_CTL1, CODEC_STANDARD);	// Set the Slave Mode and the audio Standard
-	Status &= SetVolume(Volume);									// Set the Master volume
+    Status &= Write(CS43L22_REG_POWER_CTL1,     0x01);                 // Keep Codec powered OFF
+    Status &= SetOutputMode(OutputMode);                            // Save Output device for mute ON/OFF procedure
+    Status &= Write(CS43L22_REG_POWER_CTL2,     OutputMode);
+    Status &= Write(CS43L22_REG_CLOCKING_CTL,   0x81);                // Clock configuration: Auto detection
+    Status &= Write(CS43L22_REG_INTERFACE_CTL1, CODEC_STANDARD);    // Set the Slave Mode and the audio Standard
+    Status &= SetVolume(Volume);                                    // Set the Master volume
 
-	// If the Speaker is enabled, set the Mono mode and volume attenuation level
-	if(OutputDevice != OUTPUT_DEVICE_HEADPHONE)
-	{
-		Status &= Write(CS43L22_REG_PLAYBACK_CTL2, 0x06);			// Set the Speaker Mono mode
-		Status &= Write(CS43L22_REG_SPEAKER_A_VOL, 0x00);			// Set the Speaker attenuation level
-		Status &= Write(CS43L22_REG_SPEAKER_B_VOL, 0x00);
-	}
+    // If the Speaker is enabled, set the Mono mode and volume attenuation level
+    if(OutputDevice != OUTPUT_DEVICE_HEADPHONE)
+    {
+        Status &= Write(CS43L22_REG_PLAYBACK_CTL2, 0x06);            // Set the Speaker Mono mode
+        Status &= Write(CS43L22_REG_SPEAKER_A_VOL, 0x00);            // Set the Speaker attenuation level
+        Status &= Write(CS43L22_REG_SPEAKER_B_VOL, 0x00);
+    }
 
-	/* Additional configuration for the CODEC. These configurations are done to reduce
-	   the time needed for the Codec to power off. If these configurations are removed,
-	   then a long delay should be added between powering off the Codec and switching
-	   off the I2S peripheral MCLK clock (which is the operating clock for Codec).
-	   If this delay is not inserted, then the codec will not shut down properly and
-	   it results in high noise after shut down. */
+    /* Additional configuration for the CODEC. These configurations are done to reduce
+       the time needed for the Codec to power off. If these configurations are removed,
+       then a long delay should be added between powering off the Codec and switching
+       off the I2S peripheral MCLK clock (which is the operating clock for Codec).
+       If this delay is not inserted, then the codec will not shut down properly and
+       it results in high noise after shut down. */
 
-	Status &= Write(CS43L22_REG_ANALOG_ZC_SR_SETT, 0x00);	  		// Disable the analog soft ramp
-	Status &= Write(CS43L22_REG_MISC_CTL, 		   0x04);	  		// Disable the digital soft ramp
-	Status &= Write(CS43L22_REG_LIMIT_CTL1, 	   0x00);	  		// Disable the limiter attack level
-	Status &= Write(CS43L22_REG_TONE_CTL, 	 	   0x0F);	  		// Adjust Bass and Treble levels
-	Status &= Write(CS43L22_REG_PCMA_VOL, 		   0x0A);	  		// Adjust PCM volume level
-	Status &= Write(CS43L22_REG_PCMB_VOL, 		   0x0A);
+    Status &= Write(CS43L22_REG_ANALOG_ZC_SR_SETT, 0x00);              // Disable the analog soft ramp
+    Status &= Write(CS43L22_REG_MISC_CTL,            0x04);              // Disable the digital soft ramp
+    Status &= Write(CS43L22_REG_LIMIT_CTL1,        0x00);              // Disable the limiter attack level
+    Status &= Write(CS43L22_REG_TONE_CTL,             0x0F);              // Adjust Bass and Treble levels
+    Status &= Write(CS43L22_REG_PCMA_VOL,            0x0A);              // Adjust PCM volume level
+    Status &= Write(CS43L22_REG_PCMB_VOL,            0x0A);
 
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
@@ -142,7 +142,7 @@ void C43L22::DeInitialize(void)
 //
 //  Name:           ReadID
 //
-//  Parameter(s):	None
+//  Parameter(s):    None
 //
 //  Return:         ID
 //
@@ -153,41 +153,41 @@ void C43L22::DeInitialize(void)
 //-------------------------------------------------------------------------------------------------
 uint16_t C43L22::ReadID(void)
 {
-	uint8_t Value;
+    uint8_t Value;
 
-	// Initialize the Control interface of the Audio Codec
-	AUDIO_IO_Init();
-	Value = AUDIO_IO_Read(CS43L22_CHIPID_ADDR);
-	Value = (Value & CS43L22_ID_MASK);
-	return int(Value);
+    // Initialize the Control interface of the Audio Codec
+    AUDIO_IO_Init();
+    Value = AUDIO_IO_Read(CS43L22_CHIPID_ADDR);
+    Value = (Value & CS43L22_ID_MASK);
+    return int(Value);
 }
 
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Play
 //
-//  Parameter(s):	not used parameter
+//  Parameter(s):    not used parameter
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
 //  Description:    Start the audio codec.
 //
-//  Note(s):		For this codec no Play options are required.
+//  Note(s):        For this codec no Play options are required.
 //
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Play(uint16_t* pBuffer, uint16_t Size)
 {
-	bool Status = true;
+    bool Status = true;
 
-	if(m_IsItStopped == true)
-	{
-		Status &=  Write(CS43L22_REG_MISC_CTL, 0x06);			// Enable the digital soft ramp
-		Status &=  cs43l22_SetMute(AUDIO_MUTE_OFF);				// Enable Output device
-		Status &=  Write(CS43L22_REG_POWER_CTL1, 0x9E);			// Power on the Codec
-		m_IsItStopped = false;
-	}
+    if(m_IsItStopped == true)
+    {
+        Status &=  Write(CS43L22_REG_MISC_CTL, 0x06);            // Enable the digital soft ramp
+        Status &=  cs43l22_SetMute(AUDIO_MUTE_OFF);                // Enable Output device
+        Status &=  Write(CS43L22_REG_POWER_CTL1, 0x9E);            // Power on the Codec
+        m_IsItStopped = false;
+    }
 
-	// Return communication control value
+    // Return communication control value
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
 
@@ -199,17 +199,17 @@ SystemState_e C43L22::Play(uint16_t* pBuffer, uint16_t Size)
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
-//  Description:   	Pauses playing on the audio codec.
+//  Description:       Pauses playing on the audio codec.
 //
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Pause(void)
 {
-	bool Status = true;
+    bool Status = true;
 
-	Status &= SetMute(AUDIO_MUTE_ON);				// Mute the output first
-	Status &= Write(CS43L22_REG_POWER_CTL1, 0x01);	// Put the codec in power save mode
+    Status &= SetMute(AUDIO_MUTE_ON);                // Mute the output first
+    Status &= Write(CS43L22_REG_POWER_CTL1, 0x01);    // Put the codec in power save mode
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
 
@@ -228,12 +228,12 @@ SystemState_e C43L22::Pause(void)
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Resume(void)
 {
-	bool Status = true;
+    bool Status = true;
 
-	Status &= cs43l22_SetMute(AUDIO_MUTE_OFF);			// Unmute the output first
-	for(uint32_t index = 0x00; index < 0xFF; index++);
-	Status &= Write(CS43L22_REG_POWER_CTL2, m_OutputConfig);
-	Status &= Write(CS43L22_REG_POWER_CTL1, 0x9E);		// Exit the Power save mode
+    Status &= cs43l22_SetMute(AUDIO_MUTE_OFF);            // Unmute the output first
+    for(uint32_t index = 0x00; index < 0xFF; index++);
+    Status &= Write(CS43L22_REG_POWER_CTL2, m_OutputConfig);
+    Status &= Write(CS43L22_REG_POWER_CTL1, 0x9E);        // Exit the Power save mode
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
 
@@ -241,27 +241,27 @@ SystemState_e C43L22::Resume(void)
 //
 //  Name:           Stop
 //
-//  Parameter(s):   uint32_t CodecPdwnMode		Selects the  power down mode.
-//  *          									- CODEC_PDWN_HW: Physically power down the codec.
+//  Parameter(s):   uint32_t CodecPdwnMode        Selects the  power down mode.
+//  *                                              - CODEC_PDWN_HW: Physically power down the codec.
 //
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
 //  Description:    Stops audio Codec playing. It powers down the codec.
 //
-//  Note(s):		When resuming from this mode, the codec is set to default configuration
-//					User should re-Initialize the codec in order to play again the audio stream.
+//  Note(s):        When resuming from this mode, the codec is set to default configuration
+//                    User should re-Initialize the codec in order to play again the audio stream.
 //
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Stop(uint32_t CodecPdwnMode)
 {
-	bool Status = true;
+    bool Status = true;
 
-	VAR_UNUSED(CodecPdwnMode);
-	Status &= SetMute(AUDIO_MUTE_ON);						// Mute the output first
-	Status &= Write(CS43L22_REG_MISC_CTL, 0x04);			// Disable the digital soft ramp
-	Status &= Write(CS43L22_REG_POWER_CTL1, 0x9F);			// Disable the digital soft ramp
-	m_IsItStopped = true;
+    VAR_UNUSED(CodecPdwnMode);
+    Status &= SetMute(AUDIO_MUTE_ON);                        // Mute the output first
+    Status &= Write(CS43L22_REG_MISC_CTL, 0x04);            // Disable the digital soft ramp
+    Status &= Write(CS43L22_REG_POWER_CTL1, 0x9F);            // Disable the digital soft ramp
+    m_IsItStopped = true;
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
 
@@ -269,32 +269,32 @@ SystemState_e C43L22::Stop(uint32_t CodecPdwnMode)
 //
 //  Name:           SetVolume
 //
-//  Parameter(s):   uint8_t 	Volume: 	Byte value from 0 to 255.
+//  Parameter(s):   uint8_t     Volume:     Byte value from 0 to 255.
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
 //  Description:    Sets higher or lower the codec volume level.
 //
-//  Note(s):		Value are adapted to the codec in use
+//  Note(s):        Value are adapted to the codec in use
 //
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::SetVolume(uint8_t Volume)
 {
-	bool Status = true;
-	uint8_t convertedvol = VOLUME_CONVERT(Volume);
+    bool Status = true;
+    uint8_t convertedvol = VOLUME_CONVERT(Volume);
 
-	if(Volume > 0xE6)
-	{
-		// Set the Master volume
-		Status &= Write(CS43L22_REG_MASTER_A_VOL, convertedvol - 0xE7);
-		Status &= Write(CS43L22_REG_MASTER_B_VOL, convertedvol - 0xE7);
-	}
-	else
-	{
-		// Set the Master volume
-		Status &= Write(CS43L22_REG_MASTER_A_VOL, convertedvol + 0x19);
-		Status &= Write(CS43L22_REG_MASTER_B_VOL, convertedvol + 0x19);
-	}
+    if(Volume > 0xE6)
+    {
+        // Set the Master volume
+        Status &= Write(CS43L22_REG_MASTER_A_VOL, convertedvol - 0xE7);
+        Status &= Write(CS43L22_REG_MASTER_B_VOL, convertedvol - 0xE7);
+    }
+    else
+    {
+        // Set the Master volume
+        Status &= Write(CS43L22_REG_MASTER_A_VOL, convertedvol + 0x19);
+        Status &= Write(CS43L22_REG_MASTER_B_VOL, convertedvol + 0x19);
+    }
 
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
@@ -303,27 +303,27 @@ SystemState_e C43L22::SetVolume(uint8_t Volume)
 //
 //  Name:           SetFrequency
 //
-//  Parameter(s):   uint32_t AudioFrequency 	Audio frequency used to play the audio stream.
+//  Parameter(s):   uint32_t AudioFrequency     Audio frequency used to play the audio stream.
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
 //  Description:    Sets new frequency.
 //
-//  Note(s):		Feature not supported
+//  Note(s):        Feature not supported
 //
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::SetFrequency(uint32_t AudioFrequency)
 {
-	VAR_UNUSED(AudioFrequency);
-	return SYS_READY;
+    VAR_UNUSED(AudioFrequency);
+    return SYS_READY;
 }
 
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           SetMute
 //
-//  Parameter(s):   uint32_t Command	AUDIO_MUTE_ON to enable the mute
-//                                     	AUDIO_MUTE_OFF to disable the
+//  Parameter(s):   uint32_t Command    AUDIO_MUTE_ON to enable the mute
+//                                         AUDIO_MUTE_OFF to disable the
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
@@ -334,21 +334,21 @@ SystemState_e C43L22::SetFrequency(uint32_t AudioFrequency)
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::SetMute(uint32_t Command)
 {
-	bool Status = true;
+    bool Status = true;
 
-	// Set the Mute mode
-	if(Command == AUDIO_MUTE_ON)
-	{
-		Status &= Write(CS43L22_REG_POWER_CTL2, 	 0xFF);
-		Status &= Write(CS43L22_REG_HEADPHONE_A_VOL, 0x01);
-		Status &= Write(CS43L22_REG_HEADPHONE_B_VOL, 0x01);
-	}
-	else // AUDIO_MUTE_OFF Disable the Mute
-	{
-		Status &= Write(CS43L22_REG_HEADPHONE_A_VOL, 0x00);
-		Status &= Write(CS43L22_REG_HEADPHONE_B_VOL, 0x00);
-		Status &= Write(CS43L22_REG_POWER_CTL2,      m_OutputConfig);
-	}
+    // Set the Mute mode
+    if(Command == AUDIO_MUTE_ON)
+    {
+        Status &= Write(CS43L22_REG_POWER_CTL2,      0xFF);
+        Status &= Write(CS43L22_REG_HEADPHONE_A_VOL, 0x01);
+        Status &= Write(CS43L22_REG_HEADPHONE_B_VOL, 0x01);
+    }
+    else // AUDIO_MUTE_OFF Disable the Mute
+    {
+        Status &= Write(CS43L22_REG_HEADPHONE_A_VOL, 0x00);
+        Status &= Write(CS43L22_REG_HEADPHONE_B_VOL, 0x00);
+        Status &= Write(CS43L22_REG_POWER_CTL2,      m_OutputConfig);
+    }
 
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
 }
@@ -357,9 +357,9 @@ SystemState_e C43L22::SetMute(uint32_t Command)
 //
 //  Name:           SetOutputMode
 //
-//  Parameter(s):  	uint8_t Mode	Specifies the audio output target: 	OUTPUT_DEVICE_SPEAKER
-//																		OUTPUT_DEVICE_HEADPHONE
-//																		OUTPUT_DEVICE_BOTH
+//  Parameter(s):      uint8_t Mode    Specifies the audio output target:     OUTPUT_DEVICE_SPEAKER
+//                                                                        OUTPUT_DEVICE_HEADPHONE
+//                                                                        OUTPUT_DEVICE_BOTH
 //                                                                      OUTPUT_DEVICE_AUTO
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
@@ -371,23 +371,23 @@ SystemState_e C43L22::SetMute(uint32_t Command)
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::SetOutputMode(uint8_t Mode)
 {
-	switch(Mode)
-	{
-		case OUTPUT_DEVICE_SPEAKER:	  m_OutputConfig = 0xFA; break;	// Speaker ON  & head phone OFF
-		case OUTPUT_DEVICE_HEADPHONE: m_OutputConfig = 0xAF; break;	// Speaker OFF & head phone ON
-		case OUTPUT_DEVICE_BOTH:	  m_OutputConfig = 0xAA; break;	// Speaker ON  & head phone ON
-		default:					  m_OutputConfig = 0x05; break;	// Detect automatically
-	}
+    switch(Mode)
+    {
+        case OUTPUT_DEVICE_SPEAKER:      m_OutputConfig = 0xFA; break;    // Speaker ON  & head phone OFF
+        case OUTPUT_DEVICE_HEADPHONE: m_OutputConfig = 0xAF; break;    // Speaker OFF & head phone ON
+        case OUTPUT_DEVICE_BOTH:      m_OutputConfig = 0xAA; break;    // Speaker ON  & head phone ON
+        default:                      m_OutputConfig = 0x05; break;    // Detect automatically
+    }
 
-	return Write(CS43L22_REG_POWER_CTL2, m_OutputConfig);
+    return Write(CS43L22_REG_POWER_CTL2, m_OutputConfig);
 }
 
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Write
 //
-//  Parameter(s):	Register 			Register to write
-//					Data				Data for register
+//  Parameter(s):    Register             Register to write
+//                    Data                Data for register
 //
 //  Return:         SYS_READY or SYS_DEVICE_ERROR
 //
@@ -396,13 +396,13 @@ SystemState_e C43L22::SetOutputMode(uint8_t Mode)
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Write(uint8_t Register, uint8_t Data)
 {
-	bool Status = true;
+    bool Status = true;
 
-	AUDIO_IO_Write(m_DeviceAddress, Register, Data);
+    AUDIO_IO_Write(m_DeviceAddress, Register, Data);
 
   #ifdef VERIFY_WRITTENDATA
-	// Verify that the data has been correctly written
-	Status &= (AUDIO_IO_Read(m_Address, Register) == Data) ? true : false;
+    // Verify that the data has been correctly written
+    Status &= (AUDIO_IO_Read(m_Address, Register) == Data) ? true : false;
   #endif // VERIFY_WRITTENDATA
 
     return (Status) ? SYS_READY : SYS_DEVICE_ERROR;
@@ -412,7 +412,7 @@ SystemState_e C43L22::Write(uint8_t Register, uint8_t Data)
 //
 //  Name:           Reset
 //
-//  Parameter(s): 	None
+//  Parameter(s):     None
 //
 //  Return:         SYS_READY
 //
@@ -423,8 +423,8 @@ SystemState_e C43L22::Write(uint8_t Register, uint8_t Data)
 //-------------------------------------------------------------------------------------------------
 SystemState_e C43L22::Reset(void)
 {
-	//m_IsItStopped = true;
-	return SYS_READY;
+    //m_IsItStopped = true;
+    return SYS_READY;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -475,10 +475,10 @@ AUDIO_DrvTypeDef cs43l22_drv =
 
    - Call the function EVAL_AUDIO_Init( OutputDevice: physical output mode (OUTPUT_DEVICE_SPEAKER, 
                                         OUTPUT_DEVICE_HEADPHONE, OUTPUT_DEVICE_AUTO or OUTPUT_DEVICE_BOTH)
-										Volume: initial volume to be set (0 is min (mute), 100 is max (100%)
-										AudioFreq: Audio frequency in Hz (8000, 16000, 22500, 32000 ...) this parameter is relative to the audio file/stream type.                                  )
+                                        Volume: initial volume to be set (0 is min (mute), 100 is max (100%)
+                                        AudioFreq: Audio frequency in Hz (8000, 16000, 22500, 32000 ...) this parameter is relative to the audio file/stream type.                                  )
       
-	  This function configures all the hardware required for the audio application (codec, I2C, I2S, 
+      This function configures all the hardware required for the audio application (codec, I2C, I2S, 
       GPIOs, DMA and interrupt if needed). This function returns 0 if configuration is OK.
       if the returned value is different from 0 or the function is stuck then the communication with
       the codec (try to un-plug the power or reset device in this case).
@@ -491,8 +491,8 @@ AUDIO_DrvTypeDef cs43l22_drv =
       + OUTPUT_DEVICE_BOTH: both Speaker and Headphone are used as outputs for the audio stream
          at the same time.
 
-   - Call the function EVAL_AUDIO_Play(	pBuffer: pointer to the audio data file address
-										Size: size of the buffer to be sent in Bytes)
+   - Call the function EVAL_AUDIO_Play(    pBuffer: pointer to the audio data file address
+                                        Size: size of the buffer to be sent in Bytes)
       to start playing (for the first time) from the audio file/stream.
 
    - Call the function EVAL_AUDIO_PauseResume(
@@ -753,11 +753,11 @@ uint32_t EVAL_AUDIO_PauseResume(uint32_t Cmd)
     return 1;
   }
 
-	/* Call the Media layer pause/resume function */
-	Audio_MAL_PauseResume(Cmd, 0);
+    /* Call the Media layer pause/resume function */
+    Audio_MAL_PauseResume(Cmd, 0);
 
-	/* Return 0 if all operations are OK */
-	return 0;
+    /* Return 0 if all operations are OK */
+    return 0;
 }
 
 /**

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_fir_decimate_fast_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_fir_decimate_fast_q15.c    
 *    
-* Description:	Fast Q15 FIR Decimator.    
+* Description:    Fast Q15 FIR Decimator.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  
@@ -59,7 +59,7 @@
  *    
  * \par Restrictions   
  *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE   
- *	In this case input, output, state buffers should be aligned by 32-bit   
+ *    In this case input, output, state buffers should be aligned by 32-bit   
  *    
  * <b>Scaling and Overflow Behavior:</b>    
  * \par    
@@ -591,7 +591,7 @@ void arm_fir_decimate_fast_q15(
 }
 
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
 /**    
  * @} end of FIR_decimate group    

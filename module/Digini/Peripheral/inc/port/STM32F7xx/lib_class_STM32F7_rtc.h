@@ -66,8 +66,8 @@ class CRTC
 {
     public:
 
-                                CRTC				    (nOS_Mutex* pMutex, uint32_t Mode);
-                                ~CRTC				    ();
+                                CRTC                    (nOS_Mutex* pMutex, uint32_t Mode);
+                                ~CRTC                    ();
 
         void                    GetDate                 (Date_t* pDate);
         void                    GetTime                 (Time_t* pTime);
@@ -85,7 +85,7 @@ class CRTC
         void                    Stamp_IRQ_Handler       ();
         void                    Alarm_IRQ_Handler       ();
 
-	private:
+    private:
 
         void                    Disable                 ();
         void                    Enable                  ();

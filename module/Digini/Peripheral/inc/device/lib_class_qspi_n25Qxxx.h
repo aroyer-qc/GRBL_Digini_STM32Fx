@@ -48,16 +48,16 @@
 
 class N25Qxx
 {
-	public:
+    public:
 
-                                    N25Qxx	   		        ();
-                                    ~N25Qxx		            ();
+                                    N25Qxx                       ();
+                                    ~N25Qxx                    ();
 
         SystemState_e               Initialize              (void* pArg)
         SystemState_e               Read                    (uint8_t* pData, uint32_t ReadAddress, uint32_t Size);
         SystemState_e               Write                   (uint8_t* pData, uint32_t WriteAddress, uint32_t Size);
 
-	private:
+    private:
 
         CQSPI*                      m_pQSPI;
         SPI_sDeviceInfo*            m_pDevice;

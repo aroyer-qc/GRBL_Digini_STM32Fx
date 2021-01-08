@@ -56,15 +56,15 @@
        (+) Reset the Instruction cache and the Data cache
        (+) Enable/Disable the FLASH interrupts
        (+) Monitor the FLASH flags status
-    [..]	   
-	(@) For any Flash memory program operation (erase or program), the CPU clock frequency
+    [..]       
+    (@) For any Flash memory program operation (erase or program), the CPU clock frequency
         (HCLK) must be at least 1MHz. 
-	(@) The contents of the Flash memory are not guaranteed if a device reset occurs during 
-	    a Flash memory operation.
+    (@) The contents of the Flash memory are not guaranteed if a device reset occurs during 
+        a Flash memory operation.
     (@) Any attempt to read the Flash memory while it is being written or erased, causes the 
-	    bus to stall. Read operations are processed correctly once the program operation has 
-		completed. This means that code or data fetches cannot be performed while a write/erase 
-		operation is ongoing.
+        bus to stall. Read operations are processed correctly once the program operation has 
+        completed. This means that code or data fetches cannot be performed while a write/erase 
+        operation is ongoing.
           
   @endverbatim
   ******************************************************************************

@@ -39,7 +39,7 @@ class DS3502
         void            Reset                           (void);
         void            SetWiperIV                      (uint8_t InitialValue);
         void            SetWiper                        (uint8_t WiperValue);
-        void            Up	                            (void);
+        void            Up                                (void);
         void            Down                            (void);
         void            SetMaxValue                     (uint8_t MaxValue);
 
@@ -48,7 +48,7 @@ class DS3502
         I2C*            m_pI2C;
         uint8_t         m_WiperPos;
         uint8_t         m_WiperIV;
-		uint8_t 		m_MaxValue;
+        uint8_t         m_MaxValue;
 };
 
 //-------------------------------------------------------------------------------------------------

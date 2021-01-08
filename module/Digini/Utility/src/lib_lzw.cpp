@@ -145,25 +145,25 @@ uint32_t lzw::InputCode(RawArray* pCompxData, uint32_t* pIndex)
 
     while( m_BitCount <= 24)
     {
-		// ****************************************************************************************
-		// NEW CODE
-		static  // TODO put in class variable
+        // ****************************************************************************************
+        // NEW CODE
+        static  // TODO put in class variable
 
-		if(m_BytesLeftCounter == 0)
-		{
-			this->ReadFunction();
-			m_BytesLeftCounter = SIZE_DEFINE_BY_CALLBACK_METHOD  // TODO put the right variable here
-		}
+        if(m_BytesLeftCounter == 0)
+        {
+            this->ReadFunction();
+            m_BytesLeftCounter = SIZE_DEFINE_BY_CALLBACK_METHOD  // TODO put the right variable here
+        }
 
 
 
-		// ****************************************************************************************
-		// OLD CODE
-		// m_BitBuffer |= ((uint32_t)pCompxData->at(*pIndex) << (24 -  m_BitCount));
-		// (*pIndex)++;
-		// ****************************************************************************************
+        // ****************************************************************************************
+        // OLD CODE
+        // m_BitBuffer |= ((uint32_t)pCompxData->at(*pIndex) << (24 -  m_BitCount));
+        // (*pIndex)++;
+        // ****************************************************************************************
 
-		m_BitCount += 8;
+        m_BitCount += 8;
     }
 
     Value = (uint32_t)( m_BitBuffer >> (32 - m_Bits));

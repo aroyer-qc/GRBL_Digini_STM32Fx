@@ -170,11 +170,11 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
     /* Enable the regulator */
     __HAL_DSI_REG_ENABLE(hdsi);
     
-	/* Get tick */ 
+    /* Get tick */ 
     tickstart = HAL_GetTick();
-	
+    
     /* Wait until the regulator is ready */
-	while(__HAL_DSI_GET_FLAG(hdsi, DSI_FLAG_RRS) == RESET)
+    while(__HAL_DSI_GET_FLAG(hdsi, DSI_FLAG_RRS) == RESET)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -190,9 +190,9 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
     /* Enable the DSI PLL */
     __HAL_DSI_PLL_ENABLE(hdsi);
     
-	/* Get tick */ 
+    /* Get tick */ 
     tickstart = HAL_GetTick();
-	
+    
     /* Wait for the lock of the PLL */
     while(__HAL_DSI_GET_FLAG(hdsi, DSI_FLAG_PLLLS) == RESET)
     {
@@ -227,7 +227,7 @@ HAL_StatusTypeDef HAL_DSI_Init(DSI_HandleTypeDef *hdsi, DSI_PLLInitTypeDef *PLLI
     /* Where : F_PHY_Mhz = (NDIV * HSE_Mhz) / (IDF * ODF)                    */
     tempIDF = (PLLInit->PLLIDF > 0) ? PLLInit->PLLIDF : 1;
     unitIntervalx4 = (4000000 * tempIDF * (1 << PLLInit->PLLODF)) / ((HSE_VALUE/1000) * PLLInit->PLLNDIV);
-	
+    
     /* Set the bit period in high-speed mode */
     hdsi->Instance->WPCR[0] &= ~DSI_WPCR0_UIX4;
     hdsi->Instance->WPCR[0] |= unitIntervalx4;
@@ -1436,7 +1436,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
   /* Wait until the D-PHY active lanes enter into ULPM */
   if((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE)
   {
-	while((hdsi->Instance->PSR & DSI_PSR_UAN0) != RESET)
+    while((hdsi->Instance->PSR & DSI_PSR_UAN0) != RESET)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1450,7 +1450,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPMData(DSI_HandleTypeDef *hdsi)
   }
   else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != RESET)
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != RESET)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1492,7 +1492,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi)
   /* Wait until all active lanes exit ULPM */
   if((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE)
   {
-	while((hdsi->Instance->PSR & DSI_PSR_UAN0) != DSI_PSR_UAN0)
+    while((hdsi->Instance->PSR & DSI_PSR_UAN0) != DSI_PSR_UAN0)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1506,7 +1506,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPMData(DSI_HandleTypeDef *hdsi)
   }
   else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1))
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1))
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1557,7 +1557,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
   /* Wait until all active lanes exit ULPM */
   if((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != RESET)
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != RESET)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1571,7 +1571,7 @@ HAL_StatusTypeDef HAL_DSI_EnterULPM(DSI_HandleTypeDef *hdsi)
   }
   else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != RESET)
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != RESET)
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1635,7 +1635,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
   /* Wait until all active lanes exit ULPM */
   if((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_ONE_DATA_LANE)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != (DSI_PSR_UAN0 | DSI_PSR_UANC))
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UANC)) != (DSI_PSR_UAN0 | DSI_PSR_UANC))
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)
@@ -1649,7 +1649,7 @@ HAL_StatusTypeDef HAL_DSI_ExitULPM(DSI_HandleTypeDef *hdsi)
   }
   else if ((hdsi->Instance->PCONFR & DSI_PCONFR_NL) == DSI_TWO_DATA_LANES)
   {
-	while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC))
+    while((hdsi->Instance->PSR & (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC)) != (DSI_PSR_UAN0 | DSI_PSR_UAN1 | DSI_PSR_UANC))
     {
       /* Check for the Timeout */
       if((HAL_GetTick() - tickstart ) > DSI_TIMEOUT_VALUE)

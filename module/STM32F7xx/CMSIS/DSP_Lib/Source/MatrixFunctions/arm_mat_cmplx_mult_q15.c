@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved. 
 *      
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *      
 * Project:      CMSIS DSP Library 
-* Title:	    arm_cmplx_mat_mult_q15.c      
+* Title:        arm_cmplx_mat_mult_q15.c      
 *      
-* Description:	 Q15 complex matrix multiplication.      
+* Description:     Q15 complex matrix multiplication.      
 *      
 * Target Processor:          Cortex-M4/Cortex-M3/Cortex-M0
 *
@@ -54,8 +54,8 @@
  * @param[in]       *pSrcA points to the first input complex matrix structure      
  * @param[in]       *pSrcB points to the second input complex matrix structure      
  * @param[out]      *pDst points to output complex matrix structure      
- * @param[in]		*pScratch points to the array for storing intermediate results     
- * @return     		The function returns either      
+ * @param[in]        *pScratch points to the array for storing intermediate results     
+ * @return             The function returns either      
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.         
  *  
  * \par Conditions for optimum performance  
@@ -63,7 +63,7 @@
  *  
  * \par Restrictions  
  *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE  
- *	In this case input, output, scratch buffers should be aligned by 32-bit  
+ *    In this case input, output, scratch buffers should be aligned by 32-bit  
  *  
  * @details      
  * <b>Scaling and Overflow Behavior:</b>      

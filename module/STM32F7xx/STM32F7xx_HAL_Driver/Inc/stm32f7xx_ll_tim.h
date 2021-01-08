@@ -142,13 +142,13 @@ static const uint8_t SHIFT_TAB_OISx[] =
 #if defined(DFSDM1_Channel0)
 #define TIMx_AF1_BKDFBKE        TIM1_AF1_BKDFBKE     /*!< BRK DFSDM1_BREAK[0] enable */
 #endif /* DFSDM1_Channel0 */
-#define TIMx_AF1_BKINP	      TIM1_AF1_BKINP       /*!< BRK BKIN input polarity */
+#define TIMx_AF1_BKINP          TIM1_AF1_BKINP       /*!< BRK BKIN input polarity */
 /* Generic bit definitions for TIMx_AF2 register */
 #define TIMx_AF2_BK2INE         TIM1_AF2_BK2INE      /*!< BRK B2KINE input enable */
 #if defined(DFSDM1_Channel0)
 #define TIMx_AF2_BK2DFBKE       TIM1_AF2_BK2DFBKE    /*!< BRK DFSDM_BREAK[0] enable */
 #endif /* DFSDM1_Channel0 */
-#define TIMx_AF2_BK2INP	      TIM1_AF2_BK2INP      /*!< BRK BK2IN input polarity */
+#define TIMx_AF2_BK2INP          TIM1_AF2_BK2INP      /*!< BRK BK2IN input polarity */
 #endif /* TIM_BREAK_INPUT_SUPPORT */
 
 /* Remap mask definitions */

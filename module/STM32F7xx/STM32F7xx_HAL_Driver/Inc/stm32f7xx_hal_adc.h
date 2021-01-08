@@ -715,7 +715,7 @@ uint32_t HAL_ADC_GetError(ADC_HandleTypeDef *hadc);
 #define IS_ADC_RESOLUTION(__RESOLUTION__) (((__RESOLUTION__) == ADC_RESOLUTION_12B) || \
                                            ((__RESOLUTION__) == ADC_RESOLUTION_10B) || \
                                            ((__RESOLUTION__) == ADC_RESOLUTION_8B)  || \
-                                           ((__RESOLUTION__) == ADC_RESOLUTION_6B))			
+                                           ((__RESOLUTION__) == ADC_RESOLUTION_6B))            
 #define IS_ADC_EXT_TRIG_EDGE(__EDGE__) (((__EDGE__) == ADC_EXTERNALTRIGCONVEDGE_NONE)    || \
                                         ((__EDGE__) == ADC_EXTERNALTRIGCONVEDGE_RISING)  || \
                                         ((__EDGE__) == ADC_EXTERNALTRIGCONVEDGE_FALLING) || \
@@ -735,11 +735,11 @@ uint32_t HAL_ADC_GetError(ADC_HandleTypeDef *hadc);
                                       ((__REGTRIG__) == ADC_EXTERNALTRIGCONV_T4_TRGO)  || \
                                       ((__REGTRIG__) == ADC_EXTERNALTRIGCONV_T6_TRGO)  || \
                                       ((__REGTRIG__) == ADC_EXTERNALTRIGCONV_EXT_IT11) || \
-																			((__REGTRIG__) == ADC_SOFTWARE_START))
+                                                                            ((__REGTRIG__) == ADC_SOFTWARE_START))
 #define IS_ADC_DATA_ALIGN(__ALIGN__) (((__ALIGN__) == ADC_DATAALIGN_RIGHT) || \
                                       ((__ALIGN__) == ADC_DATAALIGN_LEFT))
-		
-                                      									
+        
+                                                                          
 #define IS_ADC_SAMPLE_TIME(__TIME__) (((__TIME__) == ADC_SAMPLETIME_3CYCLES)   || \
                                       ((__TIME__) == ADC_SAMPLETIME_15CYCLES)  || \
                                       ((__TIME__) == ADC_SAMPLETIME_28CYCLES)  || \
@@ -747,12 +747,12 @@ uint32_t HAL_ADC_GetError(ADC_HandleTypeDef *hadc);
                                       ((__TIME__) == ADC_SAMPLETIME_84CYCLES)  || \
                                       ((__TIME__) == ADC_SAMPLETIME_112CYCLES) || \
                                       ((__TIME__) == ADC_SAMPLETIME_144CYCLES) || \
-                                      ((__TIME__) == ADC_SAMPLETIME_480CYCLES))	
+                                      ((__TIME__) == ADC_SAMPLETIME_480CYCLES))    
 #define IS_ADC_EOCSelection(__EOCSelection__) (((__EOCSelection__) == ADC_EOC_SINGLE_CONV)   || \
                                                ((__EOCSelection__) == ADC_EOC_SEQ_CONV)  || \
-                                               ((__EOCSelection__) == ADC_EOC_SINGLE_SEQ_CONV))	
+                                               ((__EOCSelection__) == ADC_EOC_SINGLE_SEQ_CONV))    
 #define IS_ADC_EVENT_TYPE(__EVENT__) (((__EVENT__) == ADC_AWD_EVENT) || \
-                                      ((__EVENT__) == ADC_OVR_EVENT))		
+                                      ((__EVENT__) == ADC_OVR_EVENT))        
 #define IS_ADC_ANALOG_WATCHDOG(__WATCHDOG__) (((__WATCHDOG__) == ADC_ANALOGWATCHDOG_SINGLE_REG)        || \
                                               ((__WATCHDOG__) == ADC_ANALOGWATCHDOG_SINGLE_INJEC)      || \
                                               ((__WATCHDOG__) == ADC_ANALOGWATCHDOG_SINGLE_REGINJEC)   || \
@@ -881,11 +881,11 @@ uint32_t HAL_ADC_GetError(ADC_HandleTypeDef *hadc);
   * @retval None
   */
 #define ADC_GET_RESOLUTION(__HANDLE__) (((__HANDLE__)->Instance->CR1) & ADC_CR1_RES)
-																
+                                                                
 /**
   * @}
   */
-	
+    
 /* Private functions ---------------------------------------------------------*/
 /** @defgroup ADC_Private_Functions ADC Private Functions
   * @{
@@ -894,11 +894,11 @@ uint32_t HAL_ADC_GetError(ADC_HandleTypeDef *hadc);
 /**
   * @}
   */
-	
+    
 /**
   * @}
   */
-	
+    
 /**
   * @}
   */

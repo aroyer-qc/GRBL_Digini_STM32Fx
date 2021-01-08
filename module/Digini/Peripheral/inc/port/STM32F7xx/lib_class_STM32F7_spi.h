@@ -57,22 +57,22 @@
 #define SPI_USE_DMA_TRANSFERT       0
 
 #define SPI_PORT_QTY                6
-#define SPI_TICK_HOOK_TIME	        portTICK_RATE_MS	        // in mSec
+#define SPI_TICK_HOOK_TIME            portTICK_RATE_MS            // in mSec
 
-#define SPI_CR1_DFF_8_BITS			0
-#define SPI_CR1_DFF_16_BITS		    SPI_CR1_DFF
+#define SPI_CR1_DFF_8_BITS            0
+#define SPI_CR1_DFF_16_BITS            SPI_CR1_DFF
 
-#define	SPI_CR1_CPOL_LOW    		0
-#define SPI_CR1_CPOL_HIGH			SPI_CR1_CPOL
+#define    SPI_CR1_CPOL_LOW            0
+#define SPI_CR1_CPOL_HIGH            SPI_CR1_CPOL
 
-#define SPI_CR1_CPHA_1_EDGE			0
-#define SPI_CR1_CPHA_2_EDGE			SPI_CR1_CPHA
+#define SPI_CR1_CPHA_1_EDGE            0
+#define SPI_CR1_CPHA_2_EDGE            SPI_CR1_CPHA
 
-#define SPI_CR1_SSM_DISABLE			0
-#define SPI_CR1_SSM_ENABLE 			SPI_CR1_SSM
+#define SPI_CR1_SSM_DISABLE            0
+#define SPI_CR1_SSM_ENABLE             SPI_CR1_SSM
 
-#define SPI_CR1_MSB_FIRST			0					//SPI_FirstBit_MSB
-#define SPI_CR1_LSB_FIRST			SPI_CR1_LSBFIRST	//SPI_FirstBit_LSB
+#define SPI_CR1_MSB_FIRST            0                    //SPI_FirstBit_MSB
+#define SPI_CR1_LSB_FIRST            SPI_CR1_LSBFIRST    //SPI_FirstBit_LSB
 
 #define SPI_PRESCALER_MASK          0x0038
 
@@ -171,30 +171,30 @@ struct SPI_DeviceInfo_t
 
 class SPI_Driver
 {
-	public:
-                        SPI_Driver			    (SPI_PortInfo_t* pPort);
-                        ~SPI_Driver			    ();
+    public:
+                        SPI_Driver                (SPI_PortInfo_t* pPort);
+                        ~SPI_Driver                ();
 
-        SystemState_e   GetStatus       	    (void);
+        SystemState_e   GetStatus               (void);
         void            Initialize              (void);
-        SystemState_e   LockToDevice   		    (SPI_DeviceInfo_t* pDevice);                                             // Set SPI to this device and lock
-        SystemState_e   UnlockFromDevice 	    (SPI_DeviceInfo_t* pDevice);                                             // Unlock SPI from device
+        SystemState_e   LockToDevice               (SPI_DeviceInfo_t* pDevice);                                             // Set SPI to this device and lock
+        SystemState_e   UnlockFromDevice         (SPI_DeviceInfo_t* pDevice);                                             // Unlock SPI from device
 
-		// Read function (overloaded)
-		SystemState_e   Read				    (uint8_t* pBuffer, size_t Size);
-		SystemState_e   Read				    (uint8_t*  Data);
-		SystemState_e   Read				    (uint16_t* Data);
-		SystemState_e   Read				    (uint32_t* Data);
+        // Read function (overloaded)
+        SystemState_e   Read                    (uint8_t* pBuffer, size_t Size);
+        SystemState_e   Read                    (uint8_t*  Data);
+        SystemState_e   Read                    (uint16_t* Data);
+        SystemState_e   Read                    (uint32_t* Data);
         SystemState_e   Read                    (uint8_t* pBuffer, size_t Size, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Read                    (uint8_t*  pData, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Read                    (uint16_t* pData, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Read                    (uint32_t* pData, SPI_DeviceInfo_t* pDevice);
 
-		// Write function (overloaded)
-		SystemState_e   Write				    (const uint8_t* pBuffer, size_t Size);
-		SystemState_e   Write				    (uint8_t  Data);
-		SystemState_e   Write				    (uint16_t Data);
-		SystemState_e   Write				    (uint32_t Data);
+        // Write function (overloaded)
+        SystemState_e   Write                    (const uint8_t* pBuffer, size_t Size);
+        SystemState_e   Write                    (uint8_t  Data);
+        SystemState_e   Write                    (uint16_t Data);
+        SystemState_e   Write                    (uint32_t Data);
         SystemState_e   Write                   (const uint8_t* pBuffer, size_t Size, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Write                   (uint8_t  Data, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Write                   (uint16_t Data, SPI_DeviceInfo_t* pDevice);
@@ -207,7 +207,7 @@ class SPI_Driver
         void            RegisterDriverTick      (void (*CallBackTick)());
         SystemState_e   WaitReady               (void);
 
-	private:
+    private:
 
         uint16_t        GetPrescalerFromSpeed   (uint32_t speed);
         void            Lock                    (void);
@@ -216,11 +216,11 @@ class SPI_Driver
         SPI_PortInfo_t*                         m_pPort;
         SPI_DeviceInfo_t*                       m_pDevice;
         nOS_Mutex                               m_Mutex;
-        AccessRequest_e    	                    m_Request;
+        AccessRequest_e                            m_Request;
         uint32_t                                m_SlowSpeed;
         uint32_t                                m_FastSpeed;
-        volatile size_t				            m_Size;
-        volatile SystemState_e		            m_Status;
+        volatile size_t                            m_Size;
+        volatile SystemState_e                    m_Status;
         volatile uint8_t                        m_Timeout;
         void                                    (*m_pCallBackTick)();
 

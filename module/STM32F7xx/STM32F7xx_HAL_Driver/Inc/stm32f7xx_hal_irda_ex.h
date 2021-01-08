@@ -167,7 +167,7 @@
           break;                                              \
        }                                                      \
     }                                                         \
-	} while(0)
+    } while(0)
 
 /** @brief  Reports the mask to apply to retrieve the received data
   *         according to the word length and to the parity bits activation.

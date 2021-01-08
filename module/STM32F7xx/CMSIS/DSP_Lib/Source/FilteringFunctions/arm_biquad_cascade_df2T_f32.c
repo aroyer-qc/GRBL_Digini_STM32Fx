@@ -2,10 +2,10 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_biquad_cascade_df2T_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_biquad_cascade_df2T_f32.c    
 *    
 * Description:  Processing function for the floating-point transposed    
 *               direct form II Biquad cascade filter.   
@@ -170,7 +170,7 @@ uint32_t blockSize)
    uint32_t sample, stage = S->numStages;         /*  loop counters             */
 
 #if defined(ARM_MATH_CM7)
-	
+    
    float32_t Xn2, Xn3, Xn4, Xn5, Xn6, Xn7, Xn8;   /*  Input State variables     */
    float32_t Xn9, Xn10, Xn11, Xn12, Xn13, Xn14, Xn15, Xn16;
    float32_t acc2, acc3, acc4, acc5, acc6, acc7;  /*  Simulates the accumulator */
@@ -325,11 +325,11 @@ uint32_t blockSize)
          pOut[0 ] = acc1 ;
          d1 += a1 * acc13;
          
-         pOut[1 ] = acc2 ;	
+         pOut[1 ] = acc2 ;    
          d2 += a2 * acc13;
 
          /* Sample 14. 5 cycles */
-         pOut[2 ] = acc3 ;	
+         pOut[2 ] = acc3 ;    
          acc14 = b0 * Xn14 + d1;
              
          pOut[3 ] = acc4 ;
@@ -338,10 +338,10 @@ uint32_t blockSize)
          pOut[4 ] = acc5 ; 
          d2 = b2 * Xn14;
          
-         pOut[5 ] = acc6 ;	  
+         pOut[5 ] = acc6 ;      
          d1 += a1 * acc14;
          
-         pOut[6 ] = acc7 ;	
+         pOut[6 ] = acc7 ;    
          d2 += a2 * acc14;
 
          /* Sample 15. 5 cycles */
@@ -349,10 +349,10 @@ uint32_t blockSize)
          pOut[8 ] = acc9 ;  
          acc15 = b0 * Xn15 + d1;
               
-         pOut[9 ] = acc10;	
+         pOut[9 ] = acc10;    
          d1 = b1 * Xn15 + d2;
          
-         pOut[10] = acc11;	
+         pOut[10] = acc11;    
          d2 = b2 * Xn15;
          
          pOut[11] = acc12;
@@ -362,16 +362,16 @@ uint32_t blockSize)
          d2 += a2 * acc15;
 
          /* Sample 16. 5 cycles */
-         pOut[13] = acc14;	
+         pOut[13] = acc14;    
          acc16 = b0 * Xn16 + d1;
          
-         pOut[14] = acc15;	
+         pOut[14] = acc15;    
          d1 = b1 * Xn16 + d2;
          
          pOut[15] = acc16;
          d2 = b2 * Xn16;
          
-         sample--;	 
+         sample--;     
          d1 += a1 * acc16;
          
          pOut += 16;
@@ -392,7 +392,7 @@ uint32_t blockSize)
          pOut++;
          d1 += a1 * acc1;
          
-         sample--;	
+         sample--;    
          d2 += a2 * acc1; 
       }
 
@@ -411,7 +411,7 @@ uint32_t blockSize)
       pOut = pDst; 
 
    } while(stage > 0u);
-	
+    
 #elif defined(ARM_MATH_CM0_FAMILY)
 
    /* Run the below code for Cortex-M0 */
@@ -468,11 +468,11 @@ uint32_t blockSize)
       stage--;
 
    } while(stage > 0u);
-	 
+     
 #else
 
-   float32_t Xn2, Xn3, Xn4;                  	  /*  Input State variables     */
-   float32_t acc2, acc3, acc4;              		  /*  accumulator               */
+   float32_t Xn2, Xn3, Xn4;                        /*  Input State variables     */
+   float32_t acc2, acc3, acc4;                        /*  accumulator               */
 
 
    float32_t p0, p1, p2, p3, p4, A1;
@@ -523,7 +523,7 @@ uint32_t blockSize)
 
          p1 = b1 * Xn2;
          acc2 = p0 + d1;
-         p0 = b0 * Xn3;	 
+         p0 = b0 * Xn3;     
          p3 = a1 * acc2; 
          p2 = b2 * Xn2;                                 
          A1 = p1 + p3;
@@ -533,7 +533,7 @@ uint32_t blockSize)
 
          p1 = b1 * Xn3;
          acc3 = p0 + d1;
-         p0 = b0 * Xn4;	
+         p0 = b0 * Xn4;    
          p3 = a1 * acc3;
          p2 = b2 * Xn3;
          A1 = p1 + p3;
@@ -550,13 +550,13 @@ uint32_t blockSize)
          d1 = A1 + d2;
          d2 = p2 + p4;
 
-         pOut[0] = acc1;	
-         pOut[1] = acc2;	
-         pOut[2] = acc3;	
+         pOut[0] = acc1;    
+         pOut[1] = acc2;    
+         pOut[2] = acc3;    
          pOut[3] = acc4;
-		 pOut += 4;
-				 
-         sample--;	       
+         pOut += 4;
+                 
+         sample--;           
       }
 
       sample = blockSize & 0x3u;
@@ -572,10 +572,10 @@ uint32_t blockSize)
          p4 = a2 * acc1;
          d1 = A1 + d2;
          d2 = p2 + p4;
-	
+    
          *pOut++ = acc1;
          
-         sample--;	       
+         sample--;           
       }
 
       /* Store the updated state variables back into the state array */
