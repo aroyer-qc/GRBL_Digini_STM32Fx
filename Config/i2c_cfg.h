@@ -36,10 +36,10 @@
 
 #define I2C_DRIVER_NUM_SUPPORTED        2
 
-#define I2C_DRIVER_SUPPORT_I2C1			DEF_ENABLED
-#define I2C_DRIVER_SUPPORT_I2C2			DEF_DISABLED
-#define I2C_DRIVER_SUPPORT_I2C3			DEF_ENABLED
-#define I2C_DRIVER_SUPPORT_I2C4			DEF_DISABLED
+#define I2C_DRIVER_SUPPORT_I2C1            DEF_ENABLED
+#define I2C_DRIVER_SUPPORT_I2C2            DEF_DISABLED
+#define I2C_DRIVER_SUPPORT_I2C3            DEF_ENABLED
+#define I2C_DRIVER_SUPPORT_I2C4            DEF_DISABLED
 
 
 //-------------------------------------------------------------------------------------------------
@@ -49,20 +49,20 @@
 enum I2C_Port_e
 {
     #if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
-		DRIVER_I2C_ID_1,
-	#endif
+        DRIVER_I2C_ID_1,
+    #endif
 
     #if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
-		DRIVER_I2C_ID_2,
-	#endif
+        DRIVER_I2C_ID_2,
+    #endif
 
     #if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
-		DRIVER_I2C_ID_3,
-	#endif
+        DRIVER_I2C_ID_3,
+    #endif
 
     #if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
-		DRIVER_I2C_ID_4,
-	#endif
+        DRIVER_I2C_ID_4,
+    #endif
 
     I2C_DRIVER_NB_PORT_CONST,
 };

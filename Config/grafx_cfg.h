@@ -118,8 +118,8 @@
 
 #define DIGINI_USE_MULTI_LINE
 
-#define DIGINI_MAX_PRINT_NUMBER_OF_LINE         8									// This is the maximum number of line in the same string
-#define DIGINI_MAX_PRINT_SIZE                   256									// This the maximum size of the string to print
+#define DIGINI_MAX_PRINT_NUMBER_OF_LINE         8                                    // This is the maximum number of line in the same string
+#define DIGINI_MAX_PRINT_SIZE                   256                                    // This the maximum size of the string to print
 
 
 #define DIGINI_USE_SERV_DATE

@@ -32,7 +32,7 @@
 // Low level Peripheral
 //
 
-//#define DIGINI_USE_SAI					// Serial audio out
+//#define DIGINI_USE_SAI                    // Serial audio out
 //#define DIGINI_USE_RTC
 #define DIGINI_USE_UART
 #define DIGINI_USE_TIM

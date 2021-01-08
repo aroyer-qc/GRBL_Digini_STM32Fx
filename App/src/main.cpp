@@ -51,8 +51,8 @@
 //-------------------------------------------------------------------------------------------------
 int main()
 {
-	// Prevent stepping in every IRQ
-	//(DBGMCU)->APB1FZ = 0x7E01BFF;
+    // Prevent stepping in every IRQ
+    //(DBGMCU)->APB1FZ = 0x7E01BFF;
     //(DBGMCU)->APB2FZ = 0x70003;
 
     ISR_Disable();

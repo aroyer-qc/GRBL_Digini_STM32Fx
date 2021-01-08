@@ -210,7 +210,7 @@ int8_t Getc(char *c)
         return 0;
     }
 
-	return -1;
+    return -1;
 }
 
 
@@ -230,7 +230,7 @@ int8_t Getc(char *c)
 int Putc(const char c)
 {
     printf("%c", c);
-	return 0;
+    return 0;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -251,48 +251,48 @@ int Putc(const char c)
 //-------------------------------------------------------------------------------------------------
 void printFloat(float n, uint8_t decimal_places)
 {
-	if(n < 0) {
-		Putc('-');
-		n = -n;
-	}
+    if(n < 0) {
+        Putc('-');
+        n = -n;
+    }
 
-	uint8_t decimals = decimal_places;
+    uint8_t decimals = decimal_places;
 
-	while(decimals >= 2) { // Quickly convert values expected to be E0 to E-4.
-		n *= 100;
-		decimals -= 2;
-	}
+    while(decimals >= 2) { // Quickly convert values expected to be E0 to E-4.
+        n *= 100;
+        decimals -= 2;
+    }
 
-	if(decimals) {
-		n *= 10;
-	}
-	n += 0.5; // Add rounding factor. Ensures carryover through entire value.
+    if(decimals) {
+        n *= 10;
+    }
+    n += 0.5; // Add rounding factor. Ensures carryover through entire value.
 
-	// Generate digits backwards and store in string.
-	unsigned char buf[13];
-	uint8_t i = 0;
-	uint32_t a = (long)n;
+    // Generate digits backwards and store in string.
+    unsigned char buf[13];
+    uint8_t i = 0;
+    uint32_t a = (long)n;
 
-	while(a > 0) {
-		buf[i++] = (a % 10) + '0'; // Get digit
-		a /= 10;
-	}
+    while(a > 0) {
+        buf[i++] = (a % 10) + '0'; // Get digit
+        a /= 10;
+    }
 
-	while(i < decimal_places) {
-		buf[i++] = '0'; // Fill in zeros to decimal point for (n < 1)
-	}
+    while(i < decimal_places) {
+        buf[i++] = '0'; // Fill in zeros to decimal point for (n < 1)
+    }
 
-	if(i == decimal_places) { // Fill in leading zero, if needed.
-		buf[i++] = '0';
-	}
+    if(i == decimal_places) { // Fill in leading zero, if needed.
+        buf[i++] = '0';
+    }
 
-	// Print the generated string.
-	for(; i > 0; i--) {
-		if(i == decimal_places) {
-			Putc('.');
-		} // Insert decimal point in right place.
-		Putc(buf[i-1]);
-	}
+    // Print the generated string.
+    for(; i > 0; i--) {
+        if(i == decimal_places) {
+            Putc('.');
+        } // Insert decimal point in right place.
+        Putc(buf[i-1]);
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -312,27 +312,27 @@ void printFloat(float n, uint8_t decimal_places)
 //-------------------------------------------------------------------------------------------------
 void printFloat_CoordValue(float n)
 {
-	if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
-		//PrintFloat(n*INCH_PER_MM, N_DECIMAL_COORDVALUE_INCH);
-		printf("%." N_DECIMAL_COORD_INCH_STR "f", n * INCH_PER_MM);
-	}
-	else {
-		//PrintFloat(n, N_DECIMAL_COORDVALUE_MM);
-		printf("%." N_DECIMAL_COORD_MM_STR "f", n);
-	}
+    if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
+        //PrintFloat(n*INCH_PER_MM, N_DECIMAL_COORDVALUE_INCH);
+        printf("%." N_DECIMAL_COORD_INCH_STR "f", n * INCH_PER_MM);
+    }
+    else {
+        //PrintFloat(n, N_DECIMAL_COORDVALUE_MM);
+        printf("%." N_DECIMAL_COORD_MM_STR "f", n);
+    }
 }
 
 
 void printFloat_RateValue(float n)
 {
-	if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
-		//PrintFloat(n*INCH_PER_MM,N_DECIMAL_RATEVALUE_INCH);
-		printf("%." N_DECIMAL_RATE_INCH_STR "f", n * INCH_PER_MM);
-	}
-	else {
-		//PrintFloat(n, N_DECIMAL_RATEVALUE_MM);
-		printf("%." N_DECIMAL_RATE_MM_STR "f", n);
-	}
+    if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
+        //PrintFloat(n*INCH_PER_MM,N_DECIMAL_RATEVALUE_INCH);
+        printf("%." N_DECIMAL_RATE_INCH_STR "f", n * INCH_PER_MM);
+    }
+    else {
+        //PrintFloat(n, N_DECIMAL_RATEVALUE_MM);
+        printf("%." N_DECIMAL_RATE_MM_STR "f", n);
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -359,9 +359,9 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
 #endif // __GNUC__ or __ICCARM__
 {
     TERM_QueueDataInfo_t* pQ_Data;
-	bool                  Success = false;
+    bool                  Success = false;
 
-	VAR_UNUSED(File);
+    VAR_UNUSED(File);
 
   #ifdef ETH_IF
     Pdu_t data;
@@ -415,6 +415,6 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
   #endif
 
     // Return number of sent bytes
-	return Length;
+    return Length;
 }
 

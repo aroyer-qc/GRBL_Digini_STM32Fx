@@ -281,7 +281,7 @@ NOS_ISR(I2C1_EV_IRQHandler)
 
 NOS_ISR(I2C1_ER_IRQHandler)
 {
-	myI2C_External.ER_IRQHandler();
+    myI2C_External.ER_IRQHandler();
 }
 
 #endif
@@ -310,12 +310,12 @@ NOS_ISR(I2C2_ER_IRQHandler)
 
 NOS_ISR(I2C3_EV_IRQHandler)
 {
-	myI2C_Control.EV_IRQHandler();
+    myI2C_Control.EV_IRQHandler();
 }
 
 NOS_ISR(I2C3_ER_IRQHandler)
 {
-	myI2C_Control.ER_IRQHandler();
+    myI2C_Control.ER_IRQHandler();
 }
 
 #endif
