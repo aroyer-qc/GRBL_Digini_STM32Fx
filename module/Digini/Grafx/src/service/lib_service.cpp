@@ -136,13 +136,14 @@ static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState, uint16_t SubSer
 {
     ServiceReturn_t* pService = nullptr;
 
+    if(*pServiceState == SERVICE_RELEASED)
+    {
+        GUI_Task.SetSlidingDirection(SlideDir_e(SubService));
+    }
+
     if(*pServiceState != SERVICE_FINALIZE)
     {
         pService = GetServiceStruct(SERVICE_RETURN);
-    }
-    else
-    {
-        GUI_Task.m_SlidingDir = SlideDir_e(SubService);
     }
 
     return pService;

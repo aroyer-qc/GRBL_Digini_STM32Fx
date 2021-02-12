@@ -267,6 +267,8 @@
 		</Unit>
 		<Unit filename="..\App\src\taskIdle.cpp">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Unit filename="..\App\src\terminal.cpp">
 			<Option compilerVar="CC" />
@@ -374,6 +376,8 @@
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_copy_layer.cpp">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_copy_linear.cpp">
 			<Option compilerVar="CC" />

@@ -96,14 +96,14 @@ void GUI_myClassTask::Run()
     MsgRefresh_t    Msg;
     Link_e          NewLink;
     Link_e          PreviousLink;
-    bool            SlidePage;
-    int16_t         SlidePos;
-    nOS_TickCounter WaitTick;
+
+  #ifdef GRAFX_USE_SLIDING_PAGE
+    bool IsPageWasSliding;
+  #endif
 
     // Start at home page
     m_Link    = INVALID_LINK;
     NewLink   = LINK_MAIN_LOADING;
-    SlidePage = false;
 
   #if defined(DIGINI_USE_A_SKIN) && defined(STATIC_SKIN_DEF)
     // Static skin must be loaded
@@ -117,12 +117,7 @@ void GUI_myClassTask::Run()
 
     for(;;)
     {
-      #ifdef GRAFX_USE_SLIDING_PAGE
-        WaitTick = (SlidePage == false) ? GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP : 2;
-      #else
-      #endif
-
-        if((Error = nOS_QueueRead(&this->m_Q_Msg, &Msg, WaitTick)) == NOS_E_TIMEOUT)
+        if((Error = nOS_QueueRead(&this->m_Q_Msg, &Msg, GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP)) == NOS_E_TIMEOUT)
         {
             Msg.Type     = MESSAGE_TYPE_PDI_EVENT_INFO;
             Msg.Touch    = SERVICE_IDLE;
@@ -136,51 +131,43 @@ void GUI_myClassTask::Run()
 
         if(Error == NOS_OK)
         {
-          #ifdef GRAFX_USE_SLIDING_PAGE
-            if(SlidePage == false)
-            {
-          #endif
-                if(NewLink != INVALID_LINK)                                             // If we have a new link (switch to new page)
-                {                                                                       // Finalize old page then create new page
-                    if(m_Link != INVALID_LINK)                                          // finalize the actual page if it exist
-                    {
-                        FinalizeAllWidget();
-                    }
-                  #ifdef DIGINI_USE_POINTING_DEVICE
-                 //   PDI_pTask->ClearAllZone();
-                  #endif
-                    GUI_ClearWidgetLayer();
-
-                    // TODO (Alain#2#) maybe do a stack of previous link... now only one level is active
-                    PreviousLink = m_Link;
-                    m_Link  = NewLink;
-                    NewLink = CreateAllWidget();
-
-                   #ifdef GRAFX_USE_SLIDING_PAGE
-                   #ifdef DIGINI_USE_LOAD_SKIN
-                    if(SKIN_pTask->IsSkinLoaded() == true)
-                   #endif
-                    {
-                        if(NewLink == INVALID_LINK)
-                        {
-                            SlidePage = true;
-                            SlidePos  = GRAFX_SIZE_X;               // Use sliding direction... also need a sliding windows size bigger than real display, now just for testing
-                        }
-                    }
-                  #endif
-                }
-                else
+            if(NewLink != INVALID_LINK)                                             // If we have a new link (switch to new page)
+            {                                                                       // Finalize old page then create new page
+                if(m_Link != INVALID_LINK)                                          // finalize the actual page if it exist
                 {
-                    NewLink = RefreshAllWidget(&Msg);
+                    FinalizeAllWidget();
                 }
+              #ifdef DIGINI_USE_POINTING_DEVICE
+             //   PDI_pTask->ClearAllZone();
+              #endif
+                GUI_ClearWidgetLayer();
 
-                if(NewLink == PREVIOUS_LINK)
+                // TODO (Alain#2#) maybe do a stack of previous link... now only one level is active
+                PreviousLink = m_Link;
+                m_Link  = NewLink;
+                NewLink = CreateAllWidget();
+
+              #ifdef GRAFX_USE_SLIDING_PAGE
+               #ifdef DIGINI_USE_LOAD_SKIN
+                if(SKIN_pTask->IsSkinLoaded() == true)
+               #endif
                 {
-                    NewLink = PreviousLink;
+                    if(NewLink == INVALID_LINK)
+                    {
+                        IsPageWasSliding = this->SlidingPage();
+                    }
                 }
-          #ifdef GRAFX_USE_SLIDING_PAGE
+              #endif
             }
-          #endif
+            else
+            {
+                NewLink = RefreshAllWidget(&Msg);
+            }
+
+            if(NewLink == PREVIOUS_LINK)
+            {
+                NewLink = PreviousLink;
+            }
 
          #ifndef GRAFX_DEBUG_GUI
           #ifdef GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
@@ -188,35 +175,17 @@ void GUI_myClassTask::Run()
             if(SKIN_pTask->IsSkinLoaded() == true)
            #endif
             {
-               //myGrafx->WaitFor_V_Sync();
-              #ifdef GRAFX_USE_SLIDING_PAGE
-                if(SlidePage == true)
+                if(NewLink == INVALID_LINK)         // Only make the copy if it's not an immediate redirection
                 {
-                    SlidePos -= GRAFX_SLIDING_PAGE_GRANULARITY;
-                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_DISPLAY_LAYER_0, GRAFX_SLIDING_PAGE_GRANULARITY, 0, 0, 0, GRAFX_SIZE_X - GRAFX_SLIDING_PAGE_GRANULARITY, GRAFX_SIZE_Y);
-                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, SlidePos, 0, GRAFX_SIZE_X - SlidePos, GRAFX_SIZE_Y);
-
-                    if(SlidePos == 0)
-                    {
-                        SlidePage = false;
-
-                     #ifndef GRAFX_DEBUG_GUI
-                      #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
-                       #ifdef DIGINI_USE_LOAD_SKIN
-                        if(SKIN_pTask->IsSkinLoaded() == true)
-                       #endif
-                        {
-                            myGrafx->WaitFor_V_Sync();
-                            myGrafx->CopyLayerToLayer(CONSTRUCTION_BACKGROUND_LAYER, BACKGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
-                        }
-                      #endif
-                     #endif
-                    }
-                }
-                else if(NewLink == INVALID_LINK) /// not sure
-              #endif
-                {
+                    myGrafx->WaitFor_V_Sync();
                     myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
+
+                  #ifdef GRAFX_USE_SLIDING_PAGE
+                    if(IsPageWasSliding == true)
+                    {
+                        CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_DISPLAY_LAYER_0);
+                    }
+                  #endif
                 }
             }
           #endif
@@ -600,6 +569,208 @@ void GUI_myClassTask::FinalizeAllWidget()
 
     pMemory->Free((void**)&m_pWidgetList);
 }
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           SlidingPage
+//
+//  Parameter(s):   None
+//  Return:         None
+//
+//  Description:    With process sliding animation and return to GUI loop after it's completed
+//
+//  Note(s):        TODO (Alain#2#)   add a structure to overrides full screen slide, so a part of
+//                                    screen can be fixed
+//
+//-------------------------------------------------------------------------------------------------
+#ifdef GRAFX_USE_SLIDING_PAGE
+bool GUI_myClassTask::SlidingPage(void)
+{
+    int16_t SlidePosActualPage;
+    int16_t SlidePosNewPage;
+    Box_t   Box;
+    bool    IsPageWasSliding;
+    bool    IsItOverlapped;
+    bool    IsItDeOverlapped;
+    nOS_TickCounter AddingToWait;
+
+
+    Box.Pos.X = 0;
+    Box.Pos.Y = 0;
+    Box.Size.Width  = GRAFX_SIZE_X;
+    Box.Size.Height = GRAFX_SIZE_Y;
+    IsPageWasSliding = true;
+
+    IsItOverlapped   = false;
+    IsItDeOverlapped = false;
+    AddingToWait     = 0;
+
+    if((m_SlidingDir & SLIDING_OVERLAP_MASK) != 0)
+    {
+        IsItOverlapped = true;
+        AddingToWait  = 4;              // Since it's faster if less operation to do than we add 2 mSec to the waiting process
+    }
+
+    if((m_SlidingDir & SLIDING_DE_OVERLAP_MASK) != 0)
+    {
+        IsItDeOverlapped = true;
+        AddingToWait  = 4;              // Since it's faster if less operation to do than we add 2 mSec to the waiting process
+    }
+
+    switch(m_SlidingDir & SLIDING_MASK)
+    {
+        //-------------------------------------------------------------------------------------------------------------------------
+        case SLIDING_LEFT:
+        {
+            SlidePosNewPage    = GRAFX_SIZE_X;
+            SlidePosActualPage = 0;
+            myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, &Box);      // copy actual foreground to sliding layer
+            CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_SLIDING_LAYER);
+
+            do
+            {
+                SlidePosActualPage += GRAFX_SLIDING_PAGE_GRANULARITY;
+                SlidePosNewPage    -= GRAFX_SLIDING_PAGE_GRANULARITY;
+
+                if(IsItOverlapped == false)
+                {
+                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, SlidePosActualPage, 0, 0, 0, GRAFX_SIZE_X - SlidePosActualPage, GRAFX_SIZE_Y);
+                }
+
+                if(IsItDeOverlapped == true)
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, SlidePosNewPage, 0, SlidePosNewPage, 0, GRAFX_SIZE_X - SlidePosNewPage, GRAFX_SIZE_Y);
+                }
+                else
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, 0, SlidePosNewPage, 0, GRAFX_SIZE_X - SlidePosNewPage, GRAFX_SIZE_Y);
+                }
+
+                nOS_Sleep(GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP + AddingToWait);
+            }
+            while(SlidePosNewPage > 0);
+
+            m_SlidingDir = SLIDING_NONE;
+        }
+        break;
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        case SLIDING_RIGHT:
+        {
+            SlidePosNewPage    = GRAFX_SIZE_X;
+            SlidePosActualPage = 0;
+            myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, &Box);      // copy actual foreground to sliding layer
+            CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_SLIDING_LAYER);
+
+            do
+            {
+                SlidePosActualPage += GRAFX_SLIDING_PAGE_GRANULARITY;
+                SlidePosNewPage    -= GRAFX_SLIDING_PAGE_GRANULARITY;
+
+                if(IsItOverlapped == false)
+                {
+                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, 0, 0, SlidePosActualPage, 0, GRAFX_SIZE_X - SlidePosActualPage, GRAFX_SIZE_Y);
+                }
+
+                if(IsItDeOverlapped == true)
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, 0, 0, 0, GRAFX_SIZE_X - SlidePosNewPage, GRAFX_SIZE_Y);
+                }
+                else
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, SlidePosNewPage, 0, 0, 0, GRAFX_SIZE_X - SlidePosNewPage, GRAFX_SIZE_Y);
+                }
+
+                nOS_Sleep(GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP + AddingToWait);
+            }
+            while(SlidePosActualPage < GRAFX_SIZE_X);
+
+            m_SlidingDir = SLIDING_NONE;
+        }
+        break;
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        case SLIDING_UP:
+        {
+            SlidePosNewPage    = GRAFX_SIZE_Y;
+            SlidePosActualPage = 0;
+            myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, &Box);      // copy actual foreground to sliding layer
+            CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_SLIDING_LAYER);
+
+            do
+            {
+                SlidePosActualPage += GRAFX_SLIDING_PAGE_GRANULARITY;
+                SlidePosNewPage    -= GRAFX_SLIDING_PAGE_GRANULARITY;
+
+                if(IsItOverlapped == false)
+                {
+                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, 0, SlidePosActualPage, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosActualPage);
+                }
+
+                if(IsItDeOverlapped == true)
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, SlidePosNewPage, 0, SlidePosNewPage, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosNewPage);
+                }
+                else
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, 0, 0, SlidePosNewPage, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosNewPage);
+                }
+
+                nOS_Sleep(GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP + AddingToWait);
+            }
+            while(SlidePosNewPage > 0);
+
+            m_SlidingDir = SLIDING_NONE;
+        }
+        break;
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        case SLIDING_DOWN:
+        {
+            SlidePosNewPage    = GRAFX_SIZE_Y;
+            SlidePosActualPage = 0;
+            myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, &Box);      // copy actual foreground to sliding layer
+            CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_SLIDING_LAYER);
+
+            do
+            {
+                SlidePosActualPage += GRAFX_SLIDING_PAGE_GRANULARITY;
+                SlidePosNewPage    -= GRAFX_SLIDING_PAGE_GRANULARITY;
+
+                if(IsItOverlapped == false)
+                {
+                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_SLIDING_LAYER, 0, 0, 0, SlidePosActualPage, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosActualPage);
+                }
+
+                if(IsItDeOverlapped == true)
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, 0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosNewPage);
+                }
+                else
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_SLIDING_LAYER, 0, SlidePosNewPage, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y - SlidePosNewPage);
+                }
+
+                nOS_Sleep(GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP + AddingToWait);
+            }
+            while(SlidePosActualPage < GRAFX_SIZE_Y);
+
+            m_SlidingDir = SLIDING_NONE;
+        }
+        break;
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        default:
+        {
+            IsPageWasSliding = false;
+        }
+        break;
+    }
+
+    return IsPageWasSliding;
+}
+#endif
+
 
 //-------------------------------------------------------------------------------------------------
 //

@@ -34,7 +34,6 @@
 #include "nOS.h"
 #include "Task_grbl.h"
 #include "Task_loading.h"
-#include "TaskIdle.h"
 #include "lib_digini.h"
 #include "lib_isr.h"
 
@@ -59,10 +58,10 @@ int main()
     nOS_Init();
     BSP_Initialize();     // All hardware and system initialization
     pTaskLoading->Initialize();
-    pTaskGRBL->Initialize();
+    //pTaskGRBL->Initialize();            // Not needed as it is the idle task!!
     nOS_Start();
     BSP_PostOS_Initialize();
-    TaskIdle();
+    pTaskGRBL->Run();                     // For now it is the idle task.. (not really idle)
     return 0;
 }
 

@@ -371,7 +371,7 @@ const PageWidget_t PageMachineSelect    [] =  { {   BACK_DIAMOND,            INV
                                                 {   BTN_A_MAC,               INVALID_LINK        },
                                                 {   BTN_B_MAC,               INVALID_LINK        },
                                                 {   BTN_C_MAC,               INVALID_LINK        },
-                                                {   BTN_RETURN,              PREVIOUS_LINK       },
+                                                {   BTN_RETURN_DOWN,         PREVIOUS_LINK       },
                                                 {   RECT_BLANK_MACHINE,      INVALID_LINK        },     // Erase the display section of the graphic representatio
                                                 {   ICON_MACHINE_XY,         INVALID_LINK        },
                                                 {   ICON_MACHINE_ZX,         INVALID_LINK        },
@@ -449,7 +449,7 @@ const PageWidget_t InputDataHexa        [] =  { {   BACK_DIAMOND,            INV
                                               };
 
 const PageWidget_t PageDiagnostic       [] =  { {   BACK_DIAMOND,            INVALID_LINK        },
-                                                {   BTN_RETURN,              PREVIOUS_LINK       },
+                                                {   BTN_RETURN_DOWN,         PREVIOUS_LINK       },
                                                 {   LABEL_PAGE_INPUT_CHECK,  INVALID_LINK        },
                                                 {   LABEL_CHECK_LIMIT_X,     INVALID_LINK        },
                                                 {   LABEL_CHECK_LIMIT_Y,     INVALID_LINK        },
@@ -475,7 +475,7 @@ const PageWidget_t PageDiagnostic       [] =  { {   BACK_DIAMOND,            INV
                                               };
 
 const PageWidget_t PageInfo             [] =  { {   BACK_DIAMOND,            INVALID_LINK        },
-                                                {   BTN_RETURN,              PREVIOUS_LINK       },
+                                                {   BTN_RETURN_DOWN,         PREVIOUS_LINK       },
                                                 {   LABEL_INFO,              INVALID_LINK        },
                                                 {   LABEL_FW_NAME_INFO,      INVALID_LINK        },
                                                 {   LABEL_FW_VERSION_INFO,   INVALID_LINK        },

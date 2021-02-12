@@ -30,7 +30,7 @@
 
 #include "terminal.h"
 #include "Config.h"
-#include "TaskIdle.h"
+//#include "TaskIdle.h"
 #include "nOS.h"
 #include "lib_class_STM32F7_uart.h"
 #include "lib_CQueue.h"

@@ -75,11 +75,12 @@
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+/* Needed if task is not at the idle level
 extern "C" void TaskGRBL_Wrapper(void* pvParameters)
 {
     (static_cast<ClassTaskGRBL*>(pvParameters))->Run();
 }
-
+*/
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -97,6 +98,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 {
     nOS_Error Error;
 
+/* Needed if task is not at the idle level
     Error = nOS_ThreadCreate(&this->m_Handle,
                              TaskGRBL_Wrapper,
                              this,
@@ -104,7 +106,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
                              TASK_GRBL_STACK_SIZE,
                              TASK_GRBL_PRIO);
 
-
+*/
 
     // ------------------------
     // Stepper drive IO
@@ -203,6 +205,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskGRBL::Run(void)
 {
+    this->Initialize();         // Needed if task is not at the idle level, otherwise remove it
 
     while(SKIN_pTask->IsSkinLoaded() == false)
     {

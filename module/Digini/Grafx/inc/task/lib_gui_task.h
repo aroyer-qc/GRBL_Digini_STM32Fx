@@ -63,8 +63,9 @@ class GUI_myClassTask
         void                        Run                 (void);
         nOS_Error                   Initialize          (void);
 
+        void                        SetSlidingDirection (SlideDir_e SlidingDirection) {m_SlidingDir = SlidingDirection;};
+
         nOS_Queue                   m_Q_Msg;
-        SlideDir_e                  m_SlidingDir;
 
     private:
 
@@ -72,8 +73,9 @@ class GUI_myClassTask
         Link_e                      RefreshAllWidget    (MsgRefresh_t* pMsg);
         void                        FinalizeAllWidget   (void);
 
-        void                        SlidingPage  (void) {};
-
+      #ifdef GRAFX_USE_SLIDING_PAGE
+        bool                        SlidingPage         (void);
+      #endif
 
         Link_e                      m_Link;
         PageWidget_t*               m_pPage;
@@ -82,6 +84,10 @@ class GUI_myClassTask
         nOS_Thread                  m_Handle;
         nOS_Stack                   m_Stack[GUI_TASK_STACK_SIZE];
         MsgRefresh_t                m_ArrayMsg[GUI_NUMBER_OF_MSG];
+
+      #ifdef GRAFX_USE_SLIDING_PAGE
+        SlideDir_e                  m_SlidingDir;
+      #endif
 };
 
 //-------------------------------------------------------------------------------------------------

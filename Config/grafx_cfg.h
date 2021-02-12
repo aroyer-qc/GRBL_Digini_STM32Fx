@@ -66,11 +66,11 @@
 #define GRAFX_USE_RAM_DATA
 //#define GRAFX_USE_ROM_DATA
 
-
+#define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
 
 #define GRAFX_USE_SLIDING_PAGE
 #define GRAFX_SLIDING_PAGE_GRANULARITY                  16          // Each step is 10 Pixel wide
-#define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
+#define GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP           2
 
 #define GRAFX_USE_V_SYNC
 #define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                     // if there is enough memory to construct on a hidden layer. (prevent glitch)
