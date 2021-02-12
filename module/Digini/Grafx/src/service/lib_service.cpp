@@ -90,7 +90,7 @@ const uint8_t ServiceSizeType[NB_SERVICE_CONST] =
 };
 
 
-char Buffer[20];   // TODO fix this for needed size by using memalloc class
+char Buffer[20];   // TODO fix this for needed size by using mem alloc class
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -132,13 +132,17 @@ static ServiceReturn_t* SERV_BACK(ServiceEvent_e* pServiceState)
 //  Description:    This function is used to refresh button, and panel
 //
 //-------------------------------------------------------------------------------------------------
-static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState)
+static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
     ServiceReturn_t* pService = nullptr;
 
     if(*pServiceState != SERVICE_FINALIZE)
     {
         pService = GetServiceStruct(SERVICE_RETURN);
+    }
+    else
+    {
+        GUI_Task.m_SlidingDir = SlideDir_e(SubService);
     }
 
     return pService;
@@ -890,7 +894,7 @@ ServiceReturn_t* ServiceCall(Service_t* pService, ServiceEvent_e* pServiceState)
                 switch(pService->ID)
                 {
                     case SERV_ID_BACK: pServiceReturn = SERV_BACK(pServiceState);                  ServiceWasProcessed = true; break;
-                    case SERV_ID_BDEF: pServiceReturn = SERV_BDEF(pServiceState);                  ServiceWasProcessed = true; break;
+                    case SERV_ID_BDEF: pServiceReturn = SERV_BDEF(pServiceState, pService->SubID); ServiceWasProcessed = true; break;
                   //case SERV_ID_BOOT: pServiceReturn = SERV_BOOT(pServiceState, pService->SubID); ServiceWasProcessed = true; break;
                 }
             }

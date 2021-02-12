@@ -49,7 +49,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define GUI_TASK_STACK_SIZE                     4096
-#define GUI_TASK_PRIO                           5
+#define GUI_TASK_PRIO                           6
 #define GUI_NUMBER_OF_MSG                       4
 
 //-------------------------------------------------------------------------------------------------
@@ -64,12 +64,16 @@ class GUI_myClassTask
         nOS_Error                   Initialize          (void);
 
         nOS_Queue                   m_Q_Msg;
+        SlideDir_e                  m_SlidingDir;
 
     private:
 
         Link_e                      CreateAllWidget     (void);
         Link_e                      RefreshAllWidget    (MsgRefresh_t* pMsg);
         void                        FinalizeAllWidget   (void);
+
+        void                        SlidingPage  (void) {};
+
 
         Link_e                      m_Link;
         PageWidget_t*               m_pPage;

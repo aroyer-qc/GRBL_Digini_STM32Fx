@@ -38,14 +38,6 @@
 #include "lib_memory.h"
 
 //-------------------------------------------------------------------------------------------------
-// Local Define(s)
-//-------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------
-// Private variable(s) and constant(s)
-//-------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------
 //
 //  Name:           GUI_TaskWrapper
 //
@@ -100,14 +92,18 @@ nOS_Error GUI_myClassTask::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void GUI_myClassTask::Run()
 {
-    nOS_Error      Error;
-    MsgRefresh_t   Msg;
-    Link_e         NewLink;
-    Link_e         PreviousLink;
+    nOS_Error       Error;
+    MsgRefresh_t    Msg;
+    Link_e          NewLink;
+    Link_e          PreviousLink;
+    bool            SlidePage;
+    int16_t         SlidePos;
+    nOS_TickCounter WaitTick;
 
     // Start at home page
-    m_Link  = INVALID_LINK;
-    NewLink = LINK_MAIN_LOADING;
+    m_Link    = INVALID_LINK;
+    NewLink   = LINK_MAIN_LOADING;
+    SlidePage = false;
 
   #if defined(DIGINI_USE_A_SKIN) && defined(STATIC_SKIN_DEF)
     // Static skin must be loaded
@@ -121,7 +117,12 @@ void GUI_myClassTask::Run()
 
     for(;;)
     {
-        if((Error = nOS_QueueRead(&this->m_Q_Msg, &Msg, 8)) == NOS_E_TIMEOUT)
+      #ifdef GRAFX_USE_SLIDING_PAGE
+        WaitTick = (SlidePage == false) ? GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP : 2;
+      #else
+      #endif
+
+        if((Error = nOS_QueueRead(&this->m_Q_Msg, &Msg, WaitTick)) == NOS_E_TIMEOUT)
         {
             Msg.Type     = MESSAGE_TYPE_PDI_EVENT_INFO;
             Msg.Touch    = SERVICE_IDLE;
@@ -135,43 +136,51 @@ void GUI_myClassTask::Run()
 
         if(Error == NOS_OK)
         {
-            if(NewLink != INVALID_LINK)                                             // If we have a new link (switch to new page)
-            {                                                                       // Finalize old page then create new page
-                if(m_Link != INVALID_LINK)                                          // finalize the actual page if it exist
-                {
-                    FinalizeAllWidget();
-                }
-              #ifdef DIGINI_USE_POINTING_DEVICE
-             //   PDI_pTask->ClearAllZone();
-              #endif
-                GUI_ClearWidgetLayer();
-
-                // TODO (Alain#2#) maybe do a stack of previous link... now only one level is active
-                PreviousLink = m_Link;
-                m_Link  = NewLink;
-                NewLink = CreateAllWidget();
-
-             #ifndef GRAFX_DEBUG_GUI
-              #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
-               #ifdef DIGINI_USE_LOAD_SKIN
-                if(SKIN_pTask->IsSkinLoaded() == true)
-               #endif
-                {
-                    myGrafx->WaitFor_V_Sync();
-                    myGrafx->CopyLayerToLayer(CONSTRUCTION_BACKGROUND_LAYER, BACKGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
-                }
-              #endif
-             #endif
-            }
-            else
+          #ifdef GRAFX_USE_SLIDING_PAGE
+            if(SlidePage == false)
             {
-                NewLink = RefreshAllWidget(&Msg);
-            }
+          #endif
+                if(NewLink != INVALID_LINK)                                             // If we have a new link (switch to new page)
+                {                                                                       // Finalize old page then create new page
+                    if(m_Link != INVALID_LINK)                                          // finalize the actual page if it exist
+                    {
+                        FinalizeAllWidget();
+                    }
+                  #ifdef DIGINI_USE_POINTING_DEVICE
+                 //   PDI_pTask->ClearAllZone();
+                  #endif
+                    GUI_ClearWidgetLayer();
 
-            if(NewLink == PREVIOUS_LINK)
-            {
-                NewLink = PreviousLink;
+                    // TODO (Alain#2#) maybe do a stack of previous link... now only one level is active
+                    PreviousLink = m_Link;
+                    m_Link  = NewLink;
+                    NewLink = CreateAllWidget();
+
+                   #ifdef GRAFX_USE_SLIDING_PAGE
+                   #ifdef DIGINI_USE_LOAD_SKIN
+                    if(SKIN_pTask->IsSkinLoaded() == true)
+                   #endif
+                    {
+                        if(NewLink == INVALID_LINK)
+                        {
+                            SlidePage = true;
+                            SlidePos  = GRAFX_SIZE_X;               // Use sliding direction... also need a sliding windows size bigger than real display, now just for testing
+                        }
+                    }
+                  #endif
+                }
+                else
+                {
+                    NewLink = RefreshAllWidget(&Msg);
+                }
+
+                if(NewLink == PREVIOUS_LINK)
+                {
+                    NewLink = PreviousLink;
+                }
+          #ifdef GRAFX_USE_SLIDING_PAGE
             }
+          #endif
 
          #ifndef GRAFX_DEBUG_GUI
           #ifdef GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
@@ -179,8 +188,36 @@ void GUI_myClassTask::Run()
             if(SKIN_pTask->IsSkinLoaded() == true)
            #endif
             {
-                myGrafx->WaitFor_V_Sync();
-                myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
+               //myGrafx->WaitFor_V_Sync();
+              #ifdef GRAFX_USE_SLIDING_PAGE
+                if(SlidePage == true)
+                {
+                    SlidePos -= GRAFX_SLIDING_PAGE_GRANULARITY;
+                    myGrafx->CopyLayerToLayer(FOREGROUND_DISPLAY_LAYER_0, FOREGROUND_DISPLAY_LAYER_0, GRAFX_SLIDING_PAGE_GRANULARITY, 0, 0, 0, GRAFX_SIZE_X - GRAFX_SLIDING_PAGE_GRANULARITY, GRAFX_SIZE_Y);
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, SlidePos, 0, GRAFX_SIZE_X - SlidePos, GRAFX_SIZE_Y);
+
+                    if(SlidePos == 0)
+                    {
+                        SlidePage = false;
+
+                     #ifndef GRAFX_DEBUG_GUI
+                      #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
+                       #ifdef DIGINI_USE_LOAD_SKIN
+                        if(SKIN_pTask->IsSkinLoaded() == true)
+                       #endif
+                        {
+                            myGrafx->WaitFor_V_Sync();
+                            myGrafx->CopyLayerToLayer(CONSTRUCTION_BACKGROUND_LAYER, BACKGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
+                        }
+                      #endif
+                     #endif
+                    }
+                }
+                else if(NewLink == INVALID_LINK) /// not sure
+              #endif
+                {
+                    myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
+                }
             }
           #endif
          #endif
@@ -341,6 +378,17 @@ Link_e GUI_myClassTask::CreateAllWidget()
             pWidgetTemp         = new CMeter(&Meter[Widget - (APP_START_METER_CONST + 1)]);
             memcpy(pWidget, pWidgetTemp, sizeof(CMeter));
             delete (CMeter*)pWidgetTemp;
+        }
+       #endif
+
+       #ifdef PAGE_SLIDE_DEF
+        else if((Widget > APP_START_PAGE_SLIDE_CONST) && (Widget < APP_END_PAGE_SLIDE_CONST))
+        {
+            pWidget             = (CWidgetInterface*)pMemory->Alloc(sizeof(CPageSlide));
+            *pWidgetListPointer = pWidget;
+            pWidgetTemp         = new CPageSlide(&PageSlide[Widget - (APP_START_PAGE_SLIDE_CONST + 1)]);
+            memcpy(pWidget, pWidgetTemp, sizeof(CPageSlide));
+            delete (CPageSlide*)pWidgetTemp;
         }
        #endif
 

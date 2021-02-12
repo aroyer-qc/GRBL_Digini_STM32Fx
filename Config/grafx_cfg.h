@@ -37,8 +37,9 @@
 //          0xC003 FC00              Layer 2                ARGB8888 = 522240 Bytes
 //          0xC00B F400              Layer 3                RGB565   = 261120 Bytes
 //          0xC00F F000              Layer 4                ARGB8888 = 522240 Bytes
-//          0xC017 E800              Touch Sense layer      RGB565   = 261120 Bytes
-//          0xC01B E400              Free memory pointer for raw skin data 5512192 Bytes free for the skin raw data
+//          0xC017 E800              Layer 5                ARGB8888 = 522240 Bytes             Use for skin sliding page
+//          0xC01F E000              Touch Sense layer      RGB565   = 261120 Bytes
+//          0xC023 DC00              Free memory pointer for raw skin data 5776384 Bytes free for the skin raw data
 //              ...
 //          0xC07C 0000              256K database for skin info
 //
@@ -67,16 +68,17 @@
 
 
 
-
-
+#define GRAFX_USE_SLIDING_PAGE
+#define GRAFX_SLIDING_PAGE_GRANULARITY                  16          // Each step is 10 Pixel wide
+#define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
 
 #define GRAFX_USE_V_SYNC
-#define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                 // if there is enough memory to construct on a hidden layer. (prevent glitch)
+#define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
 
 //#define GRAFX_DEBUG_GUI
 //#define GRAFX_PAINT_BOX_DEBUG
-#define GRAFX_PAINT_BOX_DEBUG_COLOR         RED
+#define GRAFX_PAINT_BOX_DEBUG_COLOR                     RED
 
 #ifdef DIGINI_USE_QSPI
 #ifndef DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE
@@ -118,8 +120,8 @@
 
 #define DIGINI_USE_MULTI_LINE
 
-#define DIGINI_MAX_PRINT_NUMBER_OF_LINE         8									// This is the maximum number of line in the same string
-#define DIGINI_MAX_PRINT_SIZE                   256									// This the maximum size of the string to print
+#define DIGINI_MAX_PRINT_NUMBER_OF_LINE                 8               // This is the maximum number of line in the same string
+#define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
 
 
 #define DIGINI_USE_SERV_DATE
@@ -143,6 +145,7 @@
                         X_LAYER( FOREGROUND_DISPLAY_LAYER_0,    LAYER_FOREGROUND,  PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
                         X_LAYER( CONSTRUCTION_BACKGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
                         X_LAYER( CONSTRUCTION_FOREGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+                        X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
                         X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
 
 

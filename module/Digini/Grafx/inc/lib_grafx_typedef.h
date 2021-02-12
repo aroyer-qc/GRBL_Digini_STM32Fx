@@ -376,6 +376,15 @@ struct Meter_t
     uint16_t       Options;
 };
 
+struct PageSlide_t
+{
+    Service_t      Service;
+    uint16_t	   ServiceFilter;
+    Box_t		   Box;				// It is also the Touch Area
+    SlideDir_e     direction;
+    uint16_t       Options;
+};
+
 struct Panel_t
 {
     Service_t      Service;

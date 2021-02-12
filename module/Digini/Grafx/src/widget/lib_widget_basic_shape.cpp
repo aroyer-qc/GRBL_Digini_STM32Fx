@@ -40,7 +40,7 @@
 //
 //  Constructor:    CBasicShape
 //
-//  Parameter(s):   Exchange_t         pExchange         Pointer to BasicShape_t structure
+//  Parameter(s):   BasicShape_t         pBasicShape         Pointer to BasicShape_t structure
 //
 //  Description:    Initialize widget's service.
 //

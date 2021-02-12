@@ -478,6 +478,9 @@
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_meter.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_page_slide.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_panel.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -155,15 +155,15 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     // ------------------------
     // Coolant IO
   #ifdef GRBL_USE_COOLANT_FLOOD
-	IO_PinInit(IO_COOLANT_FLOOD);
+    IO_PinInit(IO_COOLANT_FLOOD);
   #endif
   #ifdef ENABLE_M7
-	IO_PinInit(IO_COOLANT_MIST);
+    IO_PinInit(IO_COOLANT_MIST);
   #endif
 
     // ------------------------
     // Probe IO
-	IO_PinInit(IO_PROBE);
+    IO_PinInit(IO_PROBE);
 
     // ------------------------
     // Spindle IO
@@ -172,16 +172,16 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     IO_PinInit(IO_SPINDLE_ENABLE);
   #else
    #ifndef ENABLE_DUAL_AXIS
-	#if USE_SPINDLE_DIRECTION_PIN
+    #if USE_SPINDLE_DIRECTION_PIN
     IO_PinInit(IO_SPINDLE_DIRECTION);
-	#endif
+    #endif
    #endif
   #endif
  #else
-	IO_PinInit(IO_SPINDLE_ENABLE);
+    IO_PinInit(IO_SPINDLE_ENABLE);
   #ifndef ENABLE_DUAL_AXIS
    #if USE_SPINDLE_DIRECTION_PIN
-	IO_PinInit(IO_SPINDLE_DIRECTION);
+    IO_PinInit(IO_SPINDLE_DIRECTION);
    #endif
   #endif
  #endif
@@ -211,7 +211,7 @@ void ClassTaskGRBL::Run(void)
 
     // --------------------------------------------------------------------------------------------
 
-	TERM_Initialize();         // Init terminal (UART or Virtual)
+    TERM_Initialize();         // Init terminal (UART or Virtual)
     system_init();
     stepper_init();
     settings_init();
@@ -230,56 +230,56 @@ void ClassTaskGRBL::Run(void)
 
     if(bit_istrue(settings.flags, BITFLAG_HOMING_ENABLE))
     {
-		sys.state = STATE_ALARM;
+        sys.state = STATE_ALARM;
     }
     else
     {
-		sys.state = STATE_IDLE;
+        sys.state = STATE_IDLE;
     }
 
-	// Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
-	// will return to this loop to be cleanly re-initialized.
+    // Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
+    // will return to this loop to be cleanly re-initialized.
 
     for(;;)
     {
-		// Reset system variables.
-		uint16_t prior_state = sys.state;
-		uint8_t home_state = sys.is_homed;
+        // Reset system variables.
+        uint16_t prior_state = sys.state;
+        uint8_t home_state = sys.is_homed;
 
-		system_clear();
-		sys.state = prior_state;
-		sys.is_homed = home_state;
+        system_clear();
+        sys.state = prior_state;
+        sys.is_homed = home_state;
 
-		probe_reset();
+        probe_reset();
 
-		sys_probe_state = 0;
-		sys_rt_exec_state = 0;
-		sys_rt_exec_alarm = 0;
-		sys_rt_exec_motion_override = 0;
-		sys_rt_exec_accessory_override = 0;
+        sys_probe_state = 0;
+        sys_rt_exec_state = 0;
+        sys_rt_exec_alarm = 0;
+        sys_rt_exec_motion_override = 0;
+        sys_rt_exec_accessory_override = 0;
 
-		// Reset Grbl-Advanced primary systems.
- 		gc_init();
-		planner_init();
- 		mc_init();
-		TC_Init();
+        // Reset Grbl-Advanced primary systems.
+         gc_init();
+        planner_init();
+         mc_init();
+        TC_Init();
 
-		coolant_init();
-		limits_init();
-		probe_init();
-		spindle_init();
-		st_reset();
+        coolant_init();
+        limits_init();
+        probe_init();
+        spindle_init();
+        st_reset();
 
-		// Sync cleared gcode and planner positions to current system position.
-		plan_sync_position();
-		gc_sync_position();
+        // Sync cleared gcode and planner positions to current system position.
+        plan_sync_position();
+        gc_sync_position();
 
-		// Print welcome message. Indicates an initialization has occured at power-up or with a reset.
-		report_init_message();
+        // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
+        report_init_message();
 
-		//-- Start Grbl-Advanced main loop. Processes program inputs and executes them. --//
-		protocol_main_loop();
-		//--------------------------------------------------------------------------------//
+        //-- Start Grbl-Advanced main loop. Processes program inputs and executes them. --//
+        protocol_main_loop();
+        //--------------------------------------------------------------------------------//
 
         // Clear serial buffer after soft reset to prevent undefined behavior
         //  FifoUsart_Init(); it's DMA... so not needed!! no buffer allocated

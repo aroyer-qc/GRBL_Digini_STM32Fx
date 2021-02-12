@@ -530,6 +530,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
             State = 2;  // Grayout
           #endif
         }
+        break;
 
         case 2:
         {
@@ -539,6 +540,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
             State = 2;  // Grayout
           #endif
         }
+        break;
 
         case 3:
         {
@@ -548,6 +550,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
             State = 2;  // Grayout
           #endif
         }
+        break;
 
         case 4:
         {
@@ -557,6 +560,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
             State = 2;  // Grayout
           #endif
         }
+        break;
 
         case 5:
         {
@@ -566,6 +570,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
             State = 2;  // Grayout
           #endif
         }
+        break;
 
         case 6:
         {

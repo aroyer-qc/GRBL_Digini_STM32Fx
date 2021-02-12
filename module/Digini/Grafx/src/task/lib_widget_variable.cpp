@@ -268,6 +268,25 @@ Meter_t Meter[APP_NB_METER_CONST] =
 #endif   // METER_DEF
 
 //-------------------------------------------------------------------------------------------------
+//  PAGE_SLIDE Widget
+//-------------------------------------------------------------------------------------------------
+
+#ifdef PAGE_SLIDE_DEF
+PageSlide_t PageSlide[APP_NB_PAGE_SLIDE_CONST] =
+{
+    #define X_PAGE_SLIDE( ENUM_ID, SERVICE, SUB_SERVICE, TIMING, POS_X, POS_Y, SIZE_X, SIZE_Y, SLIDE_DIR, OPTIONS, SERVICE_FILTER)\
+    {                                                                                                    \
+        {(uint32_t)SERVICE, (uint16_t)SUB_SERVICE, TIMING}, SERVICE_FILTER,                              \
+        {{(int16_t)POS_X, (int16_t)POS_Y}, {(uint16_t)SIZE_X, (uint16_t)SIZE_Y}},                        \
+		 (SlideDir_e)SLIDE_DIR,                                                                          \
+         (uint16_t)OPTIONS,                                                                              \
+    },
+    PAGE_SLIDE_DEF
+  #undef X_PAGE_SLIDE
+};
+#endif   // PAGE_SLIDE_DEF
+
+//-------------------------------------------------------------------------------------------------
 //  PANEL Widget
 //-------------------------------------------------------------------------------------------------
 

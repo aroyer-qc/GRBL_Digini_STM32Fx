@@ -50,24 +50,25 @@ class GRAFX_Interface
 {
     public:
 
-        virtual void            Initialize          (void* pArg)                                                                                                                                             = 0;
-        virtual void            DisplayOn           (void)                                                                                                                                                   = 0;
-        virtual void            DisplayOff          (void)                                                                                                                                                   = 0;
-        virtual void            LayerConfig         (CLayer* pLayer)                                                                                                                                         = 0;
-        virtual void            CopyLinear          (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)                                                                           = 0;
-        virtual void            BlockCopy           (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)                                                     = 0;
-        virtual void            BlockCopy           (void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode) = 0;
-        virtual void            DrawRectangle       (Box_t* pBox)                                                                                                                                            = 0;
-        virtual void            PrintFont           (FontDescriptor_t* pDescriptor, Cartesian_t* pPos)                                                                                                       = 0;
-        virtual void            DrawBox             (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness)                                                                     = 0;
-        virtual void            DrawPixel           (uint16_t PosX, uint16_t PosY)                                                                                                                           = 0;
-        virtual void            DrawHLine           (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess)                                                                                      = 0;
-        virtual void            DrawVLine           (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess)                                                                                      = 0;
-        virtual void            DrawLine            (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction)                                                                = 0;
-        virtual void            CopyLayerToLayer    (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox)                                                                                                        = 0;
-        virtual void            CopyLayerToLayer    (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height)                                                            = 0;
+        virtual void            Initialize            (void* pArg)                                                                                                                                             = 0;
+        virtual void            DisplayOn             (void)                                                                                                                                                   = 0;
+        virtual void            DisplayOff            (void)                                                                                                                                                   = 0;
+        virtual void            LayerConfig           (CLayer* pLayer)                                                                                                                                         = 0;
+        virtual void            CopyLinear            (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)                                                                           = 0;
+        virtual void            BlockCopy             (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)                                                     = 0;
+        virtual void            BlockCopy             (void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode) = 0;
+        virtual void            DrawRectangle         (Box_t* pBox)                                                                                                                                            = 0;
+        virtual void            PrintFont             (FontDescriptor_t* pDescriptor, Cartesian_t* pPos)                                                                                                       = 0;
+        virtual void            DrawBox               (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness)                                                                     = 0;
+        virtual void            DrawPixel             (uint16_t PosX, uint16_t PosY)                                                                                                                           = 0;
+        virtual void            DrawHLine             (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess)                                                                                      = 0;
+        virtual void            DrawVLine             (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess)                                                                                      = 0;
+        virtual void            DrawLine              (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction)                                                                = 0;
+        virtual void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox)                                                                                                        = 0;
+        virtual void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height)                                                            = 0;
+        virtual void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height)                        = 0;
         #ifdef GRAFX_USE_V_SYNC
-        virtual void            WaitFor_V_Sync      (void)                                                                                                                                                   = 0;
+        virtual void            WaitFor_V_Sync        (void)                                                                                                                                                   = 0;
         #endif
 };
 

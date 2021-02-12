@@ -190,6 +190,19 @@ enum ExchangeType_e
     EXCHANGE_INPUT_TYPE_HEXA,
 };
 
+enum SlideDir_e
+{
+    SLIDING_NONE            = 0x0,
+    SLIDING_LEFT            = 0x1,
+    SLIDING_RIGHT           = 0x2,
+    SLIDING_LEFT_AND_RIGHT  = 0x3,
+    SLIDING_UP              = 0x4,
+    SLIDING_DOWN            = 0x8,
+    SLIDING_UP_AND_DOWN     = 0xC,
+    SLIDING_ALL_DIRECTION   = 0xF,
+};
+
+
 //-------------------------------------------------------------------------------------------------
 
 

@@ -45,6 +45,7 @@ void                CopyLinear                  (void* pSrc, uint16_t PosX, uint
 void                CopyLinear                  (Skin_e Image, Cartesian_t Position, BlendMode_e BlendMode);
 void                CopyLayerToLayer            (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox);
 void                CopyLayerToLayer            (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height);
+void                CopyBlockLayerToLayer       (Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height);
 void                DrawHLine                   (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thickness = 1);
 void                DrawVLine                   (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thickness = 1);
 void                DrawDLine                   (float X1, float Y1, float X2, float Y2);

@@ -142,6 +142,16 @@ enum Widget_e
       APP_END_METER_CONST,
   #endif
 
+  // ---------- PageSlide widget list ---------------------
+
+  #ifdef PAGE_SLIDE_DEF
+      APP_START_PAGE_SLIDE_CONST,
+    #define X_PAGE_SLIDE(ENUM_ID, SERVICE, SUB_SERVICE, TIMING, POS_X, POS_Y, SIZE_X, SIZE_Y, SLIDE_DIR, OPTIONS, SERVICE_FILTER) ENUM_ID,
+      PAGE_SLIDE_DEF
+    #undef  X_PAGE_SLIDE
+      APP_END_PAGE_SLIDE_CONST,
+  #endif
+
   // ---------- Panel widget list -------------------------
 
   #ifdef PANEL_DEF

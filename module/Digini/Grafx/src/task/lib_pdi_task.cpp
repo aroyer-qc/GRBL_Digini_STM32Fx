@@ -398,6 +398,7 @@ Widget_e PDI_myClassTask::GetZoneID(void)
     uint32_t     PixelAddress;
     uint8_t      PixelSize;
     Cartesian_t  LayerSize;
+    Widget_e     WidgetZoneID;
 
     LayerSize     = LayerTable[TOUCH_SENSE_LAYER].GetSize();
     PixelSize     = LayerTable[TOUCH_SENSE_LAYER].GetPixelSize();
@@ -406,9 +407,24 @@ Widget_e PDI_myClassTask::GetZoneID(void)
     PixelAddress *= PixelSize;
     PixelAddress += LayerTable[TOUCH_SENSE_LAYER].GetAddress();
 
-    uint16_t PixelValue = *((uint16_t*)PixelAddress);
+    switch(PixelSize)
+    {
+        case 1: // 1 Bytes touch zone
+        {
+            WidgetZoneID = Widget_e(*((uint8_t*)PixelAddress));
+        }
+        break;
 
-    return Widget_e(PixelValue);
+        case 2: // 2 Bytes touch zone
+        {
+            WidgetZoneID = Widget_e(*((uint16_t*)PixelAddress));
+        }
+        break;
+
+        // More than 65536 touch zone ID is useless
+    }
+
+    return WidgetZoneID;
 }
 
 //-------------------------------------------------------------------------------------------------

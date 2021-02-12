@@ -41,45 +41,45 @@
 #define NB_OF_UART_SUPPORTED_CFG                8
 #define NB_OF_UART_DMA_SUPPORTED_CFG            8
 
-#define UART_DRIVER_SUPPORT_UART1_CFG			DEF_ENABLED
-#define UART_DRIVER_SUPPORT_UART2_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART3_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART4_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART5_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART6_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART7_CFG			DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART8_CFG			DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART1_CFG            DEF_ENABLED
+#define UART_DRIVER_SUPPORT_UART2_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART3_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART4_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART5_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART6_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART7_CFG            DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART8_CFG            DEF_DISABLED
 #define UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG    DEF_DISABLED
 
-#define UART_DRIVER_SUPPORT_UART1_DMA_CFG		DEF_ENABLED
-#define UART_DRIVER_SUPPORT_UART2_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART3_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART4_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART5_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART6_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART7_DMA_CFG		DEF_DISABLED
-#define UART_DRIVER_SUPPORT_UART8_DMA_CFG		DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART1_DMA_CFG        DEF_ENABLED
+#define UART_DRIVER_SUPPORT_UART2_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART3_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART4_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART5_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART6_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART7_DMA_CFG        DEF_DISABLED
+#define UART_DRIVER_SUPPORT_UART8_DMA_CFG        DEF_DISABLED
 
 #define TERMINAL_SERIAL                 UART_DRIVER_ID_1
 //#define DEBUG_SERIAL                  UART_DRIVER_ID_3
 
 #if UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED
 
-//	#define INTERNAL_SERIAL                 DRIVER_UART_UART_VIRTUAL
+//    #define INTERNAL_SERIAL                 DRIVER_UART_UART_VIRTUAL
 
-	//-------------------------------------------------------------------------------------------------
-	// Virtual UART
+    //-------------------------------------------------------------------------------------------------
+    // Virtual UART
 
-	// Hijack interrupt for module we don't use and transform them into software interrupt
-	#define VirtualUartTX_IRQHandler            CAN3_TX_IRQHandler
-	#define VirtualUartTX_IRQn                  CAN3_TX_IRQn
-	#define VirtualUartRX_IRQHandler            CAN2_TX_IRQHandler
-	#define VirtualUartRX_IRQn                  CAN2_TX_IRQn
+    // Hijack interrupt for module we don't use and transform them into software interrupt
+    #define VirtualUartTX_IRQHandler            CAN3_TX_IRQHandler
+    #define VirtualUartTX_IRQn                  CAN3_TX_IRQn
+    #define VirtualUartRX_IRQHandler            CAN2_TX_IRQHandler
+    #define VirtualUartRX_IRQn                  CAN2_TX_IRQn
 
-	// Function callback of the user library or application so it can be copied to local buffer
-	//          prototype void USER_DataReceived(const uint8_t* pBuffer, uint16_t Size);
-	//
-	//   Internal UART function call            Outside callback function name
+    // Function callback of the user library or application so it can be copied to local buffer
+    //          prototype void USER_DataReceived(const uint8_t* pBuffer, uint16_t Size);
+    //
+    //   Internal UART function call            Outside callback function name
 // extern void app_VirtualDataTransmit          (const uint8_t* pBuffer, uint16_t Size);
 // #define ReceivedFromVirtualUart              App_VirtualDataTransmit
 
@@ -92,36 +92,36 @@
 enum UART_ID_e
 {
     #if (UART_DRIVER_SUPPORT_UART1_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_1,
-	#endif
+        UART_DRIVER_ID_1,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART2_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_2,
-	#endif
+        UART_DRIVER_ID_2,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART3_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_3,
-	#endif
+        UART_DRIVER_ID_3,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART4_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_4,
-	#endif
+        UART_DRIVER_ID_4,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART5_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_5,
-	#endif
+        UART_DRIVER_ID_5,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART6_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_6,
-	#endif
+        UART_DRIVER_ID_6,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART7_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_7,
-	#endif
+        UART_DRIVER_ID_7,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART8_CFG == DEF_ENABLED)
-		UART_DRIVER_ID_8,
-	#endif
+        UART_DRIVER_ID_8,
+    #endif
 
     NB_OF_REAL_UART_DRIVER,
     INTERNAL_RESYNC_OFFSET = NB_OF_REAL_UART_DRIVER - 1,
@@ -136,36 +136,36 @@ enum UART_ID_e
 enum UART_DMA_ID_e
 {
     #if (UART_DRIVER_SUPPORT_UART1_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_1,
-	#endif
+        UART_DMA_DRIVER_ID_1,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART2_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_2,
-	#endif
+        UART_DMA_DRIVER_ID_2,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART3_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_3,
-	#endif
+        UART_DMA_DRIVER_ID_3,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART4_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_4,
-	#endif
+        UART_DMA_DRIVER_ID_4,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART5_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_5,
-	#endif
+        UART_DMA_DRIVER_ID_5,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART6_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_6,
-	#endif
+        UART_DMA_DRIVER_ID_6,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART7_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_7,
-	#endif
+        UART_DMA_DRIVER_ID_7,
+    #endif
 
     #if (UART_DRIVER_SUPPORT_UART8_DMA_CFG == DEF_ENABLED)
-		UART_DMA_DRIVER_ID_8,
-	#endif
+        UART_DMA_DRIVER_ID_8,
+    #endif
 
      NB_OF_UART_DMA_DRIVER,
 
@@ -173,14 +173,14 @@ enum UART_DMA_ID_e
 
 #if (UART_DRIVER_SUPPORT_UART1_DMA_CFG  == DEF_ENABLED) || \
     (UART_DRIVER_SUPPORT_UART2_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART3_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART4_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART5_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART6_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART7_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART8_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART9_DMA_CFG  == DEF_ENABLED) || \
-	(UART_DRIVER_SUPPORT_UART10_DMA_CFG == DEF_ENABLED)
+    (UART_DRIVER_SUPPORT_UART3_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART4_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART5_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART6_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART7_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART8_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART9_DMA_CFG  == DEF_ENABLED) || \
+    (UART_DRIVER_SUPPORT_UART10_DMA_CFG == DEF_ENABLED)
 #define UART_DRIVER_DMA_CFG                        DEF_ENABLED
 #else
 #define UART_DRIVER_DMA_CFG                        DEF_DISABLED

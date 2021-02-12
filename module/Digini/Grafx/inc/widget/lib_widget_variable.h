@@ -94,6 +94,11 @@ extern "C" {
   extern Meter_t            Meter               [APP_NB_METER_CONST];
  #endif
 
+ #ifdef PAGE_SLIDE_DEF
+  #define APP_NB_PAGE_SLIDE_CONST           (APP_END_PAGE_SLIDE_CONST       - APP_START_PAGE_SLIDE_CONST)       - 1
+  extern PageSlide_t        PageSlide           [APP_NB_PAGE_SLIDE_CONST];
+ #endif
+
  #ifdef PANEL_DEF
   #define APP_NB_PANEL_CONST                (APP_END_PANEL_CONST            - APP_START_PANEL_CONST)            - 1
   extern Panel_t            Panel               [APP_NB_PANEL_CONST];

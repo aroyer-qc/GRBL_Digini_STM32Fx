@@ -39,21 +39,21 @@
 
 #define TIM_USE_PWM_FEATURE_CFG                         DEF_ENABLED
 
-#define TIM_DRIVER_SUPPORT_TIM1_CFG			            DEF_ENABLED                 // Timer for spindle
-#define TIM_DRIVER_SUPPORT_TIM2_CFG			            DEF_ENABLED                 // Debounce limit switch
-#define TIM_DRIVER_SUPPORT_TIM3_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM4_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM5_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM6_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM7_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM8_CFG			            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM9_CFG			            DEF_ENABLED                 // Timer for stepper
-#define TIM_DRIVER_SUPPORT_TIM10_CFG		            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM11_CFG		            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM12_CFG		            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM13_CFG		            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_TIM14_CFG		            DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_LPTIM1_CFG		            DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM1_CFG                        DEF_ENABLED                 // Timer for spindle
+#define TIM_DRIVER_SUPPORT_TIM2_CFG                        DEF_ENABLED                 // Debounce limit switch
+#define TIM_DRIVER_SUPPORT_TIM3_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM4_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM5_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM6_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM7_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM8_CFG                        DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM9_CFG                        DEF_ENABLED                 // Timer for stepper
+#define TIM_DRIVER_SUPPORT_TIM10_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM11_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM12_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM13_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_TIM14_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_LPTIM1_CFG                    DEF_DISABLED
 
 // Note:
 //       1 - if compare not used, code for retrieving source IRQ will be discarded
@@ -99,64 +99,64 @@
 enum TIM_ID_e
 {
     #if (TIM_DRIVER_SUPPORT_TIM1_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_1,
-	#endif
+        TIM_DRIVER_ID_1,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM2_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_2,
-	#endif
+        TIM_DRIVER_ID_2,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM3_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_3,
-	#endif
+        TIM_DRIVER_ID_3,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM4_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_4,
-	#endif
+        TIM_DRIVER_ID_4,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM5_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_5,
-	#endif
+        TIM_DRIVER_ID_5,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM6_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_6,
-	#endif
+        TIM_DRIVER_ID_6,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM7_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_7,
-	#endif
+        TIM_DRIVER_ID_7,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM8_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_8,
-	#endif
+        TIM_DRIVER_ID_8,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM9_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_9,
-	#endif
+        TIM_DRIVER_ID_9,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM10_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_10,
-	#endif
+        TIM_DRIVER_ID_10,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM11_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_11,
-	#endif
+        TIM_DRIVER_ID_11,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM12_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_12,
-	#endif
+        TIM_DRIVER_ID_12,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM13_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_13,
-	#endif
+        TIM_DRIVER_ID_13,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_TIM14_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_14,
-	#endif
+        TIM_DRIVER_ID_14,
+    #endif
 
     #if (TIM_DRIVER_SUPPORT_LPTIM1_CFG == DEF_ENABLED)
-		TIM_DRIVER_ID_LP1,
-	#endif
+        TIM_DRIVER_ID_LP1,
+    #endif
 
      NB_OF_TIM_DRIVER,
 };

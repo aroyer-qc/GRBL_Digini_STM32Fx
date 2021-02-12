@@ -92,5 +92,44 @@ void GrafxDriver::CopyLayerToLayer(Layer_e SrcLayer, Layer_e DstLayer, uint16_t 
 #endif
 
 //-------------------------------------------------------------------------------------------------
+//
+//   Function Name: CopyBlockLayerToLayer
+//
+//   Parameter(s):  Layer_e             SrcLayer
+//                  Layer_e             DstLayer
+//                  uint16_t            X
+//                  uint16_t            Y
+//                  uint16_t            Width
+//                  uint16_t            Height
+//   Return Value:  none
+//
+//   Description:   Copy a rectangle region from a layer to another layer
+//
+//-------------------------------------------------------------------------------------------------
+#ifndef GRAFX_DRIVER_USE_OWN_COPY_LAYER_TO_LAYER
+void GrafxDriver::CopyLayerToLayer(Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height)
+{
+    CLayer*      pLayer;
+    Box_t        Box;
+    Cartesian_t  Pos;
+
+    Box.Pos.X       = SrcX;
+    Box.Size.Width  = Width;
+    Box.Pos.Y       = SrcY;
+    Box.Size.Height = Height;
+
+    Pos.X = DstX;
+    Pos.Y = DstY;
+
+    CLayer::PushDrawing();
+    CLayer::SetDrawing(DstLayer);
+    pLayer = &LayerTable[SrcLayer];
+    BlockCopy((void*)pLayer->GetAddress(), &Box, &Pos, pLayer->GetPixelFormat(), CLEAR_BLEND);
+    CLayer::PopDrawing();
+}
+#endif
+
+
+//-------------------------------------------------------------------------------------------------
 #endif // DIGINI_USE_GRAFX
 

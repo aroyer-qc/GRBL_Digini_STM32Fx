@@ -284,6 +284,30 @@ class CMeter : public CWidgetInterface
 };
 #endif
 
+#ifdef PAGE_SLIDE_DEF
+class CPageSlide : public CWidgetInterface
+{
+    public:
+                            CPageSlide                  (PageSlide_t* pPageSlide);
+                           ~CPageSlide                  (){};
+
+        Link_e              Create                      (PageWidget_t* pPageWidget);
+        Link_e              Refresh                     (MsgRefresh_t* pMsg);
+        void                Finalize                    (void);
+
+    private:
+
+        void                Draw                        (ServiceReturn_t* pService);
+        void                DrawOnce                    (ServiceReturn_t* pService);
+
+        PageSlide_t*        m_pPageSlide;
+
+        ServiceEvent_e      m_ServiceState;
+        ServiceEvent_e      m_LastServiceState;
+        PageWidget_t*       m_pPageWidget;
+};
+#endif
+
 #ifdef PANEL_DEF
 class CPanel : public CWidgetInterface
 {

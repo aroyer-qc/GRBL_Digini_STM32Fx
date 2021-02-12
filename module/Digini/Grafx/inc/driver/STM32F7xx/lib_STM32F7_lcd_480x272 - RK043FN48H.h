@@ -68,34 +68,35 @@ class GrafxDriver : public GRAFX_Interface
 {
     public:
 
-        void            Initialize          (void* pArg);
-        void            DisplayOn           (void);
-        void            DisplayOff          (void);
-        void            LayerConfig         (CLayer* pLayer);
-        void            CopyLinear          (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
-        void            BlockCopy           (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
-        void            BlockCopy           (void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
-        void            DrawRectangle       (Box_t* pBox);
-        void            PrintFont           (FontDescriptor_t* pDescriptor, Cartesian_t* pPos);
-        void            DrawBox             (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness);
-        void            DrawPixel           (uint16_t PosX, uint16_t PosY);
-        void            DrawHLine           (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess);
-        void            DrawVLine           (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess);
-        void            DrawLine            (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction);
+        void            Initialize            (void* pArg);
+        void            DisplayOn             (void);
+        void            DisplayOff            (void);
+        void            LayerConfig           (CLayer* pLayer);
+        void            CopyLinear            (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            BlockCopy             (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            BlockCopy             (void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            DrawRectangle         (Box_t* pBox);
+        void            PrintFont             (FontDescriptor_t* pDescriptor, Cartesian_t* pPos);
+        void            DrawBox               (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness);
+        void            DrawPixel             (uint16_t PosX, uint16_t PosY);
+        void            DrawHLine             (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess);
+        void            DrawVLine             (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess);
+        void            DrawLine              (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction);
 
       #ifdef GRAFX_USE_V_SYNC
-        void            WaitFor_V_Sync      (void);
+        void            WaitFor_V_Sync        (void);
       #endif
 
-        void            CopyLayerToLayer    (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox);
-        void            CopyLayerToLayer    (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height);
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox);
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height);
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height);
 
     private:
 
-        void            Line                (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
-        void            IO_Initialize       (void);     // Initialize the IO on the processor
-        void            LayerInitialize     (void);
-        void            LCD_Initialize      (void);
+        void            Line                  (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
+        void            IO_Initialize         (void);     // Initialize the IO on the processor
+        void            LayerInitialize       (void);
+        void            LCD_Initialize        (void);
 };
 
 //-------------------------------------------------------------------------------------------------
