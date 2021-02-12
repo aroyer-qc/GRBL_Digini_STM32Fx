@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_lms_norm_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_lms_norm_q31.c    
 *    
-* Description:	Processing function for the Q31 NLMS filter.    
+* Description:    Processing function for the Q31 NLMS filter.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -72,7 +72,7 @@
 * The output signal and error signal are in 1.31 format.     
 *    
 * \par    
-* 	In this filter, filter coefficients are updated for each sample and the    
+*     In this filter, filter coefficients are updated for each sample and the    
 * updation of filter cofficients are saturted.    
 *     
 */

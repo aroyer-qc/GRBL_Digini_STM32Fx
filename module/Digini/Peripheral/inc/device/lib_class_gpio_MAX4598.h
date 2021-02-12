@@ -38,12 +38,12 @@ enum MAX4598_e
 
 struct MAX4598_PinStruct_t
 {
-	IO_Output_e			GPIO_A0;
-	IO_Output_e			GPIO_A1;
-	IO_Output_e			GPIO_A2;
-	IO_Output_e			GPIO_A3;
-	IO_Output_e			GPIO_Enable;
-	IO_Output_e			GPIO_Latch;
+    IO_Output_e            GPIO_A0;
+    IO_Output_e            GPIO_A1;
+    IO_Output_e            GPIO_A2;
+    IO_Output_e            GPIO_A3;
+    IO_Output_e            GPIO_Enable;
+    IO_Output_e            GPIO_Latch;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -60,14 +60,14 @@ class MAX4598
 
     private:
 
-        MAX4598_PinStruct_t*		m_pPinStruct;
+        MAX4598_PinStruct_t*        m_pPinStruct;
 };
 
 //-------------------------------------------------------------------------------------------------
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-extern class   MAX4598                 	SWITCH_MAX4598;
+extern class   MAX4598                     SWITCH_MAX4598;
 
 #ifdef LIB_DS3502_GLOBAL
  class   MAX4598                        SWITCH_MAX4598;

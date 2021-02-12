@@ -359,7 +359,7 @@ void HAL_GPIO_DeInit(GPIO_TypeDef  *GPIOx, uint32_t GPIO_Pin)
         /* Clear Rising Falling edge configuration */
         EXTI->RTSR &= ~((uint32_t)iocurrent);
         EXTI->FTSR &= ~((uint32_t)iocurrent);
-	  }
+      }
     }
   }
 }

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_var_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_var_f32.c    
 *    
-* Description:	Variance of the elements of a floating-point vector.    
+* Description:    Variance of the elements of a floating-point vector.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -51,11 +51,11 @@
  * The underlying algorithm is used:    
  *    
  * <pre>    
- * 	Result = (sumOfSquares - sum<sup>2</sup> / blockSize) / (blockSize - 1)   
+ *     Result = (sumOfSquares - sum<sup>2</sup> / blockSize) / (blockSize - 1)   
  *   
- *	   where, sumOfSquares = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]   
+ *       where, sumOfSquares = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]   
  *   
- *	                   sum = pSrc[0] + pSrc[1] + pSrc[2] + ... + pSrc[blockSize-1]   
+ *                       sum = pSrc[0] + pSrc[1] + pSrc[2] + ... + pSrc[blockSize-1]   
  * </pre>   
  *    
  * There are separate functions for floating point, Q31, and Q15 data types.    
@@ -94,11 +94,11 @@ void arm_var_f32(
 
   float32_t meanOfSquares, mean, squareOfMean;   /* Temporary variables */
 
-	if(blockSize == 1)
-	{
-		*pResult = 0;
-		return;
-	}
+    if(blockSize == 1)
+    {
+        *pResult = 0;
+        return;
+    }
 
   /*loop Unrolling */
   blkCnt = blockSize >> 2u;
@@ -163,11 +163,11 @@ void arm_var_f32(
   /* Run the below code for Cortex-M0 */
   float32_t squareOfSum;                         /* Square of Sum */
 
-	if(blockSize == 1)
-	{
-		*pResult = 0;
-		return;
-	}
+    if(blockSize == 1)
+    {
+        *pResult = 0;
+        return;
+    }
 
   /* Loop over blockSize number of values */
   blkCnt = blockSize;

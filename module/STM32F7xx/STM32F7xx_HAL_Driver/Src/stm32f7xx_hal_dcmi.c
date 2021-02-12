@@ -682,7 +682,7 @@ HAL_StatusTypeDef HAL_DCMI_ConfigCrop(DCMI_HandleTypeDef *hdcmi, uint32_t X0, ui
   assert_param(IS_DCMI_WINDOW_HEIGHT(Y0));
   assert_param(IS_DCMI_WINDOW_COORDINATE(XSize));
   assert_param(IS_DCMI_WINDOW_COORDINATE(YSize));
-	
+    
   /* Configure CROP */
   hdcmi->Instance->CWSIZER = (XSize | (YSize << DCMI_CWSIZE_VLINE_Pos));
   hdcmi->Instance->CWSTRTR = (X0 | (Y0 << DCMI_CWSTRT_VST_Pos));

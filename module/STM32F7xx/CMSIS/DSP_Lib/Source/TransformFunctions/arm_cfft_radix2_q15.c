@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.   
 *   
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *   
-* Project: 	    CMSIS DSP Library   
-* Title:	    arm_cfft_radix2_q15.c   
+* Project:         CMSIS DSP Library   
+* Title:        arm_cfft_radix2_q15.c   
 *   
-* Description:	Radix-2 Decimation in Frequency CFFT & CIFFT Fixed point processing function   
+* Description:    Radix-2 Decimation in Frequency CFFT & CIFFT Fixed point processing function   
 *   
 *   
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
@@ -52,7 +52,7 @@ void arm_radix2_butterfly_inverse_q15(
   uint32_t fftLen,
   q15_t * pCoef,
   uint16_t twidCoefModifier);
-	
+    
 void arm_bitreversal_q15(
   q15_t * pSrc,
   uint32_t fftLen,

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_rfft_init_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_rfft_init_f32.c    
 *    
-* Description:	RFFT & RIFFT Floating point initialisation function    
+* Description:    RFFT & RIFFT Floating point initialisation function    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -54,7 +54,7 @@
 * \par    
 * Generation of realCoefA array:    
 * \par    
-* 	n = 4096    
+*     n = 4096    
 * <pre>for (i = 0; i < n; i++)    
 *  {    
 *    pATable[2 * i] = 0.5 * (1.0 - sin (2 * PI / (double) (2 * n) * (double) i));    
@@ -8286,11 +8286,11 @@ static const float32_t realCoefB[8192] = {
 * @param[in]     fftLenReal     length of the FFT.   
 * @param[in]     ifftFlagR      flag that selects forward (ifftFlagR=0) or inverse (ifftFlagR=1) transform.   
 * @param[in]     bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0) bit reversal of output.   
-* @return		The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported value.   
+* @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUMENT_ERROR if <code>fftLenReal</code> is not a supported value.   
 *    
 * \par Description:   
 * \par   
-* The parameter <code>fftLenReal</code>	Specifies length of RFFT/RIFFT Process. Supported FFT Lengths are 128, 512, 2048.    
+* The parameter <code>fftLenReal</code>    Specifies length of RFFT/RIFFT Process. Supported FFT Lengths are 128, 512, 2048.    
 * \par    
 * The parameter <code>ifftFlagR</code> controls whether a forward or inverse transform is computed.    
 * Set(=1) ifftFlagR to calculate RIFFT, otherwise RFFT is calculated.    

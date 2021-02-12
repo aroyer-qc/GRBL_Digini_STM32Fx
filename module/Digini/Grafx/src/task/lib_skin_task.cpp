@@ -201,15 +201,15 @@ bool SKIN_myClassTask::IsSkinLoaded(void)
 //-------------------------------------------------------------------------------------------------
 uint16_t SKIN_myClassTask::PercentLoader(void)
 {
-	// TODO (Alain#5#) need to check if we are causing problem by returning 0 here...
+    // TODO (Alain#5#) need to check if we are causing problem by returning 0 here...
 
 
-	if(m_TotalToLoad != 0)
-	{
-		return (uint16_t)((m_ReadCount * 100) / m_TotalToLoad);
-	}
+    if(m_TotalToLoad != 0)
+    {
+        return (uint16_t)((m_ReadCount * 100) / m_TotalToLoad);
+    }
 
-	return 0;
+    return 0;
 
 
 // on MP3 test there is no IF

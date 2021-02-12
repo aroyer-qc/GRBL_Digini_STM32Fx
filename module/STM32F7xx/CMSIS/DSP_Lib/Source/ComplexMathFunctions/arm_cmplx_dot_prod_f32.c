@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_cmplx_dot_prod_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_cmplx_dot_prod_f32.c    
 *    
-* Description:	Floating-point complex dot product    
+* Description:    Floating-point complex dot product    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  

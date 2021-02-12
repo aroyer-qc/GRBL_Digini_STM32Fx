@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_dct4_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_dct4_f32.c    
 *    
-* Description:	Processing function of DCT4 & IDCT4 F32.    
+* Description:    Processing function of DCT4 & IDCT4 F32.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -246,8 +246,8 @@ void arm_dct4_f32(
   arm_rfft_f32(S->pRfft, pInlineBuffer, pState);
 
         /*----------------------------------------------------------------------    
-	 *  Step3: Multiply the FFT output with the weights.    
-	 *----------------------------------------------------------------------*/
+     *  Step3: Multiply the FFT output with the weights.    
+     *----------------------------------------------------------------------*/
   arm_cmplx_mult_cmplx_f32(pState, weights, pState, S->N);
 
   /* ----------- Post-processing ---------- */
@@ -392,8 +392,8 @@ void arm_dct4_f32(
   arm_rfft_f32(S->pRfft, pInlineBuffer, pState);
 
         /*----------------------------------------------------------------------    
-	 *  Step3: Multiply the FFT output with the weights.    
-	 *----------------------------------------------------------------------*/
+     *  Step3: Multiply the FFT output with the weights.    
+     *----------------------------------------------------------------------*/
   arm_cmplx_mult_cmplx_f32(pState, weights, pState, S->N);
 
   /* ----------- Post-processing ---------- */

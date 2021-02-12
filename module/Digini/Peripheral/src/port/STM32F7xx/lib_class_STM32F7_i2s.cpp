@@ -132,12 +132,12 @@ void I2S::Initialize(void)
     uint32_t tmp = 0;
     uint32_t i2sclk = 0;
 
-	// Init the low level hardware : GPIO, CLOCK, CORTEX...etc
-	HAL_I2S_MspInit(m_pPort->pI2Sx);
+    // Init the low level hardware : GPIO, CLOCK, CORTEX...etc
+    HAL_I2S_MspInit(m_pPort->pI2Sx);
 
     /*----------------------- SPIx I2SCFGR & I2SPR Configuration -----------------*/
     /* Clear I2SMOD, I2SE, I2SCFG, PCMSYNC, I2SSTD, CKPOL, DATLEN and CHLEN bits */
-	m_pPort->pI2Sx->I2SCFGR &= ~(SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL |
+    m_pPort->pI2Sx->I2SCFGR &= ~(SPI_I2SCFGR_CHLEN | SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CKPOL |
                                  SPI_I2SCFGR_I2SSTD | SPI_I2SCFGR_PCMSYNC | SPI_I2SCFGR_I2SCFG |
                                  SPI_I2SCFGR_I2SE | SPI_I2SCFGR_I2SMOD);
     m_pPort->pI2Sx->I2SPR = 0x0002;
@@ -177,22 +177,22 @@ void I2S::Initialize(void)
       }
       else
       {
-  			i2sclk = I2S_GetClockFreq(hi2s);				// Get the I2S source clock value
+              i2sclk = I2S_GetClockFreq(hi2s);                // Get the I2S source clock value
       }
 
-      if(hi2s->Init.MCLKOutput == I2S_MCLKOUTPUT_ENABLE)	// Compute the Real divider depending on the MCLK output state, with a floating point
+      if(hi2s->Init.MCLKOutput == I2S_MCLKOUTPUT_ENABLE)    // Compute the Real divider depending on the MCLK output state, with a floating point
       {
-        tmp = (uint16_t)(((((i2sclk / 256) * 10) / hi2s->Init.AudioFreq)) + 5);					// MCLK output is enabled
+        tmp = (uint16_t)(((((i2sclk / 256) * 10) / hi2s->Init.AudioFreq)) + 5);                    // MCLK output is enabled
       }
       else
       {
-        tmp = (uint16_t)(((((i2sclk / (32 * packetlength)) *10 ) / hi2s->Init.AudioFreq)) + 5);	// MCLK output is disabled
+        tmp = (uint16_t)(((((i2sclk / (32 * packetlength)) *10 ) / hi2s->Init.AudioFreq)) + 5);    // MCLK output is disabled
       }
 
-      tmp = tmp / 10;								// Remove the floating point
-      i2sodd = (uint16_t)(tmp & (uint16_t)0x0001);	// Check the parity of the divider
-      i2sdiv = (uint16_t)((tmp - i2sodd) / 2);		// Compute the i2sdiv prescaler
-      i2sodd = (uint16_t) (i2sodd << 8);			// Get the Mask for the Odd bit (SPI_I2SPR[8]) register
+      tmp = tmp / 10;                                // Remove the floating point
+      i2sodd = (uint16_t)(tmp & (uint16_t)0x0001);    // Check the parity of the divider
+      i2sdiv = (uint16_t)((tmp - i2sodd) / 2);        // Compute the i2sdiv prescaler
+      i2sodd = (uint16_t) (i2sodd << 8);            // Get the Mask for the Odd bit (SPI_I2SPR[8]) register
     }
 
     // Test if the divider is 1 or 0 or greater than 0xFF
@@ -211,7 +211,7 @@ void I2S::Initialize(void)
                          (uint16_t)(hi2s->Init.Standard | (uint16_t)(hi2s->Init.DataFormat |
                          (uint16_t)hi2s->Init.CPOL))));
 
-    m_pPort->pI2Sx->I2SCFGR = tmpreg;		// Write to SPIx I2SCFGR
+    m_pPort->pI2Sx->I2SCFGR = tmpreg;        // Write to SPIx I2SCFGR
 }
 
 
@@ -481,37 +481,37 @@ void I2C::ClearBus(void)
 {
     uint8_t Count = 0;
 
-	m_pPort->pGPIO_SCL->OTYPER |= m_pPort->SCL_Pin;                                                 // Set I2C SCL as output open-drain
-	m_pPort->pGPIO_SDA->OTYPER |= m_pPort->SDA_Pin;                                                 // Set I2C SDA as output open-drain
-	m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as output open-drain
-	m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as output open-drain
-	m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x01, m_pPort->SCL_Pin);
-	m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x01, m_pPort->SDA_Pin);
-	m_pPort->pGPIO_SCL->BSRRL   = m_pPort->SCL_Pin;                                                 // Reset SCL
-	m_pPort->pGPIO_SDA->BSRRH   = m_pPort->SDA_Pin;                                                 // Assert SDA
+    m_pPort->pGPIO_SCL->OTYPER |= m_pPort->SCL_Pin;                                                 // Set I2C SCL as output open-drain
+    m_pPort->pGPIO_SDA->OTYPER |= m_pPort->SDA_Pin;                                                 // Set I2C SDA as output open-drain
+    m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as output open-drain
+    m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as output open-drain
+    m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x01, m_pPort->SCL_Pin);
+    m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x01, m_pPort->SDA_Pin);
+    m_pPort->pGPIO_SCL->BSRRL   = m_pPort->SCL_Pin;                                                 // Reset SCL
+    m_pPort->pGPIO_SDA->BSRRH   = m_pPort->SDA_Pin;                                                 // Assert SDA
 
     if((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0)                                           // If SDA hung
-	{
-		do                                                                                          // loop while SDA hung
-		{
-			m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;
+    {
+        do                                                                                          // loop while SDA hung
+        {
+            m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;
             BSP_Delay_uSec(5);
-			m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
+            m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
             BSP_Delay_uSec(5);
             Count++;
         }
-		while(((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0) && (Count < 20));
+        while(((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0) && (Count < 20));
 
         m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;                                               // Generate stop condition
-		m_pPort->pGPIO_SDA->BSRRL = m_pPort->SDA_Pin;
-		m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
-		m_pPort->pGPIO_SDA->BSRRH = m_pPort->SDA_Pin;
-	}
+        m_pPort->pGPIO_SDA->BSRRL = m_pPort->SDA_Pin;
+        m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
+        m_pPort->pGPIO_SDA->BSRRH = m_pPort->SDA_Pin;
+    }
 
-	m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as alternate function open-drain
-	m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as alternate function open-drain
-	m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x02, m_pPort->SCL_Pin);
-	m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x02, m_pPort->SDA_Pin);
+    m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as alternate function open-drain
+    m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as alternate function open-drain
+    m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x02, m_pPort->SCL_Pin);
+    m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x02, m_pPort->SDA_Pin);
 }
 */
 
@@ -594,11 +594,11 @@ void I2C::EV_IRQHandler()
 
     pI2C = m_pPort->pI2Cx;
 
-    Status = pI2C->ISR;				                            // Get I2C Status
+    Status = pI2C->ISR;                                            // Get I2C Status
 
     if(Status & I2C_ISR_ARLO)                                       // --- Master Lost Arbitration ---
     {
-    	m_Status  = SYS_ARBITRATION_LOST;                                // Set transfer status as Arbitration Lost
+        m_Status  = SYS_ARBITRATION_LOST;                                // Set transfer status as Arbitration Lost
         pI2C->ICR = I2C_ICR_ARLOCF;                                      // Clear Status Flags
     }
     else if(Status & I2C_ISR_BERR)                                  // --- Master Start Stop Error ---
@@ -668,10 +668,10 @@ void I2C::EV_IRQHandler()
 //-------------------------------------------------------------------------------------------------
 void I2C::ER_IRQHandler()
 {
-	//this->GetLastEvent();
-	//m_pPort->pI2Cx->SR1	= 0;													// After a  NACK, transfer is done
-	m_Status		    = SYS_READY;									            // We're done!
-	m_Timeout           = 0;
+    //this->GetLastEvent();
+    //m_pPort->pI2Cx->SR1    = 0;                                                    // After a  NACK, transfer is done
+    m_Status            = SYS_READY;                                                // We're done!
+    m_Timeout           = 0;
 }
 
 

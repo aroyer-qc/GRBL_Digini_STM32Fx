@@ -505,7 +505,7 @@ Link_e GUI_myClassTask::CreateAllWidget()
     {
         // TO DO init a timer for each widget contained in the page and according to his refresh rate
 
-		NewLink = (*pWidgetListPointer)->Create(pPage);
+        NewLink = (*pWidgetListPointer)->Create(pPage);
 
         // If a widget is a draw only once
         if(NewLink == REMOVE_WIDGET)

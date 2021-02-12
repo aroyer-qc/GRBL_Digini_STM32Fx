@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_fill_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_fill_f32.c    
 *    
-* Description:	Fills a constant value into a floating-point vector.   
+* Description:    Fills a constant value into a floating-point vector.   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -50,7 +50,7 @@
  * Fills the destination vector with a constant value.    
  *    
  * <pre>    
- * 	pDst[n] = value;   0 <= n < blockSize.    
+ *     pDst[n] = value;   0 <= n < blockSize.    
  * </pre>    
  *   
  * There are separate functions for floating point, Q31, Q15, and Q7 data types.     

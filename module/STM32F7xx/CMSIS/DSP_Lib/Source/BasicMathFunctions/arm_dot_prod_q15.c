@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_dot_prod_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_dot_prod_q15.c    
 *    
-* Description:	Q15 dot product.    
+* Description:    Q15 dot product.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  

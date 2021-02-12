@@ -150,10 +150,10 @@ void CGif::Draw(ServiceReturn_t* pService)
    #endif
   #endif
 
-	// Is this gif Active ?
-		// Select Next image and blend it
-	// no
-	    // Do nothing
+    // Is this gif Active ?
+        // Select Next image and blend it
+    // no
+        // Do nothing
 
     CLayer::PopDrawing();
 }

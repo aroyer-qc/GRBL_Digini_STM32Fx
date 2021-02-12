@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_sin_cos_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_sin_cos_q31.c    
 *    
-* Description:	Cosine & Sine calculation for Q31 values.   
+* Description:    Cosine & Sine calculation for Q31 values.   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  

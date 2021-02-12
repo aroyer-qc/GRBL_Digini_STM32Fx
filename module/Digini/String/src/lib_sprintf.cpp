@@ -49,10 +49,10 @@
 #define LIB_VAR_LONG                        (uint8_t)2
 */
 
-#define STR_OPT_PAD_ZERO            128	    // value in bit Position for padding with zero
-#define STR_OPT_PAD_LEFT            64     	// value in bit Position for Padding flag
-#define STR_OPT_LOWERCASE           32   	// value in bit Position for base
-#define STR_OPT_SIGN_NEGATIVE       16     	// value in bit Position for sign
+#define STR_OPT_PAD_ZERO            128        // value in bit Position for padding with zero
+#define STR_OPT_PAD_LEFT            64         // value in bit Position for Padding flag
+#define STR_OPT_LOWERCASE           32       // value in bit Position for base
+#define STR_OPT_SIGN_NEGATIVE       16         // value in bit Position for sign
 #define STR_OPT_BASE_HEXA           8       // value in bit Position for base
 
 
@@ -122,7 +122,7 @@ static size_t STR_prints(char* pOut, char* pString, size_t Width, uint8_t Option
         {
             for(; Width > 0; Width--)
             {
-            	STR_putchar(&pOut[Counter], PadChar);
+                STR_putchar(&pOut[Counter], PadChar);
                 Counter++;
             }
         }
@@ -132,7 +132,7 @@ static size_t STR_prints(char* pOut, char* pString, size_t Width, uint8_t Option
 
     for(; Width > 0; Width--)                               // Print padding character if any
     {
-    	STR_putchar(&pOut[Counter], PadChar);
+        STR_putchar(&pOut[Counter], PadChar);
         Counter++;
     }
 
@@ -327,7 +327,7 @@ size_t STR_vsnprintf(char* pOut, size_t Size, const char* pFormat, va_list va)
 
             if(*pFormat == '%')
             {
-            	STR_putchar(&pOut[Counter], *(char*)pFormat);
+                STR_putchar(&pOut[Counter], *(char*)pFormat);
                 Counter++;
             }
 
@@ -410,7 +410,7 @@ size_t STR_vsnprintf(char* pOut, size_t Size, const char* pFormat, va_list va)
         }
         else
         {
-        	STR_putchar(&pOut[Counter], *pFormat);
+            STR_putchar(&pOut[Counter], *pFormat);
             Counter++;
         }
     }

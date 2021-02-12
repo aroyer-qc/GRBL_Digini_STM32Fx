@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_biquad_cascade_df1_32x64_init_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_biquad_cascade_df1_32x64_init_q31.c    
 *    
-* Description:	High precision Q31 Biquad cascade filter initialization function.    
+* Description:    High precision Q31 Biquad cascade filter initialization function.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -52,7 +52,7 @@
 /**    
  * @details    
  *    
- * @param[in,out] *S           	points to an instance of the high precision Q31 Biquad cascade filter structure.    
+ * @param[in,out] *S               points to an instance of the high precision Q31 Biquad cascade filter structure.    
  * @param[in]     numStages     number of 2nd order stages in the filter.    
  * @param[in]     *pCoeffs      points to the filter coefficients.    
  * @param[in]     *pState       points to the state buffer.    

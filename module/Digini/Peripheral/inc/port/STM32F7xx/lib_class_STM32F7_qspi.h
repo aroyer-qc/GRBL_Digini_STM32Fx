@@ -114,10 +114,10 @@ enum QSPI_State_e
 
 enum QSPI_InstructionMode_e
 {
-	QSPI_INSTRUCTION_NONE    = ((uint32_t)0x00000000),                               // No instruction
-	QSPI_INSTRUCTION_1_LINE  = ((uint32_t)QUADSPI_CCR_IMODE_0),                      // Instruction on a single line
-	QSPI_INSTRUCTION_2_LINES = ((uint32_t)QUADSPI_CCR_IMODE_1),                      // Instruction on two lines
-	QSPI_INSTRUCTION_4_LINES = ((uint32_t)QUADSPI_CCR_IMODE),                        // Instruction on four lines
+    QSPI_INSTRUCTION_NONE    = ((uint32_t)0x00000000),                               // No instruction
+    QSPI_INSTRUCTION_1_LINE  = ((uint32_t)QUADSPI_CCR_IMODE_0),                      // Instruction on a single line
+    QSPI_INSTRUCTION_2_LINES = ((uint32_t)QUADSPI_CCR_IMODE_1),                      // Instruction on two lines
+    QSPI_INSTRUCTION_4_LINES = ((uint32_t)QUADSPI_CCR_IMODE),                        // Instruction on four lines
 };
 
 enum QSPI_AddressMode_e
@@ -139,8 +139,8 @@ enum QSPI_DataMode_e
 struct QSPI_Command_t
 {
     QSPI_Instruction_e     Instruction;        // Specifies the Instruction to be sent.
-	QSPI_InstructionMode_e InstructionMode;    // Specifies the Instruction Mode.
-	QSPI_AddressMode_e     AddressMode;        // Specifies the Address Mode.
+    QSPI_InstructionMode_e InstructionMode;    // Specifies the Instruction Mode.
+    QSPI_AddressMode_e     AddressMode;        // Specifies the Address Mode.
     QSPI_DataMode_e        DataMode;           // Specifies the Data Mode (used for dummy cycles and data phases).
     uint32_t               DummyCycles;        // Specifies the Number of Dummy Cycles. This parameter can be a number between 0 and 31
 };
@@ -151,13 +151,13 @@ struct QSPI_Command_t
 
 class QSPI_Driver
 {
-	public:
-                        QSPI_Driver				    ();
+    public:
+                        QSPI_Driver                    ();
 
-        SystemState_e   GetStatus       	        (void);
+        SystemState_e   GetStatus                   (void);
         SystemState_e   Initialize                  (void);
         SystemState_e   Read                        (uint32_t Address, uint8_t* pBuffer, uint32_t Size);
-		SystemState_e   Write				        (uint32_t Address, uint8_t* pBuffer, uint32_t Size);
+        SystemState_e   Write                        (uint32_t Address, uint8_t* pBuffer, uint32_t Size);
         SystemState_e   EraseSector                 (uint32_t SectorAddress);
         SystemState_e   EraseChip                   (void);
         SystemState_e   FlashReady                  (void);
@@ -169,7 +169,7 @@ class QSPI_Driver
         volatile SystemState_e                      m_ErrorCode;
         volatile SystemState_e                      m_DMA_ErrorCode;
 
-	private:
+    private:
 
     // ---- QSPI section ----
 

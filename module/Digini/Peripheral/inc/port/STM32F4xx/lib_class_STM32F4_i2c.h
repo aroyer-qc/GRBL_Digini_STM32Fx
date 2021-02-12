@@ -25,7 +25,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define I2C_PORT_QTY                        3
-#define I2C_TICK_HOOK_TIME	                1	            // in mSec
+#define I2C_TICK_HOOK_TIME                    1                // in mSec
 
 //-------------------------------------------------------------------------------------------------
 // struct(s) and enum(s)
@@ -81,7 +81,7 @@ struct I2C_DeviceInfo_t
 {
     nOS_Mutex*          pMutex;
     uint8_t             PhysicalAddress;
-    size_t		        MemPtrAddressLength;
+    size_t                MemPtrAddressLength;
     uint32_t            Speed;
 };
 
@@ -91,41 +91,41 @@ struct I2C_DeviceInfo_t
 
 class CI2C
 {
-	public:
+    public:
 
-                        CI2C				(I2C_PortInfo_t* pPort);
-                        ~CI2C				();
+                        CI2C                (I2C_PortInfo_t* pPort);
+                        ~CI2C                ();
 
-        SystemState_e   LockToDevice   		(I2C_DeviceInfo_t* pDevice);                                             // Set I2C to this device and lock
-        SystemState_e   UnlockFromDevice 	(I2C_DeviceInfo_t* pDevice);                                             // Unlock I2C from device
-        SystemState_e   GetStatus       	();
+        SystemState_e   LockToDevice           (I2C_DeviceInfo_t* pDevice);                                             // Set I2C to this device and lock
+        SystemState_e   UnlockFromDevice     (I2C_DeviceInfo_t* pDevice);                                             // Unlock I2C from device
+        SystemState_e   GetStatus           ();
 
-		// Read function (overloaded)
-		SystemState_e   Read				(uint32_t AddressInDevice, void* pDataAddress, size_t Size);
-		SystemState_e   Read				(uint32_t AddressInDevice, uint8_t* Data);
-		SystemState_e   Read				(uint32_t AddressInDevice, uint16_t* Data);
-		SystemState_e   Read				(uint32_t AddressInDevice, uint32_t* Data);
+        // Read function (overloaded)
+        SystemState_e   Read                (uint32_t AddressInDevice, void* pDataAddress, size_t Size);
+        SystemState_e   Read                (uint32_t AddressInDevice, uint8_t* Data);
+        SystemState_e   Read                (uint32_t AddressInDevice, uint16_t* Data);
+        SystemState_e   Read                (uint32_t AddressInDevice, uint32_t* Data);
         SystemState_e   Read                (uint32_t AddressInDevice, void* pDataAddress, size_t Size, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Read                (uint32_t AddressInDevice, uint8_t* pData, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Read                (uint32_t AddressInDevice, uint16_t* pData, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Read                (uint32_t AddressInDevice, uint32_t* pData, I2C_DeviceInfo_t* pDevice);
 
-		// Write function (overloaded)
-		SystemState_e   Write				(uint32_t AddressInDevice, void* pDataAddress, size_t Size);
-		SystemState_e   Write				(uint32_t AddressInDevice, uint8_t Data);
-		SystemState_e   Write				(uint32_t AddressInDevice, uint16_t Data);
-		SystemState_e   Write				(uint32_t AddressInDevice, uint32_t Data);
+        // Write function (overloaded)
+        SystemState_e   Write                (uint32_t AddressInDevice, void* pDataAddress, size_t Size);
+        SystemState_e   Write                (uint32_t AddressInDevice, uint8_t Data);
+        SystemState_e   Write                (uint32_t AddressInDevice, uint16_t Data);
+        SystemState_e   Write                (uint32_t AddressInDevice, uint32_t Data);
         SystemState_e   Write               (uint32_t AddressInDevice, void* pDataAddress, size_t Size, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Write               (uint32_t AddressInDevice, uint8_t Data, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Write               (uint32_t AddressInDevice, uint16_t Data, I2C_DeviceInfo_t* pDevice);
         SystemState_e   Write               (uint32_t AddressInDevice, uint32_t Data, I2C_DeviceInfo_t* pDevice);
 
-		void	        Init     			();
+        void            Init                 ();
         void            TickHook            ();
         void            ER_IRQHandler       ();
         void            EV_IRQHandler       ();
 
-	private:
+    private:
 
         void            ClearBus            ();
         uint32_t        CalculateBitMask    (uint8_t Mask, uint16_t BitConfig);
@@ -137,13 +137,13 @@ class CI2C
         I2C_PortInfo_t*                 m_pPort;
         I2C_DeviceInfo_t*               m_pDevice;
 
-        AccessRequest_e    	            m_Request;
+        AccessRequest_e                    m_Request;
         volatile uint8_t*               m_pAddressInDevice;
         volatile uint8_t*               m_pDataAddress;
-        volatile size_t				    m_Size;
-        volatile size_t		            m_AddressLengthCount;
+        volatile size_t                    m_Size;
+        volatile size_t                    m_AddressLengthCount;
 
-        volatile SystemState_e		    m_Status;
+        volatile SystemState_e            m_Status;
         volatile uint8_t                m_Timeout;
 
 };

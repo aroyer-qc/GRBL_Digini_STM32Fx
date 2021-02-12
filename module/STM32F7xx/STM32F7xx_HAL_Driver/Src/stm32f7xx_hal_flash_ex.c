@@ -402,7 +402,7 @@ HAL_StatusTypeDef HAL_FLASHEx_OBProgram(FLASH_OBProgramInitTypeDef *pOBInit)
 void HAL_FLASHEx_OBGetConfig(FLASH_OBProgramInitTypeDef *pOBInit)
 {
   pOBInit->OptionType = OPTIONBYTE_WRP | OPTIONBYTE_RDP | OPTIONBYTE_USER |\
-	                OPTIONBYTE_BOR | OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
+                    OPTIONBYTE_BOR | OPTIONBYTE_BOOTADDR_0 | OPTIONBYTE_BOOTADDR_1;
 
   /*Get WRP*/
   pOBInit->WRPSector = FLASH_OB_GetWRP();
@@ -960,7 +960,7 @@ static HAL_StatusTypeDef FLASH_OB_BootAddressConfig(uint32_t BootOption, uint32_
   if(status == HAL_OK)
   {
     if(BootOption == OPTIONBYTE_BOOTADDR_0)
-    {			
+    {            
       MODIFY_REG(FLASH->OPTCR1, FLASH_OPTCR1_BOOT_ADD0, Address);
     }
     else
@@ -1035,15 +1035,15 @@ static uint32_t FLASH_OB_GetBootAddress(uint32_t BootOption)
 {  
   uint32_t Address = 0;
     
-	/* Return the Boot base Address */
+    /* Return the Boot base Address */
   if(BootOption == OPTIONBYTE_BOOTADDR_0)
-  {			
+  {            
     Address = FLASH->OPTCR1 & FLASH_OPTCR1_BOOT_ADD0;
-	}
+    }
   else
-	{
-		Address = ((FLASH->OPTCR1 & FLASH_OPTCR1_BOOT_ADD1) >> 16);
-	}
+    {
+        Address = ((FLASH->OPTCR1 & FLASH_OPTCR1_BOOT_ADD1) >> 16);
+    }
 
   return Address;
 }

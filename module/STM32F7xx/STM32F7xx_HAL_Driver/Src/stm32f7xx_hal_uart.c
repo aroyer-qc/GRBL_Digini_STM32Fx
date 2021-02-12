@@ -1420,7 +1420,7 @@ static void UART_DMAReceiveCplt(DMA_HandleTypeDef *hdma)
     in the UART CR3 register */
     CLEAR_BIT(huart->Instance->CR3, USART_CR3_DMAR);
 
-	/* At end of Rx process, restore huart->RxState to Ready */
+    /* At end of Rx process, restore huart->RxState to Ready */
     huart->RxState = HAL_UART_STATE_READY;
   }
   HAL_UART_RxCpltCallback(huart);
@@ -1731,7 +1731,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
      (+) HAL_HalfDuplex_EnableTransmitter() API disables receiver and enables transmitter
      (+) HAL_HalfDuplex_EnableReceiver() API disables transmitter and enables receiver
      (+) HAL_LIN_SendBreak() API transmits the break characters
-	 (+) HAL_MultiProcessorEx_AddressLength_Set() API optionally sets the UART node address
+     (+) HAL_MultiProcessorEx_AddressLength_Set() API optionally sets the UART node address
          detection length to more than 4 bits for multiprocessor address mark wake up.
 @endverbatim
   * @{

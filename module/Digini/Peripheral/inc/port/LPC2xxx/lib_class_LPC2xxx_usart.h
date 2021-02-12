@@ -106,39 +106,39 @@ struct USART_DeviceInfo_t
 
 class CUSART
 {
-	public:
+    public:
 
-                        CUSART				    (USART_PortInfo_t* pPort);
-                        ~CUSART				    ();
+                        CUSART                    (USART_PortInfo_t* pPort);
+                        ~CUSART                    ();
         void            Init                    ();
-        SystemState_e   LockToDevice   		    (USART_DeviceInfo_t* pDevice);                                             // Set USART to this device and lock
-        SystemState_e   UnlockFromDevice 	    (USART_DeviceInfo_t* pDevice);                                             // Unlock USART from device
-        SystemState_e   GetStatus       	    ();
+        SystemState_e   LockToDevice               (USART_DeviceInfo_t* pDevice);                                             // Set USART to this device and lock
+        SystemState_e   UnlockFromDevice         (USART_DeviceInfo_t* pDevice);                                             // Unlock USART from device
+        SystemState_e   GetStatus               ();
 
-		// Read function (overloaded)
-		SystemState_e   Read				    (uint8_t*  pData);
-		SystemState_e   Read				    (uint16_t* pData);
-		SystemState_e   Read				    (uint32_t* pData);
-        SystemState_e   Read				    (uint8_t* pBuffer, size_t Size);
+        // Read function (overloaded)
+        SystemState_e   Read                    (uint8_t*  pData);
+        SystemState_e   Read                    (uint16_t* pData);
+        SystemState_e   Read                    (uint32_t* pData);
+        SystemState_e   Read                    (uint8_t* pBuffer, size_t Size);
 
-		// Write function (overloaded)
-		SystemState_e   Write				    (uint8_t  Data);
-		SystemState_e   Write				    (uint16_t Data);
-		SystemState_e   Write				    (uint32_t Data);
-        SystemState_e   Write				    (uint8_t* pBuffer, size_t Size);
+        // Write function (overloaded)
+        SystemState_e   Write                    (uint8_t  Data);
+        SystemState_e   Write                    (uint16_t Data);
+        SystemState_e   Write                    (uint32_t Data);
+        SystemState_e   Write                    (uint8_t* pBuffer, size_t Size);
 
         SystemState_e   Request                 (AccessRequest_e Request, void* pBuffer, size_t Size);
         void            IRQHandler              ();
         void            TickHook                ();
 
-	private:
+    private:
 
         void            Lock                    ();
         void            Unlock                  ();
 
         USART_PortInfo_t*                       m_pPort;
         USART_DeviceInfo_t*                     m_pDevice;
-        volatile SystemState_e		            m_Status;
+        volatile SystemState_e                    m_Status;
         volatile uint8_t                        m_Timeout;
 
         CFIFO*                                  m_pTxFifo;

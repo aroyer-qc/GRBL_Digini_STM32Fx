@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_fir_interpolate_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_fir_interpolate_q15.c    
 *    
-* Description:	Q15 FIR interpolation.    
+* Description:    Q15 FIR interpolation.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -377,13 +377,13 @@ void arm_fir_interpolate_q15(
 #else
 
     *pStateCurnt++ = *pState++;
-	*pStateCurnt++ = *pState++;
-	*pStateCurnt++ = *pState++;
-	*pStateCurnt++ = *pState++;
-	
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
-	
-	/* Decrement the loop counter */
+    *pStateCurnt++ = *pState++;
+    *pStateCurnt++ = *pState++;
+    *pStateCurnt++ = *pState++;
+    
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
+    
+    /* Decrement the loop counter */
     i--;
   }
 

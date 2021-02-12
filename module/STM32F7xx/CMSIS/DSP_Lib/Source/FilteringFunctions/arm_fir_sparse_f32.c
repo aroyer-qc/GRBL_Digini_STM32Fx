@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_fir_sparse_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_fir_sparse_f32.c    
 *    
-* Description:	Floating-point sparse FIR filter processing function.   
+* Description:    Floating-point sparse FIR filter processing function.   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -285,51 +285,51 @@ void arm_fir_sparse_f32(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
-	/* Compute last tap without the final read of pTapDelay */
+    
+    /* Compute last tap without the final read of pTapDelay */
 
-	/* Working pointer for state buffer is updated */
-	py = pState;
+    /* Working pointer for state buffer is updated */
+    py = pState;
 
-	/* blockSize samples are read from the state buffer */
-	arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
-											 (int32_t *) pb, (int32_t *) pb, blockSize, 1,
-											 blockSize);
+    /* blockSize samples are read from the state buffer */
+    arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
+                                             (int32_t *) pb, (int32_t *) pb, blockSize, 1,
+                                             blockSize);
 
-	/* Working pointer for the scratch buffer */
-	px = pb;
+    /* Working pointer for the scratch buffer */
+    px = pb;
 
-	/* Working pointer for destination buffer */
-	pOut = pDst;
+    /* Working pointer for destination buffer */
+    pOut = pDst;
 
-	/* Loop over the blockSize. Unroll by a factor of 4.    
-	 * Compute 4 MACS at a time. */
-	blkCnt = blockSize >> 2u;
+    /* Loop over the blockSize. Unroll by a factor of 4.    
+     * Compute 4 MACS at a time. */
+    blkCnt = blockSize >> 2u;
 
-	while(blkCnt > 0u)
-	{
-		/* Perform Multiply-Accumulate */
-		*pOut++ += *px++ * coeff;
-		*pOut++ += *px++ * coeff;
-		*pOut++ += *px++ * coeff;
-		*pOut++ += *px++ * coeff;
+    while(blkCnt > 0u)
+    {
+        /* Perform Multiply-Accumulate */
+        *pOut++ += *px++ * coeff;
+        *pOut++ += *px++ * coeff;
+        *pOut++ += *px++ * coeff;
+        *pOut++ += *px++ * coeff;
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
-	/* If the blockSize is not a multiple of 4,    
-	 * compute the remaining samples */
-	blkCnt = blockSize % 0x4u;
+    /* If the blockSize is not a multiple of 4,    
+     * compute the remaining samples */
+    blkCnt = blockSize % 0x4u;
 
-	while(blkCnt > 0u)
-	{
-		/* Perform Multiply-Accumulate */
-		*pOut++ += *px++ * coeff;
+    while(blkCnt > 0u)
+    {
+        /* Perform Multiply-Accumulate */
+        *pOut++ += *px++ * coeff;
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
 #else
 
@@ -407,33 +407,33 @@ void arm_fir_sparse_f32(
     /* Decrement the tap loop counter */
     tapCnt--;
   }
-	
-	/* Compute last tap without the final read of pTapDelay */	
-	
-	/* Working pointer for state buffer is updated */
-	py = pState;
+    
+    /* Compute last tap without the final read of pTapDelay */    
+    
+    /* Working pointer for state buffer is updated */
+    py = pState;
 
-	/* blockSize samples are read from the state buffer */
-	arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
-											 (int32_t *) pb, (int32_t *) pb, blockSize, 1,
-											 blockSize);
+    /* blockSize samples are read from the state buffer */
+    arm_circularRead_f32((int32_t *) py, delaySize, &readIndex, 1,
+                                             (int32_t *) pb, (int32_t *) pb, blockSize, 1,
+                                             blockSize);
 
-	/* Working pointer for the scratch buffer */
-	px = pb;
+    /* Working pointer for the scratch buffer */
+    px = pb;
 
-	/* Working pointer for destination buffer */
-	pOut = pDst;
+    /* Working pointer for destination buffer */
+    pOut = pDst;
 
-	blkCnt = blockSize;
+    blkCnt = blockSize;
 
-	while(blkCnt > 0u)
-	{
-		/* Perform Multiply-Accumulate */
-		*pOut++ += *px++ * coeff;
+    while(blkCnt > 0u)
+    {
+        /* Perform Multiply-Accumulate */
+        *pOut++ += *px++ * coeff;
 
-		/* Decrement the loop counter */
-		blkCnt--;
-	}
+        /* Decrement the loop counter */
+        blkCnt--;
+    }
 
 #endif /*   #ifndef ARM_MATH_CM0_FAMILY        */
 

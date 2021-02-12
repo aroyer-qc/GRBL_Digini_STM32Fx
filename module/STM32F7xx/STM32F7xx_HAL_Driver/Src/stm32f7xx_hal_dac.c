@@ -110,7 +110,7 @@
        (+) To read the DAC last data output value, use the HAL_DAC_GetValue() function.
        (+) Stop the DAC peripheral using HAL_DAC_Stop()
 
-	   
+       
      *** DMA mode IO operation ***    
      ==============================
      [..]    
@@ -747,7 +747,7 @@ __weak void HAL_DAC_DMAUnderrunCallbackCh1(DAC_HandleTypeDef *hdac)
   */
   
 /** @defgroup DAC_Exported_Functions_Group3 Peripheral Control functions
- *  @brief   	Peripheral Control functions 
+ *  @brief       Peripheral Control functions 
  *
 @verbatim   
   ==============================================================================

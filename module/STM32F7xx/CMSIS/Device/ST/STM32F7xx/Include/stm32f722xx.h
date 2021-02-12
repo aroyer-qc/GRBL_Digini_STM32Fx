@@ -14993,7 +14993,7 @@ typedef struct
      ((__INSTANCE__) == TIM6)    || \
      ((__INSTANCE__) == TIM7)    || \
      ((__INSTANCE__) == TIM8))
-	 
+     
 /****************** TIM Instances : supporting clock division *****************/
 #define IS_TIM_CLOCK_DIVISION_INSTANCE(__INSTANCE__)   (((__INSTANCE__) == TIM1)    || \
                                                     ((__INSTANCE__) == TIM2)    || \
@@ -15040,7 +15040,7 @@ typedef struct
                                                          
 /****************** TIM Instances : supporting commutation event generation ***/
 #define IS_TIM_COMMUTATION_EVENT_INSTANCE(__INSTANCE__) (((__INSTANCE__) == TIM1)   || \
-                                                         ((__INSTANCE__) == TIM8)) 	 
+                                                         ((__INSTANCE__) == TIM8))      
 
 /******************** USART Instances : Synchronous mode **********************/
 #define IS_USART_INSTANCE(__INSTANCE__) (((__INSTANCE__) == USART1) || \

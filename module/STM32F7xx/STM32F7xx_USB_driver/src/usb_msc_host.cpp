@@ -25,9 +25,9 @@ NOT needed anymore!!!!   it is in the class
  *  public data                                                        *
  *---------------------------------------------------------------------*/
 
-usb_msc_host_status_t	usb_msc_host_status;
-USB_OTG_CORE_HANDLE		USB_OTG_Core;
-USBH_HOST				USB_Host;
+usb_msc_host_status_t    usb_msc_host_status;
+USB_OTG_CORE_HANDLE        USB_OTG_Core;
+USBH_HOST                USB_Host;
 
 /*---------------------------------------------------------------------*
  *  private data                                                       *
@@ -43,19 +43,19 @@ USBH_HOST				USB_Host;
 
 void usb_msc_host_init (void)
 {
-	usb_msc_host_status = USB_MSC_DEV_DETACHED;
+    usb_msc_host_status = USB_MSC_DEV_DETACHED;
 
-	USBH_Init (&USB_OTG_Core, USB_OTG_HS_CORE_ID, &USB_Host, &USBH_MSC_cb, &USR_Callbacks);
+    USBH_Init (&USB_OTG_Core, USB_OTG_HS_CORE_ID, &USB_Host, &USBH_MSC_cb, &USR_Callbacks);
 }
 
 usb_msc_host_status_t usb_msc_host_main (void)
 {
-	if (usb_msc_host_status != USB_MSC_DEV_NOT_SUPPORTED)
-	{
-		USBH_Process (&USB_OTG_Core, &USB_Host);
-	}
+    if (usb_msc_host_status != USB_MSC_DEV_NOT_SUPPORTED)
+    {
+        USBH_Process (&USB_OTG_Core, &USB_Host);
+    }
 
-	return usb_msc_host_status;
+    return usb_msc_host_status;
 }
 
 /*---------------------------------------------------------------------*

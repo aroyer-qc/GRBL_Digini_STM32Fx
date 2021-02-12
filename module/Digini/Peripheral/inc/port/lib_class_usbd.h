@@ -33,13 +33,13 @@ class DeviceUSB_Interface
 {
     public:
 
-		virtual void      		Initialize     (class USB_Application* pUSB)                                  = 0;
-	    virtual SystemState_e   RegisterClass  (USBD_ClassTypeDef *pclass)                                    = 0;
-	    virtual void			Start          (void)                                                         = 0;
+        virtual void              Initialize     (class USB_Application* pUSB)                                  = 0;
+        virtual SystemState_e   RegisterClass  (USBD_ClassTypeDef *pclass)                                    = 0;
+        virtual void            Start          (void)                                                         = 0;
 
-		virtual void      		GetStatus      (void)                                                         = 0;
-		virtual void      		ReadData	   (void)                                                         = 0;
-		virtual void      		WriteData	   (void)                                                         = 0;
+        virtual void              GetStatus      (void)                                                         = 0;
+        virtual void              ReadData       (void)                                                         = 0;
+        virtual void              WriteData       (void)                                                         = 0;
 };
 
 //-------------------------------------------------------------------------------------------------

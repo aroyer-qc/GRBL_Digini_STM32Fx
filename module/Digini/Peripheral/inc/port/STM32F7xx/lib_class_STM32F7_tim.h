@@ -173,9 +173,9 @@ typedef void (*TIM_CallBack_t)(TIM_TypeMatch_e TypeMatch);
 
 class TIM_Driver
 {
-	public:
+    public:
 
-                        TIM_Driver      	    (TIM_ID_e TimerID);
+                        TIM_Driver              (TIM_ID_e TimerID);
         void            RegisterCallBack        (TIM_CallBack_t pCallBack);
         void            CallBack                (bool ProcessUpdate);
         uint32_t        GetCounterValue         (void);
@@ -196,7 +196,7 @@ class TIM_Driver
 
         TIM_CallBack_t      m_pCallBack;
 
-	private:
+    private:
 
         TIM_TypeDef*        m_pTim;
         TIM_Info_t*         m_pInfo;

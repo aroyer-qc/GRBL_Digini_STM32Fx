@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_rms_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_rms_f32.c    
 *    
-* Description:	Root mean square value of an array of F32 type    
+* Description:    Root mean square value of an array of F32 type    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -52,7 +52,7 @@
  * The underlying algorithm is used:    
  *    
  * <pre>    
- * 	Result = sqrt(((pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]) / blockSize));    
+ *     Result = sqrt(((pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]) / blockSize));    
  * </pre>    
  *   
  * There are separate functions for floating point, Q31, and Q15 data types.     

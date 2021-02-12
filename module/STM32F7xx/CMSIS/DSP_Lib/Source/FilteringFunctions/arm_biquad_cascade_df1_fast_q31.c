@@ -2,13 +2,13 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. October 2015
-* $Revision: 	V.1.4.5 a
+* $Revision:     V.1.4.5 a
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_biquad_cascade_df1_fast_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_biquad_cascade_df1_fast_q31.c    
 *    
-* Description:	Processing function for the    
-*				Q31 Fast Biquad cascade DirectFormI(DF1) filter.    
+* Description:    Processing function for the    
+*                Q31 Fast Biquad cascade DirectFormI(DF1) filter.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  
@@ -57,7 +57,7 @@
  * @param[in]  *pSrc     points to the block of input data.    
  * @param[out] *pDst     points to the block of output data.    
  * @param[in]  blockSize number of samples to process per call.    
- * @return 	   none.    
+ * @return        none.    
  *    
  * <b>Scaling and Overflow Behavior:</b>    
  * \par    

@@ -227,19 +227,19 @@ enum IO_IrqID_e
 
 struct IO_Properties_t
 {
-	GPIO_TypeDef* 	pPort;
-	uint32_t 		PinNumber;
-	uint32_t 		PinMode;
-	uint32_t 		PinType;
-	uint32_t 		PinSpeed;
-	uint32_t 		State;
+    GPIO_TypeDef*     pPort;
+    uint32_t         PinNumber;
+    uint32_t         PinMode;
+    uint32_t         PinType;
+    uint32_t         PinSpeed;
+    uint32_t         State;
 };
 
 struct IO_IRQ_Properties_t
 {
     IO_ID_e         IO_Id;
-	IRQn_Type  	    IRQ_Channel;
-	uint32_t        Trigger;
+    IRQn_Type          IRQ_Channel;
+    uint32_t        Trigger;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -286,9 +286,9 @@ extern const IO_Properties_t IO_Properties[IO_NUM];
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-void 	    IO_PinInit		            (IO_ID_e IO_Id);
-void 	    IO_PinInitInput	            (IO_ID_e IO_Id);
-void 	    IO_PinInitOutput	        (IO_ID_e IO_Id);
+void         IO_PinInit                    (IO_ID_e IO_Id);
+void         IO_PinInitInput                (IO_ID_e IO_Id);
+void         IO_PinInitOutput            (IO_ID_e IO_Id);
 void        IO_SetPinLow                (IO_ID_e IO_Id);
 void        IO_SetPinHigh               (IO_ID_e IO_Id);
 void        IO_TogglePin                (IO_ID_e IO_Id);

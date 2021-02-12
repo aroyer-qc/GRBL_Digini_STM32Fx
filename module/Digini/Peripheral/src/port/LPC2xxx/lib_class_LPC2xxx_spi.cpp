@@ -34,8 +34,8 @@
 //
 //   Note(s):
 //
-//					SPIx: where x can be 1 to 6 to select the SPI peripheral.
-//					SPI_InitStruct: pointer to a SPI_InitTypeDef structure that contains
+//                    SPIx: where x can be 1 to 6 to select the SPI peripheral.
+//                    SPI_InitStruct: pointer to a SPI_InitTypeDef structure that contains
 //                  the configuration information for the specified SPI peripheral.
 //
 //-------------------------------------------------------------------------------------------------
@@ -144,9 +144,9 @@ void CSPI::Initialize(void)
         case SPI1_HARD_PORT:
         {
             // ---- Reset peripheral and set clock ----
-            RCC->APB2RSTR |=  RCC_APB2RSTR_SPI1RST;	                                                // Enable SPI1 reset state
+            RCC->APB2RSTR |=  RCC_APB2RSTR_SPI1RST;                                                    // Enable SPI1 reset state
             RCC->APB2RSTR &= ~RCC_APB2RSTR_SPI1RST;                                                 // Release SPI1 from reset state
-            RCC->APB2ENR  |=  RCC_APB2ENR_SPI1EN;	                            		            // Enable SPI_PORT clock
+            RCC->APB2ENR  |=  RCC_APB2ENR_SPI1EN;                                                    // Enable SPI_PORT clock
             RCC->AHB1ENR  |=  RCC_AHB1ENR_DMA2EN;
             break;
         }
@@ -155,9 +155,9 @@ void CSPI::Initialize(void)
         case SPI3_HARD_PORT:
         {
             // ---- Reset peripheral and set clock ----
-            RCC->APB1RSTR |=  (RCC_APB1RSTR_SPI2RST << (m_pPort->HardwarePort - SPI2_HARD_PORT));	// Enable SPI2 or SPI3 reset state
+            RCC->APB1RSTR |=  (RCC_APB1RSTR_SPI2RST << (m_pPort->HardwarePort - SPI2_HARD_PORT));    // Enable SPI2 or SPI3 reset state
             RCC->APB1RSTR &= ~(RCC_APB1RSTR_SPI2RST << (m_pPort->HardwarePort - SPI2_HARD_PORT));   // Release SPI2 or SPI3 from reset state
-            RCC->APB1ENR  |=  (RCC_APB1ENR_SPI2EN   << (m_pPort->HardwarePort - SPI2_HARD_PORT));	// Enable SPI_PORT clock
+            RCC->APB1ENR  |=  (RCC_APB1ENR_SPI2EN   << (m_pPort->HardwarePort - SPI2_HARD_PORT));    // Enable SPI_PORT clock
             RCC->AHB1ENR  |=  RCC_AHB1ENR_DMA1EN;
             break;
         }
@@ -165,9 +165,9 @@ void CSPI::Initialize(void)
         case SPI4_HARD_PORT:
         {
             // ---- Reset peripheral and set clock ----
-            RCC->APB2RSTR |=  RCC_APB2RSTR_SPI4RST;	                                                // Enable SPI4 reset state
+            RCC->APB2RSTR |=  RCC_APB2RSTR_SPI4RST;                                                    // Enable SPI4 reset state
             RCC->APB2RSTR &= ~RCC_APB2RSTR_SPI4RST;                                                 // Release SPI4 from reset state
-            RCC->APB2ENR  |=  RCC_APB2ENR_SPI4EN;	                            		            // Enable SPI_PORT clock
+            RCC->APB2ENR  |=  RCC_APB2ENR_SPI4EN;                                                    // Enable SPI_PORT clock
             RCC->AHB1ENR  |=  RCC_AHB1ENR_DMA2EN;
             break;
         }
@@ -175,9 +175,9 @@ void CSPI::Initialize(void)
         case SPI6_HARD_PORT:
         {
             // ---- Reset peripheral and set clock ----
-            RCC->APB2RSTR |=  (RCC_APB2RSTR_SPI5RST << (m_pPort->HardwarePort - SPI5_HARD_PORT));	// Enable SPI5 or SPI6 reset state
+            RCC->APB2RSTR |=  (RCC_APB2RSTR_SPI5RST << (m_pPort->HardwarePort - SPI5_HARD_PORT));    // Enable SPI5 or SPI6 reset state
             RCC->APB2RSTR &= ~(RCC_APB2RSTR_SPI5RST << (m_pPort->HardwarePort - SPI5_HARD_PORT));   // Release SPI6 or SPI6 from reset state
-            RCC->APB2ENR  |=  (RCC_APB2ENR_SPI5EN   << (m_pPort->HardwarePort - SPI5_HARD_PORT));	// Enable SPI_PORT clock
+            RCC->APB2ENR  |=  (RCC_APB2ENR_SPI5EN   << (m_pPort->HardwarePort - SPI5_HARD_PORT));    // Enable SPI_PORT clock
             RCC->AHB1ENR  |=   RCC_AHB1ENR_DMA2EN;
             break;
         }
@@ -594,7 +594,7 @@ SystemState_e CSPI::Request(AccessRequest_e Request, uint8_t* pBuffer, size_t Si
     {
       #if SPI_USE_DMA_TRANSFERT == 1
 
-        uint8_t	DummyTX = 0xFF;
+        uint8_t    DummyTX = 0xFF;
         bool    bTransmitCompleted;
 
         this->Lock();

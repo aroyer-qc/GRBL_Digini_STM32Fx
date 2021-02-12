@@ -5,7 +5,7 @@
 //  Build  Date           Author            Description
 //  -----  -------------  ----------------  -------------------------------------------------------
 //  000    Nov 13,  2015  Alain Royer       Base on MCD Code for USB host on STM32F4, just reformat
-//											look to fit Digini code standard and move to C++ Class
+//                                            look to fit Digini code standard and move to C++ Class
 //
 //*************************************************************************************************
 
@@ -51,13 +51,13 @@ enum USB_State_e
 
 enum USB_MSC_HostStatus_e
 {
-	USB_MSC_HOST_NO_INIT = 0,  // USB interface not initialized
-	USB_MSC_DEV_DETACHED,      // no device connected
-	USB_MSC_SPEED_ERROR,       // unsupported USB speed
-	USB_MSC_DEV_NOT_SUPPORTED, // unsupported device
-	USB_MSC_DEV_WRITE_PROTECT, // device is write protected
-	USB_MSC_OVER_CURRENT,      // overcurrent detected
-	USB_MSC_DEV_CONNECTED      // device connected and ready
+    USB_MSC_HOST_NO_INIT = 0,  // USB interface not initialized
+    USB_MSC_DEV_DETACHED,      // no device connected
+    USB_MSC_SPEED_ERROR,       // unsupported USB speed
+    USB_MSC_DEV_NOT_SUPPORTED, // unsupported device
+    USB_MSC_DEV_WRITE_PROTECT, // device is write protected
+    USB_MSC_OVER_CURRENT,      // overcurrent detected
+    USB_MSC_DEV_CONNECTED      // device connected and ready
 };
 
 
@@ -94,9 +94,9 @@ struct USB_PortInfo_t
 //-------------------------------------------------------------------------------------------------
 class CUSB
 {
-	public:
-                                CUSB	   		        (void);
-                               ~CUSB		            (void);
+    public:
+                                CUSB                       (void);
+                               ~CUSB                    (void);
 
     void                        Initialize              (void);
     USB_MSC_HostStatus_e        GetStatus               (void);
@@ -108,12 +108,12 @@ class CUSB
 
         //also fatfs_usb should derive form this
 
-        USB_OTG_CORE_HANDLE		m_OTG_Core;
-        USB_MSC_HostStatus_e	m_MSC_HostStatus;  // use getter setter
-        USBH_HOST				m_Host;
+        USB_OTG_CORE_HANDLE        m_OTG_Core;
+        USB_MSC_HostStatus_e    m_MSC_HostStatus;  // use getter setter
+        USBH_HOST                m_Host;
 
 
-	private:
+    private:
 
 
 

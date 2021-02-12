@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_rfft_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_rfft_q15.c    
 *    
-* Description:	RFFT & RIFFT Q15 process function    
+* Description:    RFFT & RIFFT Q15 process function    
 *    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
@@ -42,7 +42,7 @@
 #include "arm_math.h"
 
 /*--------------------------------------------------------------------    
-*		Internal functions prototypes    
+*        Internal functions prototypes    
 --------------------------------------------------------------------*/
 
 void arm_split_rfft_q15(
@@ -127,12 +127,12 @@ void arm_rfft_q15(
 
 /**    
 * @brief  Core Real FFT process    
-* @param  *pSrc 				points to the input buffer.   
-* @param  fftLen  				length of FFT.   
-* @param  *pATable 			points to the A twiddle Coef buffer.    
-* @param  *pBTable 			points to the B twiddle Coef buffer.   
-* @param  *pDst 				points to the output buffer.   
-* @param  modifier 	        twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
+* @param  *pSrc                 points to the input buffer.   
+* @param  fftLen                  length of FFT.   
+* @param  *pATable             points to the A twiddle Coef buffer.    
+* @param  *pBTable             points to the B twiddle Coef buffer.   
+* @param  *pDst                 points to the output buffer.   
+* @param  modifier             twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
 * @return none.    
 * The function implements a Real FFT    
 */
@@ -294,12 +294,12 @@ void arm_split_rfft_q15(
 
 /**    
 * @brief  Core Real IFFT process    
-* @param[in]   *pSrc 				points to the input buffer.    
-* @param[in]   fftLen  		    length of FFT.   
-* @param[in]   *pATable 			points to the twiddle Coef A buffer.   
-* @param[in]   *pBTable 			points to the twiddle Coef B buffer.    
-* @param[out]  *pDst 				points to the output buffer.   
-* @param[in]   modifier 	        twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
+* @param[in]   *pSrc                 points to the input buffer.    
+* @param[in]   fftLen              length of FFT.   
+* @param[in]   *pATable             points to the twiddle Coef A buffer.   
+* @param[in]   *pBTable             points to the twiddle Coef B buffer.    
+* @param[out]  *pDst                 points to the output buffer.   
+* @param[in]   modifier             twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table.   
 * @return none.    
 * The function implements a Real IFFT    
 */

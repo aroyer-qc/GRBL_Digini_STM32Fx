@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_scale_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_mat_scale_q15.c    
 *    
-* Description:	Multiplies a Q15 matrix by a scalar.    
+* Description:    Multiplies a Q15 matrix by a scalar.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -55,7 +55,7 @@
  * @param[in]       scaleFract fractional portion of the scale factor    
  * @param[in]       shift number of bits to shift the result by    
  * @param[out]      *pDst points to output matrix structure    
- * @return     		The function returns either    
+ * @return             The function returns either    
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.    
  *    
  * @details    

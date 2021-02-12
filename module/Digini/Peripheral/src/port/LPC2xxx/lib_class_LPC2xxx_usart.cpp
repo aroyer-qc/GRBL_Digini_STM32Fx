@@ -82,14 +82,14 @@ CUSART::~CUSART(void)
 void CUSART::Init(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-	USART_InitTypeDef USART_InitStructure;
+    USART_InitTypeDef USART_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
 
-	/* Enable peripheral clock for USART2 */
-	RCC_APB2PeriphClockCmd(m_pPort->Clock, ENABLE);
+    /* Enable peripheral clock for USART2 */
+    RCC_APB2PeriphClockCmd(m_pPort->Clock, ENABLE);
 
-	/* TX GPIO clock enable */
-	RCC_AHB1PeriphClockCmd( m_pPort->TX_Clock, ENABLE);
+    /* TX GPIO clock enable */
+    RCC_AHB1PeriphClockCmd( m_pPort->TX_Clock, ENABLE);
 
     /* RX GPIO clock enable */
     RCC_AHB1PeriphClockCmd( m_pPort->RX_Clock, ENABLE);
@@ -99,7 +99,7 @@ void CUSART::Init(void)
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;                              // this defines the output type as push pull mode (as opposed to open drain)
     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;                               // this activates the pullup resistors on the IO pins
 
-	/* TX GPIO Configuration*/
+    /* TX GPIO Configuration*/
     GPIO_InitStructure.GPIO_Pin   = m_pPort->TX_Pin;
     GPIO_InitStructure.GPIO_Speed = m_pPort->TX_Speed;                          // this defines the IO speed and has nothing to do with the baudrate!
     GPIO_Init(m_pPort->TX_pGPIO, &GPIO_InitStructure);
@@ -109,29 +109,29 @@ void CUSART::Init(void)
     GPIO_InitStructure.GPIO_Speed = m_pPort->RX_Speed;                          // this defines the IO speed and has nothing to do with the baudrate!
     GPIO_Init(m_pPort->RX_pGPIO, &GPIO_InitStructure);
 
-	/* Connect USART pins to AF */
+    /* Connect USART pins to AF */
     GPIO_PinAFConfig(m_pPort->TX_pGPIO, m_pPort->TX_PinSource, m_pPort->AlternateFunction);
     GPIO_PinAFConfig(m_pPort->RX_pGPIO, m_pPort->RX_PinSource, m_pPort->AlternateFunction);
 
     /* USART congiguration */
-	USART_InitStructure.USART_BaudRate            = m_pPort->BaudRate;
-	USART_InitStructure.USART_WordLength          = m_pPort->WordLength;
-	USART_InitStructure.USART_StopBits            = m_pPort->StopBits;
-	USART_InitStructure.USART_Parity              = m_pPort->Parity;
-	USART_InitStructure.USART_HardwareFlowControl = m_pPort->HardwareFlowControl;
-	USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
-	USART_Init(m_pPort->pUSARTn, &USART_InitStructure);
+    USART_InitStructure.USART_BaudRate            = m_pPort->BaudRate;
+    USART_InitStructure.USART_WordLength          = m_pPort->WordLength;
+    USART_InitStructure.USART_StopBits            = m_pPort->StopBits;
+    USART_InitStructure.USART_Parity              = m_pPort->Parity;
+    USART_InitStructure.USART_HardwareFlowControl = m_pPort->HardwareFlowControl;
+    USART_InitStructure.USART_Mode                = USART_Mode_Tx | USART_Mode_Rx;
+    USART_Init(m_pPort->pUSARTn, &USART_InitStructure);
 
     /* Interrupt configuration */
     //NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
-    NVIC_InitStructure.NVIC_IRQChannel = m_pPort->IRQn;		                    // we want to configure the USART interrupts
+    NVIC_InitStructure.NVIC_IRQChannel = m_pPort->IRQn;                            // we want to configure the USART interrupts
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = m_pPort->PreempPrio; // this sets the priority group of the USART interrupts
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = m_pPort->SubPriority;		// this sets the subpriority inside the group
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			                    // the USART interrupts are globally enabled
-    NVIC_Init(&NVIC_InitStructure);							                    // the properties are passed to the NVIC_Init function which takes care of the low level stuff
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = m_pPort->SubPriority;        // this sets the subpriority inside the group
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;                                // the USART interrupts are globally enabled
+    NVIC_Init(&NVIC_InitStructure);                                                // the properties are passed to the NVIC_Init function which takes care of the low level stuff
 
-	/* Enable the complete USART peripheral */
-	USART_Cmd(m_pPort->pUSARTn, ENABLE);
+    /* Enable the complete USART peripheral */
+    USART_Cmd(m_pPort->pUSARTn, ENABLE);
 
     /* Enable Interrupt */
     USART_ITConfig(m_pPort->pUSARTn, USART_IT_RXNE , ENABLE); // enable the USART interrupt
@@ -155,17 +155,17 @@ SystemState_e CUSART::LockToDevice(USART_DeviceInfo_t* pDevice)
 {
     while(nOS_MutexLock(pDevice->pMutex, NOS_WAIT_INFINITE) != NOS_OK){};
 
-	// Now we have the mutex than keep a copy for the UnlockFromDevice()
-	m_pDevice       = pDevice;
-	m_Status        = SYS_READY;
+    // Now we have the mutex than keep a copy for the UnlockFromDevice()
+    m_pDevice       = pDevice;
+    m_Status        = SYS_READY;
 
-	m_pPort->BaudRate             =  pDevice->BaudRate;
-	m_pPort->WordLength           =  pDevice->WordLength;
-	m_pPort->StopBits             =  pDevice->StopBits;
-	m_pPort->Parity               =  pDevice->Parity;
-	m_pPort->HardwareFlowControl  =  pDevice->HardwareFlowControl;
+    m_pPort->BaudRate             =  pDevice->BaudRate;
+    m_pPort->WordLength           =  pDevice->WordLength;
+    m_pPort->StopBits             =  pDevice->StopBits;
+    m_pPort->Parity               =  pDevice->Parity;
+    m_pPort->HardwareFlowControl  =  pDevice->HardwareFlowControl;
 
-	Init();
+    Init();
 
     return m_Status;
 }

@@ -61,11 +61,11 @@
 //
 //   Description:   Initialize the I2Cx peripheral according to the specified Parameters
 //
-//   Note(s):		To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency
-//					(I2C peripheral input clock) must be a multiple of 10 MHz.
+//   Note(s):        To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency
+//                    (I2C peripheral input clock) must be a multiple of 10 MHz.
 //
-//					I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
-//					I2C_InitStruct: pointer to a I2C_InitTypeDef structure that contains
+//                    I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+//                    I2C_InitStruct: pointer to a I2C_InitTypeDef structure that contains
 //                  the configuration information for the specified I2C peripheral.
 //
 //-------------------------------------------------------------------------------------------------
@@ -96,32 +96,32 @@ void I2C_Driver::Initialize(void)
 
     if(m_IsItInitialize == false)
     {
-    	m_IsItInitialize = true;
-    	Error = nOS_MutexCreate(&m_Mutex, NOS_MUTEX_RECURSIVE, NOS_MUTEX_PRIO_INHERIT);
-    	VAR_UNUSED(Error);
+        m_IsItInitialize = true;
+        Error = nOS_MutexCreate(&m_Mutex, NOS_MUTEX_RECURSIVE, NOS_MUTEX_PRIO_INHERIT);
+        VAR_UNUSED(Error);
     }
 
-	m_Timeout = 0;
+    m_Timeout = 0;
 
-	NVIC_DisableIRQ(m_pPort->EV_IRQn);
-	NVIC_DisableIRQ(m_pPort->ER_IRQn);
+    NVIC_DisableIRQ(m_pPort->EV_IRQn);
+    NVIC_DisableIRQ(m_pPort->ER_IRQn);
 
-	// ---- GPIO configuration ----
-	RCC->APB1RSTR |=  m_pPort->RCC_APB1_En;             // Reset I2C
-	RCC->APB1RSTR &= ~m_pPort->RCC_APB1_En;             // Release reset signal of I2C
-	RCC->APB1ENR  |=  m_pPort->RCC_APB1_En;
+    // ---- GPIO configuration ----
+    RCC->APB1RSTR |=  m_pPort->RCC_APB1_En;             // Reset I2C
+    RCC->APB1RSTR &= ~m_pPort->RCC_APB1_En;             // Release reset signal of I2C
+    RCC->APB1ENR  |=  m_pPort->RCC_APB1_En;
 
     IO_PinInit(m_pPort->SCL);
     IO_PinInit(m_pPort->SDA);
 
-	// Configure I2C module Frequency
-	m_pPort->pI2Cx->TIMINGR = m_pPort->Timing;
+    // Configure I2C module Frequency
+    m_pPort->pI2Cx->TIMINGR = m_pPort->Timing;
 
-	PriorityGroup = NVIC_GetPriorityGrouping();
-	NVIC_SetPriority(m_pPort->EV_IRQn, NVIC_EncodePriority(PriorityGroup, 5, 0));
-	NVIC_EnableIRQ(m_pPort->EV_IRQn);
-	NVIC_SetPriority(m_pPort->ER_IRQn, NVIC_EncodePriority(PriorityGroup, 5, 0));
-	NVIC_EnableIRQ(m_pPort->ER_IRQn);
+    PriorityGroup = NVIC_GetPriorityGrouping();
+    NVIC_SetPriority(m_pPort->EV_IRQn, NVIC_EncodePriority(PriorityGroup, 5, 0));
+    NVIC_EnableIRQ(m_pPort->EV_IRQn);
+    NVIC_SetPriority(m_pPort->ER_IRQn, NVIC_EncodePriority(PriorityGroup, 5, 0));
+    NVIC_EnableIRQ(m_pPort->ER_IRQn);
 }
 
 
@@ -433,11 +433,11 @@ void I2C_Driver::EV_IRQHandler()
 
     pI2C = m_pPort->pI2Cx;
 
-    Status = pI2C->ISR;				                            // Get I2C Status
+    Status = pI2C->ISR;                                            // Get I2C Status
 
     if(Status & I2C_ISR_ARLO)                                       // --- Master Lost Arbitration ---
     {
-    	m_Status  = SYS_ARBITRATION_LOST;                                // Set transfer status as Arbitration Lost
+        m_Status  = SYS_ARBITRATION_LOST;                                // Set transfer status as Arbitration Lost
         pI2C->ICR = I2C_ICR_ARLOCF;                                      // Clear Status Flags
     }
     else if(Status & I2C_ISR_BERR)                                  // --- Master Start Stop Error ---
@@ -512,10 +512,10 @@ void I2C_Driver::EV_IRQHandler()
 //-------------------------------------------------------------------------------------------------
 void I2C_Driver::ER_IRQHandler()
 {
-	//this->GetLastEvent();
-	//m_pPort->pI2Cx->SR1	= 0;													// After a  NACK, transfer is done
-	m_Status		    = SYS_READY;									            // We're done!
-	m_Timeout           = 0;
+    //this->GetLastEvent();
+    //m_pPort->pI2Cx->SR1    = 0;                                                    // After a  NACK, transfer is done
+    m_Status            = SYS_READY;                                                // We're done!
+    m_Timeout           = 0;
 }
 
 //-------------------------------------------------------------------------------------------------

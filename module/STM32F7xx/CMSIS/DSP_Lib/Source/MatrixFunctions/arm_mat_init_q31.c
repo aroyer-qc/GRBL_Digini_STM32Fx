@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
+* Project:         CMSIS DSP Library    
 * Title:        arm_mat_init_q31.c    
 *    
-* Description:	Q31 matrix initialization.    
+* Description:    Q31 matrix initialization.    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
 * Redistribution and use in source and binary forms, with or without 
@@ -59,7 +59,7 @@
    * @param[in,out] *S             points to an instance of the floating-point matrix structure.    
    * @param[in]     nRows          number of rows in the matrix.    
    * @param[in]     nColumns       number of columns in the matrix.    
-   * @param[in]     *pData	   points to the matrix data array.    
+   * @param[in]     *pData       points to the matrix data array.    
    * @return        none    
    */
 

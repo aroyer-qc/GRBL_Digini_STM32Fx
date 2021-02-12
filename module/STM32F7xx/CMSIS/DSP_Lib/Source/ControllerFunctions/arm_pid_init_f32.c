@@ -2,13 +2,13 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_pid_init_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_pid_init_f32.c    
 *    
-* Description:	Floating-point PID Control initialization function    
-*				   
+* Description:    Floating-point PID Control initialization function    
+*                   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  

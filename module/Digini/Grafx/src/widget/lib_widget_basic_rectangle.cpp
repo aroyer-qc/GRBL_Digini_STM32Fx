@@ -76,7 +76,7 @@ Link_e CBasicRect::Create(PageWidget_t* pPageWidget)
     {
         EventArea.Rectangle.Box = m_pBasicRect->Box;
       #ifdef DIGINI_USE_POINTING_DEVICE
-        PDI_pTask->CreateZone(&EventArea, m_pBasicRect->Options, pPageWidget->ID);  	// Create the zone on the touch sense virtual screen
+        PDI_pTask->CreateZone(&EventArea, m_pBasicRect->Options, pPageWidget->ID);      // Create the zone on the touch sense virtual screen
       #endif
         Draw(pService);
         FreeServiceStruct(&pService);
@@ -204,8 +204,8 @@ void CBasicRect::Draw(ServiceReturn_t* pService)
     }
   #endif
 
-	CLayer::SetColor(m_pBasicRect->RectColor);
-	DrawRectangle(&m_pBasicRect->Box);
+    CLayer::SetColor(m_pBasicRect->RectColor);
+    DrawRectangle(&m_pBasicRect->Box);
 
     CLayer::PopDrawing();
 }

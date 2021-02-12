@@ -236,9 +236,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         if(remainingDataLength > MSC_Machine.MSBulkInEpSize)
         {
           USBH_BulkReceiveData (pdev,
-	                        datapointer, 
-			        MSC_Machine.MSBulkInEpSize , 
-			        MSC_Machine.hc_num_in);
+                            datapointer, 
+                    MSC_Machine.MSBulkInEpSize , 
+                    MSC_Machine.hc_num_in);
           
           remainingDataLength -= MSC_Machine.MSBulkInEpSize;
           datapointer = datapointer + MSC_Machine.MSBulkInEpSize;
@@ -251,9 +251,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         else
         {       
           USBH_BulkReceiveData (pdev,
-	                        datapointer, 
-			        remainingDataLength , 
-			        MSC_Machine.hc_num_in);
+                            datapointer, 
+                    remainingDataLength , 
+                    MSC_Machine.hc_num_in);
           
           remainingDataLength = 0; /* Reset this value and keep in same state */
         }
@@ -307,9 +307,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         else
         {
           USBH_BulkSendData (pdev,
-	                     datapointer, 
-			     remainingDataLength , 
-			     MSC_Machine.hc_num_out);
+                         datapointer, 
+                 remainingDataLength , 
+                 MSC_Machine.hc_num_out);
           
           remainingDataLength = 0; /* Reset this value and keep in same state */   
         }      

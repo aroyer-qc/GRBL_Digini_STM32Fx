@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_std_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_std_q15.c    
 *    
-* Description:	Standard deviation of an array of Q15 type.    
+* Description:    Standard deviation of an array of Q15 type.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -87,11 +87,11 @@ void arm_std_q15(
   q31_t in;                                      /* input value */
   q15_t in1;                                     /* input value */
 
-	if(blockSize == 1)
-	{
-		*pResult = 0;
-		return;
-	}
+    if(blockSize == 1)
+    {
+        *pResult = 0;
+        return;
+    }
 
   /*loop Unrolling */
   blkCnt = blockSize >> 2u;
@@ -149,11 +149,11 @@ void arm_std_q15(
   /* Run the below code for Cortex-M0 */
   q15_t in;                                      /* input value */
 
-	if(blockSize == 1)
-	{
-		*pResult = 0;
-		return;
-	}
+    if(blockSize == 1)
+    {
+        *pResult = 0;
+        return;
+    }
 
   /* Loop over blockSize number of values */
   blkCnt = blockSize;

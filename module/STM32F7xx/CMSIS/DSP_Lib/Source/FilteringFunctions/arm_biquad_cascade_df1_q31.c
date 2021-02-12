@@ -2,13 +2,13 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_biquad_cascade_df1_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_biquad_cascade_df1_q31.c    
 *    
-* Description:	Processing function for the    
-*				Q31 Biquad cascade filter    
+* Description:    Processing function for the    
+*                Q31 Biquad cascade filter    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  

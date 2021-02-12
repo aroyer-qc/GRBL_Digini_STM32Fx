@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.  
 *  
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *  
-* Project: 	    CMSIS DSP Library  
-* Title:	    arm_fir_f32.c  
+* Project:         CMSIS DSP Library  
+* Title:        arm_fir_f32.c  
 *  
-* Description:	Floating-point FIR filter processing function.  
+* Description:    Floating-point FIR filter processing function.  
 *  
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -180,13 +180,13 @@ uint32_t blockSize)
       acc4 = 0.0f;
       acc5 = 0.0f;
       acc6 = 0.0f;
-      acc7 = 0.0f;		
+      acc7 = 0.0f;        
 
       /* Initialize state pointer */
       px = pState;
 
       /* Initialize coeff pointer */
-      pb = (pCoeffs);		
+      pb = (pCoeffs);        
    
       /* This is separated from the others to avoid 
        * a call to __aeabi_memmove which would be slower
@@ -610,13 +610,13 @@ uint32_t blockSize)
       acc4 = 0.0f;
       acc5 = 0.0f;
       acc6 = 0.0f;
-      acc7 = 0.0f;		
+      acc7 = 0.0f;        
 
       /* Initialize state pointer */
       px = pState;
 
       /* Initialize coeff pointer */
-      pb = (pCoeffs);		
+      pb = (pCoeffs);        
    
       /* This is separated from the others to avoid 
        * a call to __aeabi_memmove which would be slower

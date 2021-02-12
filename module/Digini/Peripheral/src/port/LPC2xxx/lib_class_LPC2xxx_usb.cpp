@@ -90,9 +90,9 @@ USB_MSC_HostStatus_e CUSB::GetStatus(void)
 //-------------------------------------------------------------------------------------------------
 void CUSB::Initialize(void)
 {
-	m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
-	USBH_Init(&m_OTG_Core, USB_OTG_HS_CORE_ID, &m_Host, &USBH_MSC_cb, &USR_Callbacks);
-	Process();
+    m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
+    USBH_Init(&m_OTG_Core, USB_OTG_HS_CORE_ID, &m_Host, &USBH_MSC_cb, &USR_Callbacks);
+    Process();
 }
 
 
@@ -110,12 +110,12 @@ void CUSB::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 USB_MSC_HostStatus_e CUSB::Process(void)
 {
-	if(m_MSC_HostStatus != USB_MSC_DEV_NOT_SUPPORTED)
-	{
-		USBH_Process(&m_OTG_Core, &m_Host);
-	}
+    if(m_MSC_HostStatus != USB_MSC_DEV_NOT_SUPPORTED)
+    {
+        USBH_Process(&m_OTG_Core, &m_Host);
+    }
 
-	return m_MSC_HostStatus;
+    return m_MSC_HostStatus;
 }
 
 

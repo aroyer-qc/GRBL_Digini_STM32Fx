@@ -281,7 +281,7 @@ void CSDIO::TickHook(void)
 //   Function name: TransmitCommand
 //
 //   Parameter(s):  uint8_t         Command
-//	                uint32_t        Argument
+//                    uint32_t        Argument
 //   Return value:  None
 //
 //   Description:   Send command to the SD Card

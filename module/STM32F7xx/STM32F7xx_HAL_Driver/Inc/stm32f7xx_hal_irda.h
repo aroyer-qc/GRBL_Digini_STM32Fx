@@ -702,23 +702,23 @@ uint32_t HAL_IRDA_GetError(IRDA_HandleTypeDef *hirda);
 #define IS_IRDA_PARITY(__PARITY__) (((__PARITY__) == IRDA_PARITY_NONE) || \
                                     ((__PARITY__) == IRDA_PARITY_EVEN) || \
                                     ((__PARITY__) == IRDA_PARITY_ODD))
-								
+                                
 #define IS_IRDA_TX_RX_MODE(__MODE__) ((((__MODE__) & (~((uint32_t)(IRDA_MODE_TX_RX)))) == (uint32_t)0x00) && ((__MODE__) != (uint32_t)0x00U))
 
 #define IS_IRDA_POWERMODE(__MODE__) (((__MODE__) == IRDA_POWERMODE_LOWPOWER) || \
                                      ((__MODE__) == IRDA_POWERMODE_NORMAL))
-									 
+                                     
 #define IS_IRDA_STATE(__STATE__) (((__STATE__) == IRDA_STATE_DISABLE) || \
                                   ((__STATE__) == IRDA_STATE_ENABLE))
-								  
+                                  
 #define IS_IRDA_MODE(__STATE__)  (((__STATE__) == IRDA_MODE_DISABLE) || \
                                   ((__STATE__) == IRDA_MODE_ENABLE))
-								  
+                                  
 #define IS_IRDA_ONE_BIT_SAMPLE(__ONEBIT__)     (((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_DISABLE) || \
                                                ((__ONEBIT__) == IRDA_ONE_BIT_SAMPLE_ENABLE))
 
 #define IS_IRDA_DMA_TX(__DMATX__)     (((__DMATX__) == IRDA_DMA_TX_DISABLE) || \
-                                       ((__DMATX__) == IRDA_DMA_TX_ENABLE))		
+                                       ((__DMATX__) == IRDA_DMA_TX_ENABLE))        
 
 #define IS_IRDA_DMA_RX(__DMARX__)     (((__DMARX__) == IRDA_DMA_RX_DISABLE) || \
                                        ((__DMARX__) == IRDA_DMA_RX_ENABLE))
@@ -727,7 +727,7 @@ uint32_t HAL_IRDA_GetError(IRDA_HandleTypeDef *hirda);
                                           ((PARAM) == IRDA_SENDBREAK_REQUEST) || \
                                           ((PARAM) == IRDA_MUTE_MODE_REQUEST) || \
                                           ((PARAM) == IRDA_RXDATA_FLUSH_REQUEST) || \
-                                          ((PARAM) == IRDA_TXDATA_FLUSH_REQUEST))									   
+                                          ((PARAM) == IRDA_TXDATA_FLUSH_REQUEST))                                       
 /**
  * @}
  */

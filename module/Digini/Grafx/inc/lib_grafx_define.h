@@ -127,17 +127,17 @@
 #define SERVICE_INVALID_STATE                       0xFF
 
 // Filter for 'GUI_FilterServiceStateFilterServiceState' in 'lib_gui_task.cpp'
-#define	SERVICE_FILTER_RELEASED                     0x0001
-#define	SERVICE_FILTER_IDLE                         0x0002
-#define	SERVICE_FILTER_PRESSED                      0x0004
+#define    SERVICE_FILTER_RELEASED                     0x0001
+#define    SERVICE_FILTER_IDLE                         0x0002
+#define    SERVICE_FILTER_PRESSED                      0x0004
 #define SERVICE_FILTER_TRANSIT                      0x0008
 #define SERVICE_FILTER_TYPEMATIC                    0x0010
-#define	SERVICE_FILTER_SUPERKEY                     0x0020
+#define    SERVICE_FILTER_SUPERKEY                     0x0020
 #define SERVICE_FILTER_CANCEL                       0x0040
-#define	SERVICE_FILTER_START 		  			    0x0080
-#define	SERVICE_FILTER_REFRESH 						0x0100
-#define	SERVICE_FILTER_FORCED           			0x0200
-#define	SERVICE_FILTER_FINALIZE        				0x0400
+#define    SERVICE_FILTER_START                           0x0080
+#define    SERVICE_FILTER_REFRESH                         0x0100
+#define    SERVICE_FILTER_FORCED                       0x0200
+#define    SERVICE_FILTER_FINALIZE                        0x0400
 
 #define SERVICE_FILTER_NORMAL                       0x0045              // if service need the PRESSED and RELEASED only State
 #define SERVICE_FILTER_NORMAL_START                 0x00C5              // if service need the START, PRESSED and RELEASED only State

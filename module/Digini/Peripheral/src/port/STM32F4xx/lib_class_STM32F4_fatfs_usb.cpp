@@ -57,7 +57,7 @@ CFatFS_USB::CFatFS_USB(void)
 //-------------------------------------------------------------------------------------------------
 CFatFS_USB::~CFatFS_USB(void)
 {
-	// Nothing to do at this point
+    // Nothing to do at this point
 }
 
 
@@ -126,15 +126,15 @@ DRESULT CFatFS_USB::Read(uint8_t* pBuffer, uint32_t Sector, uint8_t NumberOfBloc
 {
     uint8_t Status;
 
-	if(NumberOfBlocks == 0)
-	{
-		return RES_PARERR;
-	}
+    if(NumberOfBlocks == 0)
+    {
+        return RES_PARERR;
+    }
 
-	if(m_Status & STA_NOINIT)
-	{
-		return RES_NOTRDY;
-	}
+    if(m_Status & STA_NOINIT)
+    {
+        return RES_NOTRDY;
+    }
 
     if(USB.GetStatus() == USB_MSC_DEV_CONNECTED)
     {
@@ -176,44 +176,44 @@ DRESULT CFatFS_USB::Read(uint8_t* pBuffer, uint32_t Sector, uint8_t NumberOfBloc
 //-------------------------------------------------------------------------------------------------
 DRESULT CFatFS_USB::Write(const uint8_t* pBuffer, uint32_t Sector, uint8_t NumberOfBlocks)
 {
-	uint8_t Status = USBH_MSC_OK;
+    uint8_t Status = USBH_MSC_OK;
 
-	if(NumberOfBlocks == 0)
-	{
-		return RES_PARERR;
-	}
+    if(NumberOfBlocks == 0)
+    {
+        return RES_PARERR;
+    }
 
-	if(m_Status & STA_NOINIT)
-	{
-		return RES_NOTRDY;
-	}
+    if(m_Status & STA_NOINIT)
+    {
+        return RES_NOTRDY;
+    }
 
-	if(m_Status & STA_PROTECT)
-	{
-		return RES_WRPRT;
-	}
+    if(m_Status & STA_PROTECT)
+    {
+        return RES_WRPRT;
+    }
 
     if(USB.GetStatus() == USB_MSC_DEV_CONNECTED)
-	{
-		do
-		{
-			Status = USBH_MSC_Write10(&USB.m_OTG_Core, (BYTE*)pBuffer, Sector, 512 * NumberOfBlocks);
-			USBH_MSC_HandleBOTXfer(&USB.m_OTG_Core, &USB.m_Host);
+    {
+        do
+        {
+            Status = USBH_MSC_Write10(&USB.m_OTG_Core, (BYTE*)pBuffer, Sector, 512 * NumberOfBlocks);
+            USBH_MSC_HandleBOTXfer(&USB.m_OTG_Core, &USB.m_Host);
 
-			if(HCD_IsDeviceConnected(&USB.m_OTG_Core) == 0)
-			{
-				return RES_ERROR;
-			}
-		}
-		while(Status == USBH_MSC_BUSY);
+            if(HCD_IsDeviceConnected(&USB.m_OTG_Core) == 0)
+            {
+                return RES_ERROR;
+            }
+        }
+        while(Status == USBH_MSC_BUSY);
 
         if(Status == USBH_MSC_OK)
         {
             return RES_OK;
         }
-	}
+    }
 
-	return RES_ERROR;
+    return RES_ERROR;
 }
 
 
@@ -221,8 +221,8 @@ DRESULT CFatFS_USB::Write(const uint8_t* pBuffer, uint32_t Sector, uint8_t Numbe
 //
 //   Function name: IO_Control
 //
-//   Parameter(s):  uint8_t    Control		Control code
-//	                void*      pBuffer		Buffer to send/receive control data
+//   Parameter(s):  uint8_t    Control        Control code
+//                    void*      pBuffer        Buffer to send/receive control data
 //   Return value:  DRESULT
 //
 //   Description:   Control
@@ -238,49 +238,49 @@ DRESULT CFatFS_USB::Write(const uint8_t* pBuffer, uint32_t Sector, uint8_t Numbe
 #if _USE_IOCTL == 1
 DRESULT CFatFS_USB::IO_Control(uint8_t Control, void *pBuffer)
 {
-	DRESULT res = RES_ERROR;
+    DRESULT res = RES_ERROR;
 
-	if(m_Status & STA_NOINIT)
-	{
-		return RES_NOTRDY;
-	}
+    if(m_Status & STA_NOINIT)
+    {
+        return RES_NOTRDY;
+    }
 
-	switch(Control)
-	{
-		case CTRL_SYNC:											// Make sure that no pending write process
-		{
-			res = RES_OK;
-			break;
-		}
+    switch(Control)
+    {
+        case CTRL_SYNC:                                            // Make sure that no pending write process
+        {
+            res = RES_OK;
+            break;
+        }
 
-		case GET_SECTOR_COUNT:									// Get number of sectors on the disk (unit32_t)
-		{
-			*(uint32_t*)pBuffer = (uint32_t)USBH_MSC_Param.MSCapacity;
-			res = RES_OK;
-			break;
-		}
+        case GET_SECTOR_COUNT:                                    // Get number of sectors on the disk (unit32_t)
+        {
+            *(uint32_t*)pBuffer = (uint32_t)USBH_MSC_Param.MSCapacity;
+            res = RES_OK;
+            break;
+        }
 
-		case GET_SECTOR_SIZE:									// Get R/W sector size (unit16_t)
-		{
-			*(uint16_t*)pBuffer = 512;
-			res = RES_OK;
-			break;
-		}
+        case GET_SECTOR_SIZE:                                    // Get R/W sector size (unit16_t)
+        {
+            *(uint16_t*)pBuffer = 512;
+            res = RES_OK;
+            break;
+        }
 
-		case GET_BLOCK_SIZE:									// Get erase block size in unit of sector (unit32_t)
-		{
-			*(uint32_t*)pBuffer = 512;
-			break;
-		}
+        case GET_BLOCK_SIZE:                                    // Get erase block size in unit of sector (unit32_t)
+        {
+            *(uint32_t*)pBuffer = 512;
+            break;
+        }
 
 
-		default:
-		{
-			res = RES_PARERR;
-		}
-	}
+        default:
+        {
+            res = RES_PARERR;
+        }
+    }
 
-	return res;
+    return res;
 }
 #endif
 

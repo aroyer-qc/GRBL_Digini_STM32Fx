@@ -72,12 +72,12 @@ void USBH_USR_Init(void)
  */
 void USBH_USR_DeviceAttached(void)
 {
-	USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
+    USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
 }
 
 void USBH_USR_UnrecoveredError (void)
 {
-	USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
+    USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
 }
 
 /*
@@ -85,7 +85,7 @@ void USBH_USR_UnrecoveredError (void)
  */
 void USBH_USR_DeviceDisconnected (void)
 {
-	USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
+    USB.m_MSC_HostStatus = USB_MSC_DEV_DETACHED;
 }
 
 /*
@@ -100,10 +100,10 @@ void USBH_USR_ResetDevice (void)
  */
 void USBH_USR_DeviceSpeedDetected (uint8_t DeviceSpeed)
 {
-	if ((DeviceSpeed != HPRT0_PRTSPD_FULL_SPEED) && (DeviceSpeed != HPRT0_PRTSPD_LOW_SPEED))
-	{
-		USB.m_MSC_HostStatus = USB_MSC_SPEED_ERROR;
-	}
+    if ((DeviceSpeed != HPRT0_PRTSPD_FULL_SPEED) && (DeviceSpeed != HPRT0_PRTSPD_LOW_SPEED))
+    {
+        USB.m_MSC_HostStatus = USB_MSC_SPEED_ERROR;
+    }
 }
 
 /*
@@ -160,13 +160,13 @@ void USBH_USR_EnumerationDone (void)
  */
 void USBH_USR_DeviceNotSupported (void)
 {
-	USB.m_MSC_HostStatus = USB_MSC_DEV_NOT_SUPPORTED;
+    USB.m_MSC_HostStatus = USB_MSC_DEV_NOT_SUPPORTED;
 }
 
 
 USBH_USR_Status USBH_USR_UserInput (void)
 {
-	return USBH_USR_RESP_OK;
+    return USBH_USR_RESP_OK;
 }
 
 /*
@@ -174,7 +174,7 @@ USBH_USR_Status USBH_USR_UserInput (void)
  */
 void USBH_USR_OverCurrentDetected (void)
 {
-	USB.m_MSC_HostStatus = USB_MSC_OVER_CURRENT;
+    USB.m_MSC_HostStatus = USB_MSC_OVER_CURRENT;
 }
 
 /*
@@ -182,27 +182,27 @@ void USBH_USR_OverCurrentDetected (void)
  */
 int USBH_USR_MSC_Application (void)
 {
-	switch (USBH_USR_ApplicationState)
-	{
-		case USH_USR_FS_INIT:
-			USB.m_MSC_HostStatus = USB_MSC_DEV_CONNECTED;
+    switch (USBH_USR_ApplicationState)
+    {
+        case USH_USR_FS_INIT:
+            USB.m_MSC_HostStatus = USB_MSC_DEV_CONNECTED;
 
-			if (USBH_MSC_Param.MSWriteProtect == DISK_WRITE_PROTECTED)
-			{
-				USB.m_MSC_HostStatus = USB_MSC_DEV_WRITE_PROTECT;
-			}
+            if (USBH_MSC_Param.MSWriteProtect == DISK_WRITE_PROTECTED)
+            {
+                USB.m_MSC_HostStatus = USB_MSC_DEV_WRITE_PROTECT;
+            }
 
-			USBH_USR_ApplicationState = USH_USR_FS_LOOP;
-			break;
+            USBH_USR_ApplicationState = USH_USR_FS_LOOP;
+            break;
 
-		case USH_USR_FS_LOOP:
-			break;
+        case USH_USR_FS_LOOP:
+            break;
 
-		default:
-			break;
-	}
+        default:
+            break;
+    }
 
-	return 0;
+    return 0;
 }
 
 /*
@@ -210,7 +210,7 @@ int USBH_USR_MSC_Application (void)
  */
 void USBH_USR_DeInit (void)
 {
-	USBH_USR_ApplicationState = USH_USR_FS_INIT;
+    USBH_USR_ApplicationState = USH_USR_FS_INIT;
 }
 
 /*---------------------------------------------------------------------*

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5  
+* $Revision:     V.1.4.5  
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_power_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_power_f32.c    
 *    
-* Description:	Sum of the squares of the elements of a floating-point vector.    
+* Description:    Sum of the squares of the elements of a floating-point vector.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -51,7 +51,7 @@
  * The underlying algorithm is used:    
  *    
  * <pre>    
- * 	Result = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + pSrc[2] * pSrc[2] + ... + pSrc[blockSize-1] * pSrc[blockSize-1];    
+ *     Result = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + pSrc[2] * pSrc[2] + ... + pSrc[blockSize-1] * pSrc[blockSize-1];    
  * </pre>    
  *   
  * There are separate functions for floating point, Q31, Q15, and Q7 data types.     

@@ -28,13 +28,13 @@ extern "C" {
 
 typedef enum
 {
-	USB_MSC_HOST_NO_INIT = 0,  // USB interface not initialized
-	USB_MSC_DEV_DETACHED,      // no device connected
-	USB_MSC_SPEED_ERROR,       // unsupported USB speed
-	USB_MSC_DEV_NOT_SUPPORTED, // unsupported device
-	USB_MSC_DEV_WRITE_PROTECT, // device is write protected
-	USB_MSC_OVER_CURRENT,      // overcurrent detected
-	USB_MSC_DEV_CONNECTED      // device connected and ready
+    USB_MSC_HOST_NO_INIT = 0,  // USB interface not initialized
+    USB_MSC_DEV_DETACHED,      // no device connected
+    USB_MSC_SPEED_ERROR,       // unsupported USB speed
+    USB_MSC_DEV_NOT_SUPPORTED, // unsupported device
+    USB_MSC_DEV_WRITE_PROTECT, // device is write protected
+    USB_MSC_OVER_CURRENT,      // overcurrent detected
+    USB_MSC_DEV_CONNECTED      // device connected and ready
 } usb_msc_host_status_t;
 
 /*---------------------------------------------------------------------*

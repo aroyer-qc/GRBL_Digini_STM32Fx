@@ -48,10 +48,10 @@
 
 enum CrcType_e
 {
-	CRC_16_MODBUS,
+    CRC_16_MODBUS,
     CRC_16_CCITT,
-	CRC_32_IEEE,
-	CRC_NORMAL,
+    CRC_32_IEEE,
+    CRC_NORMAL,
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -727,7 +727,7 @@ void UART_Driver::DMA_ConfigRX(uint8_t* pBufferRX, size_t SizeRX)
 //-------------------------------------------------------------------------------------------------
 void UART_Driver::DMA_ConfigTX(uint8_t* pBufferTX, size_t SizeTX)
 {
-	DMA_Stream_TypeDef* pDMA;
+    DMA_Stream_TypeDef* pDMA;
 
     if(m_pUart != nullptr)
     {

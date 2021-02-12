@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_iir_lattice_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_iir_lattice_q15.c    
 *    
-* Description:	Q15 IIR lattice filter processing function.    
+* Description:    Q15 IIR lattice filter processing function.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -92,7 +92,7 @@ void arm_iir_lattice_q15(
   q15_t out;                                     /* Temporary variable for output */
   q31_t v;                                       /* Temporary variable for ladder coefficient */
 #ifdef UNALIGNED_SUPPORT_DISABLE
-	q15_t v1, v2;
+    q15_t v1, v2;
 #endif
 
 
@@ -176,20 +176,20 @@ void arm_iir_lattice_q15(
 
 #else
 
-	  v1 = *pv++;
-	  v2 = *pv++;
+      v1 = *pv++;
+      v2 = *pv++;
 
 #ifndef ARM_MATH_BIG_ENDIAN
 
-	  v = __PKHBT(v1, v2, 16);
+      v = __PKHBT(v1, v2, 16);
 
 #else
 
-	  v = __PKHBT(v2, v1, 16);
+      v = __PKHBT(v2, v1, 16);
 
-#endif	/* 	#ifndef ARM_MATH_BIG_ENDIAN		*/
+#endif    /*     #ifndef ARM_MATH_BIG_ENDIAN        */
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE */
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE */
 
 
       /* Pack gN-1(n) and gN-2(n) */
@@ -245,20 +245,20 @@ void arm_iir_lattice_q15(
 
 #else
 
-	  v1 = *pv++;
-	  v2 = *pv++;
+      v1 = *pv++;
+      v2 = *pv++;
 
 #ifndef ARM_MATH_BIG_ENDIAN
 
-	  v = __PKHBT(v1, v2, 16);
+      v = __PKHBT(v1, v2, 16);
 
 #else
 
-	  v = __PKHBT(v2, v1, 16);
+      v = __PKHBT(v2, v1, 16);
 
-#endif	/* #ifndef ARM_MATH_BIG_ENDIAN	 */
+#endif    /* #ifndef ARM_MATH_BIG_ENDIAN     */
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE */
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE */
 
 
       /* Pack gN-3(n) and gN-4(n) */
@@ -341,7 +341,7 @@ void arm_iir_lattice_q15(
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
 
-#endif /*	#ifndef UNALIGNED_SUPPORT_DISABLE */
+#endif /*    #ifndef UNALIGNED_SUPPORT_DISABLE */
 
     /* Decrement the loop counter */
     stgCnt--;

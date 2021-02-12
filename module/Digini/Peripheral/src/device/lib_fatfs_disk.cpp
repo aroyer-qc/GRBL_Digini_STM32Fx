@@ -96,18 +96,18 @@ bool FATFS_DISK_CheckMedia(DiskMedia_e Device)
 //-------------------------------------------------------------------------------------------------
 bool FATFS_DISK_Mount(DiskMedia_e Device)
 {
-	uint32_t FreeClusters;
-	FATFS*   fs;
-	char*    Volume;
+    uint32_t FreeClusters;
+    FATFS*   fs;
+    char*    Volume;
 
-	Volume = FATFS_DISK_GetVolume(Device);
+    Volume = FATFS_DISK_GetVolume(Device);
 
-	if((f_mount(&fso, Volume, 1) == FR_OK) && (f_getfree(Volume, &FreeClusters, &fs) == FR_OK))
-	{
-		return true;
-	}
+    if((f_mount(&fso, Volume, 1) == FR_OK) && (f_getfree(Volume, &FreeClusters, &fs) == FR_OK))
+    {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 
@@ -126,12 +126,12 @@ bool FATFS_DISK_Mount(DiskMedia_e Device)
 //-------------------------------------------------------------------------------------------------
 bool FATFS_DISK_Unmount(DiskMedia_e Device)
 {
-	if(f_mount(NULL, FATFS_DISK_GetVolume(Device), 1) == FR_OK)
-	{
-		return true;
-	}
+    if(f_mount(NULL, FATFS_DISK_GetVolume(Device), 1) == FR_OK)
+    {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 //-------------------------------------------------------------------------------------------------

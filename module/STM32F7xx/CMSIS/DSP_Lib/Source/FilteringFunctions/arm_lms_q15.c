@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_lms_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_lms_q15.c    
 *    
-* Description:	Processing function for the Q15 LMS filter.    
+* Description:    Processing function for the Q15 LMS filter.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -67,7 +67,7 @@
  * Lastly, the accumulator is saturated to yield a result in 1.15 format.    
  *   
  * \par   
- * 	In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted.   
+ *     In this filter, filter coefficients are updated for each sample and the updation of filter cofficients are saturted.   
  *    
  */
 
@@ -142,7 +142,7 @@ void arm_lms_q15(
       acc += (q63_t) (((q31_t) (*px++) * (*pb++)));
 
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
       /* Decrement the loop counter */
       tapCnt--;

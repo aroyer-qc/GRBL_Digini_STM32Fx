@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_conv_partial_fast_q31.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_conv_partial_fast_q31.c    
 *    
-* Description:	Fast Q31 Partial convolution.    
+* Description:    Fast Q31 Partial convolution.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  

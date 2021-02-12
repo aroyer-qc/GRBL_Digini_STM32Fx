@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_mat_mult_fast_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_mat_mult_fast_q15.c    
 *    
-* Description:	 Q15 matrix multiplication (fast variant)    
+* Description:     Q15 matrix multiplication (fast variant)    
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  
@@ -55,8 +55,8 @@
  * @param[in]       *pSrcA points to the first input matrix structure    
  * @param[in]       *pSrcB points to the second input matrix structure    
  * @param[out]      *pDst points to output matrix structure    
- * @param[in]		*pState points to the array for storing intermediate results    
- * @return     		The function returns either    
+ * @param[in]        *pState points to the array for storing intermediate results    
+ * @return             The function returns either    
  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.    
  *    
  * @details    
@@ -110,7 +110,7 @@ arm_status arm_mat_mult_fast_q15(
   q15_t in;                                      /* Temporary variable to hold the input value */
   q15_t inA1, inA2, inB1, inB2;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
@@ -232,9 +232,9 @@ arm_status arm_mat_mult_fast_q15(
         /* Store one element in the destination */
         *px = in;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
         
-		/* Update the pointer px to point to the next row of the transposed matrix */
+        /* Update the pointer px to point to the next row of the transposed matrix */
         px += numRowsB;
 
         /* Decrement the column loop counter */
@@ -323,7 +323,7 @@ arm_status arm_mat_mult_fast_q15(
           sum += inA1 * inB1;
           sum += inA2 * inB2;
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
           /* Decrement the loop counter */
           colCnt--;

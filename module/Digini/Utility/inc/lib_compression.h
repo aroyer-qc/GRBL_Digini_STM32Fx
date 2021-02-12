@@ -72,9 +72,9 @@ enum Compression_e
 
 struct CompxWorkMem_t
 {
-	RawArray* pPrefix;
-	RawArray* pAppend;
-	RawArray* pDecode;
+    RawArray* pPrefix;
+    RawArray* pAppend;
+    RawArray* pDecode;
 };
 
 //-------------------------------------------------------------------------------------------------

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
 *
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *
-* Project: 	    CMSIS DSP Library
-* Title:	    arm_rfft_f32.c
+* Project:         CMSIS DSP Library
+* Title:        arm_rfft_f32.c
 *
-* Description:	RFFT & RIFFT Floating point process function
+* Description:    RFFT & RIFFT Floating point process function
 *
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *
@@ -44,17 +44,17 @@ void stage_rfft_f32(
   arm_rfft_fast_instance_f32 * S,
   float32_t * p, float32_t * pOut)
 {
-   uint32_t  k;								   /* Loop Counter                     */
-   float32_t twR, twI;						   /* RFFT Twiddle coefficients        */
+   uint32_t  k;                                   /* Loop Counter                     */
+   float32_t twR, twI;                           /* RFFT Twiddle coefficients        */
    float32_t * pCoeff = S->pTwiddleRFFT;  /* Points to RFFT Twiddle factors   */
-   float32_t *pA = p;						   /* increasing pointer               */
-   float32_t *pB = p;						   /* decreasing pointer               */
-   float32_t xAR, xAI, xBR, xBI;				/* temporary variables              */
-   float32_t t1a, t1b;				         /* temporary variables              */
-   float32_t p0, p1, p2, p3;				   /* temporary variables              */
+   float32_t *pA = p;                           /* increasing pointer               */
+   float32_t *pB = p;                           /* decreasing pointer               */
+   float32_t xAR, xAI, xBR, xBI;                /* temporary variables              */
+   float32_t t1a, t1b;                         /* temporary variables              */
+   float32_t p0, p1, p2, p3;                   /* temporary variables              */
 
 
-   k = (S->Sint).fftLen - 1;					
+   k = (S->Sint).fftLen - 1;                    
 
    /* Pack first and last sample of the frequency domain together */
 
@@ -130,15 +130,15 @@ void merge_rfft_f32(
 arm_rfft_fast_instance_f32 * S,
 float32_t * p, float32_t * pOut)
 {
-   uint32_t  k;								/* Loop Counter                     */
-   float32_t twR, twI;						/* RFFT Twiddle coefficients        */
-   float32_t *pCoeff = S->pTwiddleRFFT;		/* Points to RFFT Twiddle factors   */
-   float32_t *pA = p;						/* increasing pointer               */
-   float32_t *pB = p;						/* decreasing pointer               */
-   float32_t xAR, xAI, xBR, xBI;			/* temporary variables              */
-   float32_t t1a, t1b, r, s, t, u;			/* temporary variables              */
+   uint32_t  k;                                /* Loop Counter                     */
+   float32_t twR, twI;                        /* RFFT Twiddle coefficients        */
+   float32_t *pCoeff = S->pTwiddleRFFT;        /* Points to RFFT Twiddle factors   */
+   float32_t *pA = p;                        /* increasing pointer               */
+   float32_t *pB = p;                        /* decreasing pointer               */
+   float32_t xAR, xAI, xBR, xBI;            /* temporary variables              */
+   float32_t t1a, t1b, r, s, t, u;            /* temporary variables              */
 
-   k = (S->Sint).fftLen - 1;					
+   k = (S->Sint).fftLen - 1;                    
 
    xAR = pA[0];
    xAI = pA[1];
@@ -149,7 +149,7 @@ float32_t * p, float32_t * pOut)
    *pOut++ = 0.5f * ( xAR - xAI );
 
    pB  =  p + 2*k ;
-   pA +=  2	   ;
+   pA +=  2       ;
 
    while(k > 0u)
    {

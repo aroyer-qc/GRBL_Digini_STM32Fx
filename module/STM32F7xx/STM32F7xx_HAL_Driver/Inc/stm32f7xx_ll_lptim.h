@@ -48,7 +48,7 @@ extern "C" {
   * @{
   */
 #if defined (LPTIM1) 
-	
+    
 /** @defgroup LPTIM_LL LPTIM
   * @{
   */

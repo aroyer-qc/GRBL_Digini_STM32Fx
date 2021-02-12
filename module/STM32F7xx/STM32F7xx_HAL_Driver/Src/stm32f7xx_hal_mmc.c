@@ -1453,7 +1453,7 @@ void HAL_MMC_IRQHandler(MMC_HandleTypeDef *hmmc)
     {
       hmmc->ErrorCode |= HAL_MMC_ERROR_TX_UNDERRUN; 
     }
-	
+    
     /* Clear All flags */
     __HAL_MMC_CLEAR_FLAG(hmmc, SDMMC_STATIC_FLAGS);
     
@@ -1834,10 +1834,10 @@ HAL_StatusTypeDef HAL_MMC_ConfigWideBusOperation(MMC_HandleTypeDef *hmmc, uint32
   SDMMC_InitTypeDef Init;
   uint32_t errorstate = HAL_MMC_ERROR_NONE;
   uint32_t response = 0, busy = 0;
-	
-	/* Check the parameters */
+    
+    /* Check the parameters */
   assert_param(IS_SDMMC_BUS_WIDE(WideMode));
-	
+    
   /* Chnage Satte */
   hmmc->State = HAL_MMC_STATE_BUSY;
   

@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.   
 *   
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *   
-* Project: 	    CMSIS DSP Library   
-* Title:		arm_correlate_q7.c   
+* Project:         CMSIS DSP Library   
+* Title:        arm_correlate_q7.c   
 *   
-* Description:	Correlation of Q7 sequences. 
+* Description:    Correlation of Q7 sequences. 
 *   
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -474,7 +474,7 @@ void arm_correlate_q7(
       *pOut = (q7_t) (__SSAT(acc3 >> 7, 8));
       pOut += inc;
 
-	  count += 4u;
+      count += 4u;
       /* Update the inputA and inputB pointers for next MAC calculation */
       px = pIn1 + count;
       py = pIn2;
@@ -548,7 +548,7 @@ void arm_correlate_q7(
       pOut += inc;
 
       /* Increment the pointer pIn1 index, count by 1 */
-	  count++;
+      count++;
 
       /* Update the inputA and inputB pointers for next MAC calculation */
       px = pIn1 + count;

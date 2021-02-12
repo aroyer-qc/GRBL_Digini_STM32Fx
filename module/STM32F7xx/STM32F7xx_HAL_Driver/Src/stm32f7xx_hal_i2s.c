@@ -285,7 +285,7 @@ HAL_StatusTypeDef HAL_I2S_Init(I2S_HandleTypeDef *hi2s)
     else
     {
       /* Get the I2S source clock value */
-			i2sclk = I2S_GetClockFreq(hi2s);
+            i2sclk = I2S_GetClockFreq(hi2s);
     }
     
     /* Compute the Real divider depending on the MCLK output state, with a floating point */
@@ -1506,7 +1506,7 @@ static void I2S_Transmit_IT(I2S_HandleTypeDef *hi2s)
 {
   /* Transmit data */
   hi2s->Instance->DR = (*hi2s->pTxBuffPtr++);
-  hi2s->TxXferCount--;	
+  hi2s->TxXferCount--;    
 
   if(hi2s->TxXferCount == 0)
   {

@@ -150,12 +150,12 @@ void IO_PinInit(IO_ID_e IO_Id)
 {
     const IO_Properties_t* pIO_Properties;
     GPIO_TypeDef* pPort;
-	uint32_t 	  PinNumber;
-	uint32_t 	  Pin2BitShift;
-	uint32_t 	  PinMode;
-	uint32_t 	  PinType;
-	uint32_t 	  PinSpeed;
-	uint32_t 	  State;
+    uint32_t       PinNumber;
+    uint32_t       Pin2BitShift;
+    uint32_t       PinMode;
+    uint32_t       PinType;
+    uint32_t       PinSpeed;
+    uint32_t       State;
 
 
     pIO_Properties = &IO_Properties[IO_Id];
@@ -200,7 +200,7 @@ void IO_PinInit(IO_ID_e IO_Id)
         break;
 
         // case IO_MODE_ANALOG:  // Nothing to do for analog
-        // case IO_MODE_INPUT:	 // Nothing to do for input
+        // case IO_MODE_INPUT:     // Nothing to do for input
         default:
         {
         }
@@ -210,7 +210,7 @@ void IO_PinInit(IO_ID_e IO_Id)
     pPort->PUPDR  &= ~(uint32_t)((IO_TYPE_PIN_PULL_MASK >> 1) << Pin2BitShift);                 // Reset bit for Pull Up
     pPort->PUPDR  |=  (uint32_t)(((PinType & IO_TYPE_PIN_PULL_MASK) >> 1) << Pin2BitShift);     // Set new pull setting
 
-    pPort->OTYPER &= ~(uint32_t)(IO_TYPE_PIN_DRIVE_MASK << PinNumber);        		            // Reset bit for Drive type PP or OD
+    pPort->OTYPER &= ~(uint32_t)(IO_TYPE_PIN_DRIVE_MASK << PinNumber);                            // Reset bit for Drive type PP or OD
     pPort->OTYPER |=  (uint32_t)((PinType & IO_TYPE_PIN_DRIVE_MASK) << PinNumber);              // Set new type
 
     pPort->MODER  &= ~(uint32_t)(IO_MODE_PIN_MASK << Pin2BitShift);
@@ -232,7 +232,7 @@ void IO_PinInit(IO_ID_e IO_Id)
 void IO_PinInitInput(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort;
-	uint32_t 	  PinNumber;
+    uint32_t       PinNumber;
 
     pPort     = IO_Properties[IO_Id].pPort;
     PinNumber = IO_Properties[IO_Id].PinNumber << 1;
@@ -254,7 +254,7 @@ void IO_PinInitInput(IO_ID_e IO_Id)
 void IO_PinInitOutput(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort;
-	uint32_t 	  PinNumber;
+    uint32_t       PinNumber;
 
     pPort     = IO_Properties[IO_Id].pPort;
     PinNumber = IO_Properties[IO_Id].PinNumber << 1;
@@ -278,7 +278,7 @@ void IO_PinInitOutput(IO_ID_e IO_Id)
 void IO_SetPinLow(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort     = IO_Properties[IO_Id].pPort;
-	uint32_t 	  PinNumber = IO_Properties[IO_Id].PinNumber;
+    uint32_t       PinNumber = IO_Properties[IO_Id].PinNumber;
     pPort->BSRR = ((1 << PinNumber) << 16);
 }
 
@@ -297,7 +297,7 @@ void IO_SetPinLow(IO_ID_e IO_Id)
 void IO_SetPinHigh(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort     = IO_Properties[IO_Id].pPort;
-	uint32_t 	  PinNumber = IO_Properties[IO_Id].PinNumber;
+    uint32_t       PinNumber = IO_Properties[IO_Id].PinNumber;
     pPort->BSRR = (1 << PinNumber);
 }
 
@@ -316,7 +316,7 @@ void IO_SetPinHigh(IO_ID_e IO_Id)
 void IO_TogglePin(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort     = IO_Properties[IO_Id].pPort;
-	uint32_t 	  PinNumber = IO_Properties[IO_Id].PinNumber;
+    uint32_t       PinNumber = IO_Properties[IO_Id].PinNumber;
     pPort->ODR ^= (1 << PinNumber);
 }
 
@@ -360,7 +360,7 @@ void IO_SetPin(IO_ID_e IO_Id, uint32_t Value)
 uint32_t IO_GetInputPin(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort     = IO_Properties[IO_Id].pPort;
-	uint32_t 	  PinNumber = IO_Properties[IO_Id].PinNumber;
+    uint32_t       PinNumber = IO_Properties[IO_Id].PinNumber;
 
     if((pPort->IDR & (1 << PinNumber)) == 0)
     {
@@ -385,7 +385,7 @@ uint32_t IO_GetInputPin(IO_ID_e IO_Id)
 uint32_t IO_GetOutputPin(IO_ID_e IO_Id)
 {
     GPIO_TypeDef* pPort     = IO_Properties[IO_Id].pPort;
-	uint32_t 	  PinNumber = IO_Properties[IO_Id].PinNumber;
+    uint32_t       PinNumber = IO_Properties[IO_Id].PinNumber;
 
     if((pPort->ODR & (1 << PinNumber)) == 0)
     {
@@ -423,7 +423,7 @@ void IO_InitIRQ(IO_IrqID_e IO_IRQ_Id, IO_PinChangeCallback_t pCallback)
     PinMask         = 1 << PinNumber;
 
     // Init The IO for this pin
-	IO_PinInit(pIRQ_Properties->IO_Id);
+    IO_PinInit(pIRQ_Properties->IO_Id);
 
     // Enable EXT Line in SYSCFG
     SYSCFG->EXTICR[PinNumber >> 2] &= ~(((uint32_t)0x0F) << ((PinNumber & 3)) << 2);

@@ -413,16 +413,16 @@ static void DRV_LTDC_Initialize(void)
     RCC_PLLSAICmd(ENABLE);                                                                          // Enable PLLSAI Clock
     while(RCC_GetFlagStatus(RCC_FLAG_PLLSAIRDY) == RESET){};                                        // Wait for PLLSAI activation
 
-	// configure timer
-	 // BP = back porch, FP = front porch
-	 //
-	 // HSync = 10       VSync = 2
-	 // HBP   = 20       VBP   = 2
-	 // HFP   = 10       VFP   = 4
-	 //
-	 // portrait mode: W = 240, H = 320
-	 //
-	LTDC_StructInit (&LTDC_InitStruct);
+    // configure timer
+     // BP = back porch, FP = front porch
+     //
+     // HSync = 10       VSync = 2
+     // HBP   = 20       VBP   = 2
+     // HFP   = 10       VFP   = 4
+     //
+     // portrait mode: W = 240, H = 320
+     //
+    LTDC_StructInit (&LTDC_InitStruct);
 
     // ---- LTDC Initialization ----
 
@@ -631,7 +631,7 @@ void DRV_LayerConfig(CLayer* pLayer)
         // Reload configuration
         LTDC_ReloadConfig(LTDC_IMReload);
 
-	LTDC_DitherCmd (DISABLE);
+    LTDC_DitherCmd (DISABLE);
 
         // Enable The LCD
         LTDC_Cmd(ENABLE);

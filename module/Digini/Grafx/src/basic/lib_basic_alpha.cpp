@@ -32,7 +32,7 @@
 #include "digini_cfg.h"
 #ifdef DIGINI_USE_GRAFX
 
-//static void    PrecomputeAlphaTable       ();			// TODO change for externally accessible
+//static void    PrecomputeAlphaTable       ();            // TODO change for externally accessible
 // ...
 
 

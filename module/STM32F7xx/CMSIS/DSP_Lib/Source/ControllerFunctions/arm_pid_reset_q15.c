@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_pid_reset_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_pid_reset_q15.c    
 *    
-* Description:	Q15 PID Control reset function   
+* Description:    Q15 PID Control reset function   
 *    
 * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
 *  
@@ -47,7 +47,7 @@
 
 /**    
 * @brief  Reset function for the Q15 PID Control.   
-* @param[in] *S		Instance pointer of PID control data structure.   
+* @param[in] *S        Instance pointer of PID control data structure.   
 * @return none.    
 * \par Description:   
 * The function resets the state buffer to zeros.    

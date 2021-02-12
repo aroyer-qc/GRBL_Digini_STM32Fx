@@ -488,9 +488,9 @@ uint32_t DeCompression::LZW_InputCode(void)
 
     while( m_BitCount <= 24)
     {
-		m_BitBuffer |= ((uint32_t)m_pCompxData->at(m_DataOffset) << (24 -  m_BitCount));
-		m_DataOffset++;
-		m_BitCount += 8;
+        m_BitBuffer |= ((uint32_t)m_pCompxData->at(m_DataOffset) << (24 -  m_BitCount));
+        m_DataOffset++;
+        m_BitCount += 8;
     }
 
     Value = m_BitBuffer >> (32 - m_Bits);

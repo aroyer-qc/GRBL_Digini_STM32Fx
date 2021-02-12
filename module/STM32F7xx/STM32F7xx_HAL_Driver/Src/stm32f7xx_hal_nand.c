@@ -335,7 +335,7 @@ HAL_StatusTypeDef HAL_NAND_Read_ID(NAND_HandleTypeDef *hnand, NAND_IDTypeDef *pN
   /* Update the NAND controller state */ 
   hnand->State = HAL_NAND_STATE_BUSY;
   
-  /* Send Read ID command sequence */ 	
+  /* Send Read ID command sequence */     
   *(__IO uint8_t *)((uint32_t)(deviceAddress | CMD_AREA))  = NAND_CMD_READID;
   __DSB();
   *(__IO uint8_t *)((uint32_t)(deviceAddress | ADDR_AREA)) = 0x00;
@@ -611,7 +611,7 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, NAND_Address
   
   /* Page(s) read loop */  
   while((NumPageToRead != 0) && (nandAddress < ((hnand->Config.BlockSize) * (hnand->Config.BlockNbr))))
-  {	   
+  {       
     /* update the buffer size */
     size = (hnand->Config.PageSize) + ((hnand->Config.PageSize) * numPagesRead);
     
@@ -825,9 +825,9 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, NAND_Address
     *(__IO uint8_t *)((uint32_t)(deviceAddress | CMD_AREA)) = NAND_CMD_WRITE_TRUE1;
     __DSB();
     
-	/* Get tick */
+    /* Get tick */
     tickstart = HAL_GetTick();
-	
+    
     /* Read status until NAND is ready */
     while(HAL_NAND_Read_Status(hnand) != NAND_READY)
     {  
@@ -963,9 +963,9 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, NAND_Addres
     *(__IO uint8_t *)((uint32_t)(deviceAddress | CMD_AREA)) = NAND_CMD_WRITE_TRUE1;
     __DSB();
     
-	/* Get tick */
+    /* Get tick */
     tickstart = HAL_GetTick();
-	  
+      
     /* Read status until NAND is ready */
     while(HAL_NAND_Read_Status(hnand) != NAND_READY)
     {  
@@ -1410,7 +1410,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, NAND_Ad
    
     /* Get tick */
     tickstart = HAL_GetTick();
-	
+    
     /* Read status until NAND is ready */
     while(HAL_NAND_Read_Status(hnand) != NAND_READY)
     {  
@@ -1557,7 +1557,7 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, NAND_A
    
     /* Get tick */
     tickstart = HAL_GetTick();
-	  
+      
     /* Read status until NAND is ready */
     while(HAL_NAND_Read_Status(hnand) != NAND_READY)
     { 
@@ -1621,7 +1621,7 @@ HAL_StatusTypeDef HAL_NAND_Erase_Block(NAND_HandleTypeDef *hnand, NAND_AddressTy
     __DSB();
   *(__IO uint8_t *)((uint32_t)(DeviceAddress | ADDR_AREA)) = ADDR_3RD_CYCLE(ARRAY_ADDRESS(pAddress, hnand));
   __DSB();
-		
+        
   *(__IO uint8_t *)((uint32_t)(DeviceAddress | CMD_AREA)) = NAND_CMD_ERASE1; 
   __DSB();
   

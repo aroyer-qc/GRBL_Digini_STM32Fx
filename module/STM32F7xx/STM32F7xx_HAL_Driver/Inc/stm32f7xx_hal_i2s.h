@@ -433,7 +433,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
   */
 #define IS_I2S_CLOCKSOURCE(CLOCK) (((CLOCK) == I2S_CLOCK_EXTERNAL) || \
                                    ((CLOCK) == I2S_CLOCK_PLL))
-								   
+                                   
 #define IS_I2S_MODE(MODE) (((MODE) == I2S_MODE_SLAVE_TX) || \
                            ((MODE) == I2S_MODE_SLAVE_RX) || \
                            ((MODE) == I2S_MODE_MASTER_TX)|| \
@@ -456,7 +456,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
 #define IS_I2S_AUDIO_FREQ(FREQ) ((((FREQ) >= I2S_AUDIOFREQ_8K) && \
                                  ((FREQ) <= I2S_AUDIOFREQ_192K)) || \
                                  ((FREQ) == I2S_AUDIOFREQ_DEFAULT))
-								 
+                                 
 #define IS_I2S_CPOL(CPOL) (((CPOL) == I2S_CPOL_LOW) || \
                            ((CPOL) == I2S_CPOL_HIGH))
 /**
@@ -470,7 +470,7 @@ uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s);
 /**
   * @}
   */  
-	
+    
 #ifdef __cplusplus
 }
 #endif

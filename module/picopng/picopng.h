@@ -34,27 +34,27 @@ extern "C" {
 
 typedef struct
 {
-	size_t          size;
-	size_t          allocsize;
-	union
-	{
-	    void*       v;
-	    uint32_t*   u32;
-	    uint8_t*    u8;
-	} data;
+    size_t          size;
+    size_t          allocsize;
+    union
+    {
+        void*       v;
+        uint32_t*   u32;
+        uint8_t*    u8;
+    } data;
 } vector_t;
 
 typedef struct
 {
-	uint32_t    width, height;
-	uint32_t    colorType, bitDepth;
-	uint32_t    compressionMethod, filterMethod, interlaceMethod;
-	uint32_t    key_r, key_g, key_b;
-	bool        key_defined;        // is a transparent color key given?
-	vector_t*   palette;
-	vector_t    Image;
-	vector_t    IDAT;
-	vector_t    ScanLines;
+    uint32_t    width, height;
+    uint32_t    colorType, bitDepth;
+    uint32_t    compressionMethod, filterMethod, interlaceMethod;
+    uint32_t    key_r, key_g, key_b;
+    bool        key_defined;        // is a transparent color key given?
+    vector_t*   palette;
+    vector_t    Image;
+    vector_t    IDAT;
+    vector_t    ScanLines;
     uint8_t*    pOut;
     uint8_t*    pIn;
     size_t      DataSize;

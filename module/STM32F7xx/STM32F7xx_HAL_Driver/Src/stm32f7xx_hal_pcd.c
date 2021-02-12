@@ -582,7 +582,7 @@ void HAL_PCD_IRQHandler(PCD_HandleTypeDef *hpcd)
         /* Get hclk frequency value */
         hclk = HAL_RCC_GetHCLKFreq();
 
-		if((hclk >= 14200000)&&(hclk < 15000000))
+        if((hclk >= 14200000)&&(hclk < 15000000))
         {
           /* hclk Clock Range between 14.2-15 MHz */
           hpcd->Instance->GUSBCFG |= (uint32_t)((0xF << 10) & USB_OTG_GUSBCFG_TRDT);

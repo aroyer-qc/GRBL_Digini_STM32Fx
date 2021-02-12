@@ -179,7 +179,7 @@ uint8_t USBH_Alloc_Channel  (USB_OTG_CORE_HANDLE *pdev, uint8_t ep_addr)
 
   if (hc_num != HC_ERROR)
   {
-	pdev->host.channel[hc_num] = HC_USED | ep_addr;
+    pdev->host.channel[hc_num] = HC_USED | ep_addr;
   }
   return hc_num;
 }
@@ -194,7 +194,7 @@ uint8_t USBH_Free_Channel  (USB_OTG_CORE_HANDLE *pdev, uint8_t idx)
 {
    if(idx < HC_MAX)
    {
-	 pdev->host.channel[idx] &= HC_USED_MASK;
+     pdev->host.channel[idx] &= HC_USED_MASK;
    }
    return USBH_OK;
 }
@@ -212,7 +212,7 @@ uint8_t USBH_DeAllocate_AllChannel  (USB_OTG_CORE_HANDLE *pdev)
    
    for (idx = 2; idx < HC_MAX ; idx ++)
    {
-	 pdev->host.channel[idx] = 0;
+     pdev->host.channel[idx] = 0;
    }
    return USBH_OK;
 }
@@ -229,10 +229,10 @@ static uint16_t USBH_GetFreeChannel (USB_OTG_CORE_HANDLE *pdev)
   
   for (idx = 0 ; idx < HC_MAX ; idx++)
   {
-	if ((pdev->host.channel[idx] & HC_USED) == 0)
-	{
-	   return idx;
-	} 
+    if ((pdev->host.channel[idx] & HC_USED) == 0)
+    {
+       return idx;
+    } 
   }
   return HC_ERROR;
 }

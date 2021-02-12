@@ -106,7 +106,7 @@ enum SkinBlockType_e
 // If new service added here don't forget to adjust const -> ServiceSizeType
 enum ServiceType_e
 {
-    SERVICE_RETURN    	    = 0,
+    SERVICE_RETURN            = 0,
     SERVICE_RETURN_TYPE1,
     SERVICE_RETURN_TYPE2,
     SERVICE_RETURN_TYPE3,
@@ -116,7 +116,7 @@ enum ServiceType_e
     SERVICE_RETURN_TYPE7,
     SERVICE_RETURN_TYPE8,
     SERVICE_RETURN_INVALID_LINK,
-	NB_SERVICE_CONST,
+    NB_SERVICE_CONST,
 };
 
 
@@ -147,7 +147,7 @@ enum ServiceEvent_e
     SERVICE_EXIT_EVENT                  =  0x00080000,
     SERVICE_START                       =  0x00020000,
     SERVICE_REFRESH                     =  0x00040000,
-    SERVICE_FORCED                      =  0x00080000,			// this will be called when a dromant widget has to be refreshed (ex: windows over widget)
+    SERVICE_FORCED                      =  0x00080000,            // this will be called when a dromant widget has to be refreshed (ex: windows over widget)
     SERVICE_FINALIZE                    =  0x00100000,
     SERVICE_SAME_EVENT                  =  0x00200000,  // tempo put a new vaue here
     SERVICE_INVALID                     =  0x80000000,
@@ -164,7 +164,7 @@ SERVICE_SAME_EVENT                  =  0x00040000,
 SERVICE_EXIT_EVENT                  =  0x00080000,
 SERVICE_START                       =  0x00100000,
 SERVICE_REFRESH                     =  0x00200000,
-SERVICE_FORCED                      =  0x00400000,			// this will be called when a dormant widget has to be refreshed (ex: windows over widget)
+SERVICE_FORCED                      =  0x00400000,            // this will be called when a dormant widget has to be refreshed (ex: windows over widget)
 */
 
 enum MessageType_e

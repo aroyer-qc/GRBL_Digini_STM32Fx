@@ -74,9 +74,9 @@ struct Circle_t
 
 struct Pie_t
 {
-   Circle_t		   Circle;
-   uint16_t		   StartAngle;
-   uint16_t		   EndAngle;
+   Circle_t           Circle;
+   uint16_t           StartAngle;
+   uint16_t           EndAngle;
 };
 
 struct Polygon_t
@@ -152,12 +152,12 @@ struct Glyph_t
 
 struct Text_t
 {
-	Box_t		   Box;
+    Box_t           Box;
     uint32_t       Color[3];
     Font_e         Font;
     BlendMode_e    Blend;
-    Label_e  	   Label;                                   // INVALID_LABEL //0xFF = No label present
-	uint8_t		   Options;
+    Label_e         Label;                                   // INVALID_LABEL //0xFF = No label present
+    uint8_t           Options;
 };
 
 // --------- Exchange Widget element ---------
@@ -274,7 +274,7 @@ struct ServiceType8_t                   // Service to override position of a wid
 struct Background_t
 {
     Service_t      Service;
-	Cartesian_t	   Pos;
+    Cartesian_t       Pos;
     Image_t        Image;
     uint16_t       Options;
 //    uint16_t     RefreshRate;      // background animation ??
@@ -283,27 +283,27 @@ struct Background_t
 struct BasicBox_t
 {
     Service_t      Service;
-	Box_t          Box;                // Calculate position of all image from this also is touch area
+    Box_t          Box;                // Calculate position of all image from this also is touch area
     Skin_e         ImageTL;
     Skin_e         ImageTR;
     Skin_e         ImageBL;
     Skin_e         ImageBR;
     Skin_e         ImageH;
     Skin_e         ImageV;
-	uint16_t	   ServiceFilter;
+    uint16_t       ServiceFilter;
     uint16_t       Options;
 };
 
 struct BasicButton_t
 {
     Service_t      Service;
-	Box_t          Box;                // Serve also as touch area
+    Box_t          Box;                // Serve also as touch area
     uint32_t       BackColor;
     uint32_t       PressedBackColor;
     uint32_t       BoxColor;
     uint32_t       PressedBoxColor;
     Text_t         Text;
-	uint16_t	   ServiceFilter;
+    uint16_t       ServiceFilter;
     uint16_t       Options;
     uint8_t        Thickness;
 };
@@ -311,28 +311,28 @@ struct BasicButton_t
 struct BasicRect_t
 {
     Service_t      Service;
-	Box_t          Box;                // Serve also as touch area
+    Box_t          Box;                // Serve also as touch area
     uint32_t       RectColor;
-	uint16_t	   ServiceFilter;
+    uint16_t       ServiceFilter;
     uint16_t       Options;
 };
 
 struct Button_t
 {
     Service_t      Service;
-	Cartesian_t	   Pos;
+    Cartesian_t       Pos;
     Image_t        Image;
     Glyph_t        Glyph;
     Text_t         Text;
     EventArea_t    EventArea;
-	uint16_t	   ServiceFilter;
+    uint16_t       ServiceFilter;
     //uint16_t     WaveList[SERVICE_FILE_INDEX_SIZE];
     uint16_t       Options;
 };
 
 struct Icon_t
 {
-    Service_t 	   Service;
+    Service_t        Service;
     Box_t          Box;
     Image_t        Image;
     uint16_t       Options;
@@ -340,7 +340,7 @@ struct Icon_t
 
 struct Gif_t
 {
-    Service_t 	   Service;
+    Service_t        Service;
     Cartesian_t    Pos;
     Image_t        Image;
     uint16_t       Options;
@@ -357,7 +357,7 @@ struct LabelList_t
 {
     Service_t      Service;
     Text_t         Text;
-    Label_e  	   Label[LABEL_LIST_SIZE];
+    Label_e         Label[LABEL_LIST_SIZE];
     uint16_t       Options;
 };
 
@@ -388,9 +388,9 @@ struct PageSlide_t
 struct Panel_t
 {
     Service_t      Service;
-    uint16_t	   ServiceFilter;
-    Box_t		   Box;				// It is also the Touch Area
-	Image_t	       Image;
+    uint16_t       ServiceFilter;
+    Box_t           Box;                // It is also the Touch Area
+    Image_t           Image;
     Text_t         Text;
     uint16_t       Options;
 };
@@ -424,7 +424,7 @@ struct Sprite_t
 {
     Service_t      Service;
     BoxSize_t      Size;
-	Image_t        Image;
+    Image_t        Image;
     uint16_t       Options;
 };
 
@@ -434,7 +434,7 @@ struct Terminal_t
     Box_t          Box;
     uint32_t       TextColor;
     Font_e         Font;
-    uint16_t	   ServiceFilter;
+    uint16_t       ServiceFilter;
     uint16_t       Options;
 };
 
@@ -454,9 +454,9 @@ struct VirtualWindow_t
 
 struct MsgRefresh_t
 {
-	MessageType_e  Type;            // Message type for the receiving task
-	ServiceEvent_e Touch;           // State of the touch zone
-	Widget_e       WidgetID;        // ID of the zone
+    MessageType_e  Type;            // Message type for the receiving task
+    ServiceEvent_e Touch;           // State of the touch zone
+    Widget_e       WidgetID;        // ID of the zone
     Cartesian_t    EventPosition;   // Position xy of the zone
 };
 

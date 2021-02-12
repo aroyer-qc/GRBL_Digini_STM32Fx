@@ -2,10 +2,10 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015 
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:	    arm_biquad_cascade_stereo_df2T_f32.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_biquad_cascade_stereo_df2T_f32.c    
 *    
 * Description:  Processing function for the floating-point transposed    
 *               direct form II Biquad cascade filter. 2 channels  
@@ -170,7 +170,7 @@ uint32_t blockSize)
     uint32_t sample, stage = S->numStages;         /*  loop counters             */
 
 #if defined(ARM_MATH_CM7)
-	
+    
     float32_t Xn2a, Xn3a, Xn4a, Xn5a, Xn6a, Xn7a, Xn8a;         /*  Input State variables     */
     float32_t Xn2b, Xn3b, Xn4b, Xn5b, Xn6b, Xn7b, Xn8b;         /*  Input State variables     */
     float32_t acc2a, acc3a, acc4a, acc5a, acc6a, acc7a, acc8a;  /*  Simulates the accumulator */
@@ -325,10 +325,10 @@ uint32_t blockSize)
             pOut[0 ] = acc1a ;      
             d2a = b2 * Xn7a;
 
-            pOut[1 ] = acc1b ;	
+            pOut[1 ] = acc1b ;    
             d1a += a1 * acc7a;
 
-            pOut[2 ] = acc2a ;	
+            pOut[2 ] = acc2a ;    
             d2a += a2 * acc7a;
 
             /* Sample 14. 5 cycles */
@@ -338,10 +338,10 @@ uint32_t blockSize)
             pOut[4 ] = acc3a ; 
             d1b = b1 * Xn7b + d2b;
 
-            pOut[5 ] = acc3b ;	
+            pOut[5 ] = acc3b ;    
             d2b = b2 * Xn7b;
 
-            pOut[6 ] = acc4a ;	  
+            pOut[6 ] = acc4a ;      
             d1b += a1 * acc7b;
 
             pOut[7 ] = acc4b ;
@@ -351,10 +351,10 @@ uint32_t blockSize)
             pOut[8 ] = acc5a ;  
             acc8a = b0 * Xn8a + d1a;
 
-            pOut[9 ] = acc5b;	
+            pOut[9 ] = acc5b;    
             d1a = b1 * Xn8a + d2a;
 
-            pOut[10] = acc6a;	
+            pOut[10] = acc6a;    
             d2a = b2 * Xn8a;
 
             pOut[11] = acc6b;
@@ -364,16 +364,16 @@ uint32_t blockSize)
             d2a += a2 * acc8a;
 
             /* Sample 16. 5 cycles */
-            pOut[13] = acc7b;	
+            pOut[13] = acc7b;    
             acc8b = b0 * Xn8b + d1b;
 
-            pOut[14] = acc8a;	
+            pOut[14] = acc8a;    
             d1b = b1 * Xn8b + d2b;
 
             pOut[15] = acc8b;
             d2b = b2 * Xn8b;
 
-            sample--;	 
+            sample--;     
             d1b += a1 * acc8b;
 
             pOut += 16;
@@ -403,7 +403,7 @@ uint32_t blockSize)
             d2a = (b2 * Xn1a) + (a2 * acc1a);
             d2b = (b2 * Xn1b) + (a2 * acc1b);
 
-            sample--;	
+            sample--;    
         }
 
         /* Store the updated state variables back into the state array */ 
@@ -423,7 +423,7 @@ uint32_t blockSize)
         pOut = pDst; 
 
     } while(stage > 0u);
-	
+    
 #elif defined(ARM_MATH_CM0_FAMILY)
 
     /* Run the below code for Cortex-M0 */
@@ -489,7 +489,7 @@ uint32_t blockSize)
         stage--;
 
     } while(stage > 0u);
-	 
+     
 #else
 
     float32_t Xn2a, Xn3a, Xn4a;                          /*  Input State variables     */
@@ -613,17 +613,17 @@ uint32_t blockSize)
             d2a = p2a + p4a;
             d2b = p2b + p4b;
 
-            pOut[0] = acc1a;	
-            pOut[1] = acc1b;	
-            pOut[2] = acc2a;	
+            pOut[0] = acc1a;    
+            pOut[1] = acc1b;    
+            pOut[2] = acc2a;    
             pOut[3] = acc2b;
-            pOut[4] = acc3a;	
-            pOut[5] = acc3b;	
-            pOut[6] = acc4a;	
+            pOut[4] = acc3a;    
+            pOut[5] = acc3b;    
+            pOut[6] = acc4a;    
             pOut[7] = acc4b;
             pOut += 8;
              
-            sample--;	       
+            sample--;           
         }
 
         sample = blockSize & 0x3u;
@@ -653,7 +653,7 @@ uint32_t blockSize)
             *pOut++ = acc1a;
             *pOut++ = acc1b;
 
-            sample--;	       
+            sample--;           
         }
 
         /* Store the updated state variables back into the state array */

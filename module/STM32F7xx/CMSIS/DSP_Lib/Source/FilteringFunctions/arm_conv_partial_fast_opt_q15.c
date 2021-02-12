@@ -2,12 +2,12 @@
 * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
 *    
 * $Date:        19. March 2015
-* $Revision: 	V.1.4.5
+* $Revision:     V.1.4.5
 *    
-* Project: 	    CMSIS DSP Library    
-* Title:		arm_conv_partial_fast_opt_q15.c    
+* Project:         CMSIS DSP Library    
+* Title:        arm_conv_partial_fast_opt_q15.c    
 *    
-* Description:	Fast Q15 Partial convolution.    
+* Description:    Fast Q15 Partial convolution.    
 *    
 * Target Processor: Cortex-M4/Cortex-M3
 *  
@@ -66,7 +66,7 @@
  *    
  * \par Restrictions    
  *  If the silicon does not support unaligned memory access enable the macro UNALIGNED_SUPPORT_DISABLE    
- *	In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit    
+ *    In this case input, output, scratch1 and scratch2 buffers should be aligned by 32-bit    
  *     
  */
 
@@ -761,7 +761,7 @@ arm_status arm_conv_partial_fast_opt_q15(
   return (status);
 }
 
-#endif	/*	#ifndef UNALIGNED_SUPPORT_DISABLE	*/
+#endif    /*    #ifndef UNALIGNED_SUPPORT_DISABLE    */
 
 /**    
  * @} end of PartialConv group    

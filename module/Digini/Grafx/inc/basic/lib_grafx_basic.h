@@ -45,14 +45,13 @@ void                CopyLinear                  (void* pSrc, uint16_t PosX, uint
 void                CopyLinear                  (Skin_e Image, Cartesian_t Position, BlendMode_e BlendMode);
 void                CopyLayerToLayer            (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox);
 void                CopyLayerToLayer            (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height);
-void                CopyBlockLayerToLayer       (Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height);
 void                DrawHLine                   (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thickness = 1);
 void                DrawVLine                   (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thickness = 1);
 void                DrawDLine                   (float X1, float Y1, float X2, float Y2);
 void                DrawBox                     (Box_t* pBox, uint16_t Thickness = 1);
 void                DrawBox                     (uint16_t PosX, uint16_t PosY, uint16_t Width, uint16_t Height, uint16_t Thickness = 1);
 void                DrawCircle                  (Circle_t* pCircle, PolygonMode_e PolygonMode);
-void        	    DrawCircle      			(uint16_t PosX, uint16_t PosY, uint16_t Radius, PolygonMode_e PolygonMode);
+void                DrawCircle                  (uint16_t PosX, uint16_t PosY, uint16_t Radius, PolygonMode_e PolygonMode);
 void                DrawPie                     (Skin_e Image, Pie_t* pPie, BlendMode_e BlendMode);
 void                DrawPie                     (Skin_e Image, Cartesian_t Position, uint16_t Radius, uint16_t StartAngle, uint16_t EndAngle, BlendMode_e BlendMode);
 void                DrawPixel                   (uint16_t X, uint16_t Y);

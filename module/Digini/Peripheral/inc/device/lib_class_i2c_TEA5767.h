@@ -56,38 +56,38 @@ class TEA5767
 {
     public:
 
-                            TEA5767                	(CI2C* pI2C);
+                            TEA5767                    (CI2C* pI2C);
                             ~TEA5767                ();
 
-		SystemState_e   	Initialize				(void);                     // Initialize the chip.
-		void            	SetMono         		(bool SwitchOn);            // Control mono/stereo mode of the radio chip
-		void            	SetMute         		(bool SwitchOn);            // Control the mute function of the radio chip
-		void            	SetFrequency    		(TEA5767_Freq_t newF);
-		TEA5767_Freq_t    	GetFrequency    		(void);
-		void            	SeekUp          		(bool toNextSender){};      // Start seek mode upwards
-		void            	SeekDown        		(bool toNextSender){};      // Start seek mode downwards
-		void            	CheckRDS        		(void);                     // Read RDS data from the current station and process when data available.
-		void            	GetRadioInfo    		(TEA5767_Info_t *info);
+        SystemState_e       Initialize                (void);                     // Initialize the chip.
+        void                SetMono                 (bool SwitchOn);            // Control mono/stereo mode of the radio chip
+        void                SetMute                 (bool SwitchOn);            // Control the mute function of the radio chip
+        void                SetFrequency            (TEA5767_Freq_t newF);
+        TEA5767_Freq_t        GetFrequency            (void);
+        void                SeekUp                  (bool toNextSender){};      // Start seek mode upwards
+        void                SeekDown                (bool toNextSender){};      // Start seek mode downwards
+        void                CheckRDS                (void);                     // Read RDS data from the current station and process when data available.
+        void                GetRadioInfo            (TEA5767_Info_t *info);
 
     private:
 
-		void  				ReadRegisters			(void);  					// Read all status & data registers
-		void  				SaveRegisters			(void);  					// Save writable registers back to the chip
-	
-	
+        void                  ReadRegisters            (void);                      // Read all status & data registers
+        void                  SaveRegisters            (void);                      // Save writable registers back to the chip
+    
+    
         CI2C*               m_pI2C;
         I2C_DeviceInfo_t*   m_pDevice;
-		
-		uint8_t         	m_Registers[5]; 									// Store the current values of the registers for controlling the radio chip.
-		uint8_t         	m_Status[5];    									// Registers with the current status of the radio chip.
-		bool            	m_Mono;
-		bool            	m_Mute;
-		TEA5767_Freq_t  	m_Freq;
+        
+        uint8_t             m_Registers[5];                                     // Store the current values of the registers for controlling the radio chip.
+        uint8_t             m_Status[5];                                        // Registers with the current status of the radio chip.
+        bool                m_Mono;
+        bool                m_Mute;
+        TEA5767_Freq_t      m_Freq;
 
-		// const
-		const uint16_t    	m_freqLow 	= 8700;
-		const uint16_t   	m_freqHigh 	= 10800;
-		const uint16_t   	m_freqSteps = 10;
+        // const
+        const uint16_t        m_freqLow     = 8700;
+        const uint16_t       m_freqHigh     = 10800;
+        const uint16_t       m_freqSteps = 10;
 };
 
 
@@ -98,7 +98,7 @@ class TEA5767
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-extern class   TEA5767                 	RADIO_TEA5767;
+extern class   TEA5767                     RADIO_TEA5767;
 
 #ifdef LIB_TEA5767_GLOBAL
  class   TEA5767                        RADIO_TEA5767;

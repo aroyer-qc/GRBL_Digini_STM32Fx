@@ -693,7 +693,7 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(LPTIM_HandleTypeDef *hlptim);
   
 #define IS_LPTIM_CLOCK_SOURCE(__SOURCE__)           (((__SOURCE__) == LPTIM_CLOCKSOURCE_ULPTIM) || \
                                                      ((__SOURCE__) == LPTIM_CLOCKSOURCE_APBCLOCK_LPOSC))
-													 
+                                                     
 #define IS_LPTIM_CLOCK_PRESCALER(__PRESCALER__)     (((__PRESCALER__) ==  LPTIM_PRESCALER_DIV1  ) || \
                                                      ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV2  ) || \
                                                      ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV4  ) || \
@@ -702,11 +702,11 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(LPTIM_HandleTypeDef *hlptim);
                                                      ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV32 ) || \
                                                      ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV64 ) || \
                                                      ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV128))
-#define IS_LPTIM_CLOCK_PRESCALERDIV1(__PRESCALER__) ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV1)													 
+#define IS_LPTIM_CLOCK_PRESCALERDIV1(__PRESCALER__) ((__PRESCALER__) ==  LPTIM_PRESCALER_DIV1)                                                     
 
 #define IS_LPTIM_OUTPUT_POLARITY(__POLARITY__)      (((__POLARITY__) == LPTIM_OUTPUTPOLARITY_LOW ) || \
                                                      ((__POLARITY__) == LPTIM_OUTPUTPOLARITY_HIGH))
-													 
+                                                     
 #define IS_LPTIM_CLOCK_SAMPLE_TIME(__SAMPLETIME__)  (((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_DIRECTTRANSITION) || \
                                                      ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_2TRANSITIONS)     || \
                                                      ((__SAMPLETIME__) == LPTIM_CLOCKSAMPLETIME_4TRANSITIONS)     || \
@@ -717,12 +717,12 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(LPTIM_HandleTypeDef *hlptim);
                                                      ((__POLARITY__) == LPTIM_CLOCKPOLARITY_RISING_FALLING))
 
 #define IS_LPTIM_TRG_SOURCE(__TRIG__)               (((__TRIG__) == LPTIM_TRIGSOURCE_SOFTWARE) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_0) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_1) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_2) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_3) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_4) || \
-													 ((__TRIG__) == LPTIM_TRIGSOURCE_5))
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_0) || \
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_1) || \
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_2) || \
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_3) || \
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_4) || \
+                                                     ((__TRIG__) == LPTIM_TRIGSOURCE_5))
 
 #define IS_LPTIM_EXT_TRG_POLARITY(__POLAR__)        (((__POLAR__) == LPTIM_ACTIVEEDGE_RISING         ) || \
                                                      ((__POLAR__) == LPTIM_ACTIVEEDGE_FALLING        ) || \
@@ -731,7 +731,7 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(LPTIM_HandleTypeDef *hlptim);
 #define IS_LPTIM_TRIG_SAMPLE_TIME(__SAMPLETIME__)   (((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_DIRECTTRANSITION) || \
                                                      ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_2TRANSITIONS    ) || \
                                                      ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_4TRANSITIONS    ) || \
-                                                     ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_8TRANSITIONS    ))		
+                                                     ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_8TRANSITIONS    ))        
 
 #define IS_LPTIM_UPDATE_MODE(__MODE__)              (((__MODE__) == LPTIM_UPDATE_IMMEDIATE) || \
                                                      ((__MODE__) == LPTIM_UPDATE_ENDOFPERIOD))
