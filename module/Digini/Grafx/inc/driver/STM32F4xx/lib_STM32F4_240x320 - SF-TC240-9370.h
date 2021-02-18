@@ -2,14 +2,29 @@
 //
 //  File : lib_STM32F4_240x320 - SF-TC240-9370.h
 //
-//  Build  Date           Author            Description
-//  -----  -------------  ----------------  -------------------------------------------------------
-//  000    Dec 1,   2016  Alain Royer       New code
+//-------------------------------------------------------------------------------------------------
 //
-//*************************************************************************************************
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
-#ifndef __LIB_STM32F4_LCD_240X320__
-#define __LIB_STM32F4_LCD_240X320__
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -42,6 +57,7 @@
 
 //#define GRAFX_USE_SOFT_PRINT_FONT               // we use this driver to print FONT using DMA2D
 //#define GRAFX_USE_SOFT_ALPHA                    // We use this uP + LCD controller has alpha acceleration
+//#define GRAFX_USE_SOFT_COPY                     // We use this driver DMA for this function
 //#define GRAFX_USE_SOFT_FILL                     // We use this driver DMA for this function
 
 //-------------------------------------------------------------------------------------------------
@@ -77,4 +93,3 @@
 
 #endif // DIGINI_USE_GRAFX
 
-#endif // __LIB_STM32F4_LCD_240X320__

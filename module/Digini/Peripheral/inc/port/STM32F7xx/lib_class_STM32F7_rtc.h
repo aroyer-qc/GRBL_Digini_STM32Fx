@@ -67,7 +67,7 @@ class CRTC
     public:
 
                                 CRTC                    (nOS_Mutex* pMutex, uint32_t Mode);
-                                ~CRTC                    ();
+                                ~CRTC                   ();
 
         void                    GetDate                 (Date_t* pDate);
         void                    GetTime                 (Time_t* pTime);

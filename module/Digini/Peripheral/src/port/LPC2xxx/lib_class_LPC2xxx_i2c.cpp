@@ -1,18 +1,39 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : lib_class_STM32F4_i2c.cpp
+//  File : lib_class_LPC2xxx_i2c.cpp
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
 #include "digini_cfg.h"
+#ifdef DIGINI_USE_I2C
 #include <stdint.h>
-#define STM32F4_I2C_GLOBAL
+#define LPC2_I2C_GLOBAL
 #include "lib_class_STM32F4_i2c.h"
-#undef  STM32F4_I2C_GLOBAL
+#undef  LPC2_I2C_GLOBAL
 #include "lib_macro.h"
 #include "bsp.h"
 #include "assert.h"
@@ -90,11 +111,11 @@ CI2C::~CI2C()
 void CI2C::Init()
 {
     uint16_t                Result;
-    uint16_t                 Register;
-    uint16_t                 FreqRange;
+    uint16_t                Register;
+    uint16_t                FreqRange;
     uint32_t                pclk1;
     uint32_t                Temp;
-    RCC_ClocksTypeDef          Clocks;
+    RCC_ClocksTypeDef       Clocks;
     GPIO_InitTypeDef        GPIO_InitStructure;
 
     m_Timeout = 0;
@@ -129,9 +150,9 @@ void CI2C::Init()
     NVIC_EnableIRQ(m_pPort->ER_IRQn);
 
     // ---- Reset peripheral and set clock ----
-    RCC->APB1RSTR |=  (RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);                                // Enable I2Cx reset state
+    RCC->APB1RSTR |=  (RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);                              // Enable I2Cx reset state
     RCC->APB1RSTR &= ~(RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);                              // Release I2Cx from reset state
-    RCC->APB1ENR  |=  (RCC_APB1ENR_I2C1EN   << m_pPort->HardwarePort);                                // Enable I2C_PORT clock
+    RCC->APB1ENR  |=  (RCC_APB1ENR_I2C1EN   << m_pPort->HardwarePort);                              // Enable I2C_PORT clock
 
     // ---- Peripheral software reset ----
     m_pPort->pI2Cx->CR1  =  I2C_CR1_SWRST;                                                          // Peripheral software reset

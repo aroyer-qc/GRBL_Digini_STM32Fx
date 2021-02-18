@@ -2,10 +2,29 @@
 //
 //  File : lib_class_STM32F4_i2c.h
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
-#ifndef __STM32F4_I2C_H__
-#define __STM32F4_I2C_H__
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -185,8 +204,125 @@ class CI2C
 
 
 
-#endif //__STM32F4_I2C_H__
+// from old version!!
+#if 0
+
+// To found how many port there is
+enum I2C_Port_e
+{
+  #define X_I2C(I2C_NUMBER, CLOCK, SPEED, PREEMP_PRIO, EVENT_IRQ_NB, ERROR_IRQ_NB, GPIO_SCL, GPIO_PIN_MASK_SCL, GPIO_SCL_CLOCK, GPIO_SCL_AF, \
+                                                                                   GPIO_SDA, GPIO_PIN_MASK_SDA, GPIO_SDA_CLOCK, GPIO_SDA_AF) I2C##I2C_NUMBER##_PORT,
+    I2C_DEF
+  #undef X_I2C
+    I2C_NB_PORT_CONST
+};
+
+struct I2C_PortInfo_t
+{
+    I2C_TypeDef*        pI2Cx;
+    uint32_t            Clock;
+    uint32_t            Speed;
+    uint8_t             PreempPrio;
+    IRQn_Type           EV_IRQn;
+    IRQn_Type           ER_IRQn;
+    IO_Pin_t            SCL;
+    IO_Pin_t            SDA;
+};
 
 
+struct I2C_DeviceInfo_t
+{
+    nOS_Mutex*          pMutex;
+    uint8_t             PhysicalAddress;
+    size_t		        MemPtrAddressLength;
+    uint32_t            Speed;
+};
 
 
+//-------------------------------------------------------------------------------------------------
+// class definition(s)
+//-------------------------------------------------------------------------------------------------
+
+class I2C
+{
+	public:
+
+                        I2C				    (I2C_PortInfo_t* pPort);
+                        ~I2C				();
+
+        SystemState_e   LockToDevice   		(uint8_t Device);       // Set I2C to this device and lock
+        SystemState_e   UnlockFromDevice 	(uint8_t Device);       // Unlock I2C from device
+        SystemState_e   GetStatus       	(void);
+
+        SystemState_e   ReadRegister        (uint8_t Register, void* pRxBuffer, size_t RxSize);
+        SystemState_e   ReadRegister        (uint8_t Register, void* pRxBuffer, size_t RxSize, uint8_t Device);
+        SystemState_e   Transfer            (void* pTxBuffer, size_t TxSize, void* pRxBuffer, size_t RxSize);
+        SystemState_e   Transfer            (void* pTxBuffer, size_t TxSize, void* pRxBuffer, size_t RxSize, uint8_t Device);
+
+		void	        Initialize 			(void);
+        void            ER_IRQHandler       (void);
+        void            EV_IRQHandler       (void);
+
+	private:
+
+        //void            ClearBus            (void);
+        //uint32_t        CalculateBitMask    (uint8_t Mask, uint16_t BitConfig);
+        void            Lock                (void);
+        void            Unlock              (void);
+
+        I2C_PortInfo_t*                 m_pPort;
+        nOS_Mutex                       m_Mutex;
+        int16_t                         m_Device;
+
+        volatile size_t				    m_TxSize;
+        volatile size_t				    m_RxSize;
+        volatile uint8_t*               m_pTxBuffer;
+        volatile uint8_t*               m_pRxBuffer;
+
+        volatile uint8_t*               m_pAddressInDevice;
+        volatile uint8_t*               m_pDataAddress;
+        volatile size_t				    m_Size;
+        volatile size_t		            m_AddressLengthCount;
+
+        volatile SystemState_e		    m_Status;
+        volatile uint8_t                m_Timeout;
+};
+
+//-------------------------------------------------------------------------------------------------
+// Global variable(s) and constant(s)
+//-------------------------------------------------------------------------------------------------
+
+#ifdef STM32F4_I2C_GLOBAL
+
+  I2C_PortInfo_t I2C_PortInfo[I2C_NB_PORT_CONST] =
+  {
+    #define X_I2C(I2C_NUMBER, CLOCK, SPEED, PREEMP_PRIO,            EVENT_IRQ_NB,            ERROR_IRQ_NB,  IO_SCL, IO_PIN_MASK_SCL, IO_SCL_CLOCK, IO_SCL_AF, \
+                                                                                                            IO_SDA, IO_PIN_MASK_SDA, IO_SDA_CLOCK, IO_SDA_AF) \
+            {I2C##I2C_NUMBER, CLOCK, SPEED, PREEMP_PRIO, (IRQn_Type)EVENT_IRQ_NB, (IRQn_Type)ERROR_IRQ_NB, {IO_SCL, IO_PIN_MASK_SCL, IO_SCL_CLOCK, IO_SCL_AF},\
+                                                                                                           {IO_SDA, IO_PIN_MASK_SDA, IO_SDA_CLOCK, IO_SDA_AF},},
+      I2C_DEF
+    #undef  X_I2C
+  };
+
+  // Name of the I2C Object will be the name of the port + _Port -> Ex. I2C1 -> I2C1_Port
+  // Ex. I2C I2C_Port1(&I2C_PortInfo[I2C1_PORT]);
+  #define X_I2C(I2C_NUMBER, CLOCK, SPEED, PREEMP_PRIO, EVENT_IRQ_NB, ERROR_IRQ_NB,  IO_SCL, IO_PIN_MASK_SCL, IO_SCL_CLOCK, IO_SCL_AF, \
+                                                                                    IO_SDA, IO_PIN_MASK_SDA, IO_SDA_CLOCK, IO_SDA_AF) \
+    class I2C I2C_Port##I2C_NUMBER(&I2C_PortInfo[I2C##I2C_NUMBER##_PORT]);
+    I2C_DEF
+  #undef  X_I2C
+
+#else // STM32F4_I2C_GLOBAL
+
+  extern I2C_PortInfo_t     I2C_PortInfo[I2C_NB_PORT_CONST];
+
+  #define X_I2C(I2C_NUMBER, CLOCK, SPEED, PREEMP_PRIO, EVENT_IRQ_NB, ERROR_IRQ_NB,  IO_SCL, IO_PIN_MASK_SCL, IO_SCL_CLOCK, IO_SCL_AF, \
+                                                                                    IO_SDA, IO_PIN_MASK_SDA, IO_SDA_CLOCK, IO_SDA_AF) \
+    extern class I2C I2C_Port##I2C_NUMBER;
+    I2C_DEF
+  #undef X_I2C
+
+#endif // STM32F4_I2C_GLOBAL
+
+//-------------------------------------------------------------------------------------------------
+#endif

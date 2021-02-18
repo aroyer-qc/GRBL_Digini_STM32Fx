@@ -2,7 +2,27 @@
 //
 //  File : lib_class_STM32F4_dac.cpp
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -20,22 +40,22 @@ static void                 SOUND_DAC_AndSoundInit(void);
 static void                 SOUND_DAC_ISR_Handler(void);
 
 // Sound variable
-static short*               SOUND_pHighSoundAddress;                                              // original copy if loopback
-static short*               SOUND_pLowSoundAddress;
-static volatile DWORD       SOUND_dwHighSoundSample                       = 0;
-static volatile DWORD       SOUND_dwLowSoundSample                        = 0;
-static DWORD                SOUND_dwHighStatus;
-static DWORD                SOUND_dwLowStatus;
-static short*               SOUND_pHighInISR_Address;
-static short*               SOUND_pLowInISR_Address;
-static DWORD                SOUND_dwHighInISR_Sample                      = 0;
-static DWORD                SOUND_dwLowInISR_Sample                       = 0;
-static long                 SOUND_lVolumeHighPrio;
-static long                 SOUND_lVolumeLowPrio;
-static BYTE                 SOUND_byRaiseVolumeHighPrio;
-static BYTE                 SOUND_byRaiseVolumeLowPrio;
-static volatile BYTE        SOUND_byInPlayHigh                            = SOUND_PRIO_LOW;
-static volatile BYTE        SOUND_byInPlayLow                             = SOUND_PRIO_LOW;
+static uint32_t*            SOUND_pHighSoundAddress;                                              // original copy if loopback
+static uint32_t*            SOUND_pLowSoundAddress;
+static volatile uint32_t    SOUND_dwHighSoundSample                       = 0;
+static volatile uint32_t    SOUND_dwLowSoundSample                        = 0;
+static uint32_t             SOUND_dwHighStatus;
+static uint32_t             SOUND_dwLowStatus;
+static uint32_t*            SOUND_pHighInISR_Address;
+static uint32_t*            SOUND_pLowInISR_Address;
+static uint32_t             SOUND_dwHighInISR_Sample                      = 0;
+static uint32_t             SOUND_dwLowInISR_Sample                       = 0;
+static int32_t              SOUND_lVolumeHighPrio;
+static int32_t              SOUND_lVolumeLowPrio;
+static uint8_t              SOUND_byRaiseVolumeHighPrio;
+static uint8_t              SOUND_byRaiseVolumeLowPrio;
+static volatile uint8_t     SOUND_byInPlayHigh                            = SOUND_PRIO_LOW;
+static volatile uint8_t     SOUND_byInPlayLow                             = SOUND_PRIO_LOW;
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -49,18 +69,11 @@ static volatile BYTE        SOUND_byInPlayLow                             = SOUN
 //
 //  Note(s):
 //
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Nov 6,   2011   Alain Royer         new code
-//
 //-------------------------------------------------------------------------------------------------
 void CSound::Init()
 {
-    DWORD  pclk_freq;
-    DWORD  rld_cnts;
-
-  #ifdef NXP_LPC1788_TM50
+    uint32_t  pclk_freq;
+    uint32_t  rld_cnts;
 
     IOCON_P0_30_bit.FUNC    = 0;                                            // shutdown
     FIO0CLR_bit.P0_30       = 1;
@@ -112,11 +125,6 @@ void CSound::Init()
 //  Description:    Handle DAC streaming.
 //
 //  Note(s):        1. This is a ISR.
-//
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Dec 1,   2010   Alain Royer         new code
 //
 //-------------------------------------------------------------------------------------------------
 
@@ -200,13 +208,13 @@ void SOUND_DAC_ISR_Handler(void)
 
     if(LowInISR_Sample != 0)
     {
-        AdjustedValueLOW.l = (VolumeLowPrio * (long)(*pLowInISR_Address)) / 31;
+        AdjustedValueLOW.l = (VolumeLowPrio * (int32_t)(*pLowInISR_Address)) / 31;
 
         if(HighInISR_Sample == 0)
         {
             if     (AdjustedValueLOW.l >  32767) AdjustedValueLOW.dw = 65535L;
             else if(AdjustedValueLOW.l < -32768) AdjustedValueLOW.dw = 0;
-            else                                 AdjustedValueLOW.dw = (DWORD)(AdjustedValueLOW.l + 32768);
+            else                                 AdjustedValueLOW.dw = (uint32_t)(AdjustedValueLOW.l + 32768);
 
             FIO0SET_bit.P0_30 = 1;
             DACR                = AdjustedValueLOW.dw | 0x00010000;                                                // Put low prio sound in DAC
@@ -330,7 +338,7 @@ void SOUND_DAC_ISR_Handler(void)
     }
 }
 
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 //
 //   function name: Start
 //
@@ -346,12 +354,7 @@ void SOUND_DAC_ISR_Handler(void)
 //
 //   note:
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 9,   2014  Alain Royer
-//
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 // ARGO TEMPO
 uint8_t VolHighPrio;
 uint8_t VolLowPrio;
@@ -377,7 +380,7 @@ SOUND_lVolumeLowPrio  = VolLowPrio;
                     {
                         OS_ENTER_CRITICAL();
                         HighStatus          = Mode;
-                        pHighSoundAddress   = (short*)Wave.pAddress;
+                        pHighSoundAddress   = (uint32_t*)Wave.pAddress;
                         HighSoundSample     = Wave.NbSamples;
                         OS_EXIT_CRITICAL();
                         InPlayHigh          = Level;
@@ -393,7 +396,7 @@ SOUND_lVolumeLowPrio  = VolLowPrio;
                         {
                             OS_ENTER_CRITICAL();
                             LowStatus          = Mode;
-                            pLowSoundAddress   = (short*)Wave.pAddress;
+                            pLowSoundAddress   = (uint32_t*)Wave.pAddress;
                             LowSoundSample     = Wave.NbSamples;
                             OS_EXIT_CRITICAL();
                             InPlayLow          = Level;
@@ -408,7 +411,7 @@ SOUND_lVolumeLowPrio  = VolLowPrio;
     return Result;
 }
 
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 //
 //   function name: Stop
 //
@@ -421,12 +424,7 @@ SOUND_lVolumeLowPrio  = VolLowPrio;
 //   note:          If a low priority sound was running prior to the start of a high priority,
 //                  it will be reenable unless it has ended.
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 9,   2014  Alain Royer
-//
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 void CSound::Stop(uint8_t Priority)
 {
     if(Priority == SOUND_PRIORITY_HIGH)
@@ -443,7 +441,7 @@ void CSound::Stop(uint8_t Priority)
     }
 }
 
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 //
 //   function name: RaiseVolumeTemporary
 //
@@ -456,12 +454,7 @@ void CSound::Stop(uint8_t Priority)
 //
 //   note:
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 9,   2014  Alain Royer
-//
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 void CSound::RaiseVolumeTemporary(uint8_t Priority)
 {
     if(Priority == SOUND_PRIORITY_HIGH)
@@ -482,7 +475,7 @@ void CSound::RaiseVolumeTemporary(uint8_t Priority)
     }
 }
 
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 //
 //   function name: Volume
 //
@@ -494,12 +487,7 @@ void CSound::RaiseVolumeTemporary(uint8_t Priority)
 //
 //   note:
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 9,   2014  Alain Royer
-//
-//=================================================================================================
+//-------------------------------------------------------------------------------------------------
 void CSound::Volume(uint8_t Volume, uint8_t Priority)
 {
     if(Volume < 11)

@@ -2,17 +2,38 @@
 //
 //  File : SPI_Flash_AT45DB641.cpp
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
+#include "digini_cfg.h"
+#ifdef DIGINI_USE_SPI
 #define SPI_FLASH_GLOBAL
 #include "lib_class_spi_AT45DB641.h"
 #undef SPI_FLASH_GLOBAL
 #include "lib_utility.h"
-// ...
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -267,7 +288,7 @@ DRESULT CSPI_FLash::Write(const uint8_t* pBuffer, uint32_t Sector, uint8_t Count
 //   Function name: IO_Control
 //
 //   Parameter(s):  uint8_t    Control        Control code
-//                    void*      pBuffer        Buffer to send/receive control data
+//                  void*      pBuffer        Buffer to send/receive control data
 //   Return value:  DRESULT
 //
 //   Description:   Control
@@ -521,3 +542,5 @@ bool CSPI_FLash::IsOperational()
 }
 
 //-------------------------------------------------------------------------------------------------
+
+#endif // DIGINI_USE_SPI

@@ -53,6 +53,7 @@
 
 //#define GRAFX_USE_SOFT_PRINT_FONT               // we use this driver to print FONT using DMA2D
 //#define GRAFX_USE_SOFT_ALPHA                    // We use this uP + LCD controller has alpha acceleration
+//#define GRAFX_USE_SOFT_COPY                     // We use this driver DMA for this function
 //#define GRAFX_USE_SOFT_FILL                     // We use this driver DMA for this function
 
 // Display size

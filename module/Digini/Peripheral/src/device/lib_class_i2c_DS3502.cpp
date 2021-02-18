@@ -2,14 +2,34 @@
 //
 //  File : lib_class_i2c_DS3502.cpp
 //
-//*************************************************************************************************
-
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
 #include "digini_cfg.h"
+#ifdef DIGINI_USE_I2C
 #define LIB_DS3502_GLOBAL
 #include "lib_class_i2c_DS3502.h"
 #undef  LIB_DS3502_GLOBAL
@@ -62,7 +82,6 @@ SystemState_e DS3502::Initialize(void* pArg)
     return SYS_READY;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Reset
@@ -98,7 +117,6 @@ void DS3502::Reset(void)
     m_WiperPos = m_WiperIV;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           SetWiperIV
@@ -117,7 +135,6 @@ void DS3502::SetWiperIV(uint8_t InitialValue)
     m_WiperIV  = InitialValue;
     this->Reset();
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -144,7 +161,6 @@ void DS3502::SetWiper(uint8_t WiperValue)
     m_pI2C->Transfer(&WriteBuffer[0], 2, nullptr, 0, DS3502_I2C_SLAVE_ADDRESS);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Up
@@ -168,7 +184,6 @@ void DS3502::Up(void)
     this->SetWiper(m_WiperPos);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Down
@@ -191,7 +206,6 @@ void DS3502::Down(void)
 
     this->SetWiper(m_WiperPos);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -219,5 +233,6 @@ void DS3502::SetMaxValue(uint8_t MaxValue)
     }
 }
 
-
 //-------------------------------------------------------------------------------------------------
+
+#endif // DIGINI_USE_I2C

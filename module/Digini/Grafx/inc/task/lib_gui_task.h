@@ -63,7 +63,10 @@ class GUI_myClassTask
         void                        Run                 (void);
         nOS_Error                   Initialize          (void);
 
+      #ifdef GRAFX_USE_SLIDING_PAGE
         void                        SetSlidingDirection (SlideDir_e SlidingDirection) {m_SlidingDir = SlidingDirection;};
+        void                        SetSlidingRange     (PageSlideRange_t* pPageSlideOverride);
+      #endif
 
         nOS_Queue                   m_Q_Msg;
 
@@ -87,6 +90,7 @@ class GUI_myClassTask
 
       #ifdef GRAFX_USE_SLIDING_PAGE
         SlideDir_e                  m_SlidingDir;
+        PageSlideRange_t            m_SlideRange;
       #endif
 };
 

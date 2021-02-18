@@ -2,7 +2,27 @@
 //
 //  File : lib_class_STM32F4_sdio.cpp
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //------ Note(s) ----------------------------------------------------------------------------------
 //
@@ -41,16 +61,11 @@
 //
 //   Note(s):
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Apr 1,   2014  Alain Royer         New code
 //-------------------------------------------------------------------------------------------------
 CSDIO::CSDIO(sSDIO* pSDIO)
 {
     m_pSDIO = pSDIO;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -66,7 +81,6 @@ CSDIO::CSDIO(sSDIO* pSDIO)
 CSDIO::~CSDIO()
 {
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -171,7 +185,6 @@ void CSDIO::Initialize(void)
     this->Unlock();
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: GetResponse
@@ -193,7 +206,6 @@ SystemState_e CSDIO::GetResponse(uint32_t* pResponse)
 
     return SYS_READY;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -223,7 +235,6 @@ uint32_t CSDIO::GetTransfertStatus(void)
 
     return Status;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -258,7 +269,6 @@ bool CSDIO::IsFlagSet(uint32_t Status, SD_StatusFlag Flag_e)
     return ((((uint32_t)1 << Flag) & Status) != 0) ? true : false;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: TickHook
@@ -279,13 +289,12 @@ void CSDIO::TickHook(void)
     }
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: TransmitCommand
 //
 //   Parameter(s):  uint8_t         Command
-//                    uint32_t        Argument
+//                  uint32_t        Argument
 //   Return value:  None
 //
 //   Description:   Send command to the SD Card
@@ -451,16 +460,11 @@ void CSDIO::Config(DeviceSpeed_e DeviceSpeed)
 //
 //   Note(s):
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Apr 1,   2014  Alain Royer         New code
 //-------------------------------------------------------------------------------------------------
 void CSDIO::Lock(void)
 {
     while(xSemaphoreTakeRecursive(*m_pSDIO->pMutex, portMAX_DELAY) != true){};
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -479,7 +483,6 @@ void CSDIO::Unlock(void)
     xSemaphoreGiveRecursive(*m_pSDIO->pMutex);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: DMA_DataInit
@@ -491,11 +494,6 @@ void CSDIO::Unlock(void)
 //   Description:   Configuration for SDIO Data using SDIO_DataInitTypeDef
 //
 //   Note(s):
-//
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Apr 4,   2014  Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 void CSDIO::SDIO_DataInit(uint32_t TransfertDir, size_t Size)
@@ -560,7 +558,6 @@ void CSDIO::DMA_Config(uint32_t* pBuffer, uint32_t BufferSize, uint32_t Directio
     DMA_Cmd(m_pSDIO->pDMA_Stream, ENABLE);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: DMA_StreamIRQHandler
@@ -581,7 +578,6 @@ void CSDIO::DMA_StreamIRQHandler(void)
         m_DMA_EndOfTransfer = true;
     }
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -635,8 +631,6 @@ void CSDIO::SDIO_IRQHandler(void)
 
     m_TransfertEnd = true;
 }
-
-
 
 //-------------------------------------------------------------------------------------------------
 

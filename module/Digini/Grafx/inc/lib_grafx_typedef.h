@@ -137,6 +137,12 @@ struct FontDescriptor_t
     uint8_t*       pAddress;
 };
 
+struct PageSlideRange_t
+{
+    int16_t        StartPos;
+    int16_t        EndPos;
+};
+
 // --------- Widget element ---------
 
 struct Image_t

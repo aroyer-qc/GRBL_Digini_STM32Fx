@@ -2,14 +2,36 @@
 //
 //  File : lib_class_STM32F4_spi.h
 //
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 //
 //  Notes: Callback for TickHook will be reinitialize when LockToDevice() or UnlockFromDevice()
 //         is called
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
 
-#ifndef __STM32F4_SPI_H__
-#define __STM32F4_SPI_H__
+#pragma once
+
+//-------------------------------------------------------------------------------------------------
 
 #ifdef STM32F4_SPI_GLOBAL
     #define STM32F4_SPI_EXTERN
@@ -36,22 +58,22 @@
 #define SPI_USE_DMA_TRANSFERT       0
 
 #define SPI_PORT_QTY                6
-#define SPI_TICK_HOOK_TIME            portTICK_RATE_MS            // in mSec
+#define SPI_TICK_HOOK_TIME          portTICK_RATE_MS            // in mSec
 
-#define SPI_CR1_DFF_8_BITS            0
-#define SPI_CR1_DFF_16_BITS            SPI_CR1_DFF
+#define SPI_CR1_DFF_8_BITS          0
+#define SPI_CR1_DFF_16_BITS         SPI_CR1_DFF
 
-#define    SPI_CR1_CPOL_LOW            0
-#define SPI_CR1_CPOL_HIGH            SPI_CR1_CPOL
+#define    SPI_CR1_CPOL_LOW         0
+#define SPI_CR1_CPOL_HIGH           SPI_CR1_CPOL
 
-#define SPI_CR1_CPHA_1_EDGE            0
-#define SPI_CR1_CPHA_2_EDGE            SPI_CR1_CPHA
+#define SPI_CR1_CPHA_1_EDGE         0
+#define SPI_CR1_CPHA_2_EDGE         SPI_CR1_CPHA
 
-#define SPI_CR1_SSM_DISABLE            0
-#define SPI_CR1_SSM_ENABLE             SPI_CR1_SSM
+#define SPI_CR1_SSM_DISABLE         0
+#define SPI_CR1_SSM_ENABLE          SPI_CR1_SSM
 
-#define SPI_CR1_MSB_FIRST            0                    //SPI_FirstBit_MSB
-#define SPI_CR1_LSB_FIRST            SPI_CR1_LSBFIRST    //SPI_FirstBit_LSB
+#define SPI_CR1_MSB_FIRST           0                           // SPI_FirstBit_MSB
+#define SPI_CR1_LSB_FIRST           SPI_CR1_LSBFIRST            // SPI_FirstBit_LSB
 
 #define SPI_PRESCALER_MASK          0x0038
 
@@ -61,7 +83,7 @@
 // typedef struct(s) and enum(s)
 //-------------------------------------------------------------------------------------------------
 
-enum SPI_IRQ_Number_e
+enum SPI_HardwarePort_e
 {
     SPI1_HARD_PORT = 0,
     SPI2_HARD_PORT,
@@ -102,7 +124,7 @@ struct SPI_PortInfo_t
 {
     SPI_TypeDef*        pSPIx;
     uint32_t            Clock;
-    uint8_t             HardwarePort;
+    SPI_HardwarePort_e  HardwarePort;
     uint8_t             AlternateFunction;
     uint16_t            portConfig;
     uint8_t             PreempPrio;
@@ -156,8 +178,8 @@ class CSPI
 
         SystemState_e   GetStatus               (void);
         void            Initialize              (void);
-        SystemState_e   LockToDevice               (SPI_DeviceInfo_t* pDevice);                                             // Set SPI to this device and lock
-        SystemState_e   UnlockFromDevice         (SPI_DeviceInfo_t* pDevice);                                             // Unlock SPI from device
+        SystemState_e   LockToDevice            (SPI_DeviceInfo_t* pDevice);                                             // Set SPI to this device and lock
+        SystemState_e   UnlockFromDevice        (SPI_DeviceInfo_t* pDevice);                                             // Unlock SPI from device
 
         // Read function (overloaded)
         SystemState_e   Read                    (uint8_t* pBuffer, size_t Size);
@@ -170,10 +192,10 @@ class CSPI
         SystemState_e   Read                    (uint32_t* pData, SPI_DeviceInfo_t* pDevice);
 
         // Write function (overloaded)
-        SystemState_e   Write                    (const uint8_t* pBuffer, size_t Size);
-        SystemState_e   Write                    (uint8_t  Data);
-        SystemState_e   Write                    (uint16_t Data);
-        SystemState_e   Write                    (uint32_t Data);
+        SystemState_e   Write                   (const uint8_t* pBuffer, size_t Size);
+        SystemState_e   Write                   (uint8_t  Data);
+        SystemState_e   Write                   (uint16_t Data);
+        SystemState_e   Write                   (uint32_t Data);
         SystemState_e   Write                   (const uint8_t* pBuffer, size_t Size, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Write                   (uint8_t  Data, SPI_DeviceInfo_t* pDevice);
         SystemState_e   Write                   (uint16_t Data, SPI_DeviceInfo_t* pDevice);
@@ -195,11 +217,11 @@ class CSPI
         SPI_PortInfo_t*                         m_pPort;
         SPI_DeviceInfo_t*                       m_pDevice;
         nOS_Mutex                               m_Mutex;
-        AccessRequest_e                            m_Request;
+        AccessRequest_e                         m_Request;
         uint32_t                                m_SlowSpeed;
         uint32_t                                m_FastSpeed;
-        volatile size_t                            m_Size;
-        volatile SystemState_e                    m_Status;
+        volatile size_t                         m_Size;
+        volatile SystemState_e                  m_Status;
         volatile uint8_t                        m_Timeout;
         void                                    (*m_pCallBackTick)();
 

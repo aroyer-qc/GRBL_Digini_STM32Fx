@@ -139,6 +139,13 @@ static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState, uint16_t SubSer
     if(*pServiceState == SERVICE_RELEASED)
     {
         GUI_Task.SetSlidingDirection(SlideDir_e(SubService));
+
+/*  this test show how to slide partial screen
+        PageSlideRange_t Test;
+        Test.StartPos = 100;
+        Test.EndPos = 200;
+        GUI_Task.SetSlidingRange (&Test);
+*/
     }
 
     if(*pServiceState != SERVICE_FINALIZE)

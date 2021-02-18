@@ -3,6 +3,35 @@
 //  File : lib_STM32F4_lcd_128x128-SSD1779.cpp
 //
 //-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
+
+#ifdef DIGINI_USE_GRAFX
+#ifdef STM32F4xx
+
+//-------------------------------------------------------------------------------------------------
+//
+//  File : lib_STM32F4_lcd_128x128-SSD1779.cpp
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -22,39 +51,39 @@
 // define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define SSD1779_SET_COLUMN_ADDRESS            0x15
-#define SSD1779_SET_POWER_CONTROL            0x20
+#define SSD1779_SET_COLUMN_ADDRESS          0x15
+#define SSD1779_SET_POWER_CONTROL           0x20
 #define SSD1779_SET_FIRST_DISPLAY           0x44
-#define SSD1779_WRITE_DISPLAY_DATA_MODE        0x5C
-#define SSD1779_READ_DISPLAY_DATA_MODE        0x5D
+#define SSD1779_WRITE_DISPLAY_DATA_MODE     0x5C
+#define SSD1779_READ_DISPLAY_DATA_MODE      0x5D
 #define SSD1779_SET_PAGE_ADDRESS            0x75
-#define SSD1779_SET_CONTRAST_LEVEL            0x81
-#define SSD1779_SET_TEMP_COMPENSATION          0x82
-#define SSD1779_SLEEP                        0x94
-#define SSD1779_SET_INVERSE_DISPLAY            0xA6
-#define SSD1779_ENTER_PARTIAL_DISPLAY        0xA8
+#define SSD1779_SET_CONTRAST_LEVEL          0x81
+#define SSD1779_SET_TEMP_COMPENSATION       0x82
+#define SSD1779_SLEEP                       0x94
+#define SSD1779_SET_INVERSE_DISPLAY         0xA6
+#define SSD1779_ENTER_PARTIAL_DISPLAY       0xA8
 #define SSD1779_EXIT_PARTIAL_DISPLAY        0xA9
-#define SSD1779_SET_AREA_SCROLL                0xAA
+#define SSD1779_SET_AREA_SCROLL             0xAA
 #define SSD1779_SET_SCROLL_START            0xAB
 #define SSD1779_DISPLAY                     0xAE
-#define SSD1779_SET_COM_OUTPUT_SCAN            0xBB
+#define SSD1779_SET_COM_OUTPUT_SCAN         0xBB
 #define SSD1779_SET_SCAN_RGB_ARRANGEMENT    0xBC
-#define SSD1779_SET_DISPLAY_CONTROL            0xCA
-#define SSD1779_CONTRAST_LEVEL                0xD6
+#define SSD1779_SET_DISPLAY_CONTROL         0xCA
+#define SSD1779_CONTRAST_LEVEL              0xD6
 #define SSD1779_INTERNAL_OSC                0xD0
-#define SSD1779_SET_READ_MODIFY_WRITE_MODE    0xE0
-#define SSD1779_EXIT_READ_MODIFY_WRITE_MODE    0xEE
+#define SSD1779_SET_READ_MODIFY_WRITE_MODE  0xE0
+#define SSD1779_EXIT_READ_MODIFY_WRITE_MODE 0xEE
 #define SSD1779_SET_COM_SEQUENCE            0xF1
 #define SSD1779_STABILIZED_VOLT_GENERATOR   0xF3
 #define SSD1779_BIAS_RATIO                  0xFB
 
 // graphic command
-#define SSD1779_DRAW_LINE                    0x83
-#define SSD1779_FILL_MODE                    0x92
-#define SSD1779_DRAW_RECTANGLE                0x84
-#define SSD1779_DRAW_CIRCLE                    0x86
+#define SSD1779_DRAW_LINE                   0x83
+#define SSD1779_FILL_MODE                   0x92
+#define SSD1779_DRAW_RECTANGLE              0x84
+#define SSD1779_DRAW_CIRCLE                 0x86
 #define SSD1779_COPY                        0x8A
-#define SSD1779_DIM_WINDOW                    0x8C
+#define SSD1779_DIM_WINDOW                  0x8C
 #define SSD1779_CLEAR_WINDOW                0x8E
 
 //  use ON or OFF on this Command
@@ -67,22 +96,22 @@
 #define SSD1779_SleepMode(State)            WriteCommand(SSD1779_SLEEP | State)
 
 
-#define SSD1779_Reverse(s)                    WriteCommand(SSD1779_SET_INVERSE_DISPLAY | s)
+#define SSD1779_Reverse(s)                  WriteCommand(SSD1779_SET_INVERSE_DISPLAY | s)
 
 //  use a value between 0 and 64 on this command
 #define SSD1779_SetContrast(Level)          {                                             \
                                                 WriteCommand(SSD1779_SET_CONTRAST_LEVEL); \
-                                                 WriteData(uint8_t(Level));                \
+                                                WriteData(uint8_t(Level));                \
                                                 WriteData(uint8_t(0x04));                 \
                                             }
 //LCD_Contrast = Level;
 
-//#define ENTER_MODE      1
+//#define ENTER_MODE            1
 #define SSD1779_EXIT_MODE       0
-//#define DECREASE        1
-//#define INCREASE        0
+//#define DECREASE              1
+//#define INCREASE              0
 #define SSD1779_OSC_ON          0x01
-//#define OSC_OFF         0x02
+//#define OSC_OFF               0x02
 
 #define SSD1779_OFF             0
 #define SSD1779_ON              1
@@ -125,7 +154,7 @@ void LCD_Driver::ControllerInitialize(void)
     WriteData(uint16_t(0x6084));
 
     WriteCommand(SSD1779_BIAS_RATIO);
-    WriteData(uint8_t(0x02));                                          // 1/9
+    WriteData(uint8_t(0x02));                                    // 1/9
 
     SSD1779_SetContrast(63);
 

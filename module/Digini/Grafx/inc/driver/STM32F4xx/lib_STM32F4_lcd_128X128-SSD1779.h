@@ -2,10 +2,29 @@
 //
 //  File : lib_STM32F4_lcd_128x128-SSD1779.h
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
-#ifndef __LIB_STM32F4_LCD_128X128_SSD1779__
-#define __LIB_STM32F4_LCD_128X128_SSD1779__
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -34,6 +53,7 @@
 
 //#define GRAFX_USE_SOFT_PRINT_FONT
 #define GRAFX_USE_SOFT_ALPHA
+//#define GRAFX_USE_SOFT_COPY
 //#define GRAFX_USE_SOFT_FILL
 
 // Display size
@@ -79,7 +99,7 @@ class LCD_Driver : public GRAFX_Interface
         void            WriteData               (uint16_t Data);
         void            Line                    (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
         void            DrawRectangle           (Box_t* pBox, uint8_t Mode = SSD1779_NO_FILL);
-        void             Clear                    (void);
+        void            Clear                   (void);
 
         IO_PinDriver    m_RegSelect;
         IO_PinDriver    m_Reset;
@@ -101,4 +121,3 @@ extern class GRAFX_Interface* myGrafx;
 
 #endif // DIGINI_USE_GRAFX
 
-#endif // __LIB_STM32F4_LCD_128X128_SSD1779__
