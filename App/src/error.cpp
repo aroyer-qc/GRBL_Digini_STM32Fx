@@ -2,19 +2,27 @@
 //
 //  File : error.cpp
 //
-//  By   : Alain Royer
+//-------------------------------------------------------------------------------------------------
 //
-//  On   : January 7, 2014
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
-//------ Revision And History ---------------------------------------------------------------------
-//
-//  Build  Date           Author            Description
-//  -----  -------------  ----------------  -------------------------------------------------------
-//  000    Jan 7,   2014  Alain Royer       New code
-//
-//
-//*************************************************************************************************
 
 //------ Note(s) ----------------------------------------------------------------------------------
 //
@@ -23,7 +31,7 @@
 //
 //
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -41,10 +49,6 @@
 //  Return:         none
 //
 //  Description:    Get a peak at the register from stack when the hard fault occured
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer         First draft
 //
 //-------------------------------------------------------------------------------------------------
 /*
@@ -95,10 +99,6 @@ extern "C" void ERR_GetRegistersFromStack(uint32_t* pullFaultStackAddress)
 //                  When no other choice are possible this is called (SKIN do not exist) basic
 //                  graphic info only can be used with explaining text
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer         First draft
-//
 //-------------------------------------------------------------------------------------------------
 //void ERR_Screen(uint8_t Type, char* pBuffer)
 //{
@@ -120,9 +120,6 @@ extern "C" void ERR_GetRegistersFromStack(uint32_t* pullFaultStackAddress)
 //  Description:    Check coordinate of a access X,Y, size X and Y and log error if out of
 //                  range
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer         First draft
 //-------------------------------------------------------------------------------------------------
 /*
 uint8_t ERR_LogInFileIfErrorCoordinate(char* pMsg,
@@ -202,9 +199,6 @@ uint8_t ERR_LogInFileIfErrorCoordinate(char* pMsg,
 //
 //  Description:    Log this message in log error file
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer         First draft
 //-------------------------------------------------------------------------------------------------
 /*
 void ERR_PutMessageInLogFile(char* pMessage, uint16_t wErrorID, uint8_t byMode)
@@ -260,9 +254,6 @@ void ERR_PutMessageInLogFile(char* pMessage, uint16_t wErrorID, uint8_t byMode)
 //
 //  Description:    Log this message in log error file
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer         First draft
 //-------------------------------------------------------------------------------------------------
 /*
 void ERR_PutAllocTableInLogFile(uint16_t wErrorID)
@@ -342,9 +333,6 @@ void ERR_PutAllocTableInLogFile(uint16_t wErrorID)
 //
 //  Description:    Log this message in log error file
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer
 //-------------------------------------------------------------------------------------------------
 /*
 void ERR_TimeStampLogFile(uint8_t byMode)
@@ -407,10 +395,6 @@ void ERR_TimeStampLogFile(uint8_t byMode)
 //
 //  Description:    Open the Log File
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 /*
 FRESULT ERR_OpenLogFile(FIL * pFile)
@@ -472,10 +456,6 @@ FRESULT ERR_OpenLogFile(FIL * pFile)
 //  Return:
 //
 //  Description:    Open the Log File
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 7,   2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 /*

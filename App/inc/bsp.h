@@ -70,7 +70,7 @@ void                BSP_Initialize          (void);
 void                BSP_IRQ_Init            (void);
 SystemState_e       BSP_PostOS_Initialize   (void);
 void                BSP_Delay_uSec          (uint32_t Delay);
-void                 BSP_Delay                (uint32_t Delay);
+void                BSP_Delay               (uint32_t Delay);
 void                BSP_SetBacklightLevel   (uint8_t Level);
 
 // dummy user function for time until class are develop

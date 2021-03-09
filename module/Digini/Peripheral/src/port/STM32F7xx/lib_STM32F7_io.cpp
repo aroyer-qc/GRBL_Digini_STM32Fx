@@ -601,9 +601,6 @@ uint32_t IO_PinLowLevelAccess(uint32_t PortIO, uint32_t PinNumber, uint32_t Dire
 
 //-------------------------------------------------------------------------------------------------
 
-
-
-
 #if 0
 
 //-------------------------------------------------------------------------------------------------
@@ -624,7 +621,6 @@ void IO_ChangeInputActiveState(IO_Input_e Input, ActiveState_e ActiveState)
     IO_In[Input].ActiveState = ActiveState;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Function:       IO_ChangeOutputActiveState
@@ -642,6 +638,5 @@ void IO_ChangeOutputActiveState(IO_Output_e Output, ActiveState_e ActiveState)
 {
     IO_Out[Output].ActiveState = ActiveState;
 }
-
 
 #endif

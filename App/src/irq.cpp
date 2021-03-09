@@ -254,211 +254,6 @@ NOS_ISR(OTG_HS_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  IIII  2222   CCCC
-//   II      22 CC
-//   II   2222  CC
-//   II   22    CC
-//  IIII  22222  CCCC
-//
-//-------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------
-//  Handler:        I2Cx_EV_IRQHandler and I2Cx_ER_IRQHandler
-//
-//  Description:    Handle interrupt I2Cx Event handler
-//
-//  Note(s):        Wrapper for C++ for handler
-//
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to I2C1
-#if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
-
-NOS_ISR(I2C1_EV_IRQHandler)
-{
-    myI2C_External.EV_IRQHandler();
-}
-
-NOS_ISR(I2C1_ER_IRQHandler)
-{
-    myI2C_External.ER_IRQHandler();
-}
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to I2C2
-#if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
-
-NOS_ISR(I2C2_EV_IRQHandler)
-{
-    // <Your c++ class object>.EV_IRQHandler();
-}
-
-NOS_ISR(I2C2_ER_IRQHandler)
-{
-    // <Your c++ class object>.ER_IRQHandler();
-}
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to I2C3
-#if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
-
-NOS_ISR(I2C3_EV_IRQHandler)
-{
-    myI2C_Control.EV_IRQHandler();
-}
-
-NOS_ISR(I2C3_ER_IRQHandler)
-{
-    myI2C_Control.ER_IRQHandler();
-}
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to I2C4
-#if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
-
-NOS_ISR(I2C4_EV_IRQHandler)
-{
-    // <Your c++ class object>.EV_IRQHandler();
-}
-
-NOS_ISR(I2C4_ER_IRQHandler)
-{
-    // <Your c++ class object>.ER_IRQHandler();
-}
-
-#endif
-
-//-------------------------------------------------------------------------------------------------
-//
-//  UU  UU  AAAA  RRRRR  TTTTTT
-//  UU  UU AA  AA RR  RR   TT
-//  UU  UU AAAAAA RRRRR    TT
-//  UU  UU AA  AA RR RR    TT
-//   UUUU  AA  AA RR  RR   TT
-//
-//-------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------
-//
-//  IRQ Handler:   External IRQ handler
-//
-//  Description:   Individual handle for each enable UART
-//
-//  Note(s):       There is virtual UART IRQ handler (Hijack unused IRQ from the system)
-//                 and use software interrupt trigger
-//
-//-------------------------------------------------------------------------------------------------
-
-
-// Interrupt Handler assign to USART1
-#if (UART_DRIVER_SUPPORT_UART1_CFG == DEF_ENABLED)
-NOS_ISR(USART1_IRQHandler)
-{
-    myUART_Terminal.IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART2
-#if (UART_DRIVER_SUPPORT_UART2_CFG == DEF_ENABLED)
-NOS_ISR(USART2_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART3
-#if (UART_DRIVER_SUPPORT_UART3_CFG == DEF_ENABLED)
-NOS_ISR(USART3_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART4
-#if (UART_DRIVER_SUPPORT_UART4 == DEF_ENABLED)
-NOS_ISR(UART4_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART5
-#if (UART_DRIVER_SUPPORT_UART5 == DEF_ENABLED)
-NOS_ISR(UART5_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART6
-#if (UART_DRIVER_SUPPORT_UART6 == DEF_ENABLED)
-NOS_ISR(USART6_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART7
-#if (UART_DRIVER_SUPPORT_UART7 == DEF_ENABLED)
-NOS_ISR(UART7_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART8
-#if (UART_DRIVER_SUPPORT_UART8 == DEF_ENABLED)
-NOS_ISR(UART8_IRQHandler)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to Virtual RX UART
-#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
-//Example -> NOS_ISR(SPDIF_RX_IRQHandler)
-{
-    // _your_class_object_here__->VirtualUartRX_IRQHandler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to Virtual TX UART
-#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
-//Example -> NOS_ISR(SPDIF_TX_IRQHandler)
-{
-    // _your_class_object_here__->VirtualUartTX_IRQHandler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-//
 //  TTTTTT IIII MM    MM
 //    TT    II  MMM  MMM
 //    TT    II  MMMMMMMM
@@ -476,7 +271,6 @@ NOS_ISR(UART8_IRQHandler)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-
 
 #if (TIM_DRIVER_SUPPORT_TIM1_CFG == DEF_ENABLED) || (TIM_DRIVER_SUPPORT_TIM10_CFG == DEF_ENABLED)
 NOS_ISR(TIM1_UP_TIM10_IRQHandler)
@@ -652,6 +446,210 @@ NOS_ISR(LPTIM1_IRQHandler)
             LPTIM1->ICR = LPTIM_ICR_ARRMCF;
         }
     }
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------//-------------------------------------------------------------------------------------------------
+//
+//  IIII  2222   CCCC
+//   II      22 CC
+//   II   2222  CC
+//   II   22    CC
+//  IIII  22222  CCCC
+//
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+//  Handler:        I2Cx_EV_IRQHandler and I2Cx_ER_IRQHandler
+//
+//  Description:    Handle interrupt I2Cx Event handler
+//
+//  Note(s):        Wrapper for C++ for handler
+//
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to I2C1
+#if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
+
+NOS_ISR(I2C1_EV_IRQHandler)
+{
+    myI2C_External.EV_IRQHandler();
+}
+
+NOS_ISR(I2C1_ER_IRQHandler)
+{
+    myI2C_External.ER_IRQHandler();
+}
+
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to I2C2
+#if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
+
+NOS_ISR(I2C2_EV_IRQHandler)
+{
+    // <Your c++ class object>.EV_IRQHandler();
+}
+
+NOS_ISR(I2C2_ER_IRQHandler)
+{
+    // <Your c++ class object>.ER_IRQHandler();
+}
+
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to I2C3
+#if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
+
+NOS_ISR(I2C3_EV_IRQHandler)
+{
+    myI2C_Control.EV_IRQHandler();
+}
+
+NOS_ISR(I2C3_ER_IRQHandler)
+{
+    myI2C_Control.ER_IRQHandler();
+}
+
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to I2C4
+#if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
+
+NOS_ISR(I2C4_EV_IRQHandler)
+{
+    // <Your c++ class object>.EV_IRQHandler();
+}
+
+NOS_ISR(I2C4_ER_IRQHandler)
+{
+    // <Your c++ class object>.ER_IRQHandler();
+}
+
+#endif
+
+//-------------------------------------------------------------------------------------------------
+//
+//  UU  UU  AAAA  RRRRR  TTTTTT
+//  UU  UU AA  AA RR  RR   TT
+//  UU  UU AAAAAA RRRRR    TT
+//  UU  UU AA  AA RR RR    TT
+//   UUUU  AA  AA RR  RR   TT
+//
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+//
+//  IRQ Handler:   External IRQ handler
+//
+//  Description:   Individual handle for each enable UART
+//
+//  Note(s):       There is virtual UART IRQ handler (Hijack unused IRQ from the system)
+//                 and use software interrupt trigger
+//
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to USART1
+#if (UART_DRIVER_SUPPORT_UART1_CFG == DEF_ENABLED)
+NOS_ISR(USART1_IRQHandler)
+{
+    myUART_Terminal.IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to USART2
+#if (UART_DRIVER_SUPPORT_UART2_CFG == DEF_ENABLED)
+NOS_ISR(USART2_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to USART3
+#if (UART_DRIVER_SUPPORT_UART3_CFG == DEF_ENABLED)
+NOS_ISR(USART3_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to UART4
+#if (UART_DRIVER_SUPPORT_UART4 == DEF_ENABLED)
+NOS_ISR(UART4_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to UART5
+#if (UART_DRIVER_SUPPORT_UART5 == DEF_ENABLED)
+NOS_ISR(UART5_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to USART6
+#if (UART_DRIVER_SUPPORT_UART6 == DEF_ENABLED)
+NOS_ISR(USART6_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to UART7
+#if (UART_DRIVER_SUPPORT_UART7 == DEF_ENABLED)
+NOS_ISR(UART7_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to UART8
+#if (UART_DRIVER_SUPPORT_UART8 == DEF_ENABLED)
+NOS_ISR(UART8_IRQHandler)
+{
+    // _your_class_object_here__->IRQ_Handler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to Virtual RX UART
+#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
+//Example -> NOS_ISR(SPDIF_RX_IRQHandler)
+{
+    // _your_class_object_here__->VirtualUartRX_IRQHandler();
+}
+#endif
+
+//-------------------------------------------------------------------------------------------------
+
+// Interrupt Handler assign to Virtual TX UART
+#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
+//Example -> NOS_ISR(SPDIF_TX_IRQHandler)
+{
+    // _your_class_object_here__->VirtualUartTX_IRQHandler();
 }
 #endif
 

@@ -42,10 +42,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART1_RX,
         IO_UART1_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART1_CTS;
+        IO_UART1_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART1_RTS;
+        IO_UART1_RTS,
       #endif
         RCC_APB2ENR_USART1EN,       // RCC_APBxENR
         &RCC->APB2ENR,              // Register
@@ -62,10 +62,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART2_RX,
         IO_UART2_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART2_CTS;
+        IO_UART2_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART2_RTS;
+        IO_UART2_RTS,
       #endif
         RCC_APB1ENR_USART2EN,       // RCC_APBxENR
         &RCC->APB1ENR,              // Register
@@ -82,10 +82,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART3_RX,
         IO_UART3_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART3_CTS;
+        IO_UART3_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART3_RTS;
+        IO_UART3_RTS,
       #endif
         RCC_APB1ENR_USART3EN,       // RCC_APBxENR
         &RCC->APB1ENR,              // Register
@@ -102,10 +102,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART4_RX,
         IO_UART4_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART4_CTS;
+        IO_UART4_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART4_RTS;
+        IO_UART4_RTS,
       #endif
         RCC_APB1ENR_UART4EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
@@ -122,10 +122,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART5_RX,
         IO_UART5_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART5_CTS;
+        IO_UART5_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART5_RTS;
+        IO_UART5_RTS,
       #endif
         RCC_APB1ENR_UART5EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
@@ -142,10 +142,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART6_RX,
         IO_UART6_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART6_CTS;
+        IO_UART6_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART6_RTS;
+        IO_UART6_RTS,
       #endif
         RCC_APB2ENR_USART6EN,       // RCC_APBxENR
         &RCC->APB2ENR,              // Register
@@ -162,10 +162,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART7_RX,
         IO_UART7_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART7_CTS;
+        IO_UART7_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART7_RTS;
+        IO_UART7_RTS,
       #endif
         RCC_APB1ENR_UART7EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
@@ -182,10 +182,10 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART8_RX,
         IO_UART8_TX,
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART8_CTS;
+        IO_UART8_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART8_RTS;
+        IO_UART8_RTS,
       #endif
         RCC_APB1ENR_UART8EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register

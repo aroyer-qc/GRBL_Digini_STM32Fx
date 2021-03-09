@@ -60,6 +60,8 @@
 #define GRAFX_SIZE_X            128
 #define GRAFX_SIZE_Y            128
 
+//#define GRAFX_DRIVER_USE_OWN_COPY_LAYER_TO_LAYER
+
 #define SSD1779_NO_FILL         0
 #define SSD1779_FILL            1
 
@@ -67,39 +69,40 @@
 // Class
 //-------------------------------------------------------------------------------------------------
 
-class LCD_Driver : public GRAFX_Interface
+class GrafxDriver : public GRAFX_Interface
 {
     public:
 
-        void            Initialize              (void* pArg);
-        void            DisplayOn               (void);
-        void            DisplayOff              (void);
-        void            LayerConfig             (CLayer* pLayer);
-        void            CopyLinear              (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
-        void            BlockCopy               (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
-        void            DrawRectangle           (Box_t* pBox);
-        void            PrintFont               (FontDescriptor_t* pDescriptor, Cartesian_t* pPos);
-        void            DrawBox                 (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness);
-        void            DrawPixel               (uint16_t PosX, uint16_t PosY);
-        void            DrawHLine               (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess);
-        void            DrawVLine               (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess);
-        void            DrawLine                (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction);
-        void            DrawCircle              (uint8_t X, uint8_t Y, uint8_t Radius, uint8_t Mode);
-        void            Copy                    (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode);
+        void            Initialize            (void* pArg);
+        void            DisplayOn             (void);
+        void            DisplayOff            (void);
+        void            LayerConfig           (CLayer* pLayer);
+        void            CopyLinear            (void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            BlockCopy             (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            BlockCopy             (void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode);
+        void            DrawRectangle         (Box_t* pBox);
+        void            PrintFont             (FontDescriptor_t* pDescriptor, Cartesian_t* pPos);
+        void            DrawBox               (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness);
+        void            DrawPixel             (uint16_t PosX, uint16_t PosY);
+        void            DrawHLine             (uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t ThickNess);
+        void            DrawVLine             (uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t ThickNess);
+        void            DrawLine              (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Thickness, DrawMode_e Direction);
+        void            DrawCircle            (uint8_t X, uint8_t Y, uint8_t Radius, uint8_t Mode);
+        void            Copy                  (void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode);
 
         #ifdef GRAFX_USE_V_SYNC
-        void            WaitFor_V_Sync          (void);
+        void            WaitFor_V_Sync        (void) {};
         #endif
 
     private:
 
-        void            ControllerInitialize    (void);     // LCD is equipped with a IL9341 controller
-        void            WriteCommand            (uint8_t Register);
-        void            WriteData               (uint8_t Data);
-        void            WriteData               (uint16_t Data);
-        void            Line                    (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
-        void            DrawRectangle           (Box_t* pBox, uint8_t Mode = SSD1779_NO_FILL);
-        void            Clear                   (void);
+        void            ControllerInitialize  (void);     // LCD is equipped with a IL9341 controller
+        void            WriteCommand          (uint8_t Register);
+        void            WriteData             (uint8_t Data);
+        void            WriteData             (uint16_t Data);
+        void            Line                  (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
+        void            DrawRectangle         (Box_t* pBox, uint8_t Mode = SSD1779_NO_FILL);
+        void            Clear                 (void);
 
         IO_PinDriver    m_RegSelect;
         IO_PinDriver    m_Reset;
@@ -109,11 +112,10 @@ class LCD_Driver : public GRAFX_Interface
 
 //-------------------------------------------------------------------------------------------------
 
-#ifdef LCD_DRIVER_GLOBAL
-class LCD_Driver              LCD_Driver;
-class GRAFX_Interface*        myGrafx = &LCD_Driver;
+#ifdef LIB_SSD1779_GLOBAL
+class GrafxDriver             Grafx;
+class GRAFX_Interface*        myGrafx = &Grafx;
 #else
-extern class LCD_Driver       myLCD_Driver;
 extern class GRAFX_Interface* myGrafx;
 #endif
 

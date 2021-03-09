@@ -43,7 +43,6 @@
 #define GRAFX_NUMBER_OF_ACTIVE_LAYER              2
 
 #define GRAFX_USE_V_SYNC                          // We use this driver hardware support V Sync
-
 //#define GRAFX_USE_SOFT_PIXEL                    // We use this driver DMA for this function
 //#define GRAFX_USE_SOFT_BOX                      // We use this driver function
 //#define GRAFX_USE_SOFT_VLINE

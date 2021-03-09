@@ -88,7 +88,6 @@ extern "C" void SKIN_TaskWrapper(void* pvParameters)
     (static_cast<SKIN_myClassTask*>(pvParameters))->Run();
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           Constructor
@@ -104,8 +103,6 @@ SKIN_myClassTask::SKIN_myClassTask(const char* pDrive, const char* pFileName)
     m_pDrive = pDrive;
     snprintf(m_Path, 15, "%s%s", pDrive, pFileName);
 }
-
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -154,7 +151,6 @@ nOS_Error SKIN_myClassTask::Initialize(void)
     return Error;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           IsSkinReloaded
@@ -170,7 +166,6 @@ bool SKIN_myClassTask::IsStaticSkinLoaded(void)
 {
     return m_IsStaticLoaded;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -203,16 +198,12 @@ uint16_t SKIN_myClassTask::PercentLoader(void)
 {
     // TODO (Alain#5#) need to check if we are causing problem by returning 0 here...
 
-
     if(m_TotalToLoad != 0)
     {
         return (uint16_t)((m_ReadCount * 100) / m_TotalToLoad);
     }
 
     return 0;
-
-
-// on MP3 test there is no IF
 }
 
 //-------------------------------------------------------------------------------------------------

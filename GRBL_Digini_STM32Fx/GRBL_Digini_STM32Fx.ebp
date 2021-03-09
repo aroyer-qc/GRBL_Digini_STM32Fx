@@ -114,7 +114,7 @@
 		<Cpp>
 			<Add option="-mfloat-abi=hard" />
 			<Add option="-std=gnu++14" />
-			<Add option="-fno-schedule-insns2" />
+			<Add option="-fschedule-insns2" />
 			<Add option="-O0" />
 			<Add option="-g3" />
 			<Add option="-Wno-psabi" />
@@ -128,7 +128,10 @@
 		<Linker>
 			<Add option="-u _printf_float" />
 			<Add option="-eb_lib=n" />
+			<Add option="-lstdc++" />
 			<Add option="-eb_start_files" />
+			<Add option="-Wl,--cref" />
+			<Add option="-Wl,--gc-sections" />
 			<Add option="-lm" />
 		</Linker>
 		<Unit filename="..\App\grbl\config.h" />
@@ -346,6 +349,7 @@
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_const.h">
 			<Option compilerVar="CPP" />
 		</Unit>
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_dbase.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_define.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_enum.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_enum_x_macro.h" />

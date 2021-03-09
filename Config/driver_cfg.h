@@ -12,7 +12,7 @@
 #include "lib_STM32F7_lcd_480x272 - RK043FN48H.h"
 #define GRAFX_DRIVER_ARGUMENT                   nullptr                 // this driver does not have argument (ex. pointer on structure and/or peripheral)
 
-
+// For the pointing device, here it is the capacitive touch screen
 #ifdef DIGINI_USE_POINTING_DEVICE
     #define GRAFX_PDI_HARD_INTERFACE            (void*)&myI2C_Control       // For the pointing device interface
     //#define GRAFX_PDI_INTERRUPT_IO                                    // not available on DISCO746

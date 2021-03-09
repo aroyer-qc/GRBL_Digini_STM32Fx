@@ -66,6 +66,8 @@
 #define GRAFX_USE_RAM_DATA
 //#define GRAFX_USE_ROM_DATA
 
+#define DIGINI_USE_MULTI_LINE
+
 #define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
 
 #define GRAFX_USE_SLIDING_PAGE
@@ -98,12 +100,12 @@
 #endif
 
 //#define DIGINI_USE_TIMED_WIDGET
-
 #define DIGINI_USE_FONT_SIZE_8
 #define DIGINI_USE_FONT_SIZE_12
 #define DIGINI_USE_FONT_SIZE_16
 
-// Color mode supported in this project
+///------------------------------------------------------------------------------------------------
+/// Color supported mode in this project
 #define GRAFX_COLOR_ARGB8888
 //#define GRAFX_COLOR_RGB888
 #define GRAFX_COLOR_RGB565
@@ -117,8 +119,6 @@
 //#define GRAFX_COLOR_A4
 //#define GRAFX_COLOR_RGB332
 //#define GRAFX_COLOR_RGB444
-
-#define DIGINI_USE_MULTI_LINE
 
 #define DIGINI_MAX_PRINT_NUMBER_OF_LINE                 8               // This is the maximum number of line in the same string
 #define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
@@ -148,7 +148,9 @@
                         X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
                         X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
 
+// Reserved define name (N/U in this app)
+// BACKGROUND_DISPLAY_LAYER_1
+// FOREGROUND_DISPLAY_LAYER_1
 
-//                        X_LAYER( BACKGROUND_DISPLAY_LAYER_1,    LAYER_VIRTUAL,     RGB565,         GRAFX_SIZE_X,   GRAFX_SIZE_Y)
-//                        X_LAYER( FOREGROUND_DISPLAY_LAYER_1,    LAYER_VIRTUAL,     ARGB8888,       GRAFX_SIZE_X,   GRAFX_SIZE_Y)
+//-------------------------------------------------------------------------------------------------
 

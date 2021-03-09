@@ -3,6 +3,26 @@
 //  File : lib_STM32F7_io.h
 //
 //-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 #pragma once
 
@@ -18,8 +38,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-//#include <stdbool.h>
-//#include <stdint.h>
 #include "stm32f7xx.h"
 #include "bsp_io_def.h"
 
@@ -29,8 +47,8 @@
 
 // TODO this is not the place for this
 #define LED_Init(p)                     IO_PinInit(p)
-//#define LED_ON(p)                       IO_Output(p, IO_SET)      todo need to be defined for state on and off
-//#define LED_OFF(p)                      IO_Output(p, IO_RESET)
+//#define LED_ON(p)                     IO_Output(p, IO_SET)      todo need to be defined for state on and off
+//#define LED_OFF(p)                    IO_Output(p, IO_RESET)
 #define LED_Toggle(p)                   IO_TogglePin(p)
 
 //#define IO_NULL                       ((IO_TypeDef *)nullptr)
@@ -51,28 +69,6 @@
 #define IO_PIN_MASK_14                  ((uint16_t)0x4000)
 #define IO_PIN_MASK_15                  ((uint16_t)0x8000)
 #define IO_PIN_MASK_All                 ((uint16_t)0xFFFF)
-
-#if 0
-#define IO_OSPEEDR_PIN_MASK             ((uint32_t)0x00000003)
-#define IO_OSPEEDR_LOW                  ((uint32_t)0x00000000)
-#define IO_OSPEEDR_MEDIUM               ((uint32_t)0x00000001)
-#define IO_OSPEEDR_HIGH                 ((uint32_t)0x00000002)
-#define IO_OSPEEDR_VERY_HIGH            ((uint32_t)0x00000003)
-
-#define IO_MODE_PIN_MASK                ((uint32_t)0x00000003)
-#define IO_MODE_INPUT                   ((uint32_t)0x00000000)
-#define IO_MODE_OUTPUT                  ((uint32_t)0x00000001)
-#define IO_MODE_ALTERNATE               ((uint32_t)0x00000002)
-#define IO_MODE_ANALOG                  ((uint32_t)0x00000003)
-
-#define IO_TYPE_PIN_DRIVE_MASK          ((uint32_t)0x00000001)
-#define IO_TYPE_PIN_PP                  ((uint32_t)0x00000000)
-#define IO_TYPE_PIN_OD                  ((uint32_t)0x00000001)
-#define IO_PULL_PIN_PULL_MASK           ((uint32_t)0x00000003)
-#define IO_PULL_PIN_NO_PULL             ((uint32_t)0x00000000)
-#define IO_PULL_PIN_PULL_UP             ((uint32_t)0x00000001)
-#define IO_PULL_PIN_PULL_DOWN           ((uint32_t)0x00000002)
-#endif
 
 #define IO_SPEED_PIN_MASK               ((uint32_t)0x00000003)
 #define IO_SPEED_FREQ_LOW               ((uint32_t)0x00000000)
@@ -101,7 +97,6 @@
 #define IO_EXTI_TRIGGER_RISING          ((uint8_t)1) // Trigger Rising Mode
 #define IO_EXTI_TRIGGER_FALLING         ((uint8_t)2) // Trigger Falling Mode
 #define IO_EXTI_TRIGGER_RISING_FALLING  ((uint8_t)3) // Trigger Rising & Falling Mode
-
 
 // TODO check if we change this!! for state
 #define IO_LEVEL_0                      0
@@ -190,12 +185,7 @@
 //  AF 15 selection
 #define IO_AF15_EVENTOUT                ((uint8_t)0x0F)  // EVENTOUT Alternate Function mapping
 
-#define IO_SPEED_FREQ_LOW               ((uint32_t)0x00000000)  // Low speed
-#define IO_SPEED_FREQ_MEDIUM            ((uint32_t)0x00000001)  // Medium speed
-#define IO_SPEED_FREQ_HIGH              ((uint32_t)0x00000002)  // Fast speed
-#define IO_SPEED_FREQ_VERY_HIGH         ((uint32_t)0x00000003)  // High speed
-
-#define IO_EXT_MODE_IT_IT_PIN_MASK      ((uint32_t)0x00000003)
+#define IO_EXT_MODE_IT_PIN_MASK         ((uint32_t)0x00000003)
 #define IO_EXT_MODE_IT_RISING           ((uint32_t)0x00000001)
 #define IO_EXT_MODE_IT_FALLING          ((uint32_t)0x00000002)
 #define IO_EXT_MODE_IT_BOTH             ((uint32_t)0x00000003)
@@ -286,9 +276,9 @@ extern const IO_Properties_t IO_Properties[IO_NUM];
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-void         IO_PinInit                    (IO_ID_e IO_Id);
-void         IO_PinInitInput                (IO_ID_e IO_Id);
-void         IO_PinInitOutput            (IO_ID_e IO_Id);
+void        IO_PinInit                  (IO_ID_e IO_Id);
+void        IO_PinInitInput             (IO_ID_e IO_Id);
+void        IO_PinInitOutput            (IO_ID_e IO_Id);
 void        IO_SetPinLow                (IO_ID_e IO_Id);
 void        IO_SetPinHigh               (IO_ID_e IO_Id);
 void        IO_TogglePin                (IO_ID_e IO_Id);

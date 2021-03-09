@@ -73,11 +73,11 @@ class TEA5767
 
         void                  ReadRegisters            (void);                      // Read all status & data registers
         void                  SaveRegisters            (void);                      // Save writable registers back to the chip
-    
-    
+
+
         CI2C*               m_pI2C;
         I2C_DeviceInfo_t*   m_pDevice;
-        
+
         uint8_t             m_Registers[5];                                     // Store the current values of the registers for controlling the radio chip.
         uint8_t             m_Status[5];                                        // Registers with the current status of the radio chip.
         bool                m_Mono;

@@ -75,11 +75,11 @@ should be base on STM32F7!!
 //
 //   Description:   Initializes the I2Cx peripheral according to the specified Parameters
 //
-//   Note(s):		To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency
-//					(I2C peripheral input clock) must be a multiple of 10 MHz.
+//   Note(s):       To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency
+//                  (I2C peripheral input clock) must be a multiple of 10 MHz.
 //
-//					I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
-//					I2C_InitStruct: pointer to a I2C_InitTypeDef structure that contains
+//                  I2Cx: where x can be 1, 2 or 3 to select the I2C peripheral.
+//                  I2C_InitStruct: pointer to a I2C_InitTypeDef structure that contains
 //                  the configuration information for the specified I2C peripheral.
 //
 //-------------------------------------------------------------------------------------------------
@@ -121,8 +121,8 @@ I2C::~I2C()
 void I2C::Initialize()
 {
 #if 0
-	nOS_Error Error;
-	uint32_t                Temp;
+    nOS_Error Error;
+    uint32_t                Temp;
 
     // mettre un flag d'initialisation
     Error = nOS_MutexCreate(&this->m_Mutex, NOS_MUTEX_RECURSIVE, NOS_MUTEX_PRIO_INHERIT);
@@ -149,8 +149,8 @@ void I2C::Initialize()
     NVIC_EnableIRQ(m_pPort->ER_IRQn);
 
     // ---- Reset peripheral and set clock ----
-    RCC->APB1ENR  |=  (RCC_APB1ENR_I2C1EN   << m_pPort->HardwarePort);			                    // Enable I2C_PORT clock
-    RCC->APB1RSTR |=  (RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);	                            // Enable I2Cx reset state
+    RCC->APB1ENR  |=  (RCC_APB1ENR_I2C1EN   << m_pPort->HardwarePort);                              // Enable I2C_PORT clock
+    RCC->APB1RSTR |=  (RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);                              // Enable I2Cx reset state
     RCC->APB1RSTR &= ~(RCC_APB1RSTR_I2C1RST << m_pPort->HardwarePort);                              // Release I2Cx from reset state
 
     // ---- Peripheral software reset ----
@@ -161,53 +161,53 @@ void I2C::Initialize()
     m_pPort->pI2Cx->CR1 |=  I2C_CR1_PE;                                                             // I2C Peripheral Enable
 
     // ---- I2Cx CR2 Configuration ----
-    Register             = m_pPort->pI2Cx->CR2;													    // Get the I2Cx CR2 value
-	Register            &= (uint16_t)~(I2C_CR2_FREQ);								  	            // Clear frequency FREQ[5:0] bits
-	RCC_GetClocksFreq(&Clocks);																	    // Get pclk1 frequency value
-	pclk1   		     = Clocks.PCLK1_Frequency;												    // Set frequency bits depending on pclk1 value
-	FreqRange  	         = (uint16_t)(pclk1 / 1000000);
-	Register            |= FreqRange;
-	m_pPort->pI2Cx->CR2  = Register;	     														// Write to I2Cx CR2
+    Register             = m_pPort->pI2Cx->CR2;                                                     // Get the I2Cx CR2 value
+    Register            &= (uint16_t)~(I2C_CR2_FREQ);                                               // Clear frequency FREQ[5:0] bits
+    RCC_GetClocksFreq(&Clocks);                                                                     // Get pclk1 frequency value
+    pclk1                = Clocks.PCLK1_Frequency;                                                  // Set frequency bits depending on pclk1 value
+    FreqRange            = (uint16_t)(pclk1 / 1000000);
+    Register            |= FreqRange;
+    m_pPort->pI2Cx->CR2  = Register;                                                                // Write to I2Cx CR2
 
 /*
-	// ---- I2Cx CCR Configuration ----
-	m_pPort->pI2Cx->CR1 &= (uint16_t)~(I2C_CR1_PE);	     								            // Disable the selected I2C peripheral to configure TRISE
-	if(m_pPort->Speed <= 100000)					   				                                // Configure speed in standard mode
-	{
-		Result = (uint16_t)(pclk1 / (m_pPort->Speed << 1));				    	                    // Standard mode speed calculate
-		Result = AbsMin(Result, 4);   														        // Test if CCR value is under 0x04
+    // ---- I2Cx CCR Configuration ----
+    m_pPort->pI2Cx->CR1 &= (uint16_t)~(I2C_CR1_PE);                                                 // Disable the selected I2C peripheral to configure TRISE
+    if(m_pPort->Speed <= 100000)                                                                    // Configure speed in standard mode
+    {
+        Result = (uint16_t)(pclk1 / (m_pPort->Speed << 1));                                         // Standard mode speed calculate
+        Result = AbsMin(Result, 4);                                                                 // Test if CCR value is under 0x04
 
-		Register |= Result;	  															            // Set speed value for standard mode
-		m_pPort->pI2Cx->TRISE = FreqRange + 1; 	     									            // Set Maximum Rise Time for standard mode
-	}
-	else 																						    // (I2C_InitStruct->I2C_ClockSpeed <= 400000) Configure speed in fast mode
-	{																							    // To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency (I2C peripheral input clock) must be a multiple of 10 MHz
-        Result = (uint16_t)(pclk1 / (m_pPort->Speed * 3));				                            // Fast mode speed calculate: Tlow/Thigh = 2
+        Register |= Result;                                                                         // Set speed value for standard mode
+        m_pPort->pI2Cx->TRISE = FreqRange + 1;                                                      // Set Maximum Rise Time for standard mode
+    }
+    else                                                                                            // (I2C_InitStruct->I2C_ClockSpeed <= 400000) Configure speed in fast mode
+    {                                                                                               // To use the I2C at 400 KHz (in fast mode), the PCLK1 frequency (I2C peripheral input clock) must be a multiple of 10 MHz
+        Result = (uint16_t)(pclk1 / (m_pPort->Speed * 3));                                          // Fast mode speed calculate: Tlow/Thigh = 2
 
-		if((Result & I2C_CCR_CCR) == 0)				   										        // Test if CCR value is under 0x1
-		{
-			Result |= (uint16_t)0x0001;  															// Set minimum allowed value
-		}
+        if((Result & I2C_CCR_CCR) == 0)                                                             // Test if CCR value is under 0x1
+        {
+            Result |= (uint16_t)0x0001;                                                             // Set minimum allowed value
+        }
 
-		Register |= (Result | I2C_CCR_FS);						  					                // Set speed value and set F/S bit for fast mode
-		m_pPort->pI2Cx->TRISE = (((FreqRange * 300) / 1000) + 1);                                   // Set Maximum Rise Time for fast mode
-	}
+        Register |= (Result | I2C_CCR_FS);                                                          // Set speed value and set F/S bit for fast mode
+        m_pPort->pI2Cx->TRISE = (((FreqRange * 300) / 1000) + 1);                                   // Set Maximum Rise Time for fast mode
+    }
 
-	m_pPort->pI2Cx->CCR  = Register;				     									        // Write to I2Cx CCR
-	m_pPort->pI2Cx->CR1 |= I2C_CR1_PE;															    // Enable the selected I2C peripheral
+    m_pPort->pI2Cx->CCR  = Register;                                                                // Write to I2Cx CCR
+    m_pPort->pI2Cx->CR1 |= I2C_CR1_PE;                                                              // Enable the selected I2C peripheral
 */
 
-	// ---- I2Cx CR1 Configuration ----
+    // ---- I2Cx CR1 Configuration ----
 
-	Register  = m_pPort->pI2Cx->CR1;														        // Get the I2Cx CR1 value
-	Register &= CR1_CLEAR_MASK;															            // Clear ACK, SMBTYPE and  SMBUS bits
-	Register |= (I2C_Mode_I2C | I2C_Ack_Enable);			                                        // Configure I2Cx: mode and acknowledgement
+    Register  = m_pPort->pI2Cx->CR1;                                                                // Get the I2Cx CR1 value
+    Register &= CR1_CLEAR_MASK;                                                                     // Clear ACK, SMBTYPE and  SMBUS bits
+    Register |= (I2C_Mode_I2C | I2C_Ack_Enable);                                                    // Configure I2Cx: mode and acknowledgement
                                                                                                     // Set SMBTYPE and SMBUS bits according to I2C_Mode value
                                                                                                     // Set ACK bit according to I2C_Ack value
-	m_pPort->pI2Cx->CR1 = Register;			        											    // Write to I2Cx CR1
+    m_pPort->pI2Cx->CR1 = Register;                                                                 // Write to I2Cx CR1
 
-	// ---- I2Cx OAR1 Configuration ----
-	m_pPort->pI2Cx->OAR1 = I2C_AcknowledgedAddress_7bit;	                                        // Set I2Cx Own Address1 and acknowledged address
+    // ---- I2Cx OAR1 Configuration ----
+    m_pPort->pI2Cx->OAR1 = I2C_AcknowledgedAddress_7bit;                                            // Set I2Cx Own Address1 and acknowledged address
 #endif
 }
 
@@ -474,7 +474,7 @@ SystemState_e I2C::ReadRegister(uint8_t Register, void* pRxBuffer, size_t RxSize
 void I2C::EV_IRQHandler()
 {
     uint32_t     Status;
-	I2C_TypeDef* pI2C;
+    I2C_TypeDef* pI2C;
 
     pI2C = m_pPort->pI2Cx;
 
@@ -482,64 +482,64 @@ void I2C::EV_IRQHandler()
 
     switch(Status)
     {
-		// ---- Master Mode ----
-		case I2C_EVENT_MASTER_MODE_SELECT:
-		{
+        // ---- Master Mode ----
+        case I2C_EVENT_MASTER_MODE_SELECT:
+        {
             if(m_TxSize != 0)
-			{
-				pI2C->DR = (m_Device /*<< */ & ~I2C_OAR1_ADD0);     			        // Send slave address for write
-			}
-			else
-			{
-				pI2C->DR = (m_Device /*<< */ | I2C_OAR1_ADD0);				            // Send slave address for read
+            {
+                pI2C->DR = (m_Device /*<< */ & ~I2C_OAR1_ADD0);                         // Send slave address for write
+            }
+            else
+            {
+                pI2C->DR = (m_Device /*<< */ | I2C_OAR1_ADD0);                          // Send slave address for read
             }
         }
-		break;
+        break;
 
         // ---- Master Transmitter ----
-		case I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED:                                // Test on I2Cx EV6 and first EV8 and clear them
+        case I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED:                                // Test on I2Cx EV6 and first EV8 and clear them
         {
-			pI2C->CR2 |= I2C_CR2_ITBUFEN; 		                                        // Next we send data buf, enable buffer interrupt
+            pI2C->CR2 |= I2C_CR2_ITBUFEN;                                               // Next we send data buf, enable buffer interrupt
             // Test on I2Cx EV8 and clear it
             // buffer register empty, DR shifting out
 
         }
-	// Pass through in write so no "break" here
+    // Pass through in write so no "break" here
 
-        case I2C_EVENT_MASTER_BYTE_TRANSMITTING:  			                            // Without BTF, EV8
+        case I2C_EVENT_MASTER_BYTE_TRANSMITTING:                                        // Without BTF, EV8
         {
             if(m_TxSize != 0)
             {
-                pI2C->DR = *m_pTxBuffer;                         						// If TX data available transmit data and continue
+                pI2C->DR = *m_pTxBuffer;                                                // If TX data available transmit data and continue
                 m_pTxBuffer++;
                 m_TxSize--;
             }
             else if(m_RxSize != 0)
             {
-				pI2C->CR2 &= ~I2C_CR2_ITBUFEN;     	                        			// Done sending data before reading data
-			}
-            else								     		                            // If transmitting last data
+                pI2C->CR2 &= ~I2C_CR2_ITBUFEN;                                          // Done sending data before reading data
+            }
+            else                                                                        // If transmitting last data
             {
-            	pI2C->CR2 &= ~I2C_CR2_ITBUFEN;	    	                    			// Done sending buffer
-			}
-		}
-		break;
+                pI2C->CR2 &= ~I2C_CR2_ITBUFEN;                                          // Done sending buffer
+            }
+        }
+        break;
 
         // Test on I2Cx EV8 and clear it
-		// buffer register empty, DR empty
+        // buffer register empty, DR empty
         case I2C_EVENT_MASTER_BYTE_TRANSMITTED:
         {
-            if(m_RxSize != 0)						                                    // If was transmitting address bytes before read
+            if(m_RxSize != 0)                                                           // If was transmitting address bytes before read
             {
-				pI2C->CR1 |= I2C_CR1_START;				                                // Generate a START condition to read data
-				// maybe need a stop to make sure it's a restart condition see Logic probe to confirm this
-			}
-            else											                            // If we are done transmitting\A0
+                pI2C->CR1 |= I2C_CR1_START;                                             // Generate a START condition to read data
+                // maybe need a stop to make sure it's a restart condition see Logic probe to confirm this
+            }
+            else                                                                        // If we are done transmitting\A0
             {
-				pI2C->CR1	|= I2C_CR1_STOP;			         	                    // Generate a STOP condition
-				pI2C->CR2	&= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);	                // Disable the selected I2C interrupts
-				m_Status = SYS_READY;
-			}
+                pI2C->CR1   |= I2C_CR1_STOP;                                            // Generate a STOP condition
+                pI2C->CR2   &= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);                    // Disable the selected I2C interrupts
+                m_Status = SYS_READY;
+            }
         }
         break;
 
@@ -549,46 +549,46 @@ void I2C::EV_IRQHandler()
         {
             if(m_RxSize == 1)
             {
-				pI2C->CR1 &= ~I2C_CR1_ACK;					                            // Disable the acknowledgement
-				pI2C->CR1 |= I2C_CR1_STOP;					                            // Generate a STOP condition
+                pI2C->CR1 &= ~I2C_CR1_ACK;                                              // Disable the acknowledgement
+                pI2C->CR1 |= I2C_CR1_STOP;                                              // Generate a STOP condition
             }
-			pI2C->CR2 |= I2C_CR2_ITBUFEN;                                               // Next we receive data buffer
+            pI2C->CR2 |= I2C_CR2_ITBUFEN;                                               // Next we receive data buffer
         }
         break;
 
         case I2C_EVENT_MASTER_BYTE_RECEIVED:                                            // EVENT EV7
         {                                                                               // Test on I2Cx EV7 and clear it
-			if(m_RxSize > 0)								                            // If waiting for bytes?
-			{
-				*m_pRxBuffer = (uint8_t)pI2C->DR;		                        		// Store I2Cx received data
+            if(m_RxSize > 0)                                                            // If waiting for bytes?
+            {
+                *m_pRxBuffer = (uint8_t)pI2C->DR;                                       // Store I2Cx received data
                 m_pRxBuffer++;
-				m_RxSize--;
+                m_RxSize--;
 
-				if(m_RxSize == 1)	                                					// One more byte to go?
-				{
-					pI2C->CR1 &= ~I2C_CR1_ACK;				                            // Disable the acknowledgement
-					pI2C->CR1 |= I2C_CR1_STOP;					                        // Generate a STOP condition
-				}
-				else if(m_RxSize == 0)		                             				// last byte received?
-				{
-					pI2C->CR2 &= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);	                // Disable the selected I2C interrupts
-					m_Status = SYS_READY;				                                // We're done!
-				}
-			}
-			else												                        // Not waiting for bytes, not supposed to be here
-			{
-				pI2C->CR2 &= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);	                    // Disable the selected I2C interrupts
-				m_Status = SYS_READY;					                                // We're done!
-			}
+                if(m_RxSize == 1)                                                       // One more byte to go?
+                {
+                    pI2C->CR1 &= ~I2C_CR1_ACK;                                          // Disable the acknowledgement
+                    pI2C->CR1 |= I2C_CR1_STOP;                                          // Generate a STOP condition
+                }
+                else if(m_RxSize == 0)                                                  // last byte received?
+                {
+                    pI2C->CR2 &= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);                  // Disable the selected I2C interrupts
+                    m_Status = SYS_READY;                                               // We're done!
+                }
+            }
+            else                                                                        // Not waiting for bytes, not supposed to be here
+            {
+                pI2C->CR2 &= ~(I2C_CR2_ITEVTEN | I2C_CR2_ITERREN);                      // Disable the selected I2C interrupts
+                m_Status = SYS_READY;                                                   // We're done!
+            }
         }
         break;
 
         default:                                                                        // Not supposed to be here
         {
-			// reset all flags : Do not modify configuration here
-        	// timeout will be generated
+            // reset all flags : Do not modify configuration here
+            // timeout will be generated
             Status = pI2C->SR1 | pI2C->SR2 | pI2C->DR;                                  // Dummy read
-      		pI2C->SR1 = 0;
+            pI2C->SR1 = 0;
         }
         break;
     }
@@ -607,15 +607,15 @@ void I2C::EV_IRQHandler()
 void I2C::ER_IRQHandler()
 {
     uint32_t     Status;
-	I2C_TypeDef* pI2C;
+    I2C_TypeDef* pI2C;
 
     pI2C = m_pPort->pI2Cx;
 
-	Status    = pI2C->SR1 | pI2C->SR2 | pI2C->DR;       // dummy read
-	VAR_UNUSED(Status);
-	pI2C->SR1 = 0;									    // After a  NACK, transfert is done
-	m_Status  = SYS_READY;								// We're done!
-	m_Timeout = 0;
+    Status    = pI2C->SR1 | pI2C->SR2 | pI2C->DR;       // dummy read
+    VAR_UNUSED(Status);
+    pI2C->SR1 = 0;                                      // After a  NACK, transfert is done
+    m_Status  = SYS_READY;                              // We're done!
+    m_Timeout = 0;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -644,37 +644,37 @@ void I2C::ClearBus()
 {
     uint8_t Count = 0;
 
-	m_pPort->pGPIO_SCL->OTYPER |= m_pPort->SCL_Pin;                                                 // Set I2C SCL as output open-drain
-	m_pPort->pGPIO_SDA->OTYPER |= m_pPort->SDA_Pin;                                                 // Set I2C SDA as output open-drain
-	m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as output open-drain
-	m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as output open-drain
-	m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x01, m_pPort->SCL_Pin);
-	m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x01, m_pPort->SDA_Pin);
-	m_pPort->pGPIO_SCL->BSRRL   = m_pPort->SCL_Pin;                                                 // Reset SCL
-	m_pPort->pGPIO_SDA->BSRRH   = m_pPort->SDA_Pin;                                                 // Assert SDA
+    m_pPort->pGPIO_SCL->OTYPER |= m_pPort->SCL_Pin;                                                 // Set I2C SCL as output open-drain
+    m_pPort->pGPIO_SDA->OTYPER |= m_pPort->SDA_Pin;                                                 // Set I2C SDA as output open-drain
+    m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as output open-drain
+    m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as output open-drain
+    m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x01, m_pPort->SCL_Pin);
+    m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x01, m_pPort->SDA_Pin);
+    m_pPort->pGPIO_SCL->BSRRL   = m_pPort->SCL_Pin;                                                 // Reset SCL
+    m_pPort->pGPIO_SDA->BSRRH   = m_pPort->SDA_Pin;                                                 // Assert SDA
 
     if((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0)                                           // If SDA hung
-	{
-		do                                                                                          // loop while SDA hung
-		{
-			m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;
+    {
+        do                                                                                          // loop while SDA hung
+        {
+            m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;
             BSP_Delay_uSec(5);
-			m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
+            m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
             BSP_Delay_uSec(5);
             Count++;
         }
-		while(((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0) && (Count < 20));
+        while(((m_pPort->pGPIO_SDA->IDR & m_pPort->SDA_Pin) == 0) && (Count < 20));
 
         m_pPort->pGPIO_SCL->BSRRL = m_pPort->SCL_Pin;                                               // Generate stop condition
-		m_pPort->pGPIO_SDA->BSRRL = m_pPort->SDA_Pin;
-		m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
-		m_pPort->pGPIO_SDA->BSRRH = m_pPort->SDA_Pin;
-	}
+        m_pPort->pGPIO_SDA->BSRRL = m_pPort->SDA_Pin;
+        m_pPort->pGPIO_SCL->BSRRH = m_pPort->SCL_Pin;
+        m_pPort->pGPIO_SDA->BSRRH = m_pPort->SDA_Pin;
+    }
 
-	m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as alternate function open-drain
-	m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as alternate function open-drain
-	m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x02, m_pPort->SCL_Pin);
-	m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x02, m_pPort->SDA_Pin);
+    m_pPort->pGPIO_SCL->MODER  &= ~CalculateBitMask(0x03, m_pPort->SCL_Pin);                        // Set I2C SCL as alternate function open-drain
+    m_pPort->pGPIO_SDA->MODER  &= ~CalculateBitMask(0x03, m_pPort->SDA_Pin);                        // Set I2C SDA as alternate function open-drain
+    m_pPort->pGPIO_SCL->MODER  |=  CalculateBitMask(0x02, m_pPort->SCL_Pin);
+    m_pPort->pGPIO_SDA->MODER  |=  CalculateBitMask(0x02, m_pPort->SDA_Pin);
 }
 
 

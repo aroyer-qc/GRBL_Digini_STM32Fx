@@ -78,5 +78,4 @@
 
 #define CVT_HOUR_TO_SECOND(H)           ((H) * 3600)
 
-//#define POLY_Y(Z)                      ((int32_t)((Points + Z)->X))
-//#define POLY_X(Z)                      ((int32_t)((Points + Z)->Y))
+
