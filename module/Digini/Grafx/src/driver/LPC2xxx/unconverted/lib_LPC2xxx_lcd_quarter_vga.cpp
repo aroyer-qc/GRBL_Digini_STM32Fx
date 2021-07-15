@@ -2,14 +2,27 @@
 //
 //  File : lib_class_STM32F4_lcd_quarter_vga.cpp
 //
-//------ Revision And History ---------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //
-//  Build  Date           Author            Description
-//  -----  -------------  ----------------  -------------------------------------------------------
-//  001    Jan  17, 2014  Alain Royer       TFT driver and memory access controller for STM32
-//                                          for a Quarter VGA LCD
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
 //
-//*************************************************************************************************
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 #ifdef DIGINI_USE_GRAFX
 #ifdef STM32F429_439xx
@@ -193,7 +206,7 @@ void GRAFX_DRV_Config()
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12;
     GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-    // Control lines IL9340    
+    // Control lines IL9340
     IO_OutputInit(LCD_NCS);
     IO_OutputInit(LCD_WRX);
 

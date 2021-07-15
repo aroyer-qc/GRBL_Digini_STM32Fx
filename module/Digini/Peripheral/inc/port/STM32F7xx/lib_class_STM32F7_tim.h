@@ -48,15 +48,18 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_TIM
 #include "stm32f7xx.h"
 #include "nOS.h"
 #include "lib_digini.h"
+#include "lib_typedef.h"
 //#include "lib_io.h"
 //#include "lib_fifo.h"
-#include "lib_typedef.h"
 #include "tim_cfg.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_TIM_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -214,4 +217,4 @@ class TIM_Driver
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_TIM
+#endif // USE_TIM_DRIVER == DEF_ENABLED

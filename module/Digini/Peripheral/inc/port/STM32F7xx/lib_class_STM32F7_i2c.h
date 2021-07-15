@@ -30,14 +30,17 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_I2C
 #include "stm32f7xx.h"
 #include "nOS.h"
 #include "lib_define.h"
 #include "lib_typedef.h"
 #include "lib_io.h"
 #include "i2c_cfg.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // typedef struct(s) and enum(s)
@@ -63,10 +66,10 @@ class I2C_Driver
 {
     public:
 
-                        I2C_Driver            (const I2C_PortInfo_t* pPort);
+                        I2C_Driver          (const I2C_PortInfo_t* pPort);
 
-        SystemState_e   LockToDevice           (uint8_t Device);       // Set I2C to this device and lock
-        SystemState_e   UnlockFromDevice     (uint8_t Device);       // Unlock I2C from device
+        SystemState_e   LockToDevice        (uint8_t Device);       // Set I2C to this device and lock
+        SystemState_e   UnlockFromDevice    (uint8_t Device);       // Unlock I2C from device
         SystemState_e   GetStatus           (void);
 
         SystemState_e   ReadRegister        (uint8_t Register, const void* pRxBuffer, size_t RxSize);
@@ -74,7 +77,7 @@ class I2C_Driver
         SystemState_e   Transfer            (uint32_t Address, uint32_t AddressSize, const void* pTxBuffer, size_t TxSize, const void* pRxBuffer, size_t RxSize);
         SystemState_e   Transfer            (uint32_t Address, uint32_t AddressSize, const void* pTxBuffer, size_t TxSize, const void* pRxBuffer, size_t RxSize, uint8_t Device);
 
-        void            Initialize             (void);
+        void            Initialize          (void);
         void            ER_IRQHandler       (void);
         void            EV_IRQHandler       (void);
 
@@ -85,25 +88,25 @@ class I2C_Driver
         void            Lock                (void);
         void            Unlock              (void);
 
-        I2C_PortInfo_t*                 m_pPort;
-        nOS_Mutex                       m_Mutex;
-        int16_t                         m_Device;
+        I2C_PortInfo_t*                     m_pPort;
+        nOS_Mutex                           m_Mutex;
+        int16_t                             m_Device;
 
-        volatile bool                    m_IsItInitialize;
-        volatile uint32_t                m_Address;
-        volatile size_t                    m_AddressSize;
-        volatile size_t                    m_TxSize;
-        volatile size_t                    m_RxSize;
-        volatile uint8_t*               m_pTxBuffer;
-        volatile uint8_t*               m_pRxBuffer;
+        volatile bool                       m_IsItInitialize;
+        volatile uint32_t                   m_Address;
+        volatile size_t                     m_AddressSize;
+        volatile size_t                     m_TxSize;
+        volatile size_t                     m_RxSize;
+        volatile uint8_t*                   m_pTxBuffer;
+        volatile uint8_t*                   m_pRxBuffer;
 
-        volatile uint8_t*               m_pAddressInDevice;
-        volatile uint8_t*               m_pDataAddress;
-        volatile size_t                    m_Size;
-        volatile size_t                    m_AddressLengthCount;
+        volatile uint8_t*                   m_pAddressInDevice;
+        volatile uint8_t*                   m_pDataAddress;
+        volatile size_t                     m_Size;
+        volatile size_t                     m_AddressLengthCount;
 
-        volatile SystemState_e            m_Status;
-        volatile uint8_t                m_Timeout;
+        volatile SystemState_e              m_Status;
+        volatile uint8_t                    m_Timeout;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -114,4 +117,4 @@ class I2C_Driver
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_I2C
+#endif // USE_I2C_DRIVER == DEF_ENABLED

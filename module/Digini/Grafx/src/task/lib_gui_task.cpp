@@ -182,7 +182,9 @@ void GUI_myClassTask::Run()
             {
                 if(NewLink == INVALID_LINK)         // Only make the copy if it's not an immediate redirection
                 {
+                  #ifdef GRAFX_USE_V_SYNC
                     myGrafx->WaitFor_V_Sync();
+                  #endif
                     myGrafx->CopyLayerToLayer(CONSTRUCTION_FOREGROUND_LAYER, FOREGROUND_DISPLAY_LAYER_0, 0, 0, GRAFX_SIZE_X, GRAFX_SIZE_Y);
 
                   #ifdef GRAFX_USE_SLIDING_PAGE
@@ -812,10 +814,12 @@ bool GUI_myClassTask::SlidingPage(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef GRAFX_USE_SLIDING_PAGE
 void GUI_myClassTask::SetSlidingRange(PageSlideRange_t* pPageSlideRange)
 {
     memcpy(&this->m_SlideRange, pPageSlideRange, sizeof(PageSlideRange_t));
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //

@@ -28,14 +28,16 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_I2C
 #include <stdint.h>
 #include "lib_macro.h"
 #include "lib_class_i2c.h"
 #define EEPROM_DRIVER_GLOBAL
 #include "lib_class_i2c_EEprom.h"
 #undef  EEPROM_DRIVER_GLOBAL
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -160,4 +162,4 @@ SystemState_e EEPROM_Driver::Write(uint32_t Address, const void* pSrc, size_t Si
 
 //-------------------------------------------------------------------------------------------------
 
-#endif
+#endif // USE_I2C_DRIVER == DEF_ENABLED

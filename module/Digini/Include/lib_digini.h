@@ -28,38 +28,81 @@
 #include <stdbool.h>
 #include "digini_cfg.h"
 
+#include "lib_memory.h"
+#include "lib_label.h"
+#include "lib_macro.h"
+#include "lib_define.h"
 #include "lib_typedef.h"
 #include "assert.h"
 #include "lib_io.h"
 
-//#ifdef DIGINI_USE_RTC
-//#include "lib_class_rtc.h"
-//#endif
+#include "driver_cfg.h"
 
-//#ifdef DIGINI_USE_USB
-//#include "lib_class_usb.h"
-//#endif
+#if (USE_ADC_DRIVER == DEF_ENABLED)           // TODO
+#include "lib_class_adc.h"
+#endif
 
-//#ifdef DIGINI_USE_FATFS
-//#include "ff.h"
-//#include "lib_fatfs_disk.h"
-//#endif
+#if (USE_DAC_DRIVER == DEF_ENABLED)
+#include "lib_class_dac.h"
+#endif
 
-#ifdef DIGINI_USE_QSPI
+#if (USE_I2C_DRIVER == DEF_ENABLED)
+#include "lib_class_i2c.h"
+#endif
+
+#if (USE_I2S_DRIVER == DEF_ENABLED)
+#include "lib_class_i2s.h"
+#endif
+
+#if (USE_PWM_DRIVER == DEF_ENABLED)
+#include "lib_class_pwm.h"
+#endif
+
+#if (USE_QSPI_DRIVER == DEF_ENABLED)
  #include "lib_class_qspi.h"
 #endif
 
+#if (USE_RTC_DRIVER == DEF_ENABLED)
+#include "lib_class_rtc.h"
+#endif
 
-#include "lib_memory.h"
-#include "lib_label.h"
+#if (USE_SAI_DRIVER == DEF_ENABLED)           // TODO
+#include "lib_class_sai.h"
+#endif
+
+#if (USE_SDIO_DRIVER == DEF_ENABLED)
+#include "lib_class_sdio.h"
+#endif
+
+#if (USE_SPI_DRIVER == DEF_ENABLED)
+#include "lib_class_spi.h"
+#endif
+
+#if (USE_TIM_DRIVER == DEF_ENABLED)
+#include "lib_class_tim.h"
+#endif
+
+#if (USE_UART_DRIVER == DEF_ENABLED)
+#include "lib_class_uart.h"
+#endif
+
+#if (USE_USB_DRIVER == DEF_ENABLED)
+#include "lib_class_usb.h"
+#endif
+
+#ifdef DIGINI_USE_FATFS
+#include "ff.h"
+#include "lib_fatfs_disk.h"
+#endif
 
 //-------------------------------------------------------------------------------------------------
-// Functions prototypes for service call processing
-//
-// Note: function available if grafx is enable
+// Functions prototypes
 //-------------------------------------------------------------------------------------------------
 
 SystemState_e       DIGINI_Initialize       (void);
 SystemState_e       DIGINI_PostInitialize   (void);
+
+void                Delay_mSec              (uint32_t Delay);
+void                Delay_uSec              (uint32_t Delay);
 
 //-------------------------------------------------------------------------------------------------

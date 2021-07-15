@@ -98,26 +98,13 @@ extern "C" void SKIN_TaskWrapper(void* pvParameters)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef DIGINI_USE_LOAD_SKIN
 SKIN_myClassTask::SKIN_myClassTask(const char* pDrive, const char* pFileName)
 {
     m_pDrive = pDrive;
     snprintf(m_Path, 15, "%s%s", pDrive, pFileName);
 }
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           Destructor
-//
-//  Parameter(s):   void
-//
-//  Description:
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-SKIN_myClassTask::~SKIN_myClassTask(void)
-{
-}
-
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -134,8 +121,13 @@ nOS_Error SKIN_myClassTask::Initialize(void)
 {
     nOS_Error Error;
 
+  #ifdef STATIC_SKIN_DEF
     m_IsStaticLoaded = false;
+  #endif
+  #ifdef DIGINI_USE_LOAD_SKIN
     m_IsSkinLoaded   = false;
+  #endif
+
     m_pCallBack      = nullptr;
 
     if((Error = nOS_ThreadCreate(&this->m_Handle,
@@ -162,10 +154,12 @@ nOS_Error SKIN_myClassTask::Initialize(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef STATIC_SKIN_DEF
 bool SKIN_myClassTask::IsStaticSkinLoaded(void)
 {
     return m_IsStaticLoaded;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -178,10 +172,12 @@ bool SKIN_myClassTask::IsStaticSkinLoaded(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef DIGINI_USE_LOAD_SKIN
 bool SKIN_myClassTask::IsSkinLoaded(void)
 {
     return m_IsSkinLoaded;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -194,17 +190,18 @@ bool SKIN_myClassTask::IsSkinLoaded(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef DIGINI_USE_LOAD_SKIN
 uint16_t SKIN_myClassTask::PercentLoader(void)
 {
-    // TODO (Alain#5#) need to check if we are causing problem by returning 0 here...
-
     if(m_TotalToLoad != 0)
     {
         return (uint16_t)((m_ReadCount * 100) / m_TotalToLoad);
     }
 
+    // TODO (Alain#5#) need to check if we are causing problem by returning 0 here...
     return 0;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -220,13 +217,18 @@ uint16_t SKIN_myClassTask::PercentLoader(void)
 //-------------------------------------------------------------------------------------------------
 void SKIN_myClassTask::Run(void)
 {
+  #ifdef DIGINI_USE_LOAD_SKIN
     uint8_t*  pFreePointer;
+  #endif
 
     for(;;)
     {
+      #ifdef DIGINI_USE_LOAD_SKIN
         // Should wait here for signal for a new skin to load
         if(m_IsSkinLoaded == false)
+      #endif
         {
+          #ifdef DIGINI_USE_LOAD_SKIN
             m_pRawInputBuffer = (uint8_t*)GRAFX_RAW_INPUT_DATA_ADDRESS;
 
             m_CompxWorkMem.pDecode = new RawArray((void*)(GRAFX_DECODE_ARRAY_ADDRESS));
@@ -254,13 +256,17 @@ void SKIN_myClassTask::Run(void)
             }
           #endif
 
+          #ifdef DIGINI_USE_LOAD_SKIN
             m_pFS       = (FATFS*)   pMemory->AllocAndClear(sizeof(FATFS));
             m_pFile     = (FIL*)     pMemory->AllocAndClear(sizeof(FIL));
             m_pFileInfo = (FILINFO*) pMemory->AllocAndClear(sizeof(FILINFO));
             this->Load();
+
             pMemory->Free((void**)&m_pFileInfo);
             pMemory->Free((void**)&m_pFile);
             pMemory->Free((void**)&m_pFS);
+          #endif
+
             delete m_pDecompress;
             delete m_CompxWorkMem.pPrefix;
             delete m_CompxWorkMem.pDecode;
@@ -271,9 +277,16 @@ void SKIN_myClassTask::Run(void)
                 this->m_pCallBack();
             }
 
+          #ifdef DIGINI_USE_LOAD_SKIN
             m_IsSkinLoaded = true;
+          #endif
         }
+
+      #ifdef DIGINI_USE_LOAD_SKIN
         nOS_Sleep(500);
+      #else
+        nOS_ThreadDelete(&this->m_Handle);
+      #endif
     }
 }
 
@@ -289,6 +302,7 @@ void SKIN_myClassTask::Run(void)
 //  Note(s):        TO DO: add error management
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef DIGINI_USE_LOAD_SKIN
 SystemState_e SKIN_myClassTask::Load(void)
 {
     SystemState_e    State;
@@ -367,6 +381,7 @@ SystemState_e SKIN_myClassTask::Load(void)
 
     return State;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -380,6 +395,7 @@ SystemState_e SKIN_myClassTask::Load(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#ifdef DIGINI_USE_LOAD_SKIN
 SystemState_e SKIN_myClassTask::DeCompressAllImage(void)
 {
     ImageInfo_t     ImageInfo;
@@ -563,8 +579,8 @@ DRV_PrintFont(&FontDescriptor, &Pos);
     return State;
 }
 
-
 //-------------------------------------------------------------------------------------------------
+
 SystemState_e SKIN_myClassTask::GetFontInfo(void)
 {
     SystemState_e    State;
@@ -626,6 +642,7 @@ SystemState_e SKIN_myClassTask::GetFontInfo(void)
     }
     return SYS_READY;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 
@@ -672,6 +689,7 @@ void SKIN_myClassTask::StaticLoad(void)
 
 //-------------------------------------------------------------------------------------------------
 
+#ifdef DIGINI_USE_LOAD_SKIN
 SystemState_e SKIN_myClassTask::Get_uint8_t(uint8_t* pValue)
 {
     uint32_t ReadCount;
@@ -683,9 +701,11 @@ SystemState_e SKIN_myClassTask::Get_uint8_t(uint8_t* pValue)
     m_ReadCount   += ReadCount;
     return SYS_READY;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 
+#ifdef DIGINI_USE_LOAD_SKIN
 SystemState_e SKIN_myClassTask::Get_uint16_t(uint16_t* pValue)
 {
     uint32_t ReadCount;
@@ -698,9 +718,11 @@ SystemState_e SKIN_myClassTask::Get_uint16_t(uint16_t* pValue)
     m_ReadCount += ReadCount;
     return SYS_READY;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 
+#ifdef DIGINI_USE_LOAD_SKIN
 SystemState_e SKIN_myClassTask::Get_uint32_t(uint32_t* pValue)
 {
     uint32_t ReadCount;
@@ -713,6 +735,7 @@ SystemState_e SKIN_myClassTask::Get_uint32_t(uint32_t* pValue)
     m_ReadCount += ReadCount;
     return SYS_READY;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //

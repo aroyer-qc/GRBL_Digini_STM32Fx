@@ -33,8 +33,6 @@
 #define LIB_SSD1779_GLOBAL
 #include "lib_STM32F4_lcd_128x128-SSD1779.h"
 #undef  LIB_SSD1779_GLOBAL
-#ifdef STM32F4xx
-#include "lib_io.h"
 #include "lib_macro.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -45,7 +43,8 @@
 #define SSD1779_SET_POWER_CONTROL           0x20
 #define SSD1779_SET_FIRST_DISPLAY           0x44
 #define SSD1779_WRITE_DISPLAY_DATA_MODE     0x5C
-#define SSD1779_READ_DISPLAY_DATA_MODE      0x5D
+#define SSD1779_READ_DISPLAY_DATA_MODE      0x5D            // WriteCommand then read data
+#define SSD1779_READ_STATUS                 0x5D            // ReadCommand  D/C must stay low to read status
 #define SSD1779_SET_PAGE_ADDRESS            0x75
 #define SSD1779_SET_CONTRAST_LEVEL          0x81
 #define SSD1779_SET_TEMP_COMPENSATION       0x82
@@ -92,7 +91,7 @@
 #define SSD1779_SetContrast(Level)          {                                             \
                                                 WriteCommand(SSD1779_SET_CONTRAST_LEVEL); \
                                                 WriteData(uint8_t(Level));                \
-                                                WriteData(uint8_t(0x04));                 \
+                                                WriteData(uint8_t(0x05));                 \
                                             }
 //LCD_Contrast = Level;
 
@@ -122,31 +121,31 @@
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::ControllerInitialize(void)
+void GrafxDriver::ControllerInitialize(void)
 {
-    m_RegSelect.Initialize(SSD1779_RS);
-    m_Reset.Initialize(SSD1779_RESET);
+    uint8_t Status;
+    uint16_t Data;
+
+    IO_PinInit(IO_SSD1779_DC);
+    IO_PinInit(IO_SSD1779_RESET);
+    //IO_PinInit(IO_SSD1779_BACK_CTRL);
     m_Bus.Initialize(SSD1779_BUS);
+    for(int i = 0; i < 10000; i++) { __asm("nop"); }            // Hold Reset at least 10 uSec
+    IO_SetPinHigh(IO_SSD1779_RESET);
 
-    m_Reset.Set(IO_LOW);
-    // delay???
-    m_Reset.Set(IO_HIGH);
-    m_RegSelect.Set(IO_LOW);    // Reset LCD
-
-    SSD1779_Oscillator(SSD1779_OSC_ON);
-    SSD1779_SleepMode(SSD1779_EXIT_MODE);
-
-    WriteCommand(SSD1779_SET_POWER_CONTROL);
+    SSD1779_Oscillator(SSD1779_OSC_ON);                         // Enable Oscillator
+    SSD1779_SleepMode(SSD1779_EXIT_MODE);                       // Exit Sleep mode
+    WriteCommand(SSD1779_SET_POWER_CONTROL);                    // Turn on the reference voltage generator, internal regulator and voltage follower. Select booster level.
     WriteData(uint8_t(0x07));
 
-    WriteCommand(SSD1779_STABILIZED_VOLT_GENERATOR);             // Recommended in the datasheet
+    WriteCommand(SSD1779_STABILIZED_VOLT_GENERATOR);            // Stabilize the voltage regulator
     WriteData(uint16_t(0x9005));
     WriteData(uint16_t(0x6084));
 
     WriteCommand(SSD1779_BIAS_RATIO);
-    WriteData(uint8_t(0x02));                                    // 1/9
+    WriteData(uint8_t(0x02));                                   // 1/9
 
-    SSD1779_SetContrast(63);
+    SSD1779_SetContrast(20);
 
     WriteCommand(SSD1779_SET_COLUMN_ADDRESS);
     WriteData(uint8_t(0));
@@ -171,12 +170,64 @@ void LCD_Driver::ControllerInitialize(void)
     WriteData(uint8_t(0xF0));
     WriteData(uint8_t(0));
 
-
     SSD1779_Reverse(SSD1779_ON);
     WriteCommand(SSD1779_EXIT_READ_MODIFY_WRITE_MODE);
 
     SSD1779_Display(SSD1779_ON);
+
+    Status = ReadCommand(SSD1779_READ_STATUS);
+
+  //  WriteCommand(SSD1779_SET_PAGE_ADDRESS);
+  //  WriteData(uint16_t(20));
+  //  WriteCommand(SSD1779_SET_COLUMN_ADDRESS);
+  //  WriteData(uint16_t(20));
+
+  //  WriteCommand(SSD1779_WRITE_DISPLAY_DATA_MODE);
+  //  WriteData(uint16_t(0x55AA));
+
+  //  WriteCommand(SSD1779_SET_PAGE_ADDRESS);
+  //  WriteData(uint16_t(40));
+  //  WriteCommand(SSD1779_SET_COLUMN_ADDRESS);
+  //  WriteData(uint16_t(40));
+
+  //  WriteData(uint16_t(0xAA55));
+
+  //  WriteCommand(SSD1779_SET_PAGE_ADDRESS);
+  //  WriteData(uint16_t(20));
+  //  WriteCommand(SSD1779_SET_COLUMN_ADDRESS);
+  //  WriteData(uint16_t(20));
+
+  //  WriteCommand(SSD1779_READ_DISPLAY_DATA_MODE);
+  //  Data = ReadData_16();
+
+    WriteCommand(SSD1779_DRAW_CIRCLE);
+    WriteData(uint8_t(64));
+    WriteData(uint8_t(64));
+    WriteData(uint8_t(20));
+    WriteData(uint8_t(0xAA));
+    WriteData(uint8_t(0x55));
+    WriteData(uint8_t(0xAA));
+    WriteData(uint8_t(0x55));
+
+SSD1779_SetContrast(0);
+SSD1779_SetContrast(5);
+SSD1779_SetContrast(10);
+SSD1779_SetContrast(15);
+SSD1779_SetContrast(20);
+SSD1779_SetContrast(25);
+SSD1779_SetContrast(30);
+SSD1779_SetContrast(35);
+SSD1779_SetContrast(40);
+SSD1779_SetContrast(45);
+SSD1779_SetContrast(50);
+SSD1779_SetContrast(55);
+SSD1779_SetContrast(60);
+SSD1779_SetContrast(63);
+
     Clear();
+
+
+//    IO_SetPinLow(IO_SSD1779_BACK_CTRL);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -191,11 +242,34 @@ void LCD_Driver::ControllerInitialize(void)
 //  Note(s):        any sub data will be sent using LCD_WriteByte
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::WriteCommand(uint8_t Command)
+void GrafxDriver::WriteCommand(uint8_t Command)
 {
-    m_RegSelect.Set(IO_HIGH);
+    IO_SetPinLow(IO_SSD1779_DC);
     m_Bus.Write(Command);
-    m_RegSelect.Set(IO_LOW);
+    IO_SetPinHigh(IO_SSD1779_DC);
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Function name:   ReadCommand
+//
+//  Parameter(s):   uint8_t         Command
+//  Return value:   uint8_t         Data
+//
+//  Description:    Send a read command to LCD
+//
+//  Note(s):        any sub data will be sent using LCD_WriteByte
+//
+//-------------------------------------------------------------------------------------------------
+uint8_t GrafxDriver::ReadCommand(uint8_t Command)
+{
+    uint8_t Data;
+
+    IO_SetPinLow(IO_SSD1779_DC);
+    m_Bus.Write(Command);
+    Data = uint8_t(m_Bus.Read());
+    IO_SetPinHigh(IO_SSD1779_DC);
+    return Data;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -210,7 +284,7 @@ void LCD_Driver::WriteCommand(uint8_t Command)
 //   Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::WriteData(uint8_t Data)
+void GrafxDriver::WriteData(uint8_t Data)
 {
     m_Bus.Write(Data);
 }
@@ -227,11 +301,47 @@ void LCD_Driver::WriteData(uint8_t Data)
 //   Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::WriteData(uint16_t Data)
+void GrafxDriver::WriteData(uint16_t Data)
 {
-
     m_Bus.Write(Data >> 8);
     m_Bus.Write(Data & 0xFF);
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//   Function name: ReadData_8
+//
+//   Parameter(s):  None
+//   Return value:  uint8_t         Data
+//
+//   Description:   Read 8 bits data from LCD
+//
+//   Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+uint8_t GrafxDriver::ReadData_8(void)
+{
+    return uint8_t(m_Bus.Read());
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//   Function name: ReadData_16
+//
+//   Parameter(s):  None
+//   Return value:  uint16_t         Data
+//
+//   Description:   Read 16 bits data from LCD
+//
+//   Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+uint16_t GrafxDriver::ReadData_16(void)
+{
+    uint16_t Data;
+
+    Data  = m_Bus.Read() << 8;
+    Data |= m_Bus.Read() & 0xFF;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -247,7 +357,7 @@ void LCD_Driver::WriteData(uint16_t Data)
 //   Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawRectangle(Box_t* pBox, uint8_t Mode)
+void GrafxDriver::DrawRectangle(Box_t* pBox, uint8_t Mode)
 {
     m_pLayer = &LayerTable[CLayer::GetDrawing()];
 
@@ -289,7 +399,7 @@ void LCD_Driver::DrawRectangle(Box_t* pBox, uint8_t Mode)
 //
 //-------------------------------------------------------------------------------------------------
 
-void LCD_Driver::Initialize(void* pArg)
+void GrafxDriver::Initialize(void* pArg)
 {
     VAR_UNUSED(pArg);
     ControllerInitialize();
@@ -307,7 +417,7 @@ void LCD_Driver::Initialize(void* pArg)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::LayerConfig(CLayer* pLayer)
+void GrafxDriver::LayerConfig(CLayer* pLayer)
 {
     VAR_UNUSED(pLayer); // This is a single layer LCD controller
 }
@@ -329,7 +439,7 @@ void LCD_Driver::LayerConfig(CLayer* pLayer)
 //  Note(s):        Source is linear
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode)
+void GrafxDriver::Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode)
 {
 /*
     uint32_t           PixelFormatSrc;
@@ -379,6 +489,43 @@ void LCD_Driver::Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat
 //  Name:           BlockCopy
 //
 //  Parameter(s):   void*           pSrc
+//                  uint16_t        X
+//                  uint16_t        Y
+//                  uint16_t        Width
+//                  uint16_t        Height
+//                  uint16_t        DstX
+//                  uint16_t        DstY
+//                  PixelFormat_e   SrcPixelFormat_e
+//                  BlendMode_e     BlendMode
+//  Return:         None
+//
+//  Description:    Copy a rectangle region from square memory region to another square memory
+//                  region
+//
+//  Note(s):        Source is linear
+//
+//-------------------------------------------------------------------------------------------------
+
+
+void GrafxDriver::BlockCopy(void* pSrc, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height, uint16_t DstX, uint16_t DstY, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)
+{
+    Box_t       Box;
+    Cartesian_t Pos;
+
+    Box.Pos.X       = X;
+    Box.Pos.Y       = Y;
+    Box.Size.Width  = Width;
+    Box.Size.Height = Height;
+    Pos.X           = DstX;
+    Pos.Y           = DstY;
+
+    this->BlockCopy(pSrc, &Box, &Pos, SrcPixelFormat, BlendMode);
+}
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           BlockCopy
+//
+//  Parameter(s):   void*           pSrc
 //                  Box_t*          pBox
 //                  Cartesian_t*    pDstPos
 //                  PixelFormat_e   SrcPixelFormat
@@ -390,7 +537,7 @@ void LCD_Driver::Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat
 //  Note(s):        Source is linear
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::BlockCopy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)
+void GrafxDriver::BlockCopy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)
 {
     VAR_UNUSED(BlendMode);
     VAR_UNUSED(SrcPixelFormat);
@@ -419,7 +566,7 @@ void LCD_Driver::BlockCopy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelF
 //  Note(s):        Source is linear
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::CopyLinear(void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)
+void GrafxDriver::CopyLinear(void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat, BlendMode_e BlendMode)
 {
 //    Not supported for now
 
@@ -442,7 +589,7 @@ void LCD_Driver::CopyLinear(void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelForma
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawCircle(uint8_t X, uint8_t Y, uint8_t Radius, uint8_t Mode)
+void GrafxDriver::DrawCircle(uint8_t X, uint8_t Y, uint8_t Radius, uint8_t Mode)
 {
     m_pLayer = &LayerTable[CLayer::GetDrawing()];
 
@@ -478,7 +625,7 @@ void LCD_Driver::DrawCircle(uint8_t X, uint8_t Y, uint8_t Radius, uint8_t Mode)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawRectangle(Box_t* pBox)
+void GrafxDriver::DrawRectangle(Box_t* pBox)
 {
     DrawRectangle(pBox, SSD1779_FILL);
 }
@@ -500,7 +647,7 @@ void LCD_Driver::DrawRectangle(Box_t* pBox)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness)
+void GrafxDriver::DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness)
 {
     Box_t Box;
 
@@ -533,7 +680,7 @@ void LCD_Driver::DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawPixel(uint16_t PosX, uint16_t PosY)
+void GrafxDriver::DrawPixel(uint16_t PosX, uint16_t PosY)
 {
     m_pLayer = &LayerTable[CLayer::GetDrawing()];
 
@@ -584,7 +731,7 @@ void LCD_Driver::DrawPixel(uint16_t PosX, uint16_t PosY)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawHLine(uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thickness)
+void GrafxDriver::DrawHLine(uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thickness)
 {
     uint16_t Length;
 
@@ -618,7 +765,7 @@ void LCD_Driver::DrawHLine(uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawVLine(uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thickness)
+void GrafxDriver::DrawVLine(uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thickness)
 {
     uint16_t Length;
 
@@ -656,7 +803,7 @@ void LCD_Driver::DrawVLine(uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction)
+void GrafxDriver::DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction)
 {
     m_pLayer = &LayerTable[CLayer::GetDrawing()];
     WriteCommand(SSD1779_DRAW_LINE);
@@ -679,7 +826,7 @@ void LCD_Driver::DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_
 //  Description:    This function will print a font to drawing layer with the drawing color
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::PrintFont(FontDescriptor_t* pDescriptor, Cartesian_t* pPos)
+void GrafxDriver::PrintFont(FontDescriptor_t* pDescriptor, Cartesian_t* pPos)
 {
     s32_t         AreaConfig;
     PixelFormat_e PixelFormat;
@@ -718,7 +865,7 @@ pLayer->GetTextColor();
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DisplayOn(void)
+void GrafxDriver::DisplayOn(void)
 {
     SSD1779_Display(SSD1779_ON);
 }
@@ -736,7 +883,7 @@ void LCD_Driver::DisplayOn(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::DisplayOff(void)
+void GrafxDriver::DisplayOff(void)
 {
     SSD1779_Display(SSD1779_OFF);
 }
@@ -755,7 +902,7 @@ void LCD_Driver::DisplayOff(void)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void LCD_Driver::Clear(void)
+void GrafxDriver::Clear(void)
 {
     WriteCommand(SSD1779_CLEAR_WINDOW);
     WriteData(uint8_t(0x00));                                // X1

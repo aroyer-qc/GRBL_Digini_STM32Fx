@@ -38,15 +38,20 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_FATFS_USE_USB_KEY
 #include <stdint.h>
 //#include "nOS.h"
 //#include "lib_typedef.h"
 //#include "diskio.h"
 //#include "usbh_core.h"
-//#include "lib_class_STM32F4_gpio.h"
+//#include "lib_STM32F4_io.h"
 #include "usbh_usr.h"
+#include "driver_cfg.h"
+#include "digini_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_USB_DRIVER == DEF_ENABLED)
+#ifdef DIGINI_FATFS_USE_USB_KEY
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -169,3 +174,6 @@ extern class CUSB USB;
 */
 
 #endif // DIGINI_FATFS_USE_USB_KEY
+
+#endif // USE_USB_DRIVER == DEF_ENABLED
+

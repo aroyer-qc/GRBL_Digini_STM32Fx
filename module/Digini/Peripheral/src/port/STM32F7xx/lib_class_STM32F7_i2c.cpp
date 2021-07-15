@@ -28,8 +28,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_I2C
 #include <stdint.h>
 #define I2C_DRIVER_GLOBAL
 #include "lib_class_STM32F7_i2c.h"
@@ -38,6 +36,10 @@
 #include "lib_macro.h"
 #include "bsp.h"
 #include "assert.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -357,7 +359,6 @@ SystemState_e I2C_Driver::ReadRegister(uint8_t Register, const void* pRxBuffer, 
     return State;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Name:           ReadRegister
@@ -520,4 +521,4 @@ void I2C_Driver::ER_IRQHandler()
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_I2C
+#endif // USE_I2C_DRIVER == DEF_ENABLED

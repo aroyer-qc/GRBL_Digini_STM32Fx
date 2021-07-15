@@ -38,14 +38,17 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_SDIO
 #include <string.h>
 #include "nOS.h"
 #include "ff.h"
 #include "diskio.h"
 #include "lib_macro.h"
 #include "stm32f7xx.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SDIO_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -295,4 +298,4 @@ extern class SDIO_Driver* pSDIO;
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_SDIO
+#endif // USE_SDIO_DRIVER == DEF_ENABLED

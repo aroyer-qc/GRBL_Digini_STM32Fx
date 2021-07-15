@@ -41,8 +41,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_RTC
 #include <stdint.h>
 #define STM32F7_RTC_GLOBAL
 #include "lib_class_STM32F4_rtc.h"
@@ -50,6 +48,10 @@
 #include "string.h"
 #include "STM32F7xx.h"
 #include "lib_utility.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_RTC_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -119,20 +121,6 @@ CRTC::CRTC(nOS_Mutex* pMutex, uint32_t Mode)
     LockRegister();
 }
 
-
-//-------------------------------------------------------------------------------------------------
-//
-//   Destructor:   CRTC
-//
-//   Parameter(s):
-//
-//   Description:    De-initializes the CRTC peripheral
-//
-//-------------------------------------------------------------------------------------------------
-CRTC::~CRTC(void)
-{
-}
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: GetBackupRegister
@@ -147,7 +135,6 @@ uint32_t CRTC::GetBackupRegister(uint8_t Register)
 {
     return *(&RTC->BKP0R + Register);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -167,7 +154,6 @@ void CRTC::SetBackupRegister(uint8_t Register, uint32_t Value)
     PWR->CR  &= uint32_t(~PWR_CR_DBP);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: GetDate
@@ -186,7 +172,6 @@ void CRTC::GetDate(Date_t* pDate)
     Unlock();
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: GetTime
@@ -204,7 +189,6 @@ void CRTC::GetTime(Time_t* pTime)
     memcpy(pTime, &m_Clock.Time, sizeof(Time_t));
     Unlock();
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -236,7 +220,6 @@ void CRTC::SetDate(Date_t* pDate)
     Disable();
 }
 
-
 void CRTC::SetDate(uint8_t Day, uint8_t Month, uint16_t Year)
 {
     Date_t Date;
@@ -246,7 +229,6 @@ void CRTC::SetDate(uint8_t Day, uint8_t Month, uint16_t Year)
     Date.Year  = Year;
     SetDate(&Date);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -286,7 +268,6 @@ void CRTC::SetTime(uint8_t Hour, uint8_t Minute, uint8_t Second)
     SetTime(&Time);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: TickHook
@@ -307,7 +288,6 @@ void CRTC::TickHook(void)
     }
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: Enable
@@ -325,7 +305,6 @@ void CRTC::Enable(void)
     EnterInitMode();
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: Disable
@@ -342,7 +321,6 @@ void CRTC::Disable(void)
     LockRegister();
     Unlock();
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -377,7 +355,6 @@ SystemState_e CRTC::EnterInitMode()
     return State;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: ExitInitMode
@@ -395,7 +372,6 @@ void CRTC::ExitInitMode(void)
     // Exit initialization mode, and restart calendar counter
     RTC->ISR &= uint32_t(~RTC_ISR_INIT);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -429,7 +405,6 @@ uint8_t CRTC::GetDayOfWeek(Date_t* pDate)
     return uint8_t(Day % 7);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function:      Lock
@@ -447,7 +422,6 @@ void CRTC::Lock(void)
     while(nOS_MutexLock(m_pMutex, NOS_WAIT_INFINITE) != NOS_OK);
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function:      Unlock
@@ -464,7 +438,6 @@ void CRTC::Unlock(void)
 {
     while(nOS_MutexUnlock(m_pMutex) != NOS_OK);
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -494,7 +467,6 @@ void CRTC::UnlockRegister(void)
     RTC->WPR  = 0xCA;
     RTC->WPR  = 0x53;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -549,7 +521,6 @@ void CRTC::UpdateTimeFeature(void)
     m_Clock.WeekOfYear++;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   Function name: WaitForSynchro
@@ -580,7 +551,6 @@ SystemState_e CRTC::WaitForSynchro(void)
     return State;
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //   IRQ Handler:   WakeUp_IRQ_Handler
@@ -610,5 +580,6 @@ void CRTC::Alarm_IRQ_Handler(void)
 
 }
 
+//-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_RTC
+#endif // USE_RTC_DRIVER == DEF_ENABLED

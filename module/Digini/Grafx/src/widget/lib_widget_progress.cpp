@@ -199,7 +199,7 @@ void CProgress::Draw(ServiceReturn_t* pService)
   // CLayer::SetColor(TRANSPARENT);
 
     // this erase the old bar...  do we put a option for redraw full widget?
-    // DrawRectangle(&m_pProgress->Box);                                                       // Erase previous draw
+    // DrawRectangle(&m_pProgress->Box);                          // Erase previous draw
 
   #ifdef GRAFX_DEBUG_GUI
     CLayer::SetColor(LIGHT_RED);

@@ -28,12 +28,14 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_SPI
 #define SPI_FLASH_GLOBAL
 #include "lib_class_spi_AT45DB641.h"
 #undef SPI_FLASH_GLOBAL
 #include "lib_utility.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -543,4 +545,4 @@ bool CSPI_FLash::IsOperational()
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_SPI
+#endif // USE_SPI_DRIVER == DEF_ENABLED

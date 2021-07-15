@@ -28,24 +28,18 @@
 
 //-------------------------------------------------------------------------------------------------
 
-#ifdef DIGINI_FATFS_USE_SD_CARD
-
-#ifdef STM32F4_SDIO_GLOBAL
-    #define STM32F4_SDIO_EXTERN
-#else
-    #define STM32F4_SDIO_EXTERN extern
-#endif
-
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
 #include "diskio.h"
-#include "lib_app.h"
-#include "lib_class_sd_card_interface.h"
-#include "lib_class_sd_card.h"
+//#include "lib_class_sd_card_interface.h"
+//#include "lib_class_sd_card.h"
+#include "driver_cfg.h"
 
-//...
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_SDIO_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -134,9 +128,9 @@ class CSDIO : public CSD_CardInterface
         void                TickHook                ();
         void                TransmitCommand         (uint8_t Command, uint32_t Argument, eResponseType ResponseType);
         void                StartBlockTransfert     (const uint8_t *pBuffer, uint32_t Count, uint32_t TransfertDir);
-        eSystemState        WaitBlockTransfertEnd   ();
         void                SDIO_IRQHandler         ();
         void                DMA_StreamIRQHandler    ();
+        eSystemState        WaitBlockTransfertEnd   ();
 
     private:
 
@@ -201,4 +195,4 @@ class CSDIO : public CSD_CardInterface
 
 #endif
 
-#endif // DIGINI_FATFS_USE_SD_CARD
+#endif // USE_SDIO_DRIVER == DEF_ENABLED

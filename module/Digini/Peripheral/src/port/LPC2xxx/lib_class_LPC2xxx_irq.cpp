@@ -112,7 +112,6 @@ extern "C" void EXTI9_5_IRQHandler()
     }
 }
 
-
 //-------------------------------------------------------------------------------------------------
 //
 //  Handler:        I2C1_EV_IRQHandler
@@ -122,6 +121,8 @@ extern "C" void EXTI9_5_IRQHandler()
 //  Note(s):        Wrapper for C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
+#if USE_I2C_DRIVER == DEF_ENABLED
+
 extern "C" void I2C1_EV_IRQHandler()             // I2C1 Event
 {
     I2C_Port1.EV_IRQHandler();
@@ -136,14 +137,10 @@ extern "C" void I2C1_EV_IRQHandler()             // I2C1 Event
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_I2C
-
 extern "C" void I2C1_ER_IRQHandler()
 {
     I2C_Port1.ER_IRQHandler();
 }
-
-#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -224,6 +221,7 @@ void I2C3_ER_IRQHandler()             // I2C3 Error
 }
 */
 
+#endif // USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -268,7 +266,7 @@ extern "C" void DMA2_Stream6_IRQHandler()
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_RTC
+#if USE_RTC_DRIVER == DEF_ENABLED
 
 extern "C" void RTC_WKUP_IRQHandler()
 {
@@ -289,8 +287,7 @@ extern "C" void TAMP_STAMP_IRQHandler()
 extern "C" void RTC_Alarm_IRQHandler()
 {
     if(BSP_pRTC != nullptr)
-    {#ifdef DIGINI_USE_RTC
-
+    {
         BSP_pRTC->Alarm_IRQ_Handler();
     }
 }
@@ -306,7 +303,7 @@ extern "C" void RTC_Alarm_IRQHandler()
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_UART
+#if USE_UART_DRIVER == DEF_ENABLED
 
 extern "C" void USART1_IRQHandler()
 {
@@ -324,7 +321,7 @@ extern "C" void USART1_IRQHandler()
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_USB
+#if USE_USB_DRIVER == DEF_ENABLED
 
 extern "C" void OTG_HS_IRQHandler()
 {

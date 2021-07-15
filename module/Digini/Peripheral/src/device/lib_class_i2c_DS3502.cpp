@@ -28,11 +28,13 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_I2C
 #define LIB_DS3502_GLOBAL
 #include "lib_class_i2c_DS3502.h"
 #undef  LIB_DS3502_GLOBAL
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -70,15 +72,15 @@ SystemState_e DS3502::Initialize(void* pArg)
 
     // Read initial wiper position
     m_pI2C->ReadRegister(DS3502_WR_IVR_REGISTER, m_WiperPos, sizeof(uint8_t), DS3502_I2C_SLAVE_ADDRESS);
-    
+
     // Always leave the DS3502 in mode 1
     WriteBuffer[0] = DS3502_CR_REGISTER;
     WriteBuffer[1] = DS3502_CR_MODE_1__WRITE_WR_ONLY;
     m_pI2C->Transfer(&WriteBuffer[0], 2, nullptr, 0, DS3502_I2C_SLAVE_ADDRESS);
-    
+
      m_WiperIV = m_WiperPos;            // At power-up both value are equal
      m_MaxValue = DS3502_MAX_VALUE;     // Set max value to chip max
-    
+
     return SYS_READY;
 }
 
@@ -112,7 +114,7 @@ void DS3502::Reset(void)
     WriteBuffer[0] = DS3502_CR_REGISTER;
     WriteBuffer[1] = DS3502_CR_MODE_1__WRITE_WR_ONLY;
     m_pI2C->Transfer(&WriteBuffer[0], 2, nullptr, 0, DS3502_I2C_SLAVE_ADDRESS);
-    
+
     // Both value are equal
     m_WiperPos = m_WiperIV;
 }
@@ -225,7 +227,7 @@ void DS3502::SetMaxValue(uint8_t MaxValue)
     if(MaxValue <= DS3502_MAX_VALUE)
     {
         m_MaxValue = MaxValue;
-        
+
         if(m_WiperPos > MaxValue)
         {
             this->SetWiper(MaxValue);
@@ -235,4 +237,4 @@ void DS3502::SetMaxValue(uint8_t MaxValue)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_I2C
+#endif // USE_I2C_DRIVER == DEF_ENABLED

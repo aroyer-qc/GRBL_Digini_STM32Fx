@@ -177,7 +177,9 @@ enum MessageType_e
 
 enum LayerType_e
 {
-    LAYER_BACKGROUND = 0,
+  #ifdef GRAFX_USE_BACKGROUND_LAYER
+    LAYER_BACKGROUND,
+  #endif
     LAYER_FOREGROUND,
     LAYER_VIRTUAL,
 };

@@ -28,14 +28,17 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_UART
 #include <stdint.h>
 #include "lib_macro.h"
 #define UART_DRIVER_GLOBAL
-#include "lib_class_STM32F7_uart.h"
+#include "lib_class_STM32F4_uart.h"
 #undef  UART_DRIVER_GLOBAL
 //#include "clock_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_UART_DRIVER == DEF_ENABLED)
+
 //-------------------------------------------------------------------------------------------------
 // define(s)
 //-------------------------------------------------------------------------------------------------
@@ -47,11 +50,10 @@
 #define UART_CR1_PARITY_ODD                 (USART_CR1_PCE | USART_CR1_PS)      // Parity control enabled and Odd Parity is selected
 
 #define UART_CR1_DATA_WIDTH_8B              0                                   // 8 bits word length
-#define UART_CR1_DATA_WIDTH_9B              USART_CR1_M0                        // 9 bits word length
-#define UART_CR1_DATA_WIDTH_7B              USART_CR1_M1                        // 9 bits word length
+#define UART_CR1_DATA_WIDTH_9B              USART_CR1_M                         // 9 bits word length
 
 #define UART_CR1_OVERSAMPLING_16            0                                   // Oversampling by 16
-#define SART_CR1_OVERSAMPLING_8             USART_CR1_OVER8                     // Oversampling by 8
+#define UART_CR1_OVERSAMPLING_8             USART_CR1_OVER8                     // Oversampling by 8
 
 #define UART_CR1_OVER_16                    0
 #define UART_CR1_OVER_8                     USART_CR1_OVER8
@@ -64,9 +66,6 @@
 #define UART_CR2_STOP_0_5B                  USART_CR2_STOP_0                    // 0.5 stop bit
 #define UART_CR2_STOP_2_B                   USART_CR2_STOP_1                    // 2   stop bits
 #define UART_CR2_STOP_1_5B                  USART_CR2_STOP_0 | USART_CR2_STOP_1 // 1.5 stop bits
-
-#define UART_CR2_LSB_FIRST                  0
-#define UART_CR2_MSB_FIRST                  USART_CR2_MSBFIRST
 
 #define UART_CR3_FLOW_CTS                   USART_CR3_CTSE
 #define UART_CR3_FLOW_CTS_ISR               USART_CR3_CTSIE
@@ -112,6 +111,8 @@ const uint32_t UART_Driver::m_BaudRate[NB_OF_BAUD] =
 //-------------------------------------------------------------------------------------------------
 UART_Driver::UART_Driver(UART_ID_e UartID)
 {
+    ISR_Prio_t          ISR_Prio;
+    uint32_t            PriorityGroup;
     DMA_Stream_TypeDef* pDMA;
 
   #if (UART_DRIVER_DMA_CFG == DEF_ENABLED)
@@ -119,10 +120,15 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
     m_DMA_IsItBusyTX = false;
   #endif
 
+    PriorityGroup = NVIC_GetPriorityGrouping();
+    ISR_Prio.PriorityGroup     = PriorityGroup;
+    ISR_Prio.SubPriority       = 0;
+    ISR_Prio.PremptionPriority = m_pInfo->PreempPrio;
+
     if(UartID < NB_OF_REAL_UART_DRIVER)
     {
         m_UartID = UartID;
-        m_pInfo = &UART_Info[UartID];
+        m_pInfo = (UART_Info_t*)&UART_Info[UartID];
         m_pUart = m_pInfo->pUARTx;
 
       #if (UART_DRIVER_DMA_CFG == DEF_ENABLED)
@@ -130,7 +136,7 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
         {
             if(UART_DMA_Info[i].UartID == UartID)
             {
-                m_pDMA_Info = &UART_DMA_Info[i];
+                m_pDMA_Info = (UART_DMA_Info_t*)&UART_DMA_Info[i];
                 i = NB_OF_UART_DMA_DRIVER;
             }
         }
@@ -150,7 +156,7 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
                        DMA_M_BURST_SINGLE                 |
                        DMA_PRIORITY_HIGH;
             SET_BIT(pDMA->CR, m_pDMA_Info->DMA_ChannelRX);
-            pDMA->PAR = (uint32_t)&m_pUart->RDR;
+            pDMA->PAR = (uint32_t)&m_pUart->DR;
 
             pDMA = m_pDMA_Info->DMA_StreamTX;                                   // Write config that will never change
             pDMA->CR = DMA_MEMORY_TO_PERIPH               |
@@ -163,7 +169,7 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
                        DMA_M_BURST_SINGLE                 |
                        DMA_PRIORITY_HIGH;
             SET_BIT(pDMA->CR, m_pDMA_Info->DMA_ChannelTX);
-            pDMA->PAR  = (uint32_t)&m_pUart->TDR;
+            pDMA->PAR  = (uint32_t)&m_pUart->DR;
         }
       #endif
 
@@ -209,7 +215,7 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
         m_pContextCompletedTX  = nullptr;
       #endif
 
-        ISR_Init(m_pInfo->IRQn_Channel, m_pInfo->PreempPrio);
+        ISR_Init(m_pInfo->IRQn_Channel, &ISR_Prio);
         this->ClearAutomaticFlag();
 
       #if (UART_DRIVER_DMA_CFG == DEF_ENABLED)
@@ -222,8 +228,8 @@ UART_Driver::UART_Driver(UART_ID_e UartID)
     {
         m_VirtualUartBusyRX = false;
         m_VirtualUartBusyTX = false;
-        ISR_Init(VirtualUartRX_IRQn, pISR_Prio);
-        ISR_Init(VirtualUartTX_IRQn, pISR_Prio);
+        ISR_Init(VirtualUartRX_IRQn, &ISR_Prio);
+        ISR_Init(VirtualUartTX_IRQn, &ISR_Prio);
     }
   #endif
     else
@@ -371,7 +377,7 @@ void UART_Driver::SetBaudRate(UART_Baud_e BaudRate)
         }
       #endif
 
-        if((m_pUart->CR1 & USART_CR1_OVER8_Msk) == UART_CR1_OVER_8)
+        if((m_pUart->CR1 & UART_CR1_OVERSAMPLING_8) == UART_CR1_OVERSAMPLING_8)
         {
             PeriphClk <<= 1;
         }
@@ -409,7 +415,7 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         this->Disable();
 
         // Parity
-        MaskedConfig = Config & UART_PARITY_MASK;
+        MaskedConfig = UART_Config_e(uint32_t(Config) & UART_PARITY_MASK);
 
         if(MaskedConfig == UART_EVEN_PARITY)
         {
@@ -421,11 +427,11 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         }
 
         // Length
-        MaskedConfig = Config & UART_LENGTH_MASK;
+        MaskedConfig = UART_Config_e(uint32_t(Config) & UART_LENGTH_MASK);
 
-        if(MaskedConfig == UART_7_LEN_BITS)
+        if(MaskedConfig == UART_8_LEN_BITS)
         {
-            CR1_Register |= UART_CR1_DATA_WIDTH_7B;
+            CR1_Register |= UART_CR1_DATA_WIDTH_8B;
         }
         else if(MaskedConfig == UART_9_LEN_BITS)
         {
@@ -433,7 +439,7 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         }
 
         // Stop Bits
-        MaskedConfig = Config & UART_STOP_MASK;
+        MaskedConfig = UART_Config_e(uint32_t(Config) & UART_STOP_MASK);
 
         switch(MaskedConfig)
         {
@@ -443,12 +449,6 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
             default: break;
         }
 
-        // LSB or MSB
-        if((Config & UART_DATA_ORDER_MASK) == UART_DATA_ORDER_MSB)
-        {
-            CR2_Register |= UART_CR2_MSB_FIRST;
-        }
-
         // OverSampling 8 or 16
         if((Config & UART_OVER_MASK) == UART_OVER_8)
         {
@@ -456,7 +456,7 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         }
 
         // RX and TX enable
-        MaskedConfig = Config & UART_ENABLE_MASK;
+        MaskedConfig = UART_Config_e(uint32_t(Config) & UART_ENABLE_MASK);
 
         switch(MaskedConfig)
         {
@@ -467,7 +467,7 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         }
 
         // Flow control
-        MaskedConfig = Config & UART_FLOW_MASK;
+        MaskedConfig = UART_Config_e(uint32_t(Config) & UART_FLOW_MASK);
 
         switch(MaskedConfig)
         {
@@ -478,11 +478,9 @@ void UART_Driver::SetConfig(UART_Config_e Config, UART_Baud_e BaudID)
         }
 
         // Register modification
-
-        MODIFY_REG(m_pUart->CR1, (USART_CR1_M_Msk | USART_CR1_PCE_Msk | USART_CR1_PS_Msk | USART_CR1_OVER8_Msk), CR1_Register);
-        MODIFY_REG(m_pUart->CR2, (USART_CR2_STOP_Msk | USART_CR2_MSBFIRST_Msk),                                  CR2_Register);
-        MODIFY_REG(m_pUart->CR3, (USART_CR3_CTSE_Msk | USART_CR3_CTSIE_Msk | USART_CR3_RTSE_Msk),                CR3_Register);
-
+        MODIFY_REG(m_pUart->CR1, (USART_CR1_M | USART_CR1_PCE | USART_CR1_PS | USART_CR1_OVER8), CR1_Register);
+        MODIFY_REG(m_pUart->CR2, (USART_CR2_STOP),                                               CR2_Register);
+        MODIFY_REG(m_pUart->CR3, (USART_CR3_CTSE | USART_CR3_CTSIE | USART_CR3_RTSE),            CR3_Register);
 
         this->SetBaudRate(BaudID);
     }
@@ -549,9 +547,9 @@ void UART_Driver::ClearAutomaticFlag(void)
 {
     volatile uint32_t tmpreg;
 
-    tmpreg = m_pUart->ISR;
+    tmpreg = m_pUart->SR;
     VAR_UNUSED(tmpreg);
-    tmpreg = m_pUart->RDR;
+    tmpreg = m_pUart->DR;
     VAR_UNUSED(tmpreg);
 }
 
@@ -809,7 +807,7 @@ void UART_Driver::DMA_EnableRX(void)
         {
             pDMA = m_pDMA_Info->DMA_StreamRX;
             SET_BIT(m_pUart->CR3, USART_CR3_DMAR);      // Enable the DMA transfer
-            (void)m_pUart->RDR;
+            (void)m_pUart->DR;
             DMA_ClearFlag(pDMA, m_pDMA_Info->FlagRX);
             DMA_Enable(pDMA);
             this->EnableRX_ISR(UART_ISR_RX_ERROR_MASK | UART_ISR_RX_IDLE_MASK);
@@ -957,7 +955,7 @@ size_t UART_Driver::DMA_GetSizeRX(uint16_t SizeRX)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // #if (UART_DRIVER_ANY_DMA_OR_VIRTUAL_CFG == DEF_ENABLED)
+#endif // UART_DRIVER_ANY_DMA_OR_VIRTUAL_CFG == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //  IIII RRRRRR    QQQQQ
@@ -983,15 +981,21 @@ size_t UART_Driver::DMA_GetSizeRX(uint16_t SizeRX)
 #if (UART_ISR_RX_IDLE_CFG  == DEF_ENABLED) || (UART_ISR_RX_ERROR_CFG == DEF_ENABLED) || (UART_ISR_RX_CFG == DEF_ENABLED)
 void UART_Driver::EnableRX_ISR(uint8_t Mask)
 {
+    volatile uint32_t Register;
+
     if(m_pUart != nullptr)
     {
-        CLEAR_BIT(m_CopyISR, (USART_ISR_RXNE | USART_ISR_IDLE | USART_ISR_ORE | USART_ISR_FE | USART_ISR_PE)); // Not empty, Idle, Error flag (Overrun, Framing error, Parity eroor)
+        // Not empty, Idle, Error flag (Overrun, Framing error, Parity eroor)
+        CLEAR_BIT(m_CopySR, (USART_SR_RXNE | USART_SR_IDLE | USART_SR_ORE | USART_SR_FE | USART_SR_PE));
 
       #if (UART_ISR_RX_IDLE_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_RX_IDLE_MASK) != 0)
         {
-            SET_BIT(m_CopyISR, USART_ISR_IDLE);
-            m_pUart->ICR = USART_ICR_IDLECF;
+            SET_BIT(m_CopySR, USART_SR_IDLE);
+            Register = m_pUart->SR;
+            (void)Register;
+            Register = m_pUart->DR;
+            (void)Register;
             SET_BIT(m_pUart->CR1, USART_CR1_IDLEIE);
         }
       #endif
@@ -999,7 +1003,7 @@ void UART_Driver::EnableRX_ISR(uint8_t Mask)
       #if (UART_ISR_RX_ERROR_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_RX_ERROR_MASK) != 0)
         {
-            SET_BIT(m_CopyISR, (USART_ISR_ORE  | USART_ISR_FE | USART_ISR_PE));
+            SET_BIT(m_CopySR, (USART_SR_ORE | USART_SR_FE | USART_SR_PE));
             this->ClearAutomaticFlag();
             SET_BIT(m_pUart->CR3, USART_CR3_EIE);
         }
@@ -1038,7 +1042,7 @@ void UART_Driver::DisableRX_ISR(uint8_t Mask)
       #if (UART_ISR_RX_IDLE_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_RX_IDLE_MASK) != 0)
         {
-            CLEAR_BIT(m_CopyISR, USART_ISR_IDLE);
+            CLEAR_BIT(m_CopySR, USART_SR_IDLE);
             CLEAR_BIT(m_pUart->CR1, USART_CR1_IDLEIE);
         }
       #endif
@@ -1046,7 +1050,7 @@ void UART_Driver::DisableRX_ISR(uint8_t Mask)
       #if (UART_ISR_RX_ERROR_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_RX_ERROR_MASK) != 0)
         {
-            CLEAR_BIT(m_CopyISR, (USART_ISR_ORE | USART_ISR_FE | USART_ISR_PE));
+            CLEAR_BIT(m_CopySR, (USART_SR_ORE | USART_SR_FE | USART_SR_PE));
             CLEAR_BIT(m_pUart->CR3, USART_CR3_EIE);
         }
       #endif
@@ -1082,12 +1086,12 @@ void UART_Driver::EnableTX_ISR(uint8_t Mask)
 {
     if(m_pUart != nullptr)
     {
-        CLEAR_BIT(m_CopyISR, (USART_ISR_TC | USART_ISR_TXE));    // Clear transmit complete and transmit empty
+        CLEAR_BIT(m_CopySR, (USART_SR_TC | USART_SR_TXE));    // Clear transmit complete and transmit empty
 
       #if (UART_ISR_TX_EMPTY_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_TX_EMPTY_MASK) != 0)
         {
-            SET_BIT(m_CopyISR, USART_ISR_TXE);
+            SET_BIT(m_CopySR, USART_SR_TXE);
             SET_BIT(m_pUart->CR1, USART_CR1_TXEIE);
         }
       #endif
@@ -1095,8 +1099,8 @@ void UART_Driver::EnableTX_ISR(uint8_t Mask)
       #if (UART_ISR_TX_COMPLETED_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_TX_COMPLETED_MASK) != 0)
         {
-            SET_BIT(m_CopyISR, USART_ISR_TC);
-            m_pUart->ICR = USART_ICR_TCCF;
+            SET_BIT(m_CopySR, USART_SR_TC);
+            m_pUart->SR= ~USART_SR_TC;
             SET_BIT(m_pUart->CR1, USART_CR1_TCIE);
         }
       #endif
@@ -1132,7 +1136,7 @@ void UART_Driver::DisableTX_ISR(uint8_t Mask)
       #if (UART_ISR_TX_COMPLETED_CFG == DEF_ENABLED)
         if((Mask & UART_ISR_TX_COMPLETED_MASK) != 0)
         {
-            CLEAR_BIT(m_CopyISR, USART_ISR_TC);
+            CLEAR_BIT(m_CopySR, USART_SR_TC);
             CLEAR_BIT(m_pUart->CR1, USART_CR1_TCIE);
         }
       #endif
@@ -1154,7 +1158,7 @@ void UART_Driver::DisableTX_ISR(uint8_t Mask)
 #if (UART_ISR_RX_CFG == DEF_ENABLED)
 void UART_Driver::RegisterCallbackRX(void* pCallback, void* pContext)
 {
-    m_pCallbackRX = pCallback;
+    m_pCallbackRX = (UART_CallBack_t)pCallback;
     m_pContextRX  = pContext;
 }
 #endif
@@ -1162,7 +1166,7 @@ void UART_Driver::RegisterCallbackRX(void* pCallback, void* pContext)
 #if UART_ISR_RX_IDLE_CFG == DEF_ENABLED
 void UART_Driver::RegisterCallbackIdle(void* pCallback, void* pContext)
 {
-    m_pCallbackIDLE = pCallback;
+    m_pCallbackIDLE = (UART_CallBack_t)pCallback;
     m_pContextIDLE  = pContext;
 }
 #endif
@@ -1170,7 +1174,7 @@ void UART_Driver::RegisterCallbackIdle(void* pCallback, void* pContext)
 #if (UART_ISR_RX_ERROR_CFG == DEF_ENABLED)
 void UART_Driver::RegisterCallbackError(void* pCallback, void* pContext)
 {
-    m_pCallbackERROR = pCallback;
+    m_pCallbackERROR = (UART_CallBack_t)pCallback;
     m_pContextERROR  = pContext;
 }
 #endif
@@ -1178,7 +1182,7 @@ void UART_Driver::RegisterCallbackError(void* pCallback, void* pContext)
 #if (UART_ISR_CTS_CFG == DEF_ENABLED)
 void UART_Driver::RegisterCallbackCTS(void* pCallback, void* pContext)
 {
-    m_pCallbackCTS = pCallback;
+    m_pCallbackCTS = (UART_CallBack_t)pCallback;
     m_pContextCTS  = pContext;
 }
 #endif
@@ -1186,7 +1190,7 @@ void UART_Driver::RegisterCallbackCTS(void* pCallback, void* pContext)
 #if (UART_ISR_TX_EMPTY_CFG == DEF_ENABLED)
 void UART_Driver::RegisterCallbackEmptyTX(void* pCallback, void* pContext)
 {
-    m_pCallbackEmptyTX = pCallback;
+    m_pCallbackEmptyTX = (UART_CallBack_t)pCallback;
     m_pContextEmptyTX  = pContext;
 }
 #endif
@@ -1194,7 +1198,7 @@ void UART_Driver::RegisterCallbackEmptyTX(void* pCallback, void* pContext)
 #if (UART_ISR_TX_COMPLETED_CFG == DEF_ENABLED)
 void UART_Driver::RegisterCallbackCompletedTX(void* pCallback, void* pContext)
 {
-    m_pCallbackCompletedTX = pCallback;
+    m_pCallbackCompletedTX = (UART_CallBack_t)pCallback;
     m_pContextCompletedTX  = pContext;
 }
 #endif
@@ -1212,8 +1216,8 @@ void UART_Driver::IRQ_Handler(void)
 
     if(m_pUart != nullptr)
     {
-        Status  = m_pUart->ISR;
-        Status &= m_CopyISR;
+        Status  = m_pUart->SR;
+        Status &= m_CopySR;
 
        #if (UART_ISR_RX_ERROR_CFG == DEF_ENABLED)
         if((Status & (USART_ISR_FE | USART_ISR_NE | USART_ISR_ORE)) != 0)
@@ -1230,23 +1234,23 @@ void UART_Driver::IRQ_Handler(void)
         }
        #endif
 
-/*
        #if (UART_ISR_RX_BYTE_CFG == DEF_ENABLED)
         if((Status & USART_ISR_RXNE) != 0)
         {
+            WRITE_REG(m_pUart->SR, ~(USART_SR_RXNE));
+
             if(m_pCallbackRX != nullptr)
             {
                 uint16_t* Data;
 
-                Data = READ_BIT(m_pUart->RDR, USART_RDR_RDR_Msk);
+                Data = READ_BIT(m_pUart->DR, USART_RDR_RDR_Msk);
                 m_pCallbackRX(READ_BIT(&Data);
             }
         }
        #endif
-*/
 
         #if (UART_ISR_RX_IDLE_CFG == DEF_ENABLED)
-         if((Status & USART_ISR_IDLE) != 0)
+         if((Status & USART_SR_IDLE) != 0)
          {
            #if (UART_DRIVER_DMA_CFG == DEF_ENABLED)
              m_Variables.SizeRX -= m_pDMA_Info->DMA_StreamRX->NDTR; // Give actual position in the DMA Buffer
@@ -1280,9 +1284,9 @@ void UART_Driver::IRQ_Handler(void)
        #endif
 
        #if (UART_ISR_TX_COMPLETED_CFG == DEF_ENABLED)
-        if((Status & USART_ISR_TC) != 0)
+        if((Status & USART_SR_TC) != 0)
         {
-            m_pUart->ICR = USART_ICR_TCCF;
+            WRITE_REG(m_pUart->SR, ~(USART_SR_TC));
 
             if(m_pCallbackCompletedTX != nullptr)
             {
@@ -1307,17 +1311,15 @@ void UART_Driver::IRQ_Handler(void)
 #if (UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 void UART_Driver::VirtualUartRX_IRQHandler(void)
 {
-     if(DEF_VTBL_VALIDATE(HALUART_VirtualUart.pV_Table, h_IsrRxIdleDetect))
-     {
-         UART_VirtualUart.pV_Table->h_IsrRxIdleDetect(m_VirtualUart.pAppContext);
-     }
+	if(m_pContextCompletedTX == nullptr) m_pCallbackCompletedTX(m_pContextTX);
      else
      {
-         this->DMA_ConfigRX(nullptr, 0);     // Reset RX packet to avoid override with a new RX packet
+           m_pCallbackCompletedTX(m_pContextCompletedTX);
+//         this->DMA_ConfigRX(nullptr, 0);     // Reset RX packet to avoid override with a new RX packet
      }
 
      m_VirtualUartBusyRX = false;
-}
+
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -1330,180 +1332,13 @@ void UART_Driver::VirtualUartRX_IRQHandler(void)
 #if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
 void UART_Driver::VirtualUartTX_IRQHandler(void)
 {
-     if(DEF_VTBL_VALIDATE(mT_VirtualUart.pV_Table, h_IsrTxComplete))
-     {
-         m_VirtualUart.pV_Table->h_IsrTxComplete(m_VirtualUart.pAppContext);
-     }
+	if(m_pContextCompletedTX == nullptr) m_pCallbackCompletedTX(m_pContextTX);
+	else                                 m_pCallbackCompletedTX(m_pContextCompletedTX);
 
-     m_VirtualUartBusyTX = false;
-}
-#endif
-
-
-//-------------------------------------------------------------------------------------------------
-//
-//  IRQ Handler:   External IRQ handler
-//
-//  Description:   Individual handle for each enable UART
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART1
-#if (UART_DRIVER_SUPPORT_UART1_CFG == DEF_ENABLED)
-extern "C" void USART1_IRQHandler(void)
-{
-    myUART_Terminal.IRQ_Handler();
+    m_VirtualUartBusyTX = false;
 }
 #endif
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to USART2
-#if (UART_DRIVER_SUPPORT_UART2_CFG == DEF_ENABLED)
-extern "C" void USART2_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART3
-#if (UART_DRIVER_SUPPORT_UART3_CFG == DEF_ENABLED)
-extern "C" void USART3_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART4
-#if (UART_DRIVER_SUPPORT_UART4 == DEF_ENABLED)
-extern "C" void UART4_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART5
-#if (UART_DRIVER_SUPPORT_UART5 == DEF_ENABLED)
-extern "C" void UART5_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to USART6
-#if (UART_DRIVER_SUPPORT_UART6 == DEF_ENABLED)
-extern "C" void USART6_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART7
-#if (UART_DRIVER_SUPPORT_UART7 == DEF_ENABLED)
-extern "C" void UART7_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-// Interrupt Handler assign to UART8
-#if (UART_DRIVER_SUPPORT_UART8 == DEF_ENABLED)
-extern "C" void UART8_IRQHandler(void)
-{
-    // _your_class_object_here__->IRQ_Handler();
-}
-#endif
-
-//-------------------------------------------------------------------------------------------------
-
-#endif // DIGINI_USE_UART
-
-
-#if 0
-
-/***********************************************************************************************************************************
- * @brief           Send data (as for now, only one byte is sent from p_TxData)
- *
- * @author          irichard
- *
- * @param           UartId:     uart id
- * @param           p_TxData:   pointer on the buffer containing the data to send
- * @param           pTxLen:     Number of bytes to send (from p_TxData)
- *                              Return number of bytes sent
- *
- * @return          none
- *
- * @todo            improvement: use fifo to send data on uart
- **********************************************************************************************************************************/
-void HALUART_SendData(HALUART_Id_te    UartId,
-                      const uint8_t   *p_TxData,
-                      uint16_t        *pTxLen)
-{
-    uint8_t Data;
-
-    if((m_pUart != nullptr) &&
-        (nullptr != p_TxData) &&
-        (*pTxLen > 0))
-    {
-        Data = *((uint8_t *)p_TxData);
-        HALUART_Properties[UartId].USARTx->DR = Data;
-        *pTxLen = 1;                                                      // one byte is sent
-    }
-    else
-    {
-      #if (UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
-        if(m_UartID == UART_DRIVER_VIRTUAL)
-        {
-            HALUART_VirtualSendData(p_TxData, *pTxLen);
-        }
-        else
-      #endif
-
-        *pTxLen = 0;
-    }
-}
-
-/***********************************************************************************************************************************
- * @brief           Set uart VTbl
- *
- * @author          irichard
- *
- * @param           UartId:         uart id
- * @param           p_UartVTbl:     pointer on the structure containing uart parameters required for configuration
- * @param           p_AppCtx:       pointer on AppCtx (used in callback functions in p_UartVTbl)
- *
- * @return          void
- **********************************************************************************************************************************/
-void HALUART_VTblSet(HALUART_Id_te             UartId,
-                     const HALUART_VTbl_ts    *p_UartVTbl,
-                     void                     *p_AppCtx)
-{
-    if(m_pUart != nullptr)
-    {
-        HALUART_Uart[UartId].pV_Table    = p_UartVTbl;
-        HALUART_Uart[UartId].pAppContext = p_AppCtx;
-    }
-  #if (UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
-    else if(m_UartID == UART_DRIVER_VIRTUAL)
-    {
-        HALUART_VirtualUart.pV_Table    = p_UartVTbl;
-        HALUART_VirtualUart.pAppContext = p_AppCtx;
-    }
-  #endif
-}
-
-#endif
+#endif // USE_UART_DRIVER == DEF_ENABLED

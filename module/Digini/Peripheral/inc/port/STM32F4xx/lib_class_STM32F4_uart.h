@@ -30,16 +30,18 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
-#ifdef DIGINI_USE_UART
-//#include <stdint.h>
 #include "stm32f4xx.h"
 #include "nOS.h"
-#include "lib_isr.h"
-#include "lib_io.h"
 #include "lib_typedef.h"
-#include "uart_cfg.h"
+#include "lib_io.h"
+#include "lib_isr.h"
 #include "lib_dma.h"
+#include "uart_cfg.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_UART_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -77,56 +79,49 @@ enum UART_Config_e
     UART_PARITY_MASK        =   0x0003,
 
     UART_8_LEN_BITS         =   0x0000,
-    UART_7_LEN_BITS         =   0x0004,
-    UART_9_LEN_BITS         =   0x0008,
-    UART_LENGTH_MASK        =   0x000C,
+    UART_9_LEN_BITS         =   0x0004,
+    UART_LENGTH_MASK        =   0x0004,
 
-    UART_1_STOP_BIT         =   0x0000,
-    UART_0_5_STOP_BIT       =   0x0010,
-    UART_1_5_STOP_BIT       =   0x0020,
-    UART_2_STOP_BITS        =   0x0030,
-    UART_STOP_MASK          =   0x0030,
+    UART_1_STOP_BIT         =   0x0008,
+    UART_0_5_STOP_BIT       =   0x0008,
+    UART_1_5_STOP_BIT       =   0x0010,
+    UART_2_STOP_BITS        =   0x0018,
+    UART_STOP_MASK          =   0x0018,
 
     UART_DATA_ORDER_LSB     =   0x0000,
-    UART_DATA_ORDER_MSB     =   0x0040,
-    UART_DATA_ORDER_MASK    =   0x0040,
+    UART_DATA_ORDER_MSB     =   0x0020,
+    UART_DATA_ORDER_MASK    =   0x0020,
 
     UART_OVER_16            =   0x0000,
-    UART_OVER_8             =   0x0080,
-    UART_OVER_MASK          =   0x0080,
+    UART_OVER_8             =   0x0040,
+    UART_OVER_MASK          =   0x0040,
 
     UART_ENABLE_RX_TX       =   0x0000,
-    UART_ENABLE_RX          =   0x0100,
-    UART_ENABLE_TX          =   0x0200,
-    UART_ENABLE_MASK        =   0x0300,
+    UART_ENABLE_RX          =   0x0080,
+    UART_ENABLE_TX          =   0x0100,
+    UART_ENABLE_MASK        =   0x0180,
 
-    UART_FLOW_CTS           =   0x0400,
-    UART_FLOW_CTS_AND_ISR   =   0x0800,
-    UART_FLOW_RTS           =   0x1000,
-    UART_FLOW_MASK          =   0x1C00,
+    UART_FLOW_CTS           =   0x0200,
+    UART_FLOW_CTS_AND_ISR   =   0x0400,
+    UART_FLOW_RTS           =   0x0800,
+    UART_FLOW_MASK          =   0x0E00,
 
     // Some more common config (all LSB with oversampling at 16, with RX and TX)
-    UART_CONFIG_N_7_1    =   (UART_NO_PARITY   | UART_7_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_N_8_1    =   (UART_NO_PARITY   | UART_8_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_N_9_1    =   (UART_NO_PARITY   | UART_9_LEN_BITS | UART_1_STOP_BIT),
 
-    UART_CONFIG_E_7_1    =   (UART_EVEN_PARITY | UART_7_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_E_8_1    =   (UART_EVEN_PARITY | UART_8_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_E_9_1    =   (UART_EVEN_PARITY | UART_9_LEN_BITS | UART_1_STOP_BIT),
 
-    UART_CONFIG_O_7_1    =   (UART_ODD_PARITY  | UART_7_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_O_8_1    =   (UART_ODD_PARITY  | UART_8_LEN_BITS | UART_1_STOP_BIT),
     UART_CONFIG_O_9_1    =   (UART_ODD_PARITY  | UART_9_LEN_BITS | UART_1_STOP_BIT),
 
-    UART_CONFIG_N_7_2    =   (UART_NO_PARITY   | UART_7_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_N_8_2    =   (UART_NO_PARITY   | UART_8_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_N_9_2    =   (UART_NO_PARITY   | UART_9_LEN_BITS | UART_2_STOP_BITS),
 
-    UART_CONFIG_E_7_2    =   (UART_EVEN_PARITY | UART_7_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_E_8_2    =   (UART_EVEN_PARITY | UART_8_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_E_9_2    =   (UART_EVEN_PARITY | UART_9_LEN_BITS | UART_2_STOP_BITS),
 
-    UART_CONFIG_O_7_2    =   (UART_ODD_PARITY  | UART_7_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_O_8_2    =   (UART_ODD_PARITY  | UART_8_LEN_BITS | UART_2_STOP_BITS),
     UART_CONFIG_O_9_2    =   (UART_ODD_PARITY  | UART_9_LEN_BITS | UART_2_STOP_BITS),
 };
@@ -178,13 +173,6 @@ struct UART_Variables_t
 typedef void    (* UART_CallBack_t)           (void* pContext);
 
 //-------------------------------------------------------------------------------------------------
-// Specific prototype for STM32F7
-//-------------------------------------------------------------------------------------------------
-//void UART_TX_DMA_IRQ_Handler (UART_ID_e UartId);
-
-
-
-//-------------------------------------------------------------------------------------------------
 // class definition(s)
 //-------------------------------------------------------------------------------------------------
 
@@ -192,7 +180,8 @@ class UART_Driver
 {
     public:
 
-                            UART_Driver                        (UART_ID_e UartID);
+                            UART_Driver                     (UART_ID_e UartID);
+
         void                SetConfig                       (UART_Config_e Config, UART_Baud_e BaudID);
         void                SetBaudRate                     (UART_Baud_e BaudID);
         uint32_t            GetBaudRate                     (void);
@@ -231,6 +220,9 @@ class UART_Driver
         void            RegisterCallbackCompletedTX         (void* pCallback, void* pContext = nullptr);
       #endif
 
+        // TODO need register for callback virtual  not sure
+
+
         void            Enable                              (void);
         void            Disable                             (void);
 
@@ -259,7 +251,7 @@ class UART_Driver
         static const uint32_t       m_BaudRate[NB_OF_BAUD];
         UART_Info_t*                m_pInfo;
         USART_TypeDef*              m_pUart;
-        uint32_t                    m_CopyISR;
+        uint32_t                    m_CopySR;
         UART_Variables_t            m_Variables;
         void*                       m_pContextRX;       // This is the global context if there is no individual context set
         void*                       m_pContextTX;       // This is the global context if there is no individual context set
@@ -277,14 +269,14 @@ class UART_Driver
 
       #if (UART_ISR_RX_CFG == DEF_ENABLED)
         UART_CallBack_t             m_pCallbackRX;
-        void*                       m_pContextRX;
+        //void*                       m_pContextRX;
       #endif
-      #if UART_ISR_RX_IDLE_CFG == DEF_ENABLED
+      #if (UART_ISR_RX_IDLE_CFG == DEF_ENABLED)
         UART_CallBack_t             m_pCallbackIDLE;
         void*                       m_pContextIDLE;
       #endif
       #if (UART_ISR_RX_ERROR_CFG == DEF_ENABLED)
-        UART_CallBack_t         m_pCallbackERROR;
+        UART_CallBack_t             m_pCallbackERROR;
         void*                       m_pContextERROR;
       #endif
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
@@ -302,11 +294,11 @@ class UART_Driver
 };
 
 //-------------------------------------------------------------------------------------------------
-// constant data
+// Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
 #include "uart_var.h"         // Project variable
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_UART
+#endif // USE_UART_DRIVER == DEF_ENABLED

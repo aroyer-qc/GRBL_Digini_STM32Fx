@@ -30,10 +30,13 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_I2C
 #include "lib_class_i2c.h"
 #include "lib_class_pointing_device_interface.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_I2C_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -96,8 +99,8 @@ extern class   PointingDeviceInterface*    PDI_pDriver;
 
 //-------------------------------------------------------------------------------------------------
 
-#else // DIGINI_USE_I2C
+#else // USE_I2C_DRIVER == DEF_ENABLED
 
 #pragma message("DIGINI driver for I2C must be enable and configure to use this device driver")
 
-#endif // DIGINI_USE_I2C
+#endif // USE_I2C_DRIVER == DEF_ENABLED

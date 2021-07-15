@@ -151,7 +151,7 @@ SystemState_e CRAM_DataBase::Initialize(void* pConfig, size_t ObjectSize)
   #ifdef GFX_RAM_DBASE_DEF
     m_ItemsPointer[i] = ((RAM_DBaseRegionPointer_t*)(pConfig))->pGFX_Ram;
 
-    for(; i < (END_GFX_RAM_INDEX - 1); i++)
+    for(; i < ((END_GFX_RAM_INDEX - START_GFX_RAM_INDEX) - 1); i++)
     {
         // Pre-calculate offset for each record
         RecordTotalSize = (size_t)m_ItemsQTY[i] * (size_t)m_ItemsSubQTY[i] * m_ItemSize[i];
@@ -161,7 +161,7 @@ SystemState_e CRAM_DataBase::Initialize(void* pConfig, size_t ObjectSize)
 
   #ifdef NV_RAM_DBASE_DEF
     m_ItemsPointer[i] = ((RAM_DBaseRegionPointer_t*)(pConfig))->pNV_Ram;
-    for(; i < (END_NV_RAM_INDEX - 1); i++)
+    for(; i < ((END_NV_RAM_INDEX - START_NV_RAM_INDEX) - 1); i++)
     {
         // Precalculate offset for each record
         RecordTotalSize = (size_t)m_ItemsQTY[i] * (size_t)m_ItemsSubQTY[i] * m_ItemSize[i];

@@ -1,33 +1,45 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : lib_class_STM32F4_spi.h
+//  File : lib_class_LPC2xxx.h
 //
+//-------------------------------------------------------------------------------------------------
 //
-//  Notes: Callback for TickHook will be reinitialize when LockToDevice() or UnlockFromDevice()
-//         is called
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
 //
-//*************************************************************************************************
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
-#ifndef __STM32F4_SPI_H__
-#define __STM32F4_SPI_H__
-
-#ifdef STM32F4_SPI_GLOBAL
-    #define STM32F4_SPI_EXTERN
-#else
-    #define STM32F4_SPI_EXTERN extern
-#endif
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
-#ifdef DIGINI_USE_SPI
 #include <stdint.h>
 #include "stm32f4xx.h"
 #include "nOS.h"
 #include "lib_class_STM32F4_gpio.h"
 #include "lib_typedef.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -36,22 +48,22 @@
 #define SPI_USE_DMA_TRANSFERT       0
 
 #define SPI_PORT_QTY                6
-#define SPI_TICK_HOOK_TIME            portTICK_RATE_MS            // in mSec
+#define SPI_TICK_HOOK_TIME          portTICK_RATE_MS            // in mSec
 
-#define SPI_CR1_DFF_8_BITS            0
-#define SPI_CR1_DFF_16_BITS            SPI_CR1_DFF
+#define SPI_CR1_DFF_8_BITS          0
+#define SPI_CR1_DFF_16_BITS         SPI_CR1_DFF
 
-#define    SPI_CR1_CPOL_LOW            0
-#define SPI_CR1_CPOL_HIGH            SPI_CR1_CPOL
+#define SPI_CR1_CPOL_LOW            0
+#define SPI_CR1_CPOL_HIGH           SPI_CR1_CPOL
 
-#define SPI_CR1_CPHA_1_EDGE            0
-#define SPI_CR1_CPHA_2_EDGE            SPI_CR1_CPHA
+#define SPI_CR1_CPHA_1_EDGE         0
+#define SPI_CR1_CPHA_2_EDGE         SPI_CR1_CPHA
 
-#define SPI_CR1_SSM_DISABLE            0
-#define SPI_CR1_SSM_ENABLE             SPI_CR1_SSM
+#define SPI_CR1_SSM_DISABLE         0
+#define SPI_CR1_SSM_ENABLE          SPI_CR1_SSM
 
-#define SPI_CR1_MSB_FIRST            0                    //SPI_FirstBit_MSB
-#define SPI_CR1_LSB_FIRST            SPI_CR1_LSBFIRST    //SPI_FirstBit_LSB
+#define SPI_CR1_MSB_FIRST           0                    //SPI_FirstBit_MSB
+#define SPI_CR1_LSB_FIRST           SPI_CR1_LSBFIRST    //SPI_FirstBit_LSB
 
 #define SPI_PRESCALER_MASK          0x0038
 
@@ -261,9 +273,7 @@ class CSPI
 #endif
 
 
-#endif // DIGINI_USE_SPI
-
-#endif //__STM32F4_SPI_H__
+#endif // USE_SPI_DRIVER == DEF_ENABLED
 
 
 

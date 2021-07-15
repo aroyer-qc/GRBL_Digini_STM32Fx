@@ -510,11 +510,6 @@ static void DRV_LAYER_Initialize(void)
 //
 //   Note(s):
 //
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 7,   2015  Alain Royer         Very basic first draft
-//
 //-------------------------------------------------------------------------------------------------
 static void DRV_WriteCommand(uint8_t Register)
 {
@@ -535,11 +530,6 @@ static void DRV_WriteCommand(uint8_t Register)
 //   Description:   Write to Register
 //
 //   Note(s):
-//
-//   ----------------------------------------------------------------------------------------------
-//   date           author              description
-//   -------------  ------------------  -----------------------------------------------------------
-//   Jul 7,   2015  Alain Royer         Very basic first draft
 //
 //-------------------------------------------------------------------------------------------------
 static void DRV_WriteData(uint8_t Value)
@@ -566,10 +556,6 @@ static void DRV_WriteData(uint8_t Value)
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 
 void DRV_Initialize(void* pArg)
@@ -594,10 +580,6 @@ void DRV_Initialize(void* pArg)
 //  Description:    Configuration for layer
 //
 //  Note(s):
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 void DRV_LayerConfig(CLayer* pLayer)
@@ -679,10 +661,6 @@ void DRV_LayerConfig(CLayer* pLayer)
 //
 //  Note(s):        Source is linear
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 30,  2014   Alain Royer         New code
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode)
 {
@@ -742,10 +720,6 @@ void DRV_Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPi
 //
 //  Note(s):        Source is linear
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 30,  2014   Alain Royer         New code
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_CopyLinear(void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat_e, BlendMode_e BlendMode)
 {
@@ -801,10 +775,6 @@ void DRV_CopyLinear(void* pSrc, Box_t* pBox, PixelFormat_e SrcPixelFormat_e, Ble
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawRectangle(Box_t* pBox)
 {
@@ -849,10 +819,6 @@ void DRV_DrawRectangle(Box_t* pBox)
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 30,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height, uint16_t Thickness)
 {
@@ -876,10 +842,6 @@ void DRV_DrawBox(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t Height,
 //  Description:    Put a pixel on selected layer
 //
 //  Note(s):
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
@@ -921,10 +883,6 @@ void DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawHLine(uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thickness)
 {
@@ -958,10 +916,6 @@ void DRV_DrawHLine(uint16_t PosY, uint16_t PosX1, uint16_t PosX2, uint16_t Thick
 //  Description:    Displays a vertical line of a specific thickness.
 //
 //  Note(s):
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawVLine(uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thickness)
@@ -1000,10 +954,6 @@ void DRV_DrawVLine(uint16_t PosX, uint16_t PosY1, uint16_t PosY2, uint16_t Thick
 //  Description:    Displays a line of a specific thickness.
 //
 //  Note(s):
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 void DRV_DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction)
@@ -1053,10 +1003,6 @@ void DRV_DrawLine(uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickN
 //  Return:         none
 //
 //  Description:    This function will print a font to drawing layer with the drawing color
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Feb 6,   2014   Alain Royer         New
 //
 //-------------------------------------------------------------------------------------------------
 void DRV_PrintFont(FontDescriptor_t* pDescriptor, Cartesian_t* pPos)
@@ -1112,10 +1058,6 @@ void DRV_PrintFont(FontDescriptor_t* pDescriptor, Cartesian_t* pPos)
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_DisplayOn(void)
 {
@@ -1134,10 +1076,6 @@ void DRV_DisplayOn(void)
 //
 //  Note(s):
 //
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 17,  2014   Alain Royer
-//
 //-------------------------------------------------------------------------------------------------
 void DRV_DisplayOff(void)
 {
@@ -1155,10 +1093,6 @@ void DRV_DisplayOff(void)
 //  Description:    Wait for the vertical synchro
 //
 //  Note(s):        this will prevent glitching on screen while changing display
-//
-//  Date            Author              Description
-//  -------------   ----------------    -----------------------------------------------------------
-//  Jan 29,  2014   Alain Royer
 //
 //-------------------------------------------------------------------------------------------------
 #ifdef GRAFX_USE_V_SYNC

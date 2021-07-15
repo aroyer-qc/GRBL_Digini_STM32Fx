@@ -43,8 +43,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_SDIO
 #include <stdint.h>
 #define STM32F7_SDIO_GLOBAL
 #include "lib_class_sdio.h"
@@ -54,6 +52,10 @@
 #include "stm32f7xx_ll_sdmmc.h"
 #include "string.h"
 #include "lib_io.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SDIO_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -1911,4 +1913,4 @@ void SDIO_Driver::CardDetectIRQ_Handler(void)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_SDIO
+#endif // USE_SDIO_DRIVER == DEF_ENABLED

@@ -35,11 +35,13 @@
 #undef  GFX_GLOBAL
 #include <stdint.h>
 #include "bsp.h"
+#include "driver_cfg.h"
 
 //-------------------------------------------------------------------------------------------------
 // const(s)
 //-------------------------------------------------------------------------------------------------
 
+#if 0
 // Calculate the offset for the Free memory after the layers used by GRAFX
 #ifdef LAYER_DEF
 const uint32_t GFX_LoadingAddress =
@@ -48,6 +50,9 @@ const uint32_t GFX_LoadingAddress =
   #undef X_LAYER
     GFX_BASE_ADDRESS;
 #endif
+#endif
+
+const uint32_t GFX_LoadingAddress = GFX_BASE_ADDRESS;
 
 //-------------------------------------------------------------------------------------------------
 // External low level function from driver
@@ -92,9 +97,14 @@ SystemState_e GRAFX_Initialize(void)
     GFX_PrecomputeAlphaTable();
   #endif
 
-    CLayer::SetActiveLayer(LAYER_BACKGROUND, BACKGROUND_DISPLAY_LAYER_0);
     CLayer::SetActiveLayer(LAYER_FOREGROUND, FOREGROUND_DISPLAY_LAYER_0);
+
+  #if GRAFX_USE_BACKGROUND_LAYER
+    CLayer::SetActiveLayer(LAYER_BACKGROUND, BACKGROUND_DISPLAY_LAYER_0);
     CLayer::SetDrawing(BACKGROUND_DISPLAY_LAYER_0);
+  #else
+    CLayer::SetDrawing(FOREGROUND_DISPLAY_LAYER_0);
+  #endif
 
     return SYS_READY;
 }
@@ -117,7 +127,7 @@ SystemState_e GRAFX_PostInitialize(void)
     nOS_Error     Error;
     uint32_t      FreePointer;
 
-    DB_Central.Set((const void*)&GFX_LoadingAddress, GFX_FREE_RAM_POINTER, 0, 0);   // Record the free SDRAM pointer in database at reload ID
+    DB_Central.Set(&GFX_LoadingAddress, GFX_FREE_RAM_POINTER, 0, 0);   // Record the free SDRAM pointer in database at reload ID
 
     FONT_Initialize();
 

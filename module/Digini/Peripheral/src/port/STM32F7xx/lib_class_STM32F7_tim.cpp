@@ -28,14 +28,16 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_TIM
 #include <stdint.h>
 #define TIM_DRIVER_GLOBAL
 #include "lib_class_STM32F7_tim.h"
 #undef  TIM_DRIVER_GLOBAL
 #include "lib_macro.h"
 #include "clock_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_TIM_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -647,4 +649,5 @@ void TIM_Driver::CallBack(bool ProcessUpdate)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_TIM
+#endif // USE_TIM_DRIVER == DEF_ENABLED
+

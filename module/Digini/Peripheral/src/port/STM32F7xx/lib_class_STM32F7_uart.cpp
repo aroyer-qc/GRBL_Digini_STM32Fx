@@ -28,14 +28,16 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_UART
 #include <stdint.h>
 #include "lib_macro.h"
 #define UART_DRIVER_GLOBAL
 #include "lib_class_STM32F7_uart.h"
 #undef  UART_DRIVER_GLOBAL
 #include "clock_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_UART_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -1299,13 +1301,11 @@ void UART_Driver::IRQ_Handler(void)
 #if (UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 void UART_Driver::VirtualUartRX_IRQHandler(void)
 {
-     if(DEF_VTBL_VALIDATE(HALUART_VirtualUart.pV_Table, h_IsrRxIdleDetect))
-     {
-         UART_VirtualUart.pV_Table->h_IsrRxIdleDetect(m_VirtualUart.pAppContext);
-     }
+	if(m_pContextCompletedTX == nullptr) m_pCallbackCompletedTX(m_pContextTX);
      else
      {
-         this->DMA_ConfigRX(nullptr, 0);     // Reset RX packet to avoid override with a new RX packet
+           m_pCallbackCompletedTX(m_pContextCompletedTX);
+//         this->DMA_ConfigRX(nullptr, 0);     // Reset RX packet to avoid override with a new RX packet
      }
 
      m_VirtualUartBusyRX = false;
@@ -1322,15 +1322,13 @@ void UART_Driver::VirtualUartRX_IRQHandler(void)
 #if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
 void UART_Driver::VirtualUartTX_IRQHandler(void)
 {
-     if(DEF_VTBL_VALIDATE(mT_VirtualUart.pV_Table, h_IsrTxComplete))
-     {
-         m_VirtualUart.pV_Table->h_IsrTxComplete(m_VirtualUart.pAppContext);
-     }
+	if(m_pContextCompletedTX == nullptr) m_pCallbackCompletedTX(m_pContextTX);
+	else                                 m_pCallbackCompletedTX(m_pContextCompletedTX);
 
-     m_VirtualUartBusyTX = false;
+    m_VirtualUartBusyTX = false;
 }
 #endif
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_UART
+#endif // USE_UART_DRIVER == DEF_ENABLED

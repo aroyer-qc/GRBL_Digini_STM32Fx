@@ -83,6 +83,9 @@ uint16_t    LIB_SinCos                      (uint16_t Angle, uint16_t Radius);  
 
 void        LIB_ProcessFloatToString        (char* pStr, double Value, int NumberOfDecimal);
 
+void		LIB_Delay_uSec					(uint32_t Delay);
+void		LIB_Delay_mSec					(uint32_t Delay);
+
 //-------------------------------------------------------------------------------------------------
 // class definition(s)
 //-------------------------------------------------------------------------------------------------

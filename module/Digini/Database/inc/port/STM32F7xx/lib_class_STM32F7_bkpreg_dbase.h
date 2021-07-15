@@ -30,12 +30,15 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_RTC
 #include "lib_typedef.h"
 #include "database_cfg.h"
 #include "lib_class_database.h"
 //#include "lib_class_STM32F7_rtc.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_RTC_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // typedef struct(s) and const(s)
@@ -83,4 +86,4 @@ class CBKPREG_DataBase : public CDataBaseInterface
 
 //-------------------------------------------------------------------------------------------------
 
-#endif //  DIGINI_USE_RTC
+#endif // USE_RTC_DRIVER == DEF_ENABLED

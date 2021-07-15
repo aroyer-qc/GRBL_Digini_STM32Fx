@@ -75,9 +75,9 @@
 //-------------------------------------------------------------------------------------------------
 SystemState_e DIGINI_Initialize(void)
 {
-  #ifdef DIGINI_USE_RTC
+  #if (USE_RTC_DRIVER == DEF_ENABLED)
     BSP_pRTC = new CRTC(&Mutex.Handle.MutexRTC, RTC_CLOCK_MODE_LSI);            // RTC module object
-  #endif // DIGINI_USE_RTC
+  #endif // USE_RTC_DRIVER == DEF_ENABLED
 
     // Register all database driver
 
@@ -147,9 +147,9 @@ SystemState_e DIGINI_PostInitialize(void)
     //nOS_Error Error;
     //SystemState_e State;
 
-  #ifdef DIGINI_USE_USB
+  #if (USE_USB_DRIVER == DEF_ENABLED)
     //USB.Initialize();
-  #endif // DIGINI_USE_USB
+  #endif // USE_USB_DRIVER == DEF_ENABLED
 
   #ifdef DIGINI_USE_FATFS
     FatFS_Initialize();

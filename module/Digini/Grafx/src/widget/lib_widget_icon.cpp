@@ -168,23 +168,25 @@ void CIcon::Draw(ServiceReturn_t* pService)
   #endif
 */
 
- #ifdef GRAFX_DEBUG_GUI
+  #ifdef GRAFX_DEBUG_GUI
     CLayer::SetDrawing(((m_pIcon->Options & GRAFX_OPTION_DRAW_ON_BACK) != 0) ? BACKGROUND_DISPLAY_LAYER_0 : FOREGROUND_DISPLAY_LAYER_0);
   #else
-
    #ifdef GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
     ForeLayerToDraw = CONSTRUCTION_FOREGROUND_LAYER;
    #else
     ForeLayerToDraw = FOREGROUND_DISPLAY_LAYER_0;
    #endif
 
-   #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
-    BackLayerToDraw = CONSTRUCTION_BACKGROUND_LAYER;
-   #else
-    BackLayerToDraw = BACKEGROUND_DISPLAY_LAYER_0;
-   #endif
-
+   #ifdef GRAFX_USE_BACKGROUND_LAYER
+    #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
+     BackLayerToDraw = CONSTRUCTION_BACKGROUND_LAYER;
+    #else
+     BackLayerToDraw = BACKGROUND_DISPLAY_LAYER_0;
+    #endif
     CLayer::SetDrawing(((m_pIcon->Options & GRAFX_OPTION_DRAW_ON_BACK) != 0) ? BackLayerToDraw : ForeLayerToDraw);
+   #else
+    CLayer::SetDrawing(ForeLayerToDraw);
+   #endif
   #endif
 
     if((m_pIcon->Options & GRAFX_OPTION_CLEAR) != 0)

@@ -70,6 +70,7 @@
 #endif
 
 #include "driver_cfg.h"
+#include GRAFX_DRIVER_INCLUDE
 
 #ifdef DIGINI_USE_POINTING_DEVICE
   #include "lib_class_pointing_device_interface.h"
@@ -86,7 +87,7 @@
 #endif
 
 #ifdef GRAFX_USE_RAM_DATA
-  #define GFX_RAM_ADDRESS        (uint32_t)&__gfx_ram_data_base__
+  #define GFX_RAM_ADDRESS       (uint32_t)&__gfx_ram_data_base__
 #endif
 
 #ifdef GRAFX_USE_ROM_DATA
@@ -245,13 +246,13 @@ class GPrintf
         uint16_t            m_OffsetJustY;
 
         // Multi line support
-      #ifdef DIGINI_USE_MULTI_LINE
+     // #ifdef DIGINI_USE_MULTI_LINE
         uint8_t             m_Line;                                                   // Number of line in the print
         char*               m_pSubLineString  [DIGINI_MAX_PRINT_NUMBER_OF_LINE];      // Pointer on each start of a sub line
         size_t              m_SubLineSizeChar [DIGINI_MAX_PRINT_NUMBER_OF_LINE];      // Size of each line    in caracter
         size_t              m_SubLineSizePixX [DIGINI_MAX_PRINT_NUMBER_OF_LINE];      // Width of each line   in pixel
         uint8_t             m_MinY            [DIGINI_MAX_PRINT_NUMBER_OF_LINE];      // Minimum Y pixel position of the line
-      #endif
+     // #endif
 };
 
 //-------------------------------------------------------------------------------------------------

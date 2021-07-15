@@ -28,12 +28,14 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_QSPI
 #define LIB_N25QXXX_GLOBAL
 #include "lib_grafx.h"
 #undef  LIB_N25QXXX_GLOBAL
 #include "lib_class_qspi_N25Qxxx.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_QSPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -624,4 +626,4 @@ static uint8_t QSPI_AutoPollingMemReady(QSPI_HandleTypeDef *hqspi, uint32_t Time
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_QSPI
+#endif // USE_QSPI_DRIVER == DEF_ENABLED

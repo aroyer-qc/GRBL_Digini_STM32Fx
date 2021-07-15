@@ -26,6 +26,8 @@
 
 #pragma once
 
+//-------------------------------------------------------------------------------------------------
+
 #ifdef QSPI_FLASH_GLOBAL
     #define QSPI_FLASH_EXTERN
 #else

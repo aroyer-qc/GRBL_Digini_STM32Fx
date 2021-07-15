@@ -32,10 +32,11 @@
 
 #include "digini_cfg.h"
 #ifdef DIGINI_USE_GRAFX
-#include <lib_lcd_driver.h>
-#include "stm32f4xx.h"
-#include "lib_class_io.h"
+#include "lib_grafx.h"
+#include "lib_lcd_driver.h"
+#include "lib_io.h"
 #include "lib_class_io_bus.h"
+#include "stm32f4xx.h"
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -49,7 +50,7 @@
 //#define GRAFX_USE_SOFT_VLINE
 //#define GRAFX_USE_SOFT_HLINE
 //#define GRAFX_USE_SOFT_DLINE
-//#define GRAFX_USE_SOFT_CIRCLE
+#define GRAFX_USE_SOFT_CIRCLE
 
 //#define GRAFX_USE_SOFT_PRINT_FONT
 #define GRAFX_USE_SOFT_ALPHA
@@ -94,18 +95,25 @@ class GrafxDriver : public GRAFX_Interface
         void            WaitFor_V_Sync        (void) {};
         #endif
 
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, Box_t* pBox) {};
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t X, uint16_t Y, uint16_t Width, uint16_t Height) {};
+        void            CopyLayerToLayer      (Layer_e SrcLayer, Layer_e DstLayer, uint16_t SrcX, uint16_t SrcY, uint16_t DstX, uint16_t DstY, uint16_t Width, uint16_t Height) {};
+
     private:
 
         void            ControllerInitialize  (void);     // LCD is equipped with a IL9341 controller
         void            WriteCommand          (uint8_t Register);
+        uint8_t         ReadCommand           (uint8_t Register);
         void            WriteData             (uint8_t Data);
         void            WriteData             (uint16_t Data);
+        uint8_t         ReadData_8            (void);
+        uint16_t        ReadData_16           (void);
         void            Line                  (uint16_t PosX, uint16_t PosY, uint16_t Length, uint16_t ThickNess, DrawMode_e Direction);
         void            DrawRectangle         (Box_t* pBox, uint8_t Mode = SSD1779_NO_FILL);
         void            Clear                 (void);
 
-        IO_PinDriver    m_RegSelect;
-        IO_PinDriver    m_Reset;
+        IO_ID_e         m_RegSelect;
+        IO_ID_e         m_Reset;
         IO_BusDriver    m_Bus;
         CLayer*         m_pLayer;
 };

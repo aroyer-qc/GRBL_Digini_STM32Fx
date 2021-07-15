@@ -28,9 +28,11 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_DAC
 #include <stdint.h>
+
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_DAC_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 
@@ -508,5 +510,5 @@ void CSound::Volume(uint8_t Volume, uint8_t Priority)
 
 */
 
+#endif // USE_DAC_DRIVER == DEF_ENABLED
 
-#endif // DIGINI_USE_DAC

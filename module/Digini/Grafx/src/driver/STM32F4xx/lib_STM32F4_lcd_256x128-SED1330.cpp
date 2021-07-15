@@ -2,7 +2,27 @@
 //
 //  File : lib_STM32F4_lcd_256x128-SED1330.cpp
 //
-//*************************************************************************************************
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -203,7 +223,7 @@ static void DRV_LCD_ControllerInitialize(void)
 {
     SED1330_RD = SED1330_DISABLE;
     SED1330_WR = SED1330_DISABLE;
-    
+
     // System Control
     DRV_WriteCommand(SED1330_SYSTEM_SET);
     DRV_u8_Write(0x30);                //P1    IV=1 W/S=0 M2=0 M1=0 M0=0
@@ -212,7 +232,7 @@ static void DRV_LCD_ControllerInitialize(void)
     DRV_u8_Write(0x1F);                //P4    C/R=(32)-1 = 0x1F
     DRV_u8_Write(0x24);                //P5    T/CR=C/R+4 = 0x24
     DRV_u8_Write(0x7F);                //P6    Height in Line Of LCD
-    DRV_u8_Write(SED1330_LINE_LENGTH);    //P7    Address Range virtual Screen (LCD = 42,Virtual = 48)    
+    DRV_u8_Write(SED1330_LINE_LENGTH);    //P7    Address Range virtual Screen (LCD = 42,Virtual = 48)
     DRV_u8_Write(0x00);                //P8
 
     // Set Device memory Map
@@ -225,12 +245,12 @@ static void DRV_LCD_ControllerInitialize(void)
     DRV_u8_Write(0x80);                //P6    SL2  = 0x80
     DRV_u8_Write(SED1330_TEXT_LOW);    //P7    Text Area Layer 1 Start Address
     DRV_u8_Write(SED1330_TEXT_HIGH);    //P8    SAD2 = 0x0000
-    
+
     // Set CG Ram Address
     DRV_WriteCommand(SED1330_CARGEN_ADDRESS);
     DRV_u8_Write(SED1330_CGRAM_LOW);            //P1    Address Set To 0x300
-    DRV_u8_Write(SED1330_CGRAM_HIGH);            //P2            
-    
+    DRV_u8_Write(SED1330_CGRAM_HIGH);            //P2
+
     // Set Horizontal Shift
     DRV_WriteCommand(SED1330_SET_HORIZONTAL_SCROLL);
     DRV_u8_Write(0x00);                //P1    No Horizontal Pixel Shift
@@ -398,8 +418,8 @@ void SED1330_SetCursor(uint8_t Type, uint8_t Behavior)
 {
     DRV_WriteCommand(SED1330_CURSOR_FORM);
     DRV_u8_Write(0x07);                            // P1            Width Of Cursor
-    DRV_u8_Write(0x07 | Type);                    // P2            Height Of Cursor + Cursor Mode    
-    
+    DRV_u8_Write(0x07 | Type);                    // P2            Height Of Cursor + Cursor Mode
+
     DRV_WriteCommand(SED1330_DISPLAY_ON);
     g_LayerDefinition = (g_LayerDefinition & 0xFC) | Behavior;
     DRV_u8_Write(g_LayerDefinition);            // P1
@@ -529,7 +549,7 @@ void DRV_Copy(void* pSrc, Box_t* pBox, Cartesian_t* pDstPos, PixelFormat_e SrcPi
 void DRV_GotoXY(uint8_t PosX, uint8_t PosY)
 {
     int Offset;
-    
+
     DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
     Offset = (SED1330_LINE_LENGTH * PosY) + PosX;
     DRV_u8_Write((uint8_t)Offset);                        // P1
@@ -654,7 +674,7 @@ void DRV_DrawPixel(uint16_t PosX, uint16_t PosY)
 //void SED1330_Pixel(BYTE byPosX, BYTE byPosY, BYTE byMode)
     int nOffset;
     uint8_t Byte;
-        
+
     nOffset = (SED1330_LINE_LENGTH * PosY) + (PosX >> 3);
     PosX = 7 - (PosX & 0x07);
 
@@ -861,7 +881,7 @@ void DRV_Clear(void)
     DRV_WriteCommand(SED1330_MEMORY_WRITE);
     for(i = 0; i < SED1330_TEXT_SIZE; i++)
     {
-        DRV_u8_Write(ASCII_SPACE);                
+        DRV_u8_Write(ASCII_SPACE);
     }
 
     // Clear Graphic Area
@@ -869,7 +889,7 @@ void DRV_Clear(void)
     DRV_WriteCommand(SED1330_MEMORY_WRITE);
     for(i = 0; i < SED1330_GRAPHIC_SIZE; i++)
     {
-        DRV_u8_Write(0x00);                
+        DRV_u8_Write(0x00);
     }
 }
 
@@ -883,16 +903,16 @@ void DRV_Clear(void)
 void DRV_SetCustomFont(uint8_t Number, const char* pString)
 {
     uint8_t Count = 8;
-        
+
     DRV_WriteCommand(SED1330_SET_CURSOR_ADDRESS);
     Number &= 0x3F;                                // no value over 63
     DRV_u8_Write(Number << 8);                    // P1    ??????????  envoie 0 alors le clown!!
     DRV_u8_Write(Number >> 5);                    // P2
-    
+
     DRV_WriteCommand(SED1330_MEMORY_WRITE);
     do
     {
-        Count--;    
+        Count--;
         DRV_u8_Write(pString[Count]);
     }
     while(Count != 0);
@@ -907,10 +927,10 @@ void DRV_SetCustomFont(uint8_t Number, const char* pString)
 void DRV_Puts(const char* pString)
 {
     uint8_t i;
-    
+
     i = 0;
     DRV_WriteCommand(SED1330_MEMORY_WRITE);
-    
+
     while(sString[i] != ASCII_NULL)
     {
         DRV_u8_Write(pString[i++]);

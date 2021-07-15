@@ -38,8 +38,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
-#ifdef DIGINI_USE_QSPI
 //#include <stdint.h>
 #include "stm32f7xx.h"
 #include "nOS.h"
@@ -47,6 +45,11 @@
 #include "lib_io.h"
 #include "lib_define.h"
 #include "qspi_cfg.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_QSPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // enum
@@ -233,7 +236,7 @@ class QSPI_Driver
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_QSPI
+#endif // USE_QSPI_DRIVER == DEF_ENABLED
 
 
 

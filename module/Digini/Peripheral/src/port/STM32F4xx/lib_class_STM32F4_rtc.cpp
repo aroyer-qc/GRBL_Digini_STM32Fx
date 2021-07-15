@@ -40,8 +40,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_RTC
 #include <stdint.h>
 #define STM32F4_RTC_GLOBAL
 #include "lib_class_STM32F4_rtc.h"
@@ -49,6 +47,10 @@
 #include "string.h"
 #include "STM32F4xx.h"
 #include "lib_utility.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if (USE_RTC_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -365,7 +367,7 @@ SystemState_e CRTC::EnterInitMode()
     m_TimeOut = 10;
     do
     {
-        OS_TaskYield();
+        nOS_Yield();
     }
     while(((RTC->ISR & RTC_ISR_INITF) == 0) && (m_TimeOut != 0));
 
@@ -610,4 +612,4 @@ void CRTC::Alarm_IRQ_Handler(void)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_RTC
+#endif // USE_RTC_DRIVER == DEF_ENABLED

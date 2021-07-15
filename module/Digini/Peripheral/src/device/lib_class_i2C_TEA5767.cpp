@@ -24,9 +24,6 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-#ifdef DIGINI_USE_GRAFX
-#ifdef DIGINI_USE_I2C
-
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
@@ -34,6 +31,11 @@
 #define LIB_TEA5767_GLOBAL
 #include "lib_class_i2c_TEA5767.h"
 #undef  LIB_TEA5767_GLOBAL
+
+//-------------------------------------------------------------------------------------------------
+
+#ifdef DIGINI_USE_GRAFX
+#if (USE_I2C_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -103,7 +105,7 @@
 //   Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-TEA5767::TEA5767(CI2C* pI2C)
+TEA5767::TEA5767(I2C_Driver* pI2C)
 {
     m_pI2C               = pI2C;
     m_pDevice            = &I2C_DeviceInfo[I2C_DEVICE_TEA5767];
@@ -216,7 +218,7 @@ void TEA5767::SetBand(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:             GetFrequency
+//  Name:           GetFrequency
 //
 //  Parameter(s):   None
 //
@@ -240,7 +242,7 @@ TEA5767_Freq_t TEA5767::GetFrequency(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:             SetFrequency
+//  Name:           SetFrequency
 //
 //  Parameter(s):   TEA5767_Freq    newF
 //
@@ -267,7 +269,7 @@ void TEA5767::SetFrequency(TEA5767_Freq_t newF)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:             SetFrequency
+//  Name:           SetFrequency
 //
 //  Parameter(s):   TEA5767_Freq    newF
 //
@@ -289,7 +291,7 @@ void TEA5767::GetRadioInfo(TEA5767_Info_t* Info)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:             ReadRegisters
+//  Name:           ReadRegisters
 //
 //  Parameter(s):   None
 //
@@ -308,7 +310,7 @@ void TEA5767::ReadRegisters(int Register, size_t Size)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:             SaveRegisters
+//  Name:           SaveRegisters
 //
 //  Parameter(s):   None
 //
@@ -327,7 +329,7 @@ void TEA5767::SaveRegisters(int Register, size_t Size)
 
 
 //-------------------------------------------------------------------------------------------------
-#endif // DIGINI_USE_I2C
+#endif // USE_I2C_DRIVER == DEF_ENABLED
 #endif // DIGINI_USE_GRAFX
 
 //void TEA5767_Seek(bool seekUp);

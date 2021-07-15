@@ -114,9 +114,11 @@ class CLayer
         // Static variables
         static Layer_e          m_ActiveDrawingLayer;
 
+      #ifdef GRAFX_USE_BACKGROUND_LAYER
         static CLayer*          m_pActiveBG_Layer;
-        static CLayer*          m_pActiveFG_Layer;
         static CLayer*          m_pConstructBG_Layer;
+      #endif
+        static CLayer*          m_pActiveFG_Layer;
         static CLayer*          m_pConstructFG_Layer;
         static uint8_t          m_LayerStackCounter;
         static Layer_e          m_LayerStack[CLAYER_STACK_LEVEL];

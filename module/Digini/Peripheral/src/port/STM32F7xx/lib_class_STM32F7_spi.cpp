@@ -28,12 +28,14 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_SPI
 #define STM32F7_SPI_GLOBAL
 #include "lib_class_STM32F7_spi.h"
 #undef STM32F7_SPI_GLOBAL
 #include "lib_utility.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -54,8 +56,8 @@
 //
 //   Note(s):
 //
-//                    SPIx: where x can be 1 to 6 to select the SPI peripheral.
-//                    SPI_InitStruct: pointer to a SPI_InitTypeDef structure that contains
+//                  SPIx: where x can be 1 to 6 to select the SPI peripheral.
+//                  SPI_InitStruct: pointer to a SPI_InitTypeDef structure that contains
 //                  the configuration information for the specified SPI peripheral.
 //
 //-------------------------------------------------------------------------------------------------
@@ -98,7 +100,6 @@ SystemState_e SPI_Driver::GetStatus(void)
 void SPI_Driver::Initialize(void)
 {
     GPIO_InitTypeDef GPIO_InitStructure;
-
 
     m_pDevice       = nullptr;
     m_Status        = SYS_DEVICE_NOT_PRESENT;
@@ -773,4 +774,4 @@ void SPI_Driver::IRQHandler(void)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_SPI
+#endif // USE_SPI_DRIVER == DEF_ENABLED

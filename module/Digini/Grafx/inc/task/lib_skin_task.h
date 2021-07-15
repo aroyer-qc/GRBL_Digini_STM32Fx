@@ -67,15 +67,16 @@ typedef void (* SKIN_PostLoadCallBack_t)           (void);
 class SKIN_myClassTask
 {
     public:
+                      #ifdef DIGINI_USE_LOAD_SKIN
                         SKIN_myClassTask            (const char* pDrive, const char* pFileName);
-                       ~SKIN_myClassTask            (void);
+                      #endif
 
         void            Run                         (void);
         nOS_Error       Initialize                  (void);
-    //  #ifdef DIGINI_USE_LOAD_SKIN
+      #ifdef DIGINI_USE_LOAD_SKIN
         bool            IsSkinLoaded                (void);
         uint16_t        PercentLoader               (void);
-    //  #endif
+      #endif
       #ifdef STATIC_SKIN_DEF
         bool            IsStaticSkinLoaded          (void);
       #endif
@@ -86,27 +87,25 @@ class SKIN_myClassTask
 
       #ifdef DIGINI_USE_LOAD_SKIN
         SystemState_e   Load                        (void);
-        FRESULT         GetFileSystemError          (void)            {return m_FResult;};
-      #endif
         SystemState_e   GetImageInfo                (void);
         SystemState_e   DeCompressAllImage          (void);
         SystemState_e   GetFontInfo                 (void);
         SystemState_e   DeCompressAllFont           (void);
-
+        SystemState_e   Get_uint8_t                 (uint8_t* pValue);
+        SystemState_e   Get_uint16_t                (uint16_t* pValue);
+        SystemState_e   Get_uint32_t                (uint32_t* pValue);
+      #endif
       #ifdef STATIC_SKIN_DEF
         void            StaticLoad                  (void);           // Initialize all static image
       #endif
 
-        SystemState_e   Get_uint8_t                 (uint8_t* pValue);
-        SystemState_e   Get_uint16_t                (uint16_t* pValue);
-        SystemState_e   Get_uint32_t                (uint32_t* pValue);
-
         SKIN_PostLoadCallBack_t                     m_pCallBack;
 
         nOS_Flag                                    m_SkinFlags;
-      #ifdef DIGINI_USE_LOAD_SKIN
         nOS_Thread                                  m_Handle;
         nOS_Stack                                   m_Stack[SKIN_TASK_STACK_SIZE];
+
+      #ifdef DIGINI_USE_LOAD_SKIN
         bool                                        m_IsSkinLoaded;
         uint32_t                                    m_TotalToLoad;
         uint32_t                                    m_ReadCount;
@@ -116,11 +115,11 @@ class SKIN_myClassTask
         FRESULT                                     m_FResult;
         const char*                                 m_pDrive;
         char                                        m_Path[15];
+        uint8_t*                                    m_pRawInputBuffer;
       #endif
       #ifdef STATIC_SKIN_DEF
         volatile bool                               m_IsStaticLoaded;
       #endif
-        uint8_t*                                    m_pRawInputBuffer;
         uint16_t                                    m_ItemCount;
         uint32_t*                                   m_pDataSize;
         uint8_t*                                    m_pCompressionMethod;
@@ -134,7 +133,12 @@ class SKIN_myClassTask
 
 
 #ifdef LIB_SKIN_TASK_GLOBAL
+  #ifdef DIGINI_USE_LOAD_SKIN
                      class   SKIN_myClassTask       SKIN_Task("0:", SKIN_FILENAME);
+  #else
+                     class   SKIN_myClassTask       SKIN_Task;
+  #endif
+
                      class   SKIN_myClassTask*      SKIN_pTask = &SKIN_Task;
 #else
     extern           class   SKIN_myClassTask       SKIN_Task;

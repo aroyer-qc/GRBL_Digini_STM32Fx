@@ -30,15 +30,18 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
-#ifdef DIGINI_USE_UART
 #include "stm32f7xx.h"
 #include "nOS.h"
-#include "lib_isr.h"
-#include "lib_io.h"
 #include "lib_typedef.h"
-#include "uart_cfg.h"
+#include "lib_io.h"
+#include "lib_isr.h"
 #include "lib_dma.h"
+#include "uart_cfg.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_UART_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -184,7 +187,7 @@ class UART_Driver
 {
     public:
 
-                            UART_Driver                        (UART_ID_e UartID);
+                            UART_Driver                     (UART_ID_e UartID);
         void                SetConfig                       (UART_Config_e Config, UART_Baud_e BaudID);
         void                SetBaudRate                     (UART_Baud_e BaudID);
         uint32_t            GetBaudRate                     (void);
@@ -268,9 +271,9 @@ class UART_Driver
 
       #if (UART_ISR_RX_CFG == DEF_ENABLED)
         UART_CallBack_t             m_pCallbackRX;
-        void*                       m_pContextRX;
+        //void*                       m_pContextRX;
       #endif
-      #if UART_ISR_RX_IDLE_CFG == DEF_ENABLED
+      #if (UART_ISR_RX_IDLE_CFG == DEF_ENABLED)
         UART_CallBack_t             m_pCallbackIDLE;
         void*                       m_pContextIDLE;
       #endif
@@ -300,4 +303,4 @@ class UART_Driver
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_UART
+#endif // USE_UART_DRIVER == DEF_ENABLED

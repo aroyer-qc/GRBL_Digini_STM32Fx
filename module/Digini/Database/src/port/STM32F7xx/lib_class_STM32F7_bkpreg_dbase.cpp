@@ -29,13 +29,14 @@
 //-------------------------------------------------------------------------------------------------
 
 #include <stdint.h>
-
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_RTC
-
 #include "lib_class_STM32F7_bkpreg_dbase.h"
 #include "lib_class_STM32F7_rtc.h"
 #include "lib_macro.h"
+#include "driver_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_RTC_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -292,4 +293,4 @@ uint8_t CBKPREG_DataBase::GetIndex(uint16_t Record, uint16_t Number, uint16_t Su
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_RTC
+#endif // USE_RTC_DRIVER == DEF_ENABLED

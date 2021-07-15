@@ -35,20 +35,17 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_SPI
 #include "lib_digini.h"
 #include <stdint.h>
 #include "stm32f7xx.h"
 #include "nOS.h"
 #include "lib_class_gpio.h"
 #include "lib_typedef.h"
+#include "driver_cfg.h"
 
-#ifdef STM32F7_SPI_GLOBAL
-    #define STM32F7_SPI_EXTERN
-#else
-    #define STM32F7_SPI_EXTERN extern
-#endif
+//-------------------------------------------------------------------------------------------------
+
+#if USE_SPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // define(s)
@@ -283,5 +280,5 @@ class SPI_Driver
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_SPI
+#endif // USE_SPI_DRIVER == DEF_ENABLED
 

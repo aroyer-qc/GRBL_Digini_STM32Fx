@@ -136,6 +136,7 @@ static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState, uint16_t SubSer
 {
     ServiceReturn_t* pService = nullptr;
 
+  #ifdef GRAFX_USE_SLIDING_PAGE
     if(*pServiceState == SERVICE_RELEASED)
     {
         GUI_Task.SetSlidingDirection(SlideDir_e(SubService));
@@ -147,6 +148,7 @@ static ServiceReturn_t* SERV_BDEF(ServiceEvent_e* pServiceState, uint16_t SubSer
         GUI_Task.SetSlidingRange (&Test);
 */
     }
+  #endif
 
     if(*pServiceState != SERVICE_FINALIZE)
     {
@@ -1067,7 +1069,9 @@ ServiceReturn_t* ServiceCall(Service_t* pService, ServiceEvent_e* pServiceState)
             {
                 switch(pService->ID)
                 {
+                  #ifdef DIGINI_USE_SERV_XCHG
                     case SERV_ID_XCHG: pServiceReturn = SERV_XCHG(pServiceState, pService->SubID); ServiceWasProcessed = true; break;
+                  #endif
                 }
             }
             break;

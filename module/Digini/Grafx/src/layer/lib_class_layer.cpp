@@ -51,9 +51,12 @@ CLayer LayerTable[LAYER_COUNT] =
 Layer_e      CLayer::m_ActiveDrawingLayer;
       //static CLayer*      m_pActiveDrawingLayer;
 
+#ifdef GRAFX_USE_BACKGROUND_LAYER
 CLayer*      CLayer::m_pActiveBG_Layer;
-CLayer*      CLayer::m_pActiveFG_Layer;
 CLayer*      CLayer::m_pConstructBG_Layer;
+#endif
+
+CLayer*      CLayer::m_pActiveFG_Layer;
 CLayer*      CLayer::m_pConstructFG_Layer;
 uint8_t      CLayer::m_LayerStackCounter;
 Layer_e      CLayer::m_LayerStack[CLAYER_STACK_LEVEL];
@@ -483,6 +486,8 @@ void CLayer::SetActiveLayer(LayerType_e LayerType, CLayer* pLayer)
 {
     switch(LayerType)
     {
+
+      #ifdef GRAFX_USE_BACKGROUND_LAYER
         case LAYER_BACKGROUND:
         {
             // Deactivate physical access from previous owner of the active layer
@@ -498,6 +503,7 @@ void CLayer::SetActiveLayer(LayerType_e LayerType, CLayer* pLayer)
             myGrafx->LayerConfig(CLayer::m_pActiveBG_Layer);
             break;
         }
+      #endif
 
         case LAYER_FOREGROUND:
         {
@@ -505,7 +511,7 @@ void CLayer::SetActiveLayer(LayerType_e LayerType, CLayer* pLayer)
             if(CLayer::m_pActiveFG_Layer != nullptr)
             {
                 CLayer::m_pActiveFG_Layer->SetActive(LAYER_VIRTUAL);                    // Set the old layer to virtual status
-                CLayer::m_pConstructFG_Layer = CLayer::m_pActiveBG_Layer;               // And also assign this layer to construct duty
+                CLayer::m_pConstructFG_Layer = CLayer::m_pActiveFG_Layer;               // And also assign this layer to construct duty
             }
 
             // Activate new owner of the active layer

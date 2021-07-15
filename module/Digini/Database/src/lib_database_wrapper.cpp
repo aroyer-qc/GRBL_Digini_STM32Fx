@@ -29,15 +29,11 @@
 //-------------------------------------------------------------------------------------------------
 
 #include <stdint.h>
-#include "digini_cfg.h"
 #include "lib_macro.h"
 #include "lib_database_wrapper.h"
 #include "lib_time_typedef.h"
-#ifndef DIGINI_USE_RTC
-#include "bsp.h"
-#endif
-
-//-------------------------------------------------------------------------------------------------
+#include "bsp.h" // temporary see bellow TODO
+#include "driver_cfg.h"
 
 
 //-------------------------------------------------------------------------------------------------
@@ -54,7 +50,7 @@ void AccessTime(AccessRequest_e AccessRequest, void* pData, uint16_t Number, uin
     VAR_UNUSED(Number);
     VAR_UNUSED(SubNumber);
 
-  #ifdef DIGINI_USE_RTC
+  #if (USE_RTC_DRIVER == DEF_ENABLED)
     if(AccessRequest == ACCESS_READ) BSP_pRTC->GetTime((Time_t*)pData);
     else                             BSP_pRTC->SetTime((Time_t*)pData);
   #else // User function
@@ -75,7 +71,7 @@ void AccessDate(AccessRequest_e AccessRequest, void* pData, uint16_t Number, uin
     VAR_UNUSED(Number);
     VAR_UNUSED(SubNumber);
 
-  #ifdef DIGINI_USE_RTC
+  #if (USE_RTC_DRIVER == DEF_ENABLED)
     if(AccessRequest == ACCESS_READ) BSP_pRTC->GetDate((Date_t*)pData);
     else                             BSP_pRTC->SetDate((Date_t*)pData);
   #else // User function
@@ -97,7 +93,7 @@ void AccessTimeFormat(AccessRequest_e AccessRequest, void* pData, uint16_t Numbe
     VAR_UNUSED(Number);
     VAR_UNUSED(SubNumber);
 
-  #ifdef DIGINI_USE_RTC
+  #if (USE_RTC_DRIVER == DEF_ENABLED)
     if(AccessRequest == ACCESS_READ) BSP_pRTC->GetTimeFormat((TimeFormat_e*)pData);
     else                             BSP_pRTC->SetTimeFormat((TimeFormat_e*)pData);
   #else // User function

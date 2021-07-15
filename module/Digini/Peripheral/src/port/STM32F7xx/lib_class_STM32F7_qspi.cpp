@@ -28,8 +28,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "digini_cfg.h"
-#ifdef DIGINI_USE_QSPI
 #define STM32F7_QSPI_GLOBAL
 #include "lib_class_STM32F7_qspi.h"
 #undef  STM32F7_QSPI_GLOBAL
@@ -39,6 +37,10 @@
 #include "lib_define.h"
 #include "lib_macro.h"
 #include "clock_cfg.h"
+
+//-------------------------------------------------------------------------------------------------
+
+#if USE_QSPI_DRIVER == DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -1788,7 +1790,7 @@ void QSPI_Driver::DMA_AbortCplt(void)
 
 //-------------------------------------------------------------------------------------------------
 
-#endif // DIGINI_USE_QSPI
+#endif // USE_QSPI_DRIVER == DEF_ENABLED
 
 
 
@@ -2182,4 +2184,4 @@ void QSPI_Driver::IRQHandler(void)
 }
 #endif
 
-#endif
+#endif // USE_QSPI_DRIVER == DEF_ENABLED

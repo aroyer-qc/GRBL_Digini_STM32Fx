@@ -175,19 +175,18 @@ void CLabel::Draw(ServiceReturn_t* pService)
   #ifdef GRAFX_DEBUG_GUI
     CLayer::SetDrawing(((m_pLabel->Options & GRAFX_OPTION_DRAW_ON_BACK) != 0) ? BACKGROUND_DISPLAY_LAYER_0 : FOREGROUND_DISPLAY_LAYER_0);
   #else
-
    #ifdef GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
     ForeLayerToDraw = CONSTRUCTION_FOREGROUND_LAYER;
    #else
     ForeLayerToDraw = FOREGROUND_DISPLAY_LAYER_0;
    #endif
 
-   #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
-    BackLayerToDraw = CONSTRUCTION_BACKGROUND_LAYER;
-   #else
-    BackLayerToDraw = BACKEGROUND_DISPLAY_LAYER_0;
-   #endif
-
+   #ifdef GRAFX_USE_BACKGROUND_LAYER
+    #ifdef GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER
+     BackLayerToDraw = CONSTRUCTION_BACKGROUND_LAYER;
+    #else
+     BackLayerToDraw = BACKGROUND_DISPLAY_LAYER_0;
+    #endif
     if(SKIN_pTask->IsSkinLoaded() != true)
     {
         CLayer::SetDrawing(FOREGROUND_DISPLAY_LAYER_0);   // On loading with do print directly on foreground layer
@@ -196,6 +195,9 @@ void CLabel::Draw(ServiceReturn_t* pService)
     {
         CLayer::SetDrawing(((m_pLabel->Options & GRAFX_OPTION_DRAW_ON_BACK) != 0) ? BackLayerToDraw : ForeLayerToDraw);
     }
+   #else
+    CLayer::SetDrawing(ForeLayerToDraw);
+   #endif
   #endif
 
     WidgetPrint(&m_pLabel->Text, pService);
