@@ -70,7 +70,7 @@
 #endif
 
 #include "driver_cfg.h"
-#include GRAFX_DRIVER_INCLUDE
+//#include GRAFX_DRIVER_INCLUDE
 
 #ifdef DIGINI_USE_POINTING_DEVICE
   #include "lib_class_pointing_device_interface.h"
