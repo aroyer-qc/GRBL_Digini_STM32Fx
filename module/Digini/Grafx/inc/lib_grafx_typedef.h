@@ -158,12 +158,12 @@ struct Glyph_t
 
 struct Text_t
 {
-    Box_t           Box;
+    Box_t          Box;
     uint32_t       Color[3];
     Font_e         Font;
     BlendMode_e    Blend;
-    Label_e         Label;                                   // INVALID_LABEL //0xFF = No label present
-    uint8_t           Options;
+    Label_e        Label;                                   // INVALID_LABEL //0xFF = No label present
+    uint8_t        Options;
 };
 
 // --------- Exchange Widget element ---------
@@ -185,7 +185,7 @@ struct InputDecimal_t
 
 struct InputFloat_t
 {
-    ExchangeCommon_t   Common;
+    ExchangeCommon_t    Common;
     Label_e             FormatLabel;
     float               Min;
     float               Max;

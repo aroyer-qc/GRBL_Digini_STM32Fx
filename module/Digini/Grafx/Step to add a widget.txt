@@ -1,4 +1,8 @@
+
+To add a widget you can follow other widget as template.
+
 -----------------------------------------------------------------
+
 lib_class_widget.h
 
 Add your class definition here
@@ -37,9 +41,14 @@ Add the external variable definition here.
 
 -----------------------------------------------------------------
 
+lib_widget_variable.cpp
+
+Add the X_MACRO variable creation here.
+
+-----------------------------------------------------------------
+
 lib_gui_task.cpp
 
 Add your widget creation code in <CreateAllWidget()>.
-Follow other widget as template.
 
 -----------------------------------------------------------------
