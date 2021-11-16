@@ -313,6 +313,17 @@ Link_e GUI_myClassTask::CreateAllWidget()
         }
        #endif
 
+       #ifdef GRAPH_DEF
+        else if((Widget > APP_START_GRAPH_CONST) && (Widget < APP_END_GRAPH_CONST))
+        {
+            pWidget             = (CWidgetInterface*)pMemory->Alloc(sizeof(CGraph));
+            *pWidgetListPointer = pWidget;
+            pWidgetTemp         = new CGraph(&Graph[Widget - (APP_START_GRAPH_CONST + 1)]);
+            memcpy(pWidget, pWidgetTemp, sizeof(CGraph));
+            delete (CGraph*)pWidgetTemp;
+        }
+       #endif
+
        #ifdef ICON_DEF
         else if((Widget > APP_START_ICON_CONST) && (Widget < APP_END_ICON_CONST))
         {

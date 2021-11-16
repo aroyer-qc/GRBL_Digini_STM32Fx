@@ -169,6 +169,10 @@
  X_BASIC_BOX( BOX_3_4T,     SERV_ID_BDEF,  0,   0,      0,    138,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
  X_BASIC_BOX( BOX_4_4T,     SERV_ID_BDEF,  0,   0,      0,    207,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
 
+//            Enum ID,      Service,       Sub, Timing, Px,   Py,   Sx,   Sy,  Grid color,  Grid X, Grid Y, Scale X, Scale Y, Scroll, Draw X, Option
+#define BASIC_BOX_DEF \
+ X_GRAPH( GRAPH_TEST_T,     SERV_ID_RFSH,  0,   0,      100,  10,   240,  110, LIGHT_GREEN, 20,     20,     200,     100,     2,      199,    `GRAFX_OPTION_TOUCH_RECTANGLE)\
+
 //            Enum ID,      Type,           Px1,   Py1,   Px2,   Py2,   Px3,   Py3,   Px4,   Py4,  Color,       Thickness,  Options
 #define BASIC_SHAPE_DEF \
  X_BASIC_SHAPE( LINE_TITLE, BASIC_LINE,     10,    34,    470,   34,    0,     0,     0,     0,    GREEN,       2,          GRAFX_OPTION_DRAW_ONCE_AND_REMOVE)\
@@ -442,6 +446,9 @@
 
 //                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
 #define GIF_DEF         X_GIF(        ICON_GIF,               SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
+
+//                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
+#define GRAPH_DEF       X_GGRAPH(     GRAPH_TEST,             SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
 
 //                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Size X,  Size Y,  Minimum image,    Maximum image     Cursor Image,   Cursor radius,  Start Angle,  End Angle,  Range,  Option,                                       Text PosX,  Text PosY,  Text Size X,  Text Size Y,  Text Color,  Text Alternate Color,  Font ID,             Font Alternate ID,   Text Option,              Text Label,
 #define METER_DEF       X_METER(      METER_TEST,             SERV_ID_NONE,    2,           322,    76,     115,     115,     INVALID_IMAGE,    INVALID_IMAGE,    INVALID_IMAGE,  57,             0,            360,        100,    OPTION_CURSOR_PRIORITY,                       15,         44,         75,           28,           0x00FFFFFF,  0x0000FF00,            SYS_FT_16,  SYS_FT_16,  _X_CENTER_Y_CENTER,  INVALID_LABEL        )\

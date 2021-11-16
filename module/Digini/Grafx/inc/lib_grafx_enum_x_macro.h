@@ -96,10 +96,20 @@ enum Widget_e
 
   #ifdef GIF_DEF
       APP_START_GIF_CONST,
-    #define X_GIF(ENUM_ID, SERVICE, SUB_SERVICE, TIMING, SIZE_X, SIZE_Y, GIF) ENUM_ID,
+    #define X_GIF(ENUM_ID, SERVICE, SUB_SERVICE, TIMING, POS_X, POS_Y, GIF) ENUM_ID,
       GIF_DEF
     #undef  X_GIF
       APP_END_GIF_CONST,
+  #endif
+
+  // ---------- Graph widget list -------------------------
+
+  #ifdef GRAPH_DEF
+      APP_START_GRAPH_CONST,
+    #define X_GRAPH(ENUM_ID, SERVICE, SUB_SERVICE, TIMING, POS_X, POS_Y, SIZE_X, SIZE_Y, GRAPH, GRID_COLOR, GRID_X, GRID_Y, SCALE_X, SCALE_Y, SCROLL, OPTION) ENUM_ID,
+      GRAPH_DEF
+    #undef  X_GRAPH
+      APP_END_GRAPH_CONST,
   #endif
 
   // ---------- Icon widget list --------------------------

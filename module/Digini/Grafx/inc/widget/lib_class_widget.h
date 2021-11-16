@@ -87,6 +87,9 @@ class CBasicBox : public CWidgetInterface
         void                DrawOnce                    (ServiceReturn_t* pService);
 
         BasicBox_t*         m_pBasicBox;
+        ServiceEvent_e      m_ServiceState;
+        PageWidget_t*       m_pPageWidget;
+
         Cartesian_t         m_TopLeft;
         Cartesian_t         m_TopRight;
         Cartesian_t         m_BottomLeft;
@@ -103,9 +106,6 @@ class CBasicBox : public CWidgetInterface
         int16_t             m_X_VerLeft;
         int16_t             m_X_VerRight;
         int16_t             m_VerUpTo;
-
-        ServiceEvent_e      m_ServiceState;
-        PageWidget_t*       m_pPageWidget;
 };
 #endif
 
@@ -196,6 +196,31 @@ class CGif : public CWidgetInterface
 };
 #endif
 
+#ifdef GGRAPH_DEF
+class CGraph : public CWidgetInterface
+{
+    public:
+                            CGraph                      (Graph_t* pGraph);
+                           ~CGraph                      (){};
+
+        Link_e              Create                      (PageWidget_t* pPageWidget);
+        Link_e              Refresh                     (MsgRefresh_t* pMsg);
+        void                Finalize                    (void);
+
+    private:
+
+        void                Draw                        (ServiceReturn_t* pService);
+        void                DrawOnce                    (ServiceReturn_t* pService);
+
+        Graph_t*            m_pGraph;
+        ServiceEvent_e      m_ServiceState;
+        PageWidget_t*       m_pPageWidget;
+
+        uint16_t            m_DrawX,
+        uint16_t            m_MaxDrawX,
+};
+#endif
+
 #ifdef ICON_DEF
 class CIcon : public CWidgetInterface
 {
@@ -279,8 +304,9 @@ class CMeter : public CWidgetInterface
 
         Meter_t*            m_pMeter;
         ServiceEvent_e      m_ServiceState;
-        uint16_t            m_Value;
         PageWidget_t*       m_pPageWidget;
+
+        uint16_t            m_Value;
 };
 #endif
 
@@ -301,10 +327,9 @@ class CPageSlide : public CWidgetInterface
         void                DrawOnce                    (ServiceReturn_t* pService);
 
         PageSlide_t*        m_pPageSlide;
-
         ServiceEvent_e      m_ServiceState;
-        ServiceEvent_e      m_LastServiceState;
         PageWidget_t*       m_pPageWidget;
+        ServiceEvent_e      m_LastServiceState;
 };
 #endif
 
@@ -325,10 +350,9 @@ class CPanel : public CWidgetInterface
         void                DrawOnce                    (ServiceReturn_t* pService);
 
         Panel_t*            m_pPanel;
-
         ServiceEvent_e      m_ServiceState;
-        ServiceEvent_e      m_LastServiceState;
         PageWidget_t*       m_pPageWidget;
+        ServiceEvent_e      m_LastServiceState;
 };
 #endif
 
@@ -349,11 +373,12 @@ class CProgress : public CWidgetInterface
         void                DrawOnce                    (ServiceReturn_t* pService);
 
         Progress_t*         m_pProgress;
-        uint16_t            m_Range;
         ServiceEvent_e      m_ServiceState;
+        PageWidget_t*       m_pPageWidget;
+
+        uint16_t            m_Range;
         uint16_t            m_Value;
         bool                m_NegativeMovement;
-        PageWidget_t*       m_pPageWidget;
         Cartesian_t         m_CursorPos;
 };
 #endif
@@ -376,6 +401,7 @@ class CSpectrum : public CWidgetInterface
         Spectrum_t*         m_pSpectrum;
         ServiceEvent_e      m_ServiceState;
         PageWidget_t*       m_pPageWidget;
+
         uint16_t            m_DotSize;
         BoxSize_t           m_BarSize;
         void*               m_BarAddress;
@@ -420,13 +446,14 @@ class CTerminal : public CWidgetInterface
         void                Draw                        (ServiceReturn_t* pService);
 
         Terminal_t*         m_pTerminal;
+        ServiceEvent_e      m_ServiceState;
+        PageWidget_t*       m_pPageWidget;
+
         uint8_t             m_NumberOfLine;
         uint8_t             m_NbOfCharPerLine;
         uint8_t             m_OffsetLine;
         uint8_t             m_CurrentLine;
         uint8_t             m_LineSize;
-        ServiceEvent_e      m_ServiceState;
-        PageWidget_t*       m_pPageWidget;
         uint8_t*            m_pScreen;
 };
 #endif
@@ -467,10 +494,11 @@ class CVirtualWindow : public CWidgetInterface
         void                DrawOnce                    (ServiceReturn_t* pService);
 
         VirtualWindow_t*    m_pVirtualWindow;
-        PixelFormat_e       m_PixelFormat;
-        uint8_t*            m_pAddress;
         ServiceEvent_e      m_ServiceState;
         PageWidget_t*       m_pPageWidget;
+
+        PixelFormat_e       m_PixelFormat;
+        uint8_t*            m_pAddress;
 };
 #endif
 

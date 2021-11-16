@@ -280,7 +280,7 @@ struct ServiceType8_t                   // Service to override position of a wid
 struct Background_t
 {
     Service_t      Service;
-    Cartesian_t       Pos;
+    Cartesian_t    Pos;
     Image_t        Image;
     uint16_t       Options;
 //    uint16_t     RefreshRate;      // background animation ??
@@ -326,7 +326,7 @@ struct BasicRect_t
 struct Button_t
 {
     Service_t      Service;
-    Cartesian_t       Pos;
+    Cartesian_t    Pos;
     Image_t        Image;
     Glyph_t        Glyph;
     Text_t         Text;
@@ -338,7 +338,7 @@ struct Button_t
 
 struct Icon_t
 {
-    Service_t        Service;
+    Service_t      Service;
     Box_t          Box;
     Image_t        Image;
     uint16_t       Options;
@@ -346,9 +346,23 @@ struct Icon_t
 
 struct Gif_t
 {
-    Service_t        Service;
+    Service_t      Service;
     Cartesian_t    Pos;
     Image_t        Image;
+    uint16_t       Options;
+};
+
+struct Graph_t
+{
+    Service_t      Service;
+    Box_t          Box;
+    uint32_t       GridColor;               // Grid color
+    uint16_t       GridSpacing_X;           // Pixel grid X
+    uint16_t       GridSpacing_Y;           // Pixel grid Y
+    uint16_t       Scale_X;                 // Scale value for X
+    uint16_t       Scale_Y;                 // Scale value for Y
+    uint16_t       ScrollStep;              // Number of step for each slot
+    uint16_t       Draw_X;                  // Start drawing position
     uint16_t       Options;
 };
 
@@ -363,7 +377,7 @@ struct LabelList_t
 {
     Service_t      Service;
     Text_t         Text;
-    Label_e         Label[LABEL_LIST_SIZE];
+    Label_e        Label[LABEL_LIST_SIZE];
     uint16_t       Options;
 };
 
@@ -395,8 +409,8 @@ struct Panel_t
 {
     Service_t      Service;
     uint16_t       ServiceFilter;
-    Box_t           Box;                // It is also the Touch Area
-    Image_t           Image;
+    Box_t          Box;                // It is also the Touch Area
+    Image_t        Image;
     Text_t         Text;
     uint16_t       Options;
 };

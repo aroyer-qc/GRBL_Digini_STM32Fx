@@ -74,6 +74,11 @@ extern "C" {
   extern Gif_t              Gif                 [APP_NB_GIF_CONST];
  #endif
 
+ #ifdef GRAPH_DEF
+  #define APP_NB_GRAPH_CONST                (APP_END_GRAPH_CONST            - APP_START_GRAPH_CONST)            - 1
+  extern Graph_t            Graph               [APP_NB_GRAPH_CONST];
+ #endif
+
  #ifdef ICON_DEF
   #define APP_NB_ICON_CONST                 (APP_END_ICON_CONST             - APP_START_ICON_CONST)             - 1
   extern Icon_t             Icon                [APP_NB_ICON_CONST];
