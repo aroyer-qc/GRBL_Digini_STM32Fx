@@ -209,8 +209,7 @@ class CGraph : public CWidgetInterface
 
     private:
 
-        void                Draw                        (ServiceReturn_t* pService);
-        void                DrawOnce                    (ServiceReturn_t* pService);
+        void                Draw                        (ServiceReturn_t* pService, bool IsItDrawingGrid);
 
         Graph_t*            m_pGraph;
         ServiceEvent_e      m_ServiceState;

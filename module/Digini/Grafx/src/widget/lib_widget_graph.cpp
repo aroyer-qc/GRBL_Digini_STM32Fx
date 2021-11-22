@@ -50,6 +50,8 @@
 CGraph::CGraph(Graph_t* pGraph)
 {
     m_pGraph = pGraph;
+    m_DrawX  = pGraph->Draw_X;          // Initialize X drawing position
+}
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -69,9 +71,10 @@ Link_e CGraph::Create(PageWidget_t* pPageWidget)
 
     m_pPageWidget  = pPageWidget;
     m_ServiceState = SERVICE_START;
+    
     if((pService = ServiceCall(&m_pGraph->Service, &m_ServiceState)) != nullptr)
     {
-        Draw(pService);
+        Draw(pService, true);
         FreeServiceStruct(&pService);
     }
 
@@ -129,14 +132,19 @@ void CGraph::Finalize()
 //  Name:           Draw
 //
 //  Parameter(s):   ServiceReturn_t* pService
+//                  bool             IsItDrawingGrid
 //  Return:         None
 //
 //
 //  Description:    Draw the Graph on display according to state.
 //
 //-------------------------------------------------------------------------------------------------
-void CGraph::Draw(ServiceReturn_t* pService)
+void CGraph::Draw(ServiceReturn_t* pService, bool IsItDrawingGrid)
 {
+    uint16_t X;
+    uint16_t EndX;
+    uint16_t Y;
+    
     CLayer::PushDrawing();
 
   #ifdef GRAFX_DEBUG_GUI
@@ -149,10 +157,49 @@ void CGraph::Draw(ServiceReturn_t* pService)
    #endif
   #endif
 
-    // Is this graph Active ?
-        // Select Next image and blend it
-    // no
-        // Do nothing
+/*
+Box.Pos.X;
+Box.Pos.Y;
+Box.Size.Width
+
+struct Graph_t
+{
+    Service_t      Service;
+    Box_t          Box;
+    uint32_t       GridColor;               // Grid color
+    uint16_t       GridSpacing_X;           // Pixel grid X
+    uint16_t       GridSpacing_Y;           // Pixel grid Y
+    uint16_t       Scale_X;                 // Scale value for X
+    uint16_t       Scale_Y;                 // Scale value for Y
+    uint16_t       ScrollStep;              // Number of step for each slot
+    uint16_t       Draw_X;                  // Start drawing position
+    uint16_t       Options;
+};
+*/
+
+    // Put here drawing function
+
+    if(IsItDrawingGrid == true)
+    {
+        EndX = (m_pGraph->Box.Pos.X + )
+        
+        for(X = m_pGraph->Box.Pos.X; X < EndX; x += m_pGraph->Scale_X)
+        // Do iteration to draw the vertical grid
+
+        // Do iteration to draw the horizontal grid
+    }
+
+    // Check if its time to shift the graph do it here by copy!!
+    {
+        // Check if we if we need to add a new vertical line do it..
+        {
+        }
+        
+        // Add every horizontal line pixel of the graph
+    }
+
+    // Plot the pixel X and Y
+    // Update all variables for next iteration
 
     CLayer::PopDrawing();
 }

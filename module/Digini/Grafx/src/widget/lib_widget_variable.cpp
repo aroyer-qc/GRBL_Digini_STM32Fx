@@ -173,18 +173,6 @@ Gif_t Gif[APP_NB_GIF_CONST] =
 //  GRAPH Widget
 //-------------------------------------------------------------------------------------------------
 
-    Service_t      Service;
-    Box_t          Box;
-    uint32_t       GridColor;               // Grid color
-    uint16_t       GridSpacing_X;           // Pixel grid X
-    uint16_t       GridSpacing_Y;           // Pixel grid Y
-    uint16_t       Scale_X;                 // Scale value for X
-    uint16_t       Scale_Y;                 // Scale value for Y
-    uint16_t       ScrollStep;              // Number of step for each slot
-    uint16_t       Draw_X;                  // Start drawing position
-    uint16_t       Options;
-
-
 #ifdef GRAPH_DEF
 Graph_t Graph[APP_NB_GRAPH_CONST] =
 {
