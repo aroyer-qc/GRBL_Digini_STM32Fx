@@ -86,12 +86,12 @@
 // Individual widget Definition
 //-------------------------------------------------------------------------------------------------
 //       Enum ID,         Service,      Sub, Timing, Px, Py, IMG0,             IMG_1,         IMG_2,         IMG_3,         IMG_4,         IMG_5,         IMG_6,         IMG_7,         IMG_8,         IMG_9,         IMG_10,        IMG_11,        IMG_12,        IMG_13,        IMG_14,        IMG_15,        Options
-#define BACK_DEF \
+#define BACK_DEF(X_BACK)\
  X_BACK( BACK_LOADING,    SERV_ID_RFSH, 0,   0,      0,  0,  LOADING_BACK,     INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, GRAFX_OPTION_DRAW_ONCE_AND_REMOVE )\
  X_BACK( BACK_DIAMOND,    SERV_ID_RFSH, 0,   0,      0,  0,  BG_IMG,           INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, INVALID_IMAGE, GRAFX_OPTION_DRAW_ONCE_AND_REMOVE )\
 
 //      Enum ID,           Service,      Sub,             Timing, Px,   Py,   Released btn,   Pressed button,         Inactive button,   GPx,  GPy,  Released glyph,     Pressed glyph,      Inactive glyph  TOPx, TOPy, TOSx, TOSy, TPx,  TPy,    TSx,  TSy,  TC,         TC_PR,        TC_GR,        Font ID,          Text Option,             Text Label,     Filter,                 Option,
-#define BTN_DEF \
+#define BTN_DEF(X_BTN) \
  X_BTN( BTN_SETTING,       SERV_ID_BDEF, SLIDING_RIGHT_OVLAP,   0,      426,  10,   BT_SPHERE,      BT_SPHERE_PR,           INVALID_IMAGE,     8,    8,    GL_TOOLS,           GL_TOOLS,           INVALID_IMAGE,  426,  10,   45,   45,   0,     0,     0,    0,    0,          0,            0,            INVALID_FONT,     0,                       INVALID_LABEL,  SERVICE_FILTER_NORMAL,  GRAFX_OPTION_TOUCH_RECTANGLE)\
  /*X_BTN( BTN_JOG,           SERV_ID_BDEF, 0,             0,      426,  40,   BT_SPHERE,      BT_SPHERE_PR,           INVALID_IMAGE,     8,    8,    GL_JOG,             GL_JOG,             INVALID_IMAGE,  426,  10,   45,   45,   0,     0,     0,    0,    0,          0,            0,            INVALID_FONT,     0,                       INVALID_LABEL,  SERVICE_FILTER_NORMAL,  GRAFX_OPTION_TOUCH_RECTANGLE)*/\
  X_BTN( BTN_RETURN,        SERV_ID_BDEF, SLIDING_LEFT_DE_OVLAP,    0,      426,  10,   BT_SPHERE,      BT_SPHERE_PR,           INVALID_IMAGE,     8,    8,    GL_RETURN,          GL_RETURN,          INVALID_IMAGE,  426,  10,   45,   45,   0,     0,     0,    0,    0,          0,            0,            INVALID_FONT,     0,                       INVALID_LABEL,  SERVICE_FILTER_NORMAL,  GRAFX_OPTION_TOUCH_RECTANGLE)\
@@ -146,7 +146,7 @@
  X_BTN( BTN_BOX_MAX,       SERV_ID_XCHG, CFG_IN_SPIN_MAX, 0,      292,  220,  BT_YELLOW,      BT_YELLOW_PR,           INVALID_IMAGE,     0,    0,    INVALID_IMAGE,      INVALID_IMAGE,      INVALID_IMAGE,  292,   220, 170,  40,   5,     7,     100,  26,   GRAY_28,    GRAY_20,      GRAY_16,      FT_DIGITAL_24,    _X_LEFT_Y_CENTER,        LBL_STRING,     SERVICE_FILTER_NORMAL,  GRAFX_OPTION_TOUCH_RECTANGLE)\
 
 //            Enum ID,      Service,       Sub, Timing, Px,   Py,   Sx,   Sy,   Top Left,    Top Right,    Bottom Left,    Bottom Right,    Horizontal,    Vertical     Filter                 Option
-#define BASIC_BOX_DEF \
+#define BASIC_BOX_DEF(X_BASIC_BOX) \
  X_BASIC_BOX( BOX_T,        SERV_ID_RFSH,  0,   0,      176,  0,    240,  272,  GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_DRAW_ONCE)\
  X_BASIC_BOX( BOX_AXIS,     SERV_ID_RFSH,  0,   0,      0,    0,    480,  272,  GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_DRAW_ONCE_AND_REMOVE)\
  X_BASIC_BOX( BOX_EDIT,     SERV_ID_RFSH,  0,   0,      10,   36,   460,  60,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_DRAW_ONCE_AND_REMOVE)\
@@ -169,16 +169,15 @@
  X_BASIC_BOX( BOX_3_4T,     SERV_ID_BDEF,  0,   0,      0,    138,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
  X_BASIC_BOX( BOX_4_4T,     SERV_ID_BDEF,  0,   0,      0,    207,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
 
-//            Enum ID,      Service,       Sub, Timing, Px,   Py,   Sx,   Sy,  Grid color,  Grid X, Grid Y, Scale X, Scale Y, Scroll, Draw X, Option
-#define BASIC_BOX_DEF \
- X_GRAPH( GRAPH_TEST_T,     SERV_ID_RFSH,  0,   0,      100,  10,   240,  110, LIGHT_GREEN, 20,     20,     200,     100,     2,      199,    `GRAFX_OPTION_TOUCH_RECTANGLE)\
+#define GRAPH_DEF(X_BASIC_SHAPE) \
+ X_GRAPH( GRAPH_TEST_T,     SERV_ID_RFSH,  0,   0,      100,  10,   240,  110, LIGHT_GREEN, 20,     20,     200,     100,     2,      199,    GRAFX_OPTION_TOUCH_RECTANGLE)\
 
 //            Enum ID,      Type,           Px1,   Py1,   Px2,   Py2,   Px3,   Py3,   Px4,   Py4,  Color,       Thickness,  Options
-#define BASIC_SHAPE_DEF \
+#define BASIC_SHAPE_DEF() \
  X_BASIC_SHAPE( LINE_TITLE, BASIC_LINE,     10,    34,    470,   34,    0,     0,     0,     0,    GREEN,       2,          GRAFX_OPTION_DRAW_ONCE_AND_REMOVE)\
 
 //      Enum ID,                 Service,      Sub, Timing, Px,   Py,   Sx,   Sy,   TC,          TAC,         TAC2,    Font ID,        Text Blend,   Text Label             Text Option         Option
-#define LABEL_DEF \
+#define LABEL_DEF(X_LBL) \
  X_LBL( LABEL_TIME,              SERV_ID_TIME, 0,   0,      20,   7,    200,  16,   WHITE,       GREEN,       0,       SYS_FT_16,      CLEAR_BLEND,  LBL_TIME,              _X_LEFT_Y_CENTER,   GRAFX_OPTION_NONE)\
  X_LBL( LABEL_DATE,              SERV_ID_DATE, 0,   0,      20,   67,   200,  16,   WHITE,       GREEN,       0,       SYS_FT_16,      CLEAR_BLEND,  LBL_DATE,              _X_LEFT_Y_CENTER,   GRAFX_OPTION_NONE)\
  X_LBL( LABEL_SKIN_LOADING,      SERV_ID_SKLD, 0,   0,      134,  222,  300,  16,   GRAY_16,     GRAY_16,     GRAY_16, SYS_FT_16,      CLEAR_BLEND,  LBL_SKIN_LOADING,      _X_LEFT_Y_CENTER,   GRAFX_OPTION_DRAW_ONCE)\
@@ -328,7 +327,7 @@
 //X_LBL(   LABEL_SAFETY_DOOR,     SERV_ID_RFSH, 0,   0,      270,  190,  200,  10,   GRAY_28,     0,           0,       FT_ARIAL_10,    ALPHA_BLEND,  LBL_INPUT_DOOR,   _X_LEFT_Y_CENTER,   GRAFX_OPTION_DRAW_ONCE_AND_REMOVE | GRAFX_OPTION_DRAW_ON_BACK)
 
 //             Enum ID,                 Service,      Sub, Timing, Px,   Py,   Sx,   Sy,   TC,         TAC,       TAC2,        Font ID,        Text Blend,  State 0,          State 1,            State 2,       State 3,        Text Option,       Option
-#define LABEL_LIST_DEF \
+#define LABEL_LIST_DEF(X_LABEL_LIST) \
  X_LABEL_LIST( LABEL_AXIS_X_1_3_BACK,   SERV_ID_INCH, 1,   0,      88,   10,   272,  66,   GRAY_8,     0,         0,           FT_DIGITAL_64,  ALPHA_BLEND, LBL_AXIS_MM_BACK, LBL_AXIS_INCH_BACK, INVALID_LABEL, INVALID_LABEL,  _X_LEFT_Y_CENTER,  GRAFX_OPTION_DRAW_ONCE_AND_REMOVE | GRAFX_OPTION_DRAW_ON_BACK)\
  X_LABEL_LIST( LABEL_AXIS_Y_2_3_BACK,   SERV_ID_INCH, 1,   0,      88,   100,  272,  66,   GRAY_8,     0,         0,           FT_DIGITAL_64,  ALPHA_BLEND, LBL_AXIS_MM_BACK, LBL_AXIS_INCH_BACK, INVALID_LABEL, INVALID_LABEL,  _X_LEFT_Y_CENTER,  GRAFX_OPTION_DRAW_ONCE_AND_REMOVE | GRAFX_OPTION_DRAW_ON_BACK)\
  X_LABEL_LIST( LABEL_AXIS_Z_2_3_BACK,   SERV_ID_INCH, 1,   0,      88,   100,  272,  66,   GRAY_8,     0,         0,           FT_DIGITAL_64,  ALPHA_BLEND, LBL_AXIS_MM_BACK, LBL_AXIS_INCH_BACK, INVALID_LABEL, INVALID_LABEL,  _X_LEFT_Y_CENTER,  GRAFX_OPTION_DRAW_ONCE_AND_REMOVE | GRAFX_OPTION_DRAW_ON_BACK)\
@@ -350,17 +349,17 @@
  X_LABEL_LIST( LABEL_AXIS_BACK,         SERV_ID_INCH, 1,   0,      4,    80,   300,  66,   GRAY_8,     0,         0,           FT_DIGITAL_64,  ALPHA_BLEND, LBL_AXIS_MM_BACK, LBL_AXIS_INCH_BACK, INVALID_LABEL, INVALID_LABEL,  _X_LEFT_Y_CENTER,  GRAFX_OPTION_DRAW_ONCE_AND_REMOVE | GRAFX_OPTION_DRAW_ON_BACK)\
 
 //           Enum ID,            Service,      Sub, Timing, Px,  Py,  Sx,  Sy,  Background IMG, Bar IMG        Cursor Image,     COx,  COy,  CSV,  CEV,  CPR,  TPx,  TPy,  TSx,  TSy,  TC,      TAC,     TAC2,     Font ID,   Text Option,         Text Label,        Option
-#define PROGRESS_DEF \
+#define PROGRESS_DEF(X_PROGRESS) \
  X_PROGRESS( PROGRESS_LOADING,   SERV_ID_SKLD, 2,   0,      25,  159, 430, 43,  INVALID_IMAGE,  LOADING_BAR,   LOADING_CURSOR,   20,   13,   0,    100,  384,  260,  63,   48,   16,   GRAY_16, GRAY_16, GRAY_16,  SYS_FT_16, _X_CENTER_Y_CENTER,  LBL_PERCENT,       GRAFX_OPTION_ORIENTATION_HORIZONTAL | GRAFX_OPTION_BLEND_CLEAR)\
 
 // TODO change... and dont use hub for single link ( all widget can return a new link...
 //      Enum ID,                Service,        Sub, Timing, LinkList
-#define VIRTUAL_HUB_DEF \
+#define VIRTUAL_HUB_DEF(X_HUB) \
  X_HUB( VIRTUAL_MAIN_HUB,       SERV_ID_MHUB,   0,   0,      LINK_MAIN_PAGE_XY,  LINK_MAIN_PAGE_ZX,  LINK_MAIN_PAGE_XYZ,  LINK_MAIN_PAGE_XYT,  LINK_MAIN_PAGE_ZXT,  LINK_MAIN_PAGE_XYZT,  INVALID_LINK,  INVALID_LINK )\
 /* X_HUB( VIRTUAL_JOG_HUB,       SERV_ID_JHUB,   0,   0,      LINK_JOG_PAGE_XY,  LINK_JOG_PAGE_ZX,  LINK_JOG_PAGE_XYZ,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK )*/\
 
 //       Enum ID,               Service,      Sub, Timing, Px,  Py,       Sx,   Sy,  Icon 0,           Icon 1,          Icon 2,        Icon 3,            Option,
-#define ICON_DEF \
+#define ICON_DEF(X_ICON) \
  X_ICON( ICON_LED_SPINDLE_3_3,  SERV_ID_ENBL, 9,   0,      140, 212,      0,    0,   GL_LED_GREEN_OFF, GL_LED_GREEN_ON, INVALID_IMAGE,    INVALID_IMAGE,  GRAFX_OPTION_BLEND_CLEAR )\
  X_ICON( ICON_LED_SPINDLE_4_4,  SERV_ID_ENBL, 9,   0,      180, 225,      0,    0,   GL_LED_GREEN_OFF, GL_LED_GREEN_ON, INVALID_IMAGE,    INVALID_IMAGE,  GRAFX_OPTION_BLEND_CLEAR )\
  X_ICON( ICON_LED_LIMIT_X_3,    SERV_ID_INPU, 0,   0,      90,  11,       0,    0,   GL_LED_RED_ON,    GL_LED_RED_OFF,  GL_LED_GRAY_OFF,  INVALID_IMAGE,  GRAFX_OPTION_NONE )\
@@ -423,11 +422,11 @@
  X_ICON( ICON_LED_SPINDLE,      SERV_ID_ENBL, 9,   0,      90,   86,      0,    0,   GL_LED_GREEN_OFF, GL_LED_GREEN_ON, INVALID_IMAGE,    INVALID_IMAGE,  GRAFX_OPTION_BLEND_CLEAR )\
 
 //             Enum ID,               Service,      Sub, Timing, Px,  Py,  Sx,  Sy,  Color,    Filter,                 Options
-#define BASIC_RECT_DEF \
+#define BASIC_RECT_DEF(X_BASIC_RECT) \
  X_BASIC_RECT( RECT_BLANK_MACHINE,    SERV_ID_RFSH, 0,   0,      10,  80,  120, 150, BLACK,    SERVICE_FILTER_NORMAL,  GRAFX_OPTION_NONE   ) \
 
 //            Enum ID,          Service,       Sub, Timing, Px,  Py,  Sx,  Sy,  TC,          Font ID,      Filter,                Options
-#define TERMINAL_DEF \
+#define TERMINAL_DEF(X_TERMINAL) \
  X_TERMINAL ( TERM_GCODE,       SERV_ID_GCOD,  0,   0,      182, 5,   228, 262, LIGHT_GREEN, FT_TERMINAL,  SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE)\
  X_TERMINAL ( TERM_GCODE_FULL,  SERV_ID_GCOD,  1,   0,      0,   0,   430, 272, LIGHT_GREEN, FT_ARIAL_10,  SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE)\
 

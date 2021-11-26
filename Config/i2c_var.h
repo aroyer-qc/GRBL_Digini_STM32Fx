@@ -34,7 +34,7 @@
 
 #ifdef I2C_DRIVER_GLOBAL
 
-const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
+I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 {
   #if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
     {
@@ -42,7 +42,7 @@ const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
         IO_I2C1_SCL,                // SCL
         IO_I2C1_SDA,                // SDA
         RCC_APB1ENR_I2C1EN,         // RCC_APB1ENR
-        0x00A01B5B,                 // Timing for this module
+        400000,                     // Speed for this module
         7,                          // PreempPrio
         I2C1_EV_IRQn,               // IRQn_Channel
         I2C1_ER_IRQn,               // IRQn_Channel
@@ -55,7 +55,7 @@ const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
         IO_I2C2_SCL,                // SCL
         IO_I2C2_SDA,                // SDA
         RCC_APB1ENR_I2C2EN,         // RCC_APB1ENR
-        0x00A01B5B,                 // Timing for this module
+        400000,                     // Speed for this module
         7,                          // PreempPrio
         I2C2_EV_IRQn,               // IRQn_Channel
         I2C2_ER_IRQn,               // IRQn_Channel
@@ -68,7 +68,7 @@ const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
         IO_I2C3_SCL,                // SCL
         IO_I2C3_SDA,                // SDA
         RCC_APB1ENR_I2C3EN,         // RCC_APB1ENR
-        0x00A01B5B,                 // Timing for this module
+        400000,                     // Speed for this module
         7,                          // PreempPrio
         I2C3_EV_IRQn,               // IRQn_Channel
         I2C3_ER_IRQn,               // IRQn_Channel
@@ -81,7 +81,7 @@ const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
         IO_I2C4_SCL,                // SCL
         IO_I2C4_SDA,                // SDA
         RCC_APB1ENR_I2C4EN,         // RCC_APB1ENR
-        0x00A01B5B,                 // Timing for this module
+        400000,                     // Speed for this module
         7,                          // PreempPrio
         I2C4_EV_IRQn,               // IRQn_Channel
         I2C4_ER_IRQn,               // IRQn_Channel
@@ -89,12 +89,12 @@ const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST] =
   #endif
 };
 
-class I2C_Driver myI2C_Control(&I2C_PortInfo[DRIVER_I2C_ID_3]);
-class I2C_Driver myI2C_External(&I2C_PortInfo[DRIVER_I2C_ID_1]);
+class I2C_Driver myI2C_Control(&I2C_PortInfo[DRIVER_I2C3_ID]);
+class I2C_Driver myI2C_External(&I2C_PortInfo[DRIVER_I2C1_ID]);
 
 #else // I2C_DRIVER_GLOBAL
 
-extern const I2C_PortInfo_t I2C_PortInfo[I2C_DRIVER_NB_PORT_CONST];
+extern const I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER];
 
 extern class I2C_Driver myI2C_Control;
 extern class I2C_Driver myI2C_External;

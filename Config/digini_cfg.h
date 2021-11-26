@@ -32,18 +32,18 @@
 // Low level Peripheral
 //
 
-//#define DIGINI_USE_SAI                    // Serial audio out
-//#define DIGINI_USE_RTC
-#define DIGINI_USE_UART
-#define DIGINI_USE_TIM
-//#define DIGINI_USE_I2S
-#define DIGINI_USE_I2C
-#define DIGINI_USE_SDIO
-//#define DIGINI_USE_USB
-//#define DIGINI_USE_USB_OTG_FS
-//#define DIGINI_USE_USB_OTG_HS
-//#define DIGINI_USE_SPI
-#define DIGINI_USE_QSPI
+#define USE_SAI_DRIVER          DEF_DISABLED             // Serial audio out
+#define USE_RTC_DRIVER          DEF_DISABLED
+#define USE_UART_DRIVER         DEF_ENABLED
+#define USE_TIM_DRIVER          DEF_ENABLED
+#define USE_I2S_DRIVER          DEF_DISABLED
+#define USE_I2C_DRIVER          DEF_ENABLED
+#define USE_SDIO_DRIVER         DEF_ENABLED
+#define USE_USB_DRIVER          DEF_DISABLED
+#define USE_USB_OTG_FS_DRIVER   DEF_DISABLED
+#define USE_USB_OTG_HS_DRIVER   DEF_DISABLED
+#define USE_SPI_DRIVER          DEF_DISABLED
+#define USE_QSPI_DRIVER         DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral

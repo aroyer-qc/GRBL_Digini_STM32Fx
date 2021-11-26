@@ -1,1 +1,0 @@
-Digini GUI core
