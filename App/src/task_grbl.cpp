@@ -28,14 +28,10 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-//#include <stdio.h>
-//#include <stdlib.h>
-#include <stdint.h>
 #define TASK_GRBL_GLOBAL
 #include "Task_grbl.h"
 #undef TASK_GRBL_GLOBAL
-#include "lib_io.h"
-#include "lib_grafx.h"
+#include "lib_digini.h"
 
 #if 0
 // for the real time command
@@ -65,25 +61,6 @@
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           TaskGRBL_Wrapper
-//
-//  Parameter(s):   void* pvParameters
-//  Return:         void
-//
-//  Description:    main() for the task2
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-/* Needed if task is not at the idle level
-extern "C" void TaskGRBL_Wrapper(void* pvParameters)
-{
-    (static_cast<ClassTaskGRBL*>(pvParameters))->Run();
-}
-*/
-
-//-------------------------------------------------------------------------------------------------
-//
 //  Name:           Initialize
 //
 //  Parameter(s):   void
@@ -96,17 +73,7 @@ extern "C" void TaskGRBL_Wrapper(void* pvParameters)
 //-------------------------------------------------------------------------------------------------
 nOS_Error ClassTaskGRBL::Initialize(void)
 {
-    nOS_Error Error;
-
-/* Needed if task is not at the idle level
-    Error = nOS_ThreadCreate(&this->m_Handle,
-                             TaskGRBL_Wrapper,
-                             this,
-                             &this->m_Stack[0],
-                             TASK_GRBL_STACK_SIZE,
-                             TASK_GRBL_PRIO);
-
-*/
+    nOS_Error Error = NOS_OK;
 
     // ------------------------
     // Stepper drive IO

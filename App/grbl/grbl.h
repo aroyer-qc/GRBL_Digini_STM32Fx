@@ -26,12 +26,6 @@
 #define GRBL_VERSION_BUILD __DATE__
 
 
-// Define standard libraries used by digini.
-#include "lib_io.h"
-#include "lib_class_tim.h"
-#include "lib_macro.h"
-#include "nOS.h"
-
 // Define standard libraries used by Grbl.
 #include <math.h>
 #include <inttypes.h>
@@ -69,6 +63,8 @@
 //#include "ServerTCP.h" argo
 //#include "Print.h"
 
+// Define standard libraries used by digini.
+#include "lib_digini.h"
 
 
 // ---------------------------------------------------------------------------------------

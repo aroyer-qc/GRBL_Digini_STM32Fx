@@ -38,7 +38,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 {
   #if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
     {
-        I2C1,                       // I2Cx
+        DRIVER_I2C1_ID,             // DRIVER_I2Cx_ID
+        I2C1,                       // pI2Cx
         IO_I2C1_SCL,                // SCL
         IO_I2C1_SDA,                // SDA
         RCC_APB1ENR_I2C1EN,         // RCC_APB1ENR
@@ -51,7 +52,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 
   #if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
     {
-        I2C2,                       // I2Cx
+        DRIVER_I2C2_ID,             // DRIVER_I2Cx_ID
+        I2C2,                       // pI2Cx
         IO_I2C2_SCL,                // SCL
         IO_I2C2_SDA,                // SDA
         RCC_APB1ENR_I2C2EN,         // RCC_APB1ENR
@@ -64,7 +66,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 
   #if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
     {
-        I2C3,                       // I2Cx
+        DRIVER_I2C3_ID,             // DRIVER_I2Cx_ID
+        I2C3,                       // pI2Cx
         IO_I2C3_SCL,                // SCL
         IO_I2C3_SDA,                // SDA
         RCC_APB1ENR_I2C3EN,         // RCC_APB1ENR
@@ -77,7 +80,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 
   #if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
     {
-        I2C4,                       // I2Cx
+        DRIVER_I2C4_ID,             // DRIVER_I2Cx_ID
+        I2C4,                       // pI2Cx
         IO_I2C4_SCL,                // SCL
         IO_I2C4_SDA,                // SDA
         RCC_APB1ENR_I2C4EN,         // RCC_APB1ENR
@@ -89,8 +93,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
   #endif
 };
 
-class I2C_Driver myI2C_Control(&I2C_PortInfo[DRIVER_I2C3_ID]);
-class I2C_Driver myI2C_External(&I2C_PortInfo[DRIVER_I2C1_ID]);
+class I2C_Driver myI2C_Control(DRIVER_I2C3_ID);
+class I2C_Driver myI2C_External(DRIVER_I2C1_ID);
 
 #else // I2C_DRIVER_GLOBAL
 

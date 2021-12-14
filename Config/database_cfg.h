@@ -28,6 +28,7 @@
 // Post Include file(s)
 //-------------------------------------------------------------------------------------------------
 
+/*
 #ifdef __DATABASE_POST_INCLUDE__
 
 #include "lib_class_database.h"
@@ -44,6 +45,7 @@
 
 #ifndef __DATABASE_CFG__
 #define __DATABASE_CFG__
+*/
 //#pragma once
 
 //-------------------------------------------------------------------------------------------------
@@ -52,7 +54,7 @@
 
 #include "lib_label.h"
 #include "project_def.h"
-#include "lib_time_typedef.h"
+#include "lib_typedef.h"
 
 //-------------------------------------------------------------------------------------------------
 // Compiler specific(s)
@@ -82,8 +84,6 @@
 
 #define     DBASE_MAX_SKIN_IMAGE_QTY            256                                 // this is max the number of image in database
 #define     DBASE_MAX_SKIN_FONT_QTY             32                                  // this is max the number of font in database
-
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -173,5 +173,5 @@ extern const uint32_t __user_ram_data_base__;
 //#endif
 
 //-------------------------------------------------------------------------------------------------
-#endif //__DATABASE_CFG__
-#endif // _DATABASE_POST_INCLUDE_
+//#endif //__DATABASE_CFG__
+//#endif // _DATABASE_POST_INCLUDE_

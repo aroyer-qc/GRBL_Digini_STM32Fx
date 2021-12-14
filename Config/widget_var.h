@@ -34,8 +34,10 @@
 // include(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "system.h"
-#include "bsp.h"
+#define DIGINI_SKIP_INCLUDE
+#include "grbl.h"
+#include "bsp.h"  // for TestInput
+#undef  DIGINI_SKIP_INCLUDE
 
 //-------------------------------------------------------------------------------------------------
 // Constant(s)

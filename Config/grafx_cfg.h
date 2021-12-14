@@ -28,6 +28,13 @@
 
 //-------------------------------------------------------------------------------------------------
 
+#define DIGINI_USE_GRAFX
+#define GRAFX_SKIN_FILENAME                       "grbl.skn"
+#define GRAFX_USE_A_SKIN
+#define GRAFX_USE_POINTING_DEVICE
+
+//-------------------------------------------------------------------------------------------------
+//
 // Memory mapping for STM32F746G-DISCO
 //
 //
@@ -48,9 +55,7 @@
 //
 // Note(s) you must provide memory address for decompressing input and output data
 //
-
-#define SKIN_FILENAME                       "grbl.skn"
-
+//-------------------------------------------------------------------------------------------------
 
 // Du to memory limitation (8M), we use unused layer for temp decoding
 #define GRAFX_RAW_INPUT_DATA_ADDRESS        0xC00BF400   // 128K
@@ -60,13 +65,14 @@
 #define GRAFX_DECOMPRESS_METHOD_ADDRESS     0xC0187400   // 8K
 #define GRAFX_DATA_SIZE_ADDRESS             0xC0189400   // 8K
 
+//-------------------------------------------------------------------------------------------------
 
 // Special section use in this project
 #define GRAFX_USE_DISPLAY_RAM
 #define GRAFX_USE_RAM_DATA
 //#define GRAFX_USE_ROM_DATA
 
-#define DIGINI_USE_MULTI_LINE
+#define GRAFX_USE_MULTI_LINE
 
 #define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
 
@@ -75,8 +81,10 @@
 #define GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP           16
 
 #define GRAFX_USE_V_SYNC
+#define GRAFX_USE_BACKGROUND_LAYER
 #define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
+
 
 //#define GRAFX_DEBUG_GUI
 //#define GRAFX_PAINT_BOX_DEBUG
@@ -88,21 +96,30 @@
 #endif
 #endif
 
-#ifdef DIGINI_USE_POINTING_DEVICE
+#ifdef GRAFX_USE_POINTING_DEVICE
     #define GRAFX_PDI_SWAP_XY
     //#define GRAFX_PDI_INVERT_X
     //#define GRAFX_PDI_INVERT_Y
 #endif
 
-#define DIGINI_USE_A_SKIN  // TO DO make sure we want this here
-#ifdef DIGINI_USE_A_SKIN
-  #define DIGINI_USE_LOAD_SKIN
-#endif
+//#ifdef GRAFX_USE_A_SKIN
+  #define GRAFX_USE_LOAD_SKIN
+//#endif
+
+
+#define GRAFX_USE_PDI_MULTI_EVENT                                                  // Set Multi-touch is supported
+//#define GRAFX_PDI_INTERRUPT_IO                                                    // not available on DISCO746
+
+// #ifdef do same thing with IRQ line for SD Detect
+    #define DIGINI_SD_CARD_DETECT_IO        DETECT_SD_CARD
+//#endif
+
+
 
 //#define DIGINI_USE_TIMED_WIDGET
-#define DIGINI_USE_FONT_SIZE_8
-#define DIGINI_USE_FONT_SIZE_12
-#define DIGINI_USE_FONT_SIZE_16
+#define GRAFX_USE_FONT_SIZE_8
+#define GRAFX_USE_FONT_SIZE_12
+#define GRAFX_USE_FONT_SIZE_16
 
 ///------------------------------------------------------------------------------------------------
 /// Color supported mode in this project
@@ -124,33 +141,21 @@
 #define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
 
 
-#define DIGINI_USE_SERV_DATE
-#define DIGINI_USE_SERV_INPD
-#define DIGINI_USE_SERV_INPF
-#define DIGINI_USE_SERV_INPH
-//#define DIGINI_USE_SERV_INPS
-#define DIGINI_USE_SERV_TIME
-#define DIGINI_USE_SERV_XCHG
+#define USE_SERV_DATE
+#define USE_SERV_INPD
+#define USE_SERV_INPF
+#define USE_SERV_INPH
+//#define USE_SERV_INPS
+#define USE_SERV_TIME
+#define USE_SERV_XCHG
 
-// Notes: if DIGINI_USE_A_SKIN is define
+// Notes: if GRAFX_USE_A_SKIN is define
 //
 //      lib_compression make use of the display memory for:
 //          - Loading of the compressed image
 //          - to hold temporary data use during decompression
 //          - to hold decompressed data before storage in to the database
 //
-
-//  Layer definition             Name of the layer              Initial layer      Pixel Format            Size X          Size Y
-#define LAYER_DEF       X_LAYER( BACKGROUND_DISPLAY_LAYER_0,    LAYER_BACKGROUND,  PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-                        X_LAYER( FOREGROUND_DISPLAY_LAYER_0,    LAYER_FOREGROUND,  PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-                        X_LAYER( CONSTRUCTION_BACKGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-                        X_LAYER( CONSTRUCTION_FOREGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-                        X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-                        X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
-
-// Reserved define name (N/U in this app)
-// BACKGROUND_DISPLAY_LAYER_1
-// FOREGROUND_DISPLAY_LAYER_1
 
 //-------------------------------------------------------------------------------------------------
 

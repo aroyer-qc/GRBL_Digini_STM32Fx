@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.00" revision="0" />
+	<EmBitzVersion release="2.10" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
@@ -208,7 +208,6 @@
 		<Unit filename="..\App\inc\system_stm32f7xx.h" />
 		<Unit filename="..\App\inc\task_grbl.h" />
 		<Unit filename="..\App\inc\task_loading.h" />
-		<Unit filename="..\App\inc\taskIdle.h" />
 		<Unit filename="..\App\inc\terminal.h" />
 		<Unit filename="..\App\Libraries\GrIP\ComIf.c">
 			<Option compilerVar="CC" />
@@ -222,22 +221,6 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="..\App\Libraries\GrIP\GrIP.h" />
-		<Unit filename="..\App\src\assert.cpp">
-			<Option compilerVar="CC" />
-			<Option target="Debug">
-				<Option CompilerOptionsRelation="0" />
-				<Add option="-std=c++11" />
-				<Add option="-Wcomment" />
-				<Add option="-Wall" />
-				<Add option="-fdata-sections" />
-				<Add option="-ffunction-sections" />
-				<Add option="-O0" />
-				<Add option="-g3" />
-				<Add option="-DSTM32F40_41xxx" />
-				<Add option="-Wno-psabi" />
-			</Option>
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="..\App\src\bsp.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -268,11 +251,6 @@
 		<Unit filename="..\App\src\task_loading.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\App\src\taskIdle.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="..\App\src\terminal.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -291,6 +269,7 @@
 		<Unit filename="..\Config\ffconf.h" />
 		<Unit filename="..\Config\font_cfg.lst" />
 		<Unit filename="..\Config\grafx_cfg.h" />
+		<Unit filename="..\Config\grafx_display_layer_cfg.h" />
 		<Unit filename="..\Config\i2c_cfg.h" />
 		<Unit filename="..\Config\i2c_var.h" />
 		<Unit filename="..\Config\label_cfg.h" />
@@ -336,19 +315,20 @@
 		<Unit filename="..\module\Digini\Database\src\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Digini\inc\assert.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_assert.h" />
 		<Unit filename="..\module\Digini\Digini\inc\lib_define.h" />
 		<Unit filename="..\module\Digini\Digini\inc\lib_digini.h" />
 		<Unit filename="..\module\Digini\Digini\inc\lib_label.h" />
 		<Unit filename="..\module\Digini\Digini\inc\lib_macro.h" />
-		<Unit filename="..\module\Digini\Digini\inc\lib_time_typedef.h" />
 		<Unit filename="..\module\Digini\Digini\inc\lib_typedef.h" />
 		<Unit filename="..\module\Digini\Digini\src\digini.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\inc\basic\lib_grafx_basic.h" />
+		<Unit filename="..\module\Digini\Digini\src\lib_assert.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\module\Digini\Grafx\inc\color\lib_grafx_color.h" />
-		<Unit filename="..\module\Digini\Grafx\inc\driver\lib_lcd_driver.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\driver\lib_grafx_driver.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\font\lib_class_font.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\layer\lib_class_layer.h" />
@@ -363,7 +343,8 @@
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_font.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link_const.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link_enum.h" />
-		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link_list.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link_list_const.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link_list_enum.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_page_widget.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_skin.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_typedef.h" />
@@ -376,13 +357,7 @@
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_alpha.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_block_copy.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_box.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_circle.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_copy_layer.cpp">
@@ -390,19 +365,10 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_copy_linear.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_line.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_pie.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
-		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_pixel.cpp">
-			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_polygon.cpp">
 			<Option compilerVar="CC" />
@@ -410,23 +376,15 @@
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_printf.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_rectangle.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\color\lib_grafx_color.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\driver\driver_generic.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\driver\lib_grafx_driver.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.cpp">
 			<Option compilerVar="CC" />
 			<Option weight="0" />
-		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\driver\STM32F7xx\lib_STM32F7_lcd_480x272.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\font\lib_class_font.cpp">
 			<Option compilerVar="CC" />
@@ -460,9 +418,6 @@
 		<Unit filename="..\module\Digini\Grafx\src\task\lib_skin_task.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\task\lib_widget_variable.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_background.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -479,6 +434,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_gif.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_graph.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_icon.cpp">
@@ -509,6 +467,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_terminal.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_variable.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_virtual_hub.cpp">
@@ -587,6 +548,8 @@
 		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_spi.cpp">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_tim.cpp">
 			<Option compilerVar="CC" />
@@ -669,6 +632,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Utility\src\lib_raw_array.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_time_and_delay.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Utility\src\lib_trigono.cpp">
@@ -757,6 +723,15 @@
 				</target_debugging_settings>
 			</debugger>
 			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </EmBitz_project_file>

@@ -31,7 +31,7 @@
 //-------------------------------------------------------------------------------------------------
 
 //          Enum ID,              Struct object name
-#define LINK_DEF                                         \
+#define LINK_DEF(X_LINK)                                 \
     X_LINK( LINK_MAIN_LOADING,    PageLoading          ) \
     X_LINK( LINK_MAIN_HUB,        PageMainHub          ) \
     X_LINK( LINK_JOG_HUB,         PageJogHub           ) \

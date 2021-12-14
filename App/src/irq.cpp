@@ -28,17 +28,8 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include <stdint.h>
-#include "digini_cfg.h"
+#include "lib_digini.h"
 #include "bsp.h"
-#include "STM32F7xx.h"
-#include "lib_class_sdio.h"
-#include "lib_class_rtc.h"
-#include "lib_class_uart.h"
-#include "lib_class_i2c.h"
-#include "lib_class_tim.h"
-//#include "lib_class_STM32F7_usb.h"
-#include "lib_pdi_task.h"
 
 //-------------------------------------------------------------------------------------------------
 

@@ -41,16 +41,9 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include <stdint.h>
 #define BSP_GLOBAL
 #include "bsp.h"
 #undef BSP_GLOBAL
-#include "lib_digini.h"
-#include "lib_grafx.h"
-#include "lib_isr.h"
-#include "nOS.h"
-#include "clock_cfg.h"
-#include "lib_skin_Task.h"
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -291,7 +284,7 @@ static void BSP_SDRAM_Initialize(void)
                           AutoRefresh                |
                           ModeRegisterDefinition);
 
-    BSP_Delay_uSec(1000);                                                                               // Insert 1 mSec delay
+    LIB_Delay_uSec(1000);                                                                               // Insert 1 mSec delay
 
     // Configure a PALL (precharge all) command
     FMC_Bank5_6->SDCMR = (FMC_SDRAM_CMD_PALL         |
@@ -358,101 +351,6 @@ static void BSP_CPU_CacheEnable(void)
 }
 #endif
 #endif
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           BSP_Delay_uSec
-//
-//  Parameter(s):   uint32_t       Delay
-//  Return:         none
-//
-//  Description:    Approximation of 1 uSec delay
-//
-//  Note(s):        Adjusted manually for STM32F4 running at 180 MHz
-//
-//-------------------------------------------------------------------------------------------------
-void BSP_Delay_uSec(uint32_t Delay)
-{
-    uint32_t i;
-    uint32_t j;
-
-    for(i = 0; i < Delay; i++)
-    {
-        for(j = 0; j <= 38; j++);
-    }
-}
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           BSP_Delay
-//
-//  Parameter(s):   uint32_t       Delay
-//  Return:         none
-//
-//  Description:    mSec delay
-//
-//  Note(s):        Adjusted manually for STM32F7 running at 216 MHz
-//
-//-------------------------------------------------------------------------------------------------
-void BSP_Delay(uint32_t Delay)
-{
-    BSP_Delay_uSec(Delay * 1000);
-}
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           HAL_GetTick
-//
-//  Parameter(s):   None
-//  Return:         None
-//
-//  Description:    function to to take over HAL version for STM32F7xx
-//
-//-------------------------------------------------------------------------------------------------
-uint32_t HAL_GetTick(void)
-{
-    return (uint32_t)nOS_GetTickCount();
-}
-
-void BSP_GetTime(Time_t* pData)
-{
-    nOS_TimeDate TimeDate = nOS_TimeDateGet();
-
-    pData->Hour   = TimeDate.hour;
-    pData->Minute = TimeDate.minute;
-    pData->Second = TimeDate.second;
-}
-
-void BSP_SetTime(Time_t* pData)
-{
-    nOS_TimeDate TimeDate;
-
-    TimeDate = nOS_TimeDateGet();
-    TimeDate.hour   = pData->Hour;
-    TimeDate.minute = pData->Minute;
-    TimeDate.second = pData->Second;
-    nOS_TimeDateSet(TimeDate);
-}
-
-void BSP_GetDate(Date_t* pData)
-{
-    nOS_TimeDate TimeDate = nOS_TimeDateGet();
-
-    pData->Day   = TimeDate.day;
-    pData->Month = TimeDate.month;
-    pData->Year  = TimeDate.year - 2000;
-}
-
-void BSP_SetDate(Date_t* pData)
-{
-    nOS_TimeDate TimeDate;
-
-    TimeDate = nOS_TimeDateGet();
-    TimeDate.day   = pData->Day;
-    TimeDate.month = pData->Month;
-    TimeDate.year  = (uint16_t)pData->Year + 2000;
-    nOS_TimeDateSet(TimeDate);
-}
 
 //-------------------------------------------------------------------------------------------------
 

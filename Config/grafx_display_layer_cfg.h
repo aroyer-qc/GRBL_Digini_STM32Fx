@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : task_idle.cpp
+//  File :  grafx_display_layer_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -24,40 +24,21 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------
-// Include file(s)
-//-------------------------------------------------------------------------------------------------
-
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-
-#include "TaskIdle.h"
-#include "nOS.h"
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
-//
-//  Name:           TaskIdle
-//
-//  Parameter(s):   none
-//  Return:         void
-//
-//  Description:    main() for the idle task
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-void TaskIdle(void)
-{
-  //  USB_MSC_HostStatus_e   USB_Status;
+//           Name of the layer              Initial layer      Pixel Format            Size X          Size Y
+#define LAYER_DEF(X_LAYER) \
+    X_LAYER( BACKGROUND_DISPLAY_LAYER_0,    LAYER_BACKGROUND,  PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+    X_LAYER( FOREGROUND_DISPLAY_LAYER_0,    LAYER_FOREGROUND,  PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+    X_LAYER( CONSTRUCTION_BACKGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+    X_LAYER( CONSTRUCTION_FOREGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+    X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
+    X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_SIZE_X,   GRAFX_SIZE_Y)\
 
-    while(1)
-    {
-        nOS_Sleep(1000);
-//        USB_Status = USB.Process();
-    };
-}
+// Reserved define name (N/U in this app)
+// BACKGROUND_DISPLAY_LAYER_1
+// FOREGROUND_DISPLAY_LAYER_1
 
 //-------------------------------------------------------------------------------------------------
-
 

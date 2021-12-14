@@ -28,14 +28,11 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include <stdint.h>
 #include "bsp.h"
-#include "assert.h"
-#include "nOS.h"
 #include "Task_grbl.h"
 #include "Task_loading.h"
 #include "lib_digini.h"
-#include "lib_isr.h"
+
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -61,7 +58,7 @@ int main()
     //pTaskGRBL->Initialize();            // Not needed as it is the idle task!!
     nOS_Start();
     BSP_PostOS_Initialize();
-    pTaskGRBL->Run();                     // For now it is the idle task.. (not really idle)
+    pTaskGRBL->Run();                     // It is the idle task..
     return 0;
 }
 

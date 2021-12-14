@@ -30,12 +30,7 @@
 
 #include "terminal.h"
 #include "Config.h"
-//#include "TaskIdle.h"
-#include "nOS.h"
-#include "lib_class_STM32F7_uart.h"
-#include "lib_CQueue.h"
-#include "lib_memory.h"
-#include "lib_macro.h"
+#include "lib_digini.h"
 #include "Settings.h"
 #include "task_grbl.h"
 //#include "GrIP.h"

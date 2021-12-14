@@ -74,7 +74,7 @@
 //           Enum ID,           Struct Ptr
 // This X-Macro build a list of struct pointer to exchange data between page and/or application service.
 // Note(s) First data of every exchange data structure is always ExchangeType_e. So Button can use this exchange system and able to print label into button
-#define XCHANGE_DEF \
+#define XCHANGE_DEF(X_XCHANGE) \
  X_XCHANGE ( CFG_INPUT_5_5_F,   &Input5_5_F_Cfg)        \
  X_XCHANGE ( CFG_INPUT_10_D,    &Input10_D_Cfg)         \
  X_XCHANGE ( CFG_INPUT_6_D,     &Input6_D_Cfg)          \
@@ -169,11 +169,11 @@
  X_BASIC_BOX( BOX_3_4T,     SERV_ID_BDEF,  0,   0,      0,    138,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
  X_BASIC_BOX( BOX_4_4T,     SERV_ID_BDEF,  0,   0,      0,    207,  174,  65,   GL_TOP_LEFT, GL_TOP_RIGHT, GL_BOTTOM_LEFT, GL_BOTTOM_RIGHT, GL_HORIZONTAL, GL_VERTICAL, SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE | GRAFX_OPTION_DRAW_ONCE)\
 
-#define GRAPH_DEF(X_BASIC_SHAPE) \
+#define GRAPH_DEF(X_GRAPH) \
  X_GRAPH( GRAPH_TEST_T,     SERV_ID_RFSH,  0,   0,      100,  10,   240,  110, LIGHT_GREEN, 20,     20,     200,     100,     2,      199,    GRAFX_OPTION_TOUCH_RECTANGLE)\
 
 //            Enum ID,      Type,           Px1,   Py1,   Px2,   Py2,   Px3,   Py3,   Px4,   Py4,  Color,       Thickness,  Options
-#define BASIC_SHAPE_DEF() \
+#define BASIC_SHAPE_DEF(X_BASIC_SHAPE) \
  X_BASIC_SHAPE( LINE_TITLE, BASIC_LINE,     10,    34,    470,   34,    0,     0,     0,     0,    GREEN,       2,          GRAFX_OPTION_DRAW_ONCE_AND_REMOVE)\
 
 //      Enum ID,                 Service,      Sub, Timing, Px,   Py,   Sx,   Sy,   TC,          TAC,         TAC2,    Font ID,        Text Blend,   Text Label             Text Option         Option
@@ -355,8 +355,8 @@
 // TODO change... and dont use hub for single link ( all widget can return a new link...
 //      Enum ID,                Service,        Sub, Timing, LinkList
 #define VIRTUAL_HUB_DEF(X_HUB) \
- X_HUB( VIRTUAL_MAIN_HUB,       SERV_ID_MHUB,   0,   0,      LINK_MAIN_PAGE_XY,  LINK_MAIN_PAGE_ZX,  LINK_MAIN_PAGE_XYZ,  LINK_MAIN_PAGE_XYT,  LINK_MAIN_PAGE_ZXT,  LINK_MAIN_PAGE_XYZT,  INVALID_LINK,  INVALID_LINK )\
-/* X_HUB( VIRTUAL_JOG_HUB,       SERV_ID_JHUB,   0,   0,      LINK_JOG_PAGE_XY,  LINK_JOG_PAGE_ZX,  LINK_JOG_PAGE_XYZ,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK,  INVALID_LINK )*/\
+ X_HUB( VIRTUAL_MAIN_HUB,       SERV_ID_MHUB,   0,   0,      LINK_LIST_MAIN_HUB )\
+/* X_HUB( VIRTUAL_JOG_HUB,       SERV_ID_JHUB,   0,   0,     LINK_LIST_JOG_HUB )*/\
 
 //       Enum ID,               Service,      Sub, Timing, Px,  Py,       Sx,   Sy,  Icon 0,           Icon 1,          Icon 2,        Icon 3,            Option,
 #define ICON_DEF(X_ICON) \

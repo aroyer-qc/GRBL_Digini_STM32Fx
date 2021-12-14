@@ -40,14 +40,8 @@ Service type 7 - Return data to override position of a widget (Must be a memory 
 // Include file(s)
 //-------------------------------------------------------------------------------------------------`
 
-#include <stdint.h>
-#include <stdio.h>
-#include "digini_cfg.h"
+#include "lib_digini.h"
 #ifdef DIGINI_USE_GRAFX
-#include "lib_grafx.h"
-#include "service.h"
-#include "lib_memory.h"
-#include "lib_class_database.h"
 #include "grbl.h"
 #include "project_def.h"
 

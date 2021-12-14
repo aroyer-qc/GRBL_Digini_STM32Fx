@@ -30,17 +30,8 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_class_database.h"
-#include "nOS.h"
-#include "lib_memory.h"
-#include "lib_time_typedef.h"
+#include "lib_digini.h"
 #include "project_def.h"
-
-//-------------------------------------------------------------------------------------------------
-// Define(s)
-//-------------------------------------------------------------------------------------------------
-
-#define BSP_TICK_PER_SECOND                         1000
 
 //-------------------------------------------------------------------------------------------------
 // Global Macro
@@ -69,15 +60,7 @@ BSP_EXTERN int32_t     TestInput;    // TODO (Alain#1#) remove this
 void                BSP_Initialize          (void);
 void                BSP_IRQ_Init            (void);
 SystemState_e       BSP_PostOS_Initialize   (void);
-void                BSP_Delay_uSec          (uint32_t Delay);
-void                BSP_Delay               (uint32_t Delay);
 void                BSP_SetBacklightLevel   (uint8_t Level);
-
-// dummy user function for time until class are develop
-void                BSP_GetTime             (Time_t* pData);
-void                BSP_SetTime             (Time_t* pData);
-void                BSP_GetDate             (Date_t* pData);
-void                BSP_SetDate             (Date_t* pData);
 
 //-------------------------------------------------------------------------------------------------
 

@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : digini_cfg.h
+//  File : Menu_link_list_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2021 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -23,38 +23,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
-//
-// NOTE(S) For Graphic related configuration, see grafx_cfg.h
-//
-//-------------------------------------------------------------------------------------------------
 
+//-------------------------------------------------------------------------------------------------
+// Global Define(s)
+//-------------------------------------------------------------------------------------------------
 
 #pragma once
 
-// #define DIGINI_USE_ASSERT
+
+//                                    Enum ID,                  ID1,                ID2,                ID3,                ID4,                ID5,                ID6,                 ID7,               ID8
+#ifndef LINK_LIST_DEF
+#define LINK_LIST_DEF(X_LINK_LIST) \
+                        X_LINK_LIST ( LINK_LIST_MAIN_HUB,       LINK_MAIN_PAGE_XY,  LINK_MAIN_PAGE_ZX,  LINK_MAIN_PAGE_XYZ, LINK_MAIN_PAGE_XYT, LINK_MAIN_PAGE_ZXT, LINK_MAIN_PAGE_XYZT, INVALID_LINK,      INVALID_LINK ) \
+                /*      X_LINK_LIST ( LINK_LIST_JOG_HUB,        LINK_JOG_PAGE_XY,   LINK_JOG_PAGE_ZX,   LINK_JOG_PAGE_XYZ,  INVALID_LINK,       INVALID_LINK,       INVALID_LINK,        INVALID_LINK,      INVALID_LINK ) \ */
+#endif
 
 //-------------------------------------------------------------------------------------------------
-// High level Peripheral
-//
-//#define DIGINI_USE_SPI_DEVICE
 
-//-------------------------------------------------------------------------------------------------
-// EEPROM support
-//
-
-#define DIGINI_USE_EEPROM
-
-//-------------------------------------------------------------------------------------------------
-// FAT FS Peripheral support
-//
-
-#define DIGINI_USE_FATFS
-
-//#define DIGINI_FATFS_USE_SPI_FLASH_CHIP           // to be added to peripheral list
-#define DIGINI_FATFS_USE_QSPI                       // to be added to peripheral list
-#define DIGINI_FATFS_USE_SDIO_SD_CARD
-//#define DIGINI_FATFS_USE_SPI_SD_CARD
-//#define DIGINI_FATFS_USE_USB_KEY
-//#define DIGINI_FATFS_USE_RAM_DRIVE
-
-//-------------------------------------------------------------------------------------------------
