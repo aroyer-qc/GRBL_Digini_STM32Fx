@@ -56,7 +56,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-#define IO_DEF \
+#define IO_DEF(X_IO) \
 /*        ENUM ID of the IO,    IO Port,    IO Pin, Mode,                 Pin output type,      IO Speed,                   Pin Option        */\
 /* Input IO's --------------------------------------------------------------------------------------------------------------------------------*/\
     X_IO( IO_USER_BUTTON,       GPIOI,      11,     IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,  IO_SPEED_FREQ_LOW,        0)                    \
@@ -254,13 +254,13 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-#define IO_IRQ_DEF \
+#define IO_IRQ_DEF(X_IO_IRQ) \
   X_IO_IRQ(IO_ISR_LIMIT_X,        IO_LIMIT_X,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
   X_IO_IRQ(IO_ISR_LIMIT_Y,        IO_LIMIT_Y,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
   X_IO_IRQ(IO_ISR_LIMIT_Z,        IO_LIMIT_Z,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
   X_IO_IRQ(IO_ISR_LIMIT_A,        IO_LIMIT_A,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
 
-// IO_LIMIT_A is a fake linit switch
+// IO_LIMIT_A is a fake limit switch
 
 
 //-------------------------------------------------------------------------------------------------

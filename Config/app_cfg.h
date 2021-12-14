@@ -71,13 +71,14 @@
 // Memory block 3:      general all around block
 // Memory block 4:      general all around block
 
-//                                      Enum ID             Memory Group Name   Allocation Group Name   Nb of block     Size of block
-#define MEM_BLOCK_DEF   X_MEM_BLOCK(    MEM_BLOCK,          Block,              AllocBlock,             32,            16U              )\
-                        X_MEM_BLOCK(    MEM_BLOCK_0,        Block_0,            AllocBlock_0,           64,            64U              )\
-                        X_MEM_BLOCK(    MEM_BLOCK_1,        Block_1,            AllocBlock_1,           64,            128U             )\
-                        X_MEM_BLOCK(    MEM_BLOCK_2,        Block_2,            AllocBlock_2,           64,            256U             )\
-                        X_MEM_BLOCK(    MEM_BLOCK_3,        Block_3,            AllocBlock_3,           8,             1024U            )\
-                        X_MEM_BLOCK(    MEM_BLOCK_4,        Block_4,            AllocBlock_4,           2,             2048U            )\
+//                 Enum ID             Memory Group Name   Allocation Group Name   Nb of block     Size of block
+#define MEM_BLOCK_DEF(X_MEM_BLOCK)\
+   X_MEM_BLOCK(    MEM_BLOCK,          Block,              AllocBlock,             32,            16U              )\
+   X_MEM_BLOCK(    MEM_BLOCK_0,        Block_0,            AllocBlock_0,           64,            64U              )\
+   X_MEM_BLOCK(    MEM_BLOCK_1,        Block_1,            AllocBlock_1,           64,            128U             )\
+   X_MEM_BLOCK(    MEM_BLOCK_2,        Block_2,            AllocBlock_2,           64,            256U             )\
+   X_MEM_BLOCK(    MEM_BLOCK_3,        Block_3,            AllocBlock_3,           8,             1024U            )\
+   X_MEM_BLOCK(    MEM_BLOCK_4,        Block_4,            AllocBlock_4,           2,             2048U            )\
 
 //.................................................................................................
 //  Miscellaneous
