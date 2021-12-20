@@ -436,34 +436,34 @@
 
 // Kept for reference
 
-#define PAGE_SLIDE_DEF \
+#define PAGE_SLIDE_DEF(X_PAGE_SLIDE) \
  X_PAGE_SLIDE ( PS_MAIN_AXIS_X,  SERV_ID_NONE,  0,   0,      182, 5,   228, 262, SLIDING_LEFT_AND_RIGHT,  SERVICE_FILTER_NORMAL, GRAFX_OPTION_TOUCH_RECTANGLE)\
 
-//                                    Enum ID,                Service,         SubService,  Timing  Pos X,  Pos Y,  Size X,  Size Y,  Thickness,  Back Color,  Press Back Color,  Box Color,   Press Box Color,  Text PosX,  Text PosY,  Text Size X,  Text Size Y,  Text Color,  pressed Text Color,  Font ID,         Text Option,              Text Label,  Filter
-#define BASIC_BTN_DEF   X_BASIC_BTN(  BASIC_BUTTON_OK,        SERV_ID_BDEF,    0,           0,      400,    100,    78,      32,      3,          BLACK,       WHITE,             RED,          GREEN,           10,         7,          60,           20,           WHITE,       GRAY_16,             SYS_FT_16,  _X_CENTER_Y_CENTER,  LBL_OK,      SERVICE_FILTER_NORMAL  )\
+//                                                Enum ID,                Service,         SubService,  Timing  Pos X,  Pos Y,  Size X,  Size Y,  Thickness,  Back Color,  Press Back Color,  Box Color,   Press Box Color,  Text PosX,  Text PosY,  Text Size X,  Text Size Y,  Text Color,  pressed Text Color,  Font ID,         Text Option,              Text Label,  Filter
+#define BASIC_BTN_DEF(X_BASIC_BTN)  X_BASIC_BTN(  BASIC_BUTTON_OK,        SERV_ID_BDEF,    0,           0,      400,    100,    78,      32,      3,          BLACK,       WHITE,             RED,          GREEN,           10,         7,          60,           20,           WHITE,       GRAY_16,             SYS_FT_16,  _X_CENTER_Y_CENTER,  LBL_OK,      SERVICE_FILTER_NORMAL  )\
 
 
-//                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
-#define GIF_DEF         X_GIF(        ICON_GIF,               SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
+//                                                Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
+#define GIF_DEF(X_GIF)         X_GIF(             ICON_GIF,               SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
 
-//                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
-#define GRAPH_DEF       X_GGRAPH(     GRAPH_TEST,             SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
+//                                                Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Gif
+#define GRAPH_DEF(X_GGRAPH)       X_GGRAPH(       GRAPH_TEST,             SERV_ID_RFSH,    0,           30,     2,      INVALID_IMAGE )\
 
-//                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Size X,  Size Y,  Minimum image,    Maximum image     Cursor Image,   Cursor radius,  Start Angle,  End Angle,  Range,  Option,                                       Text PosX,  Text PosY,  Text Size X,  Text Size Y,  Text Color,  Text Alternate Color,  Font ID,             Font Alternate ID,   Text Option,              Text Label,
-#define METER_DEF       X_METER(      METER_TEST,             SERV_ID_NONE,    2,           322,    76,     115,     115,     INVALID_IMAGE,    INVALID_IMAGE,    INVALID_IMAGE,  57,             0,            360,        100,    OPTION_CURSOR_PRIORITY,                       15,         44,         75,           28,           0x00FFFFFF,  0x0000FF00,            SYS_FT_16,  SYS_FT_16,  _X_CENTER_Y_CENTER,  INVALID_LABEL        )\
+//                                                Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Size X,  Size Y,  Minimum image,    Maximum image     Cursor Image,   Cursor radius,  Start Angle,  End Angle,  Range,  Option,                                       Text PosX,  Text PosY,  Text Size X,  Text Size Y,  Text Color,  Text Alternate Color,  Font ID,             Font Alternate ID,   Text Option,              Text Label,
+#define METER_DEF(X_METER)       X_METER(         METER_TEST,             SERV_ID_NONE,    2,           322,    76,     115,     115,     INVALID_IMAGE,    INVALID_IMAGE,    INVALID_IMAGE,  57,             0,            360,        100,    OPTION_CURSOR_PRIORITY,                       15,         44,         75,           28,           0x00FFFFFF,  0x0000FF00,            SYS_FT_16,  SYS_FT_16,  _X_CENTER_Y_CENTER,  INVALID_LABEL        )\
 
-//                                    Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Size X,  Size Y,  Released panel,  Pressed panel   Text PosX,  Text PosY,  Text SizeX,  Text Size Y,  Text Color,  Text Color Pressed,  Font ID,             Font Alternate ID,    Text Option,             Text Label,    Filter
-#define PANEL_DEF       X_PANEL(      PANEL_TEST,             SERV_ID_NONE,    0,           38,     41,     125,     193,     INVALID_IMAGE,   INVALID_IMAGE,  10,         5,          105,         20,           0x00FFFFFF,  0x000000FF,          SYS_FT_16,      SYS_FT_16,       _X_CENTER_Y_CENTER, INVALID_LABEL,  SERVICE_FILTER_NORMAL    )\
+//                                                Enum ID,                Service,         SubService,  Pos X,  Pos Y,  Size X,  Size Y,  Released panel,  Pressed panel   Text PosX,  Text PosY,  Text SizeX,  Text Size Y,  Text Color,  Text Color Pressed,  Font ID,             Font Alternate ID,    Text Option,             Text Label,    Filter
+#define PANEL_DEF(X_PANEL)       X_PANEL(         PANEL_TEST,             SERV_ID_NONE,    0,           38,     41,     125,     193,     INVALID_IMAGE,   INVALID_IMAGE,  10,         5,          105,         20,           0x00FFFFFF,  0x000000FF,          SYS_FT_16,      SYS_FT_16,       _X_CENTER_Y_CENTER, INVALID_LABEL,  SERVICE_FILTER_NORMAL    )\
 
-//                                    Enum ID,                Service,         SubService,  Size X, Size Y, Image 1
-#define SPRITE_DEF      X_SPRITE(     SPRITE_TEST,            SERV_ID_RFSH,    0,           32,     32,     INVALID_IMAGE  )\
+//                                                Enum ID,                Service,         SubService,  Size X, Size Y, Image 1
+#define SPRITE_DEF(X_SPRITE)      X_SPRITE(       SPRITE_TEST,            SERV_ID_RFSH,    0,           32,     32,     INVALID_IMAGE  )\
 
 
-//                                    Enum ID,                Service,         SubService     Pos X,  Pos Y,  Size X,  Size Y
-#define VIRTUAL_WINDOW_DEF X_WINDOW(  VIRTUAL_WINDOW_1,       SERV_ID_NONE,    0,             10,     56,     36,      160   )\
+//                                                Enum ID,                Service,         SubService     Pos X,  Pos Y,  Size X,  Size Y
+#define VIRTUAL_WINDOW_DEF(X_WINDOW) X_WINDOW(    VIRTUAL_WINDOW_1,       SERV_ID_NONE,    0,             10,     56,     36,      160   )\
 
-//        Enum ID,               Service,      Sub, Timing, Px,   Py,   Sx,   Sy,   ResX  ResY  Bar Spacing   Bar Image      Option
-#define SPECTRUM_DEF \
+//           Enum ID,               Service,      Sub, Timing, Px,   Py,   Sx,   Sy,   ResX  ResY  Bar Spacing   Bar Image      Option
+#define SPECTRUM_DEF(X_SPECTRUM) \
  X_SPECTRUM( SPECTRUM,           SERV_ID_SPEK, 0,   0,      12,   10,   168,  72,   16,   12,   3,            SPECTRUM_BAR,  GRAFX_OPTION_NONE)\
 
 

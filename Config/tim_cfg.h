@@ -53,7 +53,7 @@
 #define TIM_DRIVER_SUPPORT_TIM12_CFG                    DEF_DISABLED
 #define TIM_DRIVER_SUPPORT_TIM13_CFG                    DEF_DISABLED
 #define TIM_DRIVER_SUPPORT_TIM14_CFG                    DEF_DISABLED
-#define TIM_DRIVER_SUPPORT_LPTIM1_CFG                    DEF_DISABLED
+#define TIM_DRIVER_SUPPORT_LPTIM1_CFG                   DEF_DISABLED
 
 // Note:
 //       1 - if compare not used, code for retrieving source IRQ will be discarded

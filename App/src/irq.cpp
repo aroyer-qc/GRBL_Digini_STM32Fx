@@ -36,22 +36,7 @@
 extern "C"
 {
 
-//-------------------------------------------------------------------------------------------------
-// Prototype(s)
-//-------------------------------------------------------------------------------------------------
-
-//void EXTI9_5_IRQHandler      ();
-//void EXTI15_10_IRQHandler    ();
-//void SDMMC1_IRQHandler       ();
-//void DMA2_Stream3_IRQHandler ();
-//void DMA2_Stream6_IRQHandler ();
-//void RTC_WKUP_IRQHandler     ();
-//void TAMP_STAMP_IRQHandler   ();
-//void RTC_Alarm_IRQHandler    ();
-//void I2C1_EV_IRQHandler      ();
-//void I2C1_ER_IRQHandler      ();
-//void I2C3_EV_IRQHandler      ();
-//void I2C3_ER_IRQHandler      ();
+void TAMP_STAMP_IRQHandler          (void);
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -159,7 +144,7 @@ NOS_ISR(EXTI15_10_IRQHandler)
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_SDIO
+//#ifdef DIGINI_USE_SDIO
 NOS_ISR(SDMMC1_IRQHandler)
 {
     // Process All SDIO Interrupt Sources
@@ -177,7 +162,7 @@ NOS_ISR(DMA2_Stream6_IRQHandler)
     // Process DMA2 Stream6
     pSDIO->DMA_Stream6IRQHandler();
 }
-#endif
+//#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -200,12 +185,12 @@ NOS_ISR(DMA2_Stream6_IRQHandler)
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef DIGINI_USE_RTC
+//#ifdef DIGINI_USE_RTC
 NOS_ISR(RTC_WKUP_IRQHandler)
 {
     if(BSP_pRTC != nullptr)
     {
-        BSP_pRTC->WakeUp_IRQ_Handler();
+        //BSP_pRTC->WakeUp_IRQ_Handler();
     }
 }
 
@@ -213,19 +198,19 @@ NOS_ISR(TAMP_STAMP_IRQHandler)
 {
     if(BSP_pRTC != nullptr)
     {
-        BSP_pRTC->Stamp_IRQ_Handler();
+        //BSP_pRTC->Stamp_IRQ_Handler();
     }
 }
 
 NOS_ISR(RTC_Alarm_IRQHandler)
 {
     if(BSP_pRTC != nullptr)
-    {#ifdef DIGINI_USE_RTC
+    {
 
-        BSP_pRTC->Alarm_IRQ_Handler();
+        //BSP_pRTC->Alarm_IRQ_Handler();
     }
 }
-#endif
+//#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -440,7 +425,7 @@ NOS_ISR(LPTIM1_IRQHandler)
 }
 #endif
 
-//-------------------------------------------------------------------------------------------------//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //
 //  IIII  2222   CCCC
 //   II      22 CC
@@ -645,6 +630,807 @@ NOS_ISR(UART8_IRQHandler)
 #endif
 
 //-------------------------------------------------------------------------------------------------
+
+
+
+void UsageFault_Handler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SVC_Handler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+
+void WWDG_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void PVD_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void TAMP_STAMP_IRQHandler          (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*//*
+void RTC_WKUP_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void FLASH_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void RCC_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void EXTI0_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void EXTI1_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void EXTI2_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void EXTI3_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void EXTI4_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream0_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream1_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream2_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream3_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream4_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream5_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream6_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void ADC_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN1_TX_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN1_RX0_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN1_RX1_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN1_SCE_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void EXTI9_5_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*//*
+void TIM1_BRK_TIM9_IRQHandler       (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*//*
+void TIM1_UP_TIM10_IRQHandler       (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void TIM1_TRG_COM_TIM11_IRQHandler  (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM1_CC_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void TIM2_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void TIM3_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM4_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void I2C1_EV_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*//*
+void I2C1_ER_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void I2C2_EV_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void I2C2_ER_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI1_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI2_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void USART1_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void USART2_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void USART3_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void EXTI15_10_IRQHandler           (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*//*
+void RTC_Alarm_IRQHandler           (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void OTG_FS_WKUP_IRQHandler         (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM8_BRK_TIM12_IRQHandler      (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM8_UP_TIM13_IRQHandler       (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM8_TRG_COM_TIM14_IRQHandler  (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM8_CC_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA1_Stream7_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void FMC_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void SDMMC1_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void TIM5_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI3_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void UART4_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void UART5_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM6_DAC_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void TIM7_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA2_Stream0_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA2_Stream1_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA2_Stream2_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void DMA2_Stream3_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void DMA2_Stream4_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void ETH_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void ETH_WKUP_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN2_TX_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN2_RX0_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN2_RX1_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CAN2_SCE_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void OTG_FS_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA2_Stream5_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void DMA2_Stream6_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void DMA2_Stream7_IRQHandler        (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void USART6_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+/*
+void I2C3_EV_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void I2C3_ER_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+*/
+void OTG_HS_EP1_OUT_IRQHandler      (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void OTG_HS_EP1_IN_IRQHandler       (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void OTG_HS_WKUP_IRQHandler         (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void OTG_HS_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DCMI_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void RNG_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void FPU_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void UART7_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void UART8_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI4_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI5_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPI6_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SAI1_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void LTDC_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void LTDC_ER_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void DMA2D_IRQHandler               (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SAI2_IRQHandler                (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void QUADSPI_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void LPTIM1_IRQHandler              (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void CEC_IRQHandler                 (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void I2C4_EV_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void I2C4_ER_IRQHandler             (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+void SPDIF_RX_IRQHandler            (void)
+{
+    while(1)
+    {
+        __asm("nop");
+    };
+}
+
+
+
+
+
+
 
 } // extern "C"
 

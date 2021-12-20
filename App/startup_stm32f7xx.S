@@ -313,10 +313,10 @@ g_pfnVectors:
 
    .weak      PVD_IRQHandler
    .thumb_set PVD_IRQHandler,Default_Handler
-
+/*
    .weak      TAMP_STAMP_IRQHandler
    .thumb_set TAMP_STAMP_IRQHandler,Default_Handler
-
+*/
    .weak      RTC_WKUP_IRQHandler
    .thumb_set RTC_WKUP_IRQHandler,Default_Handler
 
