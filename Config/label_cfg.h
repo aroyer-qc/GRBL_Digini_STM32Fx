@@ -34,7 +34,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define LABEL_LANGUAGE_DEF  \
+#define LABEL_LANGUAGE_DEF(X_LABEL)  \
     X_LABEL(    LBL_OK,                     "Ok",                              "Ok"                                 ) \
     X_LABEL(    LBL_OUTPUT,                 "Output",                          "Sortie"                             ) \
     X_LABEL(    LBL_CONTROLS,               "Controls",                        "Contrôles"                          ) \

@@ -114,9 +114,9 @@ void ClassTaskLoading::Run(void)
     };
 
     // We have wait for skin loading to complete... now we can use what is left from the free extended memory
-   // DB_Central.Get(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
-   // DB_Central.SetDB_Address((void**)&pMemory, DBASE_INDEX_RAM_RANGE);
-   // DB_Central.Set(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
+    // DB_Central.Get(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
+    // DB_Central.SetDB_Address((void**)&pMemory, DBASE_INDEX_RAM_RANGE);
+    // DB_Central.Set(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
     nOS_Sleep(100);
 
     //do
