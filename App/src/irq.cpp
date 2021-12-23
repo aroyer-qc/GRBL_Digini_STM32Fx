@@ -28,7 +28,7 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
+//#include "lib_digini.h"
 #include "bsp.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -1293,6 +1293,7 @@ void OTG_HS_WKUP_IRQHandler         (void)
     };
 }
 
+/*
 void OTG_HS_IRQHandler              (void)
 {
     while(1)
@@ -1300,7 +1301,7 @@ void OTG_HS_IRQHandler              (void)
         __asm("nop");
     };
 }
-
+*/
 void DCMI_IRQHandler                (void)
 {
     while(1)

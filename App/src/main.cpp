@@ -31,7 +31,7 @@
 #include "bsp.h"
 #include "Task_grbl.h"
 #include "Task_loading.h"
-#include "lib_digini.h"
+//#include "lib_digini.h"
 
 //-------------------------------------------------------------------------------------------------
 //
