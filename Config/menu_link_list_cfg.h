@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : Menu_link_list_cfg.h
+//  File : menu_link_list_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -30,7 +30,7 @@
 
 #pragma once
 
-
+//-------------------------------------------------------------------------------------------------
 //                                   Enum ID,                  ID1,                ID2,                ID3,                ID4,                ID5,                ID6,                 ID7,               ID8
 #define LINK_LIST_DEF(X_LINK_LIST) \
                         X_LINK_LIST( LINK_LIST_MAIN_HUB,       LINK_MAIN_PAGE_XY,  LINK_MAIN_PAGE_ZX,  LINK_MAIN_PAGE_XYZ, LINK_MAIN_PAGE_XYT, LINK_MAIN_PAGE_ZXT, LINK_MAIN_PAGE_XYZT, INVALID_LINK,      INVALID_LINK ) \
