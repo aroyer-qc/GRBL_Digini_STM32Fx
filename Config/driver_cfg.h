@@ -36,21 +36,22 @@
 // Low level Peripheral
 //-------------------------------------------------------------------------------------------------
 
-#define USE_ADC_DRIVER                      DEF_DISABLED
-#define USE_DAC_DRIVER                      DEF_DISABLED
-#define USE_I2C_DRIVER                      DEF_ENABLED
-#define USE_I2S_DRIVER                      DEF_DISABLED
-#define USE_PWM_DRIVER                      DEF_DISABLED
-#define USE_QSPI_DRIVER                     DEF_DISABLED
-#define USE_RTC_DRIVER                      DEF_DISABLED
-#define USE_SAI_DRIVER                      DEF_DISABLED                    // Serial audio out
-#define USE_SDIO_DRIVER                     DEF_ENABLED
-#define USE_SPI_DRIVER                      DEF_DISABLED
-#define USE_TIM_DRIVER                      DEF_ENABLED
-#define USE_UART_DRIVER                     DEF_ENABLED
-#define USE_USB_DRIVER                      DEF_DISABLED
-    #define USE_USB_OTG_FS_CODE             DEF_DISABLED
-    #define USE_USB_OTG_HS_CODE             DEF_DISABLED
+#define USE_ADC_DRIVER              DEF_DISABLED
+#define USE_DAC_DRIVER              DEF_DISABLED
+#define USE_IO_BUS_DRIVER           DEF_DISABLED
+#define USE_I2C_DRIVER              DEF_ENABLED
+#define USE_I2S_DRIVER              DEF_DISABLED
+#define USE_PWM_DRIVER              DEF_DISABLED
+#define USE_QSPI_DRIVER             DEF_DISABLED
+#define USE_RTC_DRIVER              DEF_DISABLED
+#define USE_SAI_DRIVER              DEF_DISABLED                    // Serial audio out
+#define USE_SDIO_DRIVER             DEF_ENABLED
+#define USE_SPI_DRIVER              DEF_DISABLED
+#define USE_TIM_DRIVER              DEF_ENABLED
+#define USE_UART_DRIVER             DEF_ENABLED
+#define USE_USB_DRIVER              DEF_DISABLED
+    #define USE_USB_OTG_FS_CODE     DEF_DISABLED
+    #define USE_USB_OTG_HS_CODE     DEF_DISABLED
 
 
 // Driver and/or peripheral to use with this board

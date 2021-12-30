@@ -532,6 +532,11 @@
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_i2c.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_pwm.cpp">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_qspi.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

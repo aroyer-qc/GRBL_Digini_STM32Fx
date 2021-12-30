@@ -37,6 +37,7 @@
 // High level Peripheral
 //
 //#define DIGINI_USE_SPI_DEVICE
+#define DIGINI_SD_CARD_DETECT_IO        DETECT_SD_CARD
 
 //-------------------------------------------------------------------------------------------------
 // EEPROM support

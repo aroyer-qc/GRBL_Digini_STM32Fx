@@ -40,9 +40,9 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 // USER DEFINE FatFs file definition
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 
 #define FATFS_CFG_MAX_PATH_NAME_LEN                         16
 #define FATFS_CFG_MAX_FILENAME_SIZE                         9
@@ -50,17 +50,17 @@
 #define FATFS_CFG_MAX_FULL_FILENAME_SIZE                    13
 #define FATFS_CFG_MAX_FULL_FILENAME_SIZE_PADDING            14
 
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 // USER DEFINE FOR SUPPLEMENTARY OS BEHAVIOR
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 
 #define APP_RESTRICT_MEMORY_ALLOC_TO_BLOCK_SIZE             0       // Enable (1) or Disable (0) If Enable we allow only closest block size that are greater to be allocated
 #define TRAP_NON_CRITICAL_ERROR                             1       // Enable (1) or Disable (0) Naming OS_EVENT is not critical error, you can bypass this error
 #define APP_USE_TICK_HOOK                                   1       // Enable (1) or Disable (0)
 
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 //  block memory declaration section
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 
 // Add here all group of memory block needed and their size
 
@@ -71,18 +71,18 @@
 // Memory block 3:      general all around block
 // Memory block 4:      general all around block
 
-//                 Enum ID             Memory Group Name   Allocation Group Name   Nb of block     Size of block
+//              Enum ID             Memory Group Name   Allocation Group Name   Nb of block     Size of block
 #define MEM_BLOCK_DEF(X_MEM_BLOCK)\
-   X_MEM_BLOCK(    MEM_BLOCK,          Block,              AllocBlock,             32,            16U              )\
-   X_MEM_BLOCK(    MEM_BLOCK_0,        Block_0,            AllocBlock_0,           64,            64U              )\
-   X_MEM_BLOCK(    MEM_BLOCK_1,        Block_1,            AllocBlock_1,           64,            128U             )\
-   X_MEM_BLOCK(    MEM_BLOCK_2,        Block_2,            AllocBlock_2,           64,            256U             )\
-   X_MEM_BLOCK(    MEM_BLOCK_3,        Block_3,            AllocBlock_3,           8,             1024U            )\
-   X_MEM_BLOCK(    MEM_BLOCK_4,        Block_4,            AllocBlock_4,           2,             2048U            )\
+   X_MEM_BLOCK( MEM_BLOCK,          Block,              AllocBlock,             32,            16U              )\
+   X_MEM_BLOCK( MEM_BLOCK_0,        Block_0,            AllocBlock_0,           64,            64U              )\
+   X_MEM_BLOCK( MEM_BLOCK_1,        Block_1,            AllocBlock_1,           64,            128U             )\
+   X_MEM_BLOCK( MEM_BLOCK_2,        Block_2,            AllocBlock_2,           64,            256U             )\
+   X_MEM_BLOCK( MEM_BLOCK_3,        Block_3,            AllocBlock_3,           8,             1024U            )\
+   X_MEM_BLOCK( MEM_BLOCK_4,        Block_4,            AllocBlock_4,           2,             2048U            )\
 
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 //  Miscellaneous
-//.................................................................................................
+//-------------------------------------------------------------------------------------------------
 
 #define ETH_SOCK            0
 #define ETH_PORT            30501

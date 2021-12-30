@@ -25,45 +25,12 @@
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// Post Include file(s)
-//-------------------------------------------------------------------------------------------------
-
-/*
-#ifdef __DATABASE_POST_INCLUDE__
-
-#include "lib_class_database.h"
-#include "lib_class_eeprom_dbase.h"
-#include "lib_class_qspi_dbase.h"
-#include "lib_class_hard_dbase.h"
-#include "lib_class_ram_dbase.h"
-#include "lib_class_rom_dbase.h"
-#include "lib_class_bkpreg_dbase.h"
-#include "lib_database_wrapper.h"
-#include "lib_time_typedef.h"
-
-#else // __DATABASE_POST_INCLUDE__
-
-#ifndef __DATABASE_CFG__
-#define __DATABASE_CFG__
-*/
-//#pragma once
-
-//-------------------------------------------------------------------------------------------------
-// Pre Include file(s)
+// Include file(s)
 //-------------------------------------------------------------------------------------------------
 
 #include "lib_label.h"
 #include "project_def.h"
 #include "lib_typedef.h"
-
-//-------------------------------------------------------------------------------------------------
-// Compiler specific(s)
-//-------------------------------------------------------------------------------------------------
-
-//#if defined(__GNUC__)
-//  #pragma GCC diagnostic push
-//  #pragma GCC diagnostic ignored "-Wcomment"
-//#endif
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -80,7 +47,7 @@
 #define     DBASE_INDEX_SYSTEM_RANGE            5000
 #define     DBASE_INDEX_QSPI_RANGE              6000
 
-// specific to grafx support
+// specific to Grafx support
 
 #define     DBASE_MAX_SKIN_IMAGE_QTY            256                                 // this is max the number of image in database
 #define     DBASE_MAX_SKIN_FONT_QTY             32                                  // this is max the number of font in database
@@ -163,15 +130,3 @@ extern const uint32_t __user_ram_data_base__;
                      X_DBASE( SYSTEM_TEST2,   NV_RAM_TEST2,   E2_TEST2,   CVT_HOUR_TO_SECOND(0),  0                       )   \
 
 #endif
-
-//-------------------------------------------------------------------------------------------------
-// Compiler specific(s)
-//-------------------------------------------------------------------------------------------------
-
-//#if defined(__GNUC__)
-//  #pragma GCC diagnostic pop
-//#endif
-
-//-------------------------------------------------------------------------------------------------
-//#endif //__DATABASE_CFG__
-//#endif // _DATABASE_POST_INCLUDE_

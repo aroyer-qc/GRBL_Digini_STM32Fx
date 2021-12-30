@@ -127,7 +127,7 @@ void BSP_Initialize(void)
     // Note:  The ART accelerator is available only for flash access on ITCM interface.
     FLASH->ACR |= FLASH_ACR_ARTEN;
 
-    SysTick_Config(SYSTEM_CORE_CLOCK / 1000);
+    SysTick_Config(SYSTEM_CORE_CLOCK / SYSTICK_RATE);
 
   #ifdef ARM_MATH_CM7
     //BSP_CPU_CacheEnable();

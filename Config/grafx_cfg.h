@@ -23,9 +23,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
+//
+// Notes: if GRAFX_USE_A_SKIN is define
+//
+//      lib_compression make use of the display memory for:
+//          - Loading of the compressed image
+//          - to hold temporary data use during decompression
+//          - to hold decompressed data before storage in to the database
+//
+//-------------------------------------------------------------------------------------------------
 
 #pragma once
 
+//-------------------------------------------------------------------------------------------------
+// Define(s)
 //-------------------------------------------------------------------------------------------------
 
 #define DIGINI_USE_GRAFX
@@ -85,7 +96,6 @@
 #define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
 
-
 //#define GRAFX_DEBUG_GUI
 //#define GRAFX_PAINT_BOX_DEBUG
 #define GRAFX_PAINT_BOX_DEBUG_COLOR                     RED
@@ -102,18 +112,9 @@
     //#define GRAFX_PDI_INVERT_Y
 #endif
 
-//#ifdef GRAFX_USE_A_SKIN
-  #define GRAFX_USE_LOAD_SKIN
-//#endif
-
-
+#define GRAFX_USE_LOAD_SKIN
 #define GRAFX_USE_PDI_MULTI_EVENT                                                  // Set Multi-touch is supported
 //#define GRAFX_PDI_INTERRUPT_IO                                                    // not available on DISCO746
-
-// #ifdef do same thing with IRQ line for SD Detect
-    #define DIGINI_SD_CARD_DETECT_IO        DETECT_SD_CARD
-//#endif
-
 
 
 //#define DIGINI_USE_TIMED_WIDGET
@@ -140,7 +141,7 @@
 #define DIGINI_MAX_PRINT_NUMBER_OF_LINE                 8               // This is the maximum number of line in the same string
 #define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
 
-
+// Default service available in Grafx
 #define USE_SERV_DATE
 #define USE_SERV_INPD
 #define USE_SERV_INPF
@@ -148,14 +149,6 @@
 //#define USE_SERV_INPS
 #define USE_SERV_TIME
 #define USE_SERV_XCHG
-
-// Notes: if GRAFX_USE_A_SKIN is define
-//
-//      lib_compression make use of the display memory for:
-//          - Loading of the compressed image
-//          - to hold temporary data use during decompression
-//          - to hold decompressed data before storage in to the database
-//
 
 //-------------------------------------------------------------------------------------------------
 
