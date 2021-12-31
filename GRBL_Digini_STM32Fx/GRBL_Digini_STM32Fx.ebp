@@ -323,7 +323,7 @@
 		<Unit filename="..\module\Digini\Digini\src\digini.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Digini\src\lib_assert.cpp">
+		<Unit filename="..\module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\inc\color\lib_grafx_color.h" />

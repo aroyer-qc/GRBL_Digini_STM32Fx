@@ -117,7 +117,7 @@
 //#define GRAFX_PDI_INTERRUPT_IO                                                    // not available on DISCO746
 
 
-//#define DIGINI_USE_TIMED_WIDGET
+//#define GRAFX_USE_TIMED_WIDGET
 #define GRAFX_USE_FONT_SIZE_8
 #define GRAFX_USE_FONT_SIZE_12
 #define GRAFX_USE_FONT_SIZE_16

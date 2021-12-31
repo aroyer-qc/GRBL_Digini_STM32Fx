@@ -43,7 +43,7 @@
 
 #define BSP_GLOBAL
 #include "bsp.h"
-#undef BSP_GLOBAL
+#undef  BSP_GLOBAL
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -174,9 +174,9 @@ void BSP_PostLoadingSkinFontPatch(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           BSP_PostOS_Init
+//  Name:           BSP_PostOS_Initialize
 //  Parameter(s):   void
-//  Return:         portBASE_TYPE       SystemState
+//  Return:         SystemState_e       SystemState
 //
 //  Description:    This function should be called by your application After OS has being started
 //
