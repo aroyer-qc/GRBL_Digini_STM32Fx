@@ -30,11 +30,11 @@
 // Global Define(s)
 //-------------------------------------------------------------------------------------------------
 
-//                 Enum ID,          ARGB Value
-#define CUSTOM_COLOR_DEF(X_CUSTOM_COLOR)          \
-   X_CUSTOM_COLOR( OPAQUE_BLACK,     0xFF000000 ) \
-   X_CUSTOM_COLOR( OPAQUE_RED,       0xFFFF8080 ) \
-   X_CUSTOM_COLOR( YELLOW_TRANS,     0xAAFFF700 ) \
+//                  Enum ID,          ARGB Value
+#define CUSTOM_COLOR_DEF(X_CUSTOM_COLOR) \
+    X_CUSTOM_COLOR( OPAQUE_BLACK,     0xFF000000 ) \
+    X_CUSTOM_COLOR( OPAQUE_RED,       0xFFFF8080 ) \
+    X_CUSTOM_COLOR( YELLOW_TRANS,     0xAAFFF700 ) \
 
 //-------------------------------------------------------------------------------------------------
 

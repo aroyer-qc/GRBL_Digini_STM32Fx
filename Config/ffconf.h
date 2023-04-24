@@ -1,13 +1,14 @@
+
+#include "diskio.h"
+
 /*---------------------------------------------------------------------------/
-/  FatFs - FAT file system module configuration file  R0.10a (C)ChaN, 2014
+/  Configurations of FatFs Module
 /---------------------------------------------------------------------------*/
 
-#ifndef _FFCONF
-#define _FFCONF 29000    /* Revision ID */
-
+#define FFCONF_DEF	80286	/* Revision ID */
 
 /*---------------------------------------------------------------------------/
-/ Functions and Buffer Configurations
+/ Function Configurations
 /---------------------------------------------------------------------------*/
 
 #define    _FS_TINY        0    /* 0:Normal or 1:Tiny */

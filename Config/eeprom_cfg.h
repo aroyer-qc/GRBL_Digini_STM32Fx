@@ -34,6 +34,8 @@
 // Global Define(s)
 //-------------------------------------------------------------------------------------------------
 
+// list of supported device should be moved in digini
+
 // E2_M24LC32A
 #define E2_M24LC32A_SIZE            4096
 #define E2_M24LC32A_NB_OF_PAGE      32

@@ -31,7 +31,11 @@
 
 #pragma once
 
-// #define DIGINI_USE_ASSERT
+//-------------------------------------------------------------------------------------------------
+// #define DIGINI_USE_ASSERT// Convert to DEF_ENABLED/DEF_DISABLED
+#define DIGINI_USE_CONSOLE                     DEF_DISABLED
+#define DIGINI_USE_CMD_LINE                    DEF_DISABLED
+#define DIGINI_USE_VT100_MENU                  DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
@@ -43,7 +47,14 @@
 // EEPROM support
 //
 
-#define DIGINI_USE_EEPROM
+#define DIGINI_USE_EEPROM			// Convert to DEF_ENABLED/DEF_DISABLED
+
+//-------------------------------------------------------------------------------------------------
+// Multi language support
+//
+// Note: If it is DEF_ENABLED then you need to add to a database the item DIGINI_SYSTEM_LANGUAGE
+
+#define DIGINI_USE_MULTI_LANGUAGE_SUPPORT       DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // FAT FS Peripheral support
@@ -51,11 +62,17 @@
 
 #define DIGINI_USE_FATFS
 
-//#define DIGINI_FATFS_USE_SPI_FLASH_CHIP           // to be added to peripheral list
-#define DIGINI_FATFS_USE_QSPI                       // to be added to peripheral list
-#define DIGINI_FATFS_USE_SDIO_SD_CARD
-//#define DIGINI_FATFS_USE_SPI_SD_CARD
-//#define DIGINI_FATFS_USE_USB_KEY
-//#define DIGINI_FATFS_USE_RAM_DRIVE
+#define DIGINI_FATFS_USE_SPI_FLASH_CHIP         DEF_DISABLED  // to be added to peripheral list
+#define DIGINI_FATFS_USE_QSPI                   DEF_DISABLED  // to be added to peripheral list
+#define DIGINI_FATFS_USE_SDIO_SD_CARD           DEF_ENABLED
+#define DIGINI_FATFS_USE_SPI_SD_CARD            DEF_DISABLED
+#define DIGINI_FATFS_USE_USB_KEY                DEF_DISABLED
+#define DIGINI_FATFS_USE_RAM_DISK               DEF_DISABLED
+
+//-------------------------------------------------------------------------------------------------
+// GRAFX Configuration
+//
+
+#define DIGINI_USE_GRAFX
 
 //-------------------------------------------------------------------------------------------------

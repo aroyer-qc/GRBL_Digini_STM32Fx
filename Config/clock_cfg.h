@@ -27,7 +27,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// Pre define(s)
+// Pre Define(s)
 //-------------------------------------------------------------------------------------------------
 
 #define HSE_VALUE                                    25000000
@@ -103,14 +103,14 @@
 
 //-------------------------------------------------------------------------------------------------
 //
-//     W   W    A    RRRR   N   N  III  N   N   GGG
-//     W   W  A   A  R   R  NN  N   I   NN  N  G
-//     W   W  AAAAA  RRRR   N N N   I   N N N  G  GG
-//     W W W  A   A  R  R   N  NN   I   N  NN  G   G
-//     W   W  A   A  R   R  N   N  III  N   N   GGG
+//       WW    WW   AAA   RRRRR  NN   NN  IIII  NN   NN   GGGG
+//       WW    WW  AA AA  RR  RR NNN  NN   II   NNN  NN  GG
+//       WW    WW AAAAAAA RRRRR  NN N NN   II   NN N NN  GG GGG
+//       WW WW WW AA   AA RR RR  NN  NNN   II   NN  NNN  GG  GG
+//        WW  WW  AA   AA RR  RR NN   NN  IIII  NN   NN   GGGG
 //
-//    WARNING:        Don't modified passed this point, everything else is automatic
-//
+//   Don't modified passed this point, everything else is automatic
+// NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE move this out.. no need to be in config!!
 //-------------------------------------------------------------------------------------------------
 
 // --------------------------------------------------------------------------------------------------------------------------------
