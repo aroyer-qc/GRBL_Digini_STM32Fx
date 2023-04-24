@@ -33,15 +33,15 @@
 
 //-------------------------------------------------------------------------------------------------
 // #define DIGINI_USE_ASSERT// Convert to DEF_ENABLED/DEF_DISABLED
-#define DIGINI_USE_CONSOLE                     DEF_DISABLED
-#define DIGINI_USE_CMD_LINE                    DEF_DISABLED
-#define DIGINI_USE_VT100_MENU                  DEF_DISABLED
+#define DIGINI_USE_CONSOLE                      DEF_DISABLED
+#define DIGINI_USE_CMD_LINE                     DEF_DISABLED
+#define DIGINI_USE_VT100_MENU                   DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
 //
 //#define DIGINI_USE_SPI_DEVICE
-#define DIGINI_SD_CARD_DETECT_IO        DETECT_SD_CARD
+#define DIGINI_SD_CARD_DETECT_IO                DETECT_SD_CARD
 
 //-------------------------------------------------------------------------------------------------
 // EEPROM support
