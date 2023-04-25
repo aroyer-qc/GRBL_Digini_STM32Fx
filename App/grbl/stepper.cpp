@@ -508,7 +508,7 @@ void Stepper_MainISR(TIM_TypeMatch_e TypeMatch)
             }
 
             // Initialize step segment timing per step and load number of steps to execute.
-            myTIM_GRBL_Stepper.Reload(st.exec_segment->cycles_per_tick);                                            //      TIM9->ARR = st.exec_segment->cycles_per_tick;
+  // poutine          myTIM_GRBL_Stepper.Reload(st.exec_segment->cycles_per_tick);                                            //      TIM9->ARR = st.exec_segment->cycles_per_tick;
            // not in arduino??? myTIM_GRBL_Stepper.SetCompare(TIM_COMPARE_CH1, (uint16_t)(st.exec_segment->cycles_per_tick * 0.75));    //     TIM9->CCR1 = (uint16_t)(st.exec_segment->cycles_per_tick * 0.75);
             st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
 

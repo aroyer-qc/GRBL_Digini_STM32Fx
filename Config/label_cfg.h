@@ -43,7 +43,6 @@
     X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                   "%2d:%02d:%02d"                      ) \
     X_LABEL( LBL_DATE,                   "%2d %02d %04d",                   "%2d %02d %04d"                      ) \
     X_LABEL( LBL_PERCENT,                "%2d",                             "%2d"                                ) \
-    X_LABEL( LBL_STRING,                 "%s",                              "%s"                                 ) \
     X_LABEL( LBL_0,                      "0",                               "0"                                  ) \
     X_LABEL( LBL_1,                      "1",                               "1"                                  ) \
     X_LABEL( LBL_2,                      "2",                               "2"                                  ) \

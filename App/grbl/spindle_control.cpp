@@ -52,7 +52,8 @@ uint8_t spindle_get_state()
     if (IO_GetInputPin(IO_SPINDLE_ENABLE) == 1) { return(SPINDLE_STATE_CW); }
    #endif
   #else
-    if (myTIM_GRBL_Spindle.IsItRunning() == true) { // Check if PWM is enabled.
+ // poutine   if (myTIM_GRBL_Spindle.IsItRunning() == true)
+    { // Check if PWM is enabled.
 	  #ifdef ENABLE_DUAL_AXIS
         return(SPINDLE_STATE_CW);
       #else
@@ -112,7 +113,7 @@ void spindle_stop()
 // and stepper ISR. Keep routine small and efficient.
 void spindle_set_speed(uint8_t pwm_value)
 {
-	myTIM_GRBL_Spindle.Reload(pwm_value);
+// poutine	myTIM_GRBL_Spindle.Reload(pwm_value);
 
   #ifdef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
 	if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
@@ -132,7 +133,7 @@ void spindle_set_speed(uint8_t pwm_value)
   #else
 	if(pwm_value == SPINDLE_PWM_OFF_VALUE) {
 		myTIM_GRBL_Spindle.Stop();          // Disable PWM. Output voltage is zero.
-	    myTIM_GRBL_Spindle.Reload(0xFFFF);                  // TODO validate this Argo to adapt TIM1->CCR1 = TIM1_INIT;    // Disable PWM. Output voltage is zero.
+// poutine	    myTIM_GRBL_Spindle.Reload(0xFFFF);                  // TODO validate this Argo to adapt TIM1->CCR1 = TIM1_INIT;    // Disable PWM. Output voltage is zero.
 	} else {
 		myTIM_GRBL_Spindle.Start();
 	}

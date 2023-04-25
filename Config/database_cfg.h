@@ -80,11 +80,12 @@
     X_EEPROM_DBASE( SYSTEM_LANGUAGE, 1,                1,               sizeof(Language_e)         )
 
 */
-//                Enum ID                 Items QTY,  Items SubQTY    Item Size               Get/Set Callback
+//                Enum ID                 Items QTY,       Items SubQTY       Item Size               Get/Set Callback
 #define HARD_DBASE_DEF(X_HARD_DBASE) \
-    X_HARD_DBASE( REC_TIME,               1,          1,              sizeof(Time_t),          AccessTime)         \
-    X_HARD_DBASE( REC_DATE,               1,          1,              sizeof(Date_t),          AccessDate)         \
-    X_HARD_DBASE( REC_TIME_FORMAT,        1,          1,              sizeof(TimeFormat_e),    AccessTimeFormat)   \
+    X_HARD_DBASE( REC_TIME,               1,               1,                 sizeof(Time_t),          AccessTime)         \
+    X_HARD_DBASE( REC_DATE,               1,               1,                 sizeof(Date_t),          AccessDate)         \
+    X_HARD_DBASE( REC_TIME_FORMAT,        1,               1,                 sizeof(TimeFormat_e),    AccessTimeFormat)   \
+    X_HARD_DBASE( APPLICATION_LABEL,      NB_LABEL_CONST,  NB_LANGUAGE_CONST, sizeof(char*),           GetLabel)           \
 
 /*
 #define NV_RAM_DBASE_ADDRESS   You must give address of your database of the NV_RAM Region here (Ex. &ByteArrayNV_Ram[x]
@@ -123,7 +124,6 @@ extern const uint32_t __user_ram_data_base__;
     X_ROM_DBASE( FW_GUI_VERSION_TEXT,   &OUR_FIRMWARE_GUI_VERSION[0],  1,                1,                 sizeof(OUR_FIRMWARE_GUI_VERSION) )   \
     X_ROM_DBASE( MODEL_NAME_TEXT,       &OUR_MODEL_NAME[0],            1,                1,                 sizeof(OUR_SERIAL_NUMBER)        )   \
     X_ROM_DBASE( SERIAL_NUMBER_TEXT,    &OUR_SERIAL_NUMBER[0],         1,                1,                 sizeof(OUR_SERIAL_NUMBER)        )   \
-    X_ROM_DBASE( APPLICATION_LABEL,     &LBL_Application[0][0],        NB_LABEL_CONST,   NB_LANGUAGE_CONST, sizeof(char*)                    )   \
 
 // System Database are record that are both in RAM ( cpu ram, board ram, nvram, backup register) and in rom (E2, etc..)
 // Also there is an interval and a start time to save them in E2 ( save can also be forced )

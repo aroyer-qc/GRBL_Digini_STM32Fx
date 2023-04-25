@@ -8,6 +8,8 @@
 
 #include "lib_digini.h"
 
+#if (DIGINI_USE_EEPROM == DEF_ENABLED)
+
 /*! \brief  Read byte from EEPROM.
  *
  *  This function reads one byte from a given EEPROM address.
@@ -68,3 +70,4 @@ int memcpy_from_eeprom_with_checksum(char *destination, unsigned int source, uns
 }
 
 // end of file
+#endif

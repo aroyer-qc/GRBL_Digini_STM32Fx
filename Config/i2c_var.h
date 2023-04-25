@@ -36,7 +36,7 @@
 
 I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
 {
-  #if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
+  #if (I2C_DRIVER_SUPPORT_I2C1_CFG == DEF_ENABLED)
     {
         DRIVER_I2C1_ID,             // DRIVER_I2Cx_ID
         I2C1,                       // pI2Cx
@@ -50,7 +50,7 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     },
   #endif
 
-  #if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
+  #if (I2C_DRIVER_SUPPORT_I2C2_CFG == DEF_ENABLED)
     {
         DRIVER_I2C2_ID,             // DRIVER_I2Cx_ID
         I2C2,                       // pI2Cx
@@ -64,7 +64,7 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     },
   #endif
 
-  #if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
+  #if (I2C_DRIVER_SUPPORT_I2C3_CFG == DEF_ENABLED)
     {
         DRIVER_I2C3_ID,             // DRIVER_I2Cx_ID
         I2C3,                       // pI2Cx
@@ -78,7 +78,7 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     },
   #endif
 
-  #if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
+  #if (I2C_DRIVER_SUPPORT_I2C4_CFG == DEF_ENABLED)
     {
         DRIVER_I2C4_ID,             // DRIVER_I2Cx_ID
         I2C4,                       // pI2Cx

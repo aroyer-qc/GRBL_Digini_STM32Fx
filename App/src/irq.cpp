@@ -63,7 +63,7 @@ NOS_ISR(EXTI9_5_IRQHandler)
     //}
 
     // For SD Card Detect  // todo this need rework to follow new IRQ handling by IO function
-  #ifdef DIGINI_FATFS_USE_SD_CARD
+  #if (DIGINI_FATFS_USE_SD_CARD == DEF_ENABLED)
    #if SD_CARD_USE_DETECT_SIGNAL == 1
     if((EXTI->PR & IO_PIN_MASK_6) != 0)
     {

@@ -76,19 +76,19 @@
 
 #define GRBL_SPINDLE                            TIM_DRIVER_ID_1
 #define GRBL_SPINDLE_USE_UPDATE_IRQ             false
-#define GRBL_SPINDLE_MODE                       TIM_OP_MODE_REPETITIVE
+#define GRBL_SPINDLE_MODE                       TIM_OP_MODE_REPETITIVE_UP_COUNT
 #define GRBL_SPINDLE_PRESCALER                  1000
 #define GRBL_SPINDLE_RELOAD                     100
 
 #define GRBL_STEPPER                            TIM_DRIVER_ID_9
 #define GRBL_STEPPER_USE_UPDATE_IRQ             true
-#define GRBL_STEPPER_MODE                       TIM_OP_MODE_REPETITIVE
+#define GRBL_STEPPER_MODE                       TIM_OP_MODE_REPETITIVE_UP_COUNT
 #define GRBL_STEPPER_PRESCALER                  SYS_APB2_TIMER_CLOCK_FREQUENCY / (DEBOUNCE_TIME_CHECK) / 100
 #define GRBL_STEPPER_RELOAD                     100
 
 #define GRBL_LIMITS_DEBOUNCE                    TIM_DRIVER_ID_2
 #define GRBL_LIMITS_DEBOUNCE_USE_UPDATE_IRQ     true
-#define GRBL_LIMITS_DEBOUNCE_MODE               TIM_OP_MODE_SINGLE
+#define GRBL_LIMITS_DEBOUNCE_MODE               TIM_OP_MODE_SINGLE_UP_COUNT
 #define GRBL_LIMITS_DEBOUNCE_PRESCALER          SYS_APB2_TIMER_CLOCK_FREQUENCY / (MAX_STEP_RATE_HZ) / 1000
 #define GRBL_LIMITS_DEBOUNCE_RELOAD             1000
 

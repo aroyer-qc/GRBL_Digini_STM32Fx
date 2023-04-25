@@ -172,7 +172,7 @@
  * Enable or disable joining thread (waiting for other thread to complete).                                           *
  *                                                                                                                    *
  **********************************************************************************************************************/
-#define NOS_CONFIG_THREAD_MPU_REGION_ENABLE         1
+#define NOS_CONFIG_THREAD_MPU_REGION_ENABLE         0
 
 /**********************************************************************************************************************
  *                                                                                                                    *

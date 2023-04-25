@@ -154,8 +154,8 @@ void TERM_Initialize(void)
     Q_RX_Data.CreateQueue(&GetQueueArray[0], TERM_RX_DATA_Q_LENGTH, TERM_RX_DATA_Q_ITEM_SIZE);
 
     // Register callback for uart RX Bytes and TX Completed
-    myUART_Terminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
-    myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
+ // TODO match with new class register type or something   myUART_Terminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
+  // myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
 
     // Provide first RX buffer
     pBuffer = (uint8_t*)pMemory->Alloc(TERM_RX_BUFFER_SIZE);

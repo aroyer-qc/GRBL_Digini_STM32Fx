@@ -34,10 +34,10 @@
 // Global Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define I2C_DRIVER_SUPPORT_I2C1            DEF_ENABLED
-#define I2C_DRIVER_SUPPORT_I2C2            DEF_DISABLED
-#define I2C_DRIVER_SUPPORT_I2C3            DEF_ENABLED
-#define I2C_DRIVER_SUPPORT_I2C4            DEF_DISABLED
+#define I2C_DRIVER_SUPPORT_I2C1_CFG             DEF_ENABLED
+#define I2C_DRIVER_SUPPORT_I2C2_CFG             DEF_DISABLED
+#define I2C_DRIVER_SUPPORT_I2C3_CFG             DEF_ENABLED
+#define I2C_DRIVER_SUPPORT_I2C4_CFG             DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 
