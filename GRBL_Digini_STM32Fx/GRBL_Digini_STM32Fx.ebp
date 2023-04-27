@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.50" revision="0" />
+	<EmBitzVersion release="2.60" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
@@ -204,7 +204,6 @@
 		<Unit filename="..\App\inc\bsp.h" />
 		<Unit filename="..\App\inc\error.h" />
 		<Unit filename="..\App\inc\service.h" />
-		<Unit filename="..\App\inc\system_stm32f7xx.h" />
 		<Unit filename="..\App\inc\task_grbl.h" />
 		<Unit filename="..\App\inc\task_loading.h" />
 		<Unit filename="..\App\inc\terminal.h" />
@@ -239,9 +238,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\src\service.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\src\system_stm32f7xx.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\src\task_grbl.cpp">
@@ -530,6 +526,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_dma.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_io.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_isr.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\system_clock.h" />
 		<Unit filename="..\Module\Digini\Peripheral\src\device\diskio.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

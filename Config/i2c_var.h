@@ -43,7 +43,16 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C1_SCL,                // SCL
         IO_I2C1_SDA,                // SDA
         RCC_APB1ENR_I2C1EN,         // RCC_APB1ENR
-        400000,                     // Speed for this module
+        400000,                     // Timing  ???
+      #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
+        I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
+        I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
+        0,                          // Own Address_1
+        0,                          // Own Address_2
+        0,                          // Own Address_2 Masks
+        I2C_GENERAL_CALL_DISABLE,   // General Call Mode
+        I2C_NO_STRETCH_DISABLE,     // No Stretch Mode
+      #endif
         7,                          // PreempPrio
         I2C1_EV_IRQn,               // IRQn_Channel
         I2C1_ER_IRQn,               // IRQn_Channel
@@ -57,7 +66,16 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C2_SCL,                // SCL
         IO_I2C2_SDA,                // SDA
         RCC_APB1ENR_I2C2EN,         // RCC_APB1ENR
-        400000,                     // Speed for this module
+        400000,                     // Timing  ???
+      #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
+        I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
+        I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
+        0,                          // Own Address_1
+        0,                          // Own Address_2
+        0,                          // Own Address_2 Masks
+        I2C_GENERAL_CALL_DISABLE,   // General Call Mode
+        I2C_NO_STRETCH_DISABLE,     // No Stretch Mode
+      #endif
         7,                          // PreempPrio
         I2C2_EV_IRQn,               // IRQn_Channel
         I2C2_ER_IRQn,               // IRQn_Channel
@@ -71,7 +89,16 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C3_SCL,                // SCL
         IO_I2C3_SDA,                // SDA
         RCC_APB1ENR_I2C3EN,         // RCC_APB1ENR
-        400000,                     // Speed for this module
+        400000,                     // Timing  ???
+      #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
+        I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
+        I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
+        0,                          // Own Address_1
+        0,                          // Own Address_2
+        0,                          // Own Address_2 Masks
+        I2C_GENERAL_CALL_DISABLE,   // General Call Mode
+        I2C_NO_STRETCH_DISABLE,     // No Stretch Mode
+      #endif
         7,                          // PreempPrio
         I2C3_EV_IRQn,               // IRQn_Channel
         I2C3_ER_IRQn,               // IRQn_Channel
@@ -85,7 +112,16 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C4_SCL,                // SCL
         IO_I2C4_SDA,                // SDA
         RCC_APB1ENR_I2C4EN,         // RCC_APB1ENR
-        400000,                     // Speed for this module
+        400000,                     // Timing  ???
+      #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
+        I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
+        I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
+        0,                          // Own Address_1
+        0,                          // Own Address_2
+        0,                          // Own Address_2 Masks
+        I2C_GENERAL_CALL_DISABLE,   // General Call Mode
+        I2C_NO_STRETCH_DISABLE,     // No Stretch Mode
+      #endif
         7,                          // PreempPrio
         I2C4_EV_IRQn,               // IRQn_Channel
         I2C4_ER_IRQn,               // IRQn_Channel
