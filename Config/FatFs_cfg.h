@@ -40,8 +40,14 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define _USE_WRITE                      1       // 1: Enable FatFS disk_write function
-#define _USE_IOCTL                      1       // 1: Enable FatFs disk_ioctl function
+#define FATFS_CFG_MAX_PATH_NAME_LEN                         16
+#define FATFS_CFG_MAX_FILENAME_SIZE                         9
+#define FATFS_CFG_MAX_EXT_SIZE                              5
+#define FATFS_CFG_MAX_FULL_FILENAME_SIZE                    13
+#define FATFS_CFG_MAX_FULL_FILENAME_SIZE_PADDING            14
+
+#define _USE_WRITE                                          1       // 1: Enable FatFS disk_write function
+#define _USE_IOCTL                                          1       // 1: Enable FatFs disk_ioctl function
 
 //-------------------------------------------------------------------------------------------------
 // X-Macro

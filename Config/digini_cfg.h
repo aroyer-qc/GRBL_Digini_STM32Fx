@@ -28,14 +28,25 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// #define DIGINI_USE_ASSERT// Convert to DEF_ENABLED/DEF_DISABLED
-#define DIGINI_USE_CONSOLE                      DEF_DISABLED
-#define DIGINI_USE_CMD_LINE                     DEF_DISABLED
-#define DIGINI_USE_VT100_MENU                   DEF_DISABLED
+//  Define(s)
+//-------------------------------------------------------------------------------------------------
+
+#define ETH_SOCK            0
+#define ETH_PORT            30501
+
+
+#define DIGINI_USE_ASSERT                               DEF_DISABLED
+
+#define DIGINI_RESTRICT_MEMORY_ALLOC_TO_BLOCK_SIZE      DEF_DISABLED    // LIB_Memory.x. If Enable we allow only closest block size that are greater to be allocated
+
+//#define DIGINI_APP_USE_TICK_HOOK                      DEF_ENABLED
+
+#define DIGINI_USE_CONSOLE                              DEF_DISABLED
+#define DIGINI_USE_CMD_LINE                             DEF_DISABLED
+#define DIGINI_USE_VT100_MENU                           DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral

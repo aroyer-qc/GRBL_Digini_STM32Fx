@@ -43,6 +43,7 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C1_SCL,                // SCL
         IO_I2C1_SDA,                // SDA
         RCC_APB1ENR_I2C1EN,         // RCC_APB1ENR
+        I2C1_SELECT_PLCK1,
         400000,                     // Timing  ???
       #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
         I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
@@ -66,7 +67,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C2_SCL,                // SCL
         IO_I2C2_SDA,                // SDA
         RCC_APB1ENR_I2C2EN,         // RCC_APB1ENR
-        400000,                     // Timing  ???
+        I2C2_SELECT_PLCK1,
+        0x6000030D,                 // 400 KHz Timing
       #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
         I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
         I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
@@ -89,7 +91,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C3_SCL,                // SCL
         IO_I2C3_SDA,                // SDA
         RCC_APB1ENR_I2C3EN,         // RCC_APB1ENR
-        400000,                     // Timing  ???
+        I2C3_SELECT_PLCK1,
+        0x6000030D,                 // 400 KHz Timing
       #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
         I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
         I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode
@@ -112,7 +115,8 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
         IO_I2C4_SCL,                // SCL
         IO_I2C4_SDA,                // SDA
         RCC_APB1ENR_I2C4EN,         // RCC_APB1ENR
-        400000,                     // Timing  ???
+        I2C3_SELECT_PLCK1,
+        0x6000030D,                 // 400 KHz Timing
       #if I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG == DEF_ENABLED
         I2C_ADDRESSING_MODE_7_BIT,  // Addressing Mode
         I2C_DUAL_ADDRESS_DISABLE,   // Dual Address Mode

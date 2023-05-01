@@ -55,15 +55,15 @@
 #define HSI_PLLM_N_MULTIPLIER                       100
 #define HSI_PLLM_P_DIVIDER                          2
 #define HSI_PLLM_Q_DIVIDER                          2
-#define HSI_PLLM_R_DIVIDER                          2
+//#define HSI_PLLM_R_DIVIDER                          2
 
 // For xxx MHz HCLK on HSE
 #define HSE_PLLM_SOURCE                             HSE_VALUE
 #define HSE_PLLM_DIVIDER                            25
 #define HSE_PLLM_N_MULTIPLIER                       432
 #define HSE_PLLM_P_DIVIDER                          2
-#define HSE_PLLM_Q_DIVIDER                          5
-#define HSE_PLLM_R_DIVIDER                          2
+#define HSE_PLLM_Q_DIVIDER                          9
+//#define HSE_PLLM_R_DIVIDER                          2
 
 //#define CORTEX_SYSTEM_TIMER                         LL_SYSTICK_CLKSOURCE_HCLK_DIV8               // LL_SYSTICK_CLKSOURCE_HCLK (/1) or LL_SYSTICK_CLKSOURCE_HCLK_DIV8
 
