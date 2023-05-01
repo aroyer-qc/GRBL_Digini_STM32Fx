@@ -78,7 +78,7 @@
 #define DIGINI_FATFS_USE_SDIO_SD_CARD           DEF_ENABLED
 #define DIGINI_FATFS_USE_SPI_SD_CARD            DEF_DISABLED
 #define DIGINI_FATFS_USE_USB_KEY                DEF_DISABLED
-#define DIGINI_FATFS_USE_RAM_DISK               DEF_DISABLED
+#define DIGINI_FATFS_USE_RAM_DISK               DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // GRAFX Configuration

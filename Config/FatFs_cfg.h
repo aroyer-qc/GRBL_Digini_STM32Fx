@@ -53,11 +53,14 @@
 // X-Macro
 //-------------------------------------------------------------------------------------------------
 
+
+// should move this to default available drive in DIGINI
+
 #define FAT_FS_DRIVE_DEF(X_DRIVE)\
 /*  Will create x-macro for defined drive only  */\
     IF_USE( DIGINI_FATFS_USE_SPI_FLASH_CHIP, X_DRIVE( DISK_SPI_FLASH,    CFatFS_SPI_Flash,      SPI_Flash)    )\
     IF_USE( DIGINI_FATFS_USE_SPI_SD_CARD,    X_DRIVE( SPI_SD_CARD,       CFatFS_SD_Card,        SPI_SD_Card)  )\
-    IF_USE( DIGINI_FATFS_USE_SDIO_SD_CARD,   X_DRIVE( DISK_SDIO_SD_CARD, CFatFS_SDIO,           SDIO)         )\
+    IF_USE( DIGINI_FATFS_USE_SDIO_SD_CARD,   X_DRIVE( DISK_SDIO_SD_CARD, CFatFS_SDIO,           SDIO_SD_Card) )\
     IF_USE( DIGINI_FATFS_USE_USB_KEY,        X_DRIVE( DISK_USB_KEY,      CFatFS_USB,            USB_Key)      )\
     IF_USE( DIGINI_FATFS_USE_RAM_DISK,       X_DRIVE( DISK_RAM_DISK,     CFatFS_RAM_Disk,       RAM_Disk)     )\
 
