@@ -593,6 +593,9 @@
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_isr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\system_clock.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\RTOS_Wrapper\inc\nOS\lib_CQueue.h" />
 		<Unit filename="..\Module\Digini\RTOS_Wrapper\inc\nOS\lib_CTimer.h" />
 		<Unit filename="..\Module\Digini\RTOS_Wrapper\src\nOS\lib_CQueue.cpp">
