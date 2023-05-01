@@ -134,6 +134,7 @@
 			<Add option="-Wl,--cref" />
 			<Add option="-lm" />
 		</Linker>
+		<Unit filename="..\..\AntiqueRadio\Module\Digini\Peripheral\inc\FatFs\diskio_typedef.h" />
 		<Unit filename="..\App\grbl\config.h" />
 		<Unit filename="..\App\grbl\coolant_control.cpp">
 			<Option compilerVar="CC" />
@@ -253,7 +254,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Config\adc_cfg.h" />
-		<Unit filename="..\Config\app_cfg.h" />
 		<Unit filename="..\Config\bsp_io_def.h" />
 		<Unit filename="..\Config\cli_cfg.h" />
 		<Unit filename="..\Config\cli_var.h" />
@@ -499,7 +499,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_def.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_drv.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_typedef.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\lib_class_fatfs_ram_disk.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_pointing_device_interface.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_spi_sd_card.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_sdio.h" />
@@ -540,6 +540,9 @@
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\FatFS\diskio.cpp">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.cpp">
 			<Option compilerVar="CC" />

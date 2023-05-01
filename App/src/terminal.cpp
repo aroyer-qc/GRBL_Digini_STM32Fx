@@ -73,6 +73,8 @@ uint8_t         GetQueueArray[TERM_RX_DATA_Q_LENGTH * TERM_RX_DATA_Q_ITEM_SIZE];
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void TERM_TX_Callback(void* pContext)
 {
     TERM_QueueDataInfo_t* pQ_Data;
@@ -81,6 +83,7 @@ static void TERM_TX_Callback(void* pContext)
     pMemory->Free((void**)&pQ_Data->pBuffer);
     pMemory->Free((void**)&pQ_Data);
 }
+#pragma GCC diagnostic pop
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -94,6 +97,8 @@ static void TERM_TX_Callback(void* pContext)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 static void TERM_RX_Callback(void* pContext)
 {
     uint8_t *            pBuffer;
@@ -132,6 +137,7 @@ static void TERM_RX_Callback(void* pContext)
         __asm("nop");
     };
 }
+#pragma GCC diagnostic pop
 
 
 //-------------------------------------------------------------------------------------------------
