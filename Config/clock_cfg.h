@@ -30,13 +30,13 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define HSE_VALUE                                    25000000
-#define HSI_VALUE                                    16000000
-#define LSE_VALUE                                    32768
-#define LSI_VALUE                                    32768
-#define SYSTICK_RATE                                 1000
+#define SYS_HSE_VALUE                               25000000
+#define SYS_HSI_VALUE                               16000000
+#define SYS_LSE_VALUE                               32768
+#define SYS_LSI_VALUE                               32768
+#define SYSTICK_RATE                                1000
 
-#define LIB_TIMING_CFG_DELAY_LOOP_VALUE_FOR_1_USEC   1000 // TODO need to be set and fine tuned
+#define LIB_TIMING_CFG_DELAY_LOOP_VALUE_FOR_1_USEC  1000 // TODO need to be set and fine tuned
 
 // User clock selection
 #define SYS_PLL_SOURCE_MUX                          RCC_PLLCFGR_PLLSRC_HSE      // RCC_PLLCFGR_PLLSRC_HSE or
@@ -50,7 +50,7 @@
 // User PLL configuration
 
 // For xxx MHz HCLK on HSI
-#define HSI_PLLM_SOURCE                             HSI_VALUE
+#define HSI_PLLM_SOURCE                             SYS_HSI_VALUE
 #define HSI_PLLM_DIVIDER                            8
 #define HSI_PLLM_N_MULTIPLIER                       100
 #define HSI_PLLM_P_DIVIDER                          2
@@ -58,7 +58,7 @@
 //#define HSI_PLLM_R_DIVIDER                          2
 
 // For xxx MHz HCLK on HSE
-#define HSE_PLLM_SOURCE                             HSE_VALUE
+#define HSE_PLLM_SOURCE                             SYS_HSE_VALUE
 #define HSE_PLLM_DIVIDER                            25
 #define HSE_PLLM_N_MULTIPLIER                       432
 #define HSE_PLLM_P_DIVIDER                          2

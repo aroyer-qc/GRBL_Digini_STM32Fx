@@ -92,7 +92,7 @@
 #define GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP           16
 
 #define GRAFX_USE_V_SYNC
-#define GRAFX_USE_BACKGROUND_LAYER
+#define GRAFX_USE_BACKGROUND_LAYER                                  // if you're LCD support more than 1 layer
 #define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER                     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER
 

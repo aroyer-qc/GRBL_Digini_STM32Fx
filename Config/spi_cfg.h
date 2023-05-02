@@ -24,7 +24,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-//#pragma once
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -33,6 +33,10 @@
 #define SPI_DRIVER_SUPPORT_SPI1_CFG         DEF_DISABLED
 #define SPI_DRIVER_SUPPORT_SPI2_CFG         DEF_DISABLED
 #define SPI_DRIVER_SUPPORT_SPI3_CFG         DEF_DISABLED
+#define SPI_DRIVER_SUPPORT_SPI4_CFG	    DEF_DISABLED
+#define SPI_DRIVER_SUPPORT_SPI5_CFG         DEF_DISABLED
+#define SPI_DRIVER_SUPPORT_SPI6_CFG         DEF_DISABLED
+
 
 #define SPI_DRIVER_SUPPORT_DMA_CFG          DEF_DISABLED
 

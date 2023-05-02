@@ -141,7 +141,7 @@ NOS_ISR(EXTI15_10_IRQHandler)
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-//#ifdef DIGINI_USE_SDIO
+#if (USE_SDIO_DRIVER == DEF_ENABLED)
 NOS_ISR(SDMMC1_IRQHandler)
 {
     // Process All SDIO Interrupt Sources
@@ -159,7 +159,7 @@ NOS_ISR(DMA2_Stream6_IRQHandler)
     // Process DMA2 Stream6
     pSDIO->DMA_Stream6IRQHandler();
 }
-//#endif
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -183,7 +183,7 @@ NOS_ISR(DMA2_Stream6_IRQHandler)
 //
 //-------------------------------------------------------------------------------------------------
 
-#ifdef USE_RTC_DRIVER
+#if (USE_RTC_DRIVER  == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 
@@ -226,7 +226,7 @@ NOS_ISR(RTC_Alarm_IRQHandler)
 //  Note(s):        Wrapper C++ for handler
 //
 //-------------------------------------------------------------------------------------------------
-#ifdef USE_USB_DRIVER
+#if (USE_USB_DRIVER == DEF_ENABLED)
 NOS_ISR(OTG_HS_IRQHandler)
 {
     //USB.IRQHandler();
@@ -243,7 +243,7 @@ NOS_ISR(OTG_HS_IRQHandler)
 //
 //-------------------------------------------------------------------------------------------------
 
-#ifdef USE_TIM_DRIVER
+#if (USE_TIM_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -437,7 +437,7 @@ NOS_ISR(LPTIM1_IRQHandler)
 #endif // USE_TIM_DRIVER
 
 
-//-------------------------------------------------------------------------------------------------//-------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 //
 //  IIII  2222   CCCC
 //   II      22 CC
@@ -447,7 +447,7 @@ NOS_ISR(LPTIM1_IRQHandler)
 //
 //-------------------------------------------------------------------------------------------------
 
-#ifdef USE_I2C_DRIVER
+#if (USE_I2C_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 //  Handler:        I2Cx_EV_IRQHandler and I2Cx_ER_IRQHandler
@@ -459,7 +459,7 @@ NOS_ISR(LPTIM1_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to I2C1
-#if (I2C_DRIVER_SUPPORT_I2C1 == DEF_ENABLED)
+#if (I2C_DRIVER_SUPPORT_I2C1_CFG == DEF_ENABLED)
 
 NOS_ISR(I2C1_EV_IRQHandler)
 {
@@ -476,7 +476,7 @@ NOS_ISR(I2C1_ER_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to I2C2
-#if (I2C_DRIVER_SUPPORT_I2C2 == DEF_ENABLED)
+#if (I2C_DRIVER_SUPPORT_I2C2_CFG == DEF_ENABLED)
 
 NOS_ISR(I2C2_EV_IRQHandler)
 {
@@ -493,7 +493,7 @@ NOS_ISR(I2C2_ER_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to I2C3
-#if (I2C_DRIVER_SUPPORT_I2C3 == DEF_ENABLED)
+#if (I2C_DRIVER_SUPPORT_I2C3_CFG == DEF_ENABLED)
 
 NOS_ISR(I2C3_EV_IRQHandler)
 {
@@ -510,7 +510,7 @@ NOS_ISR(I2C3_ER_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to I2C4
-#if (I2C_DRIVER_SUPPORT_I2C4 == DEF_ENABLED)
+#if (I2C_DRIVER_SUPPORT_I2C4_CFG == DEF_ENABLED)
 
 NOS_ISR(I2C4_EV_IRQHandler)
 {
@@ -538,7 +538,7 @@ NOS_ISR(I2C4_ER_IRQHandler)
 //
 //-------------------------------------------------------------------------------------------------
 
-#ifdef USE_UART_DRIVER
+#if (USE_UART_DRIVER == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -582,7 +582,7 @@ NOS_ISR(USART3_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to UART4
-#if (UART_DRIVER_SUPPORT_UART4 == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART4_CFG == DEF_ENABLED)
 NOS_ISR(UART4_IRQHandler)
 {
     // _your_class_object_here__->IRQ_Handler();
@@ -592,7 +592,7 @@ NOS_ISR(UART4_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to UART5
-#if (UART_DRIVER_SUPPORT_UART5 == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART5_CFG == DEF_ENABLED)
 NOS_ISR(UART5_IRQHandler)
 {
     // _your_class_object_here__->IRQ_Handler();
@@ -602,7 +602,7 @@ NOS_ISR(UART5_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to USART6
-#if (UART_DRIVER_SUPPORT_UART6 == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART6_CFG == DEF_ENABLED)
 NOS_ISR(USART6_IRQHandler)
 {
     // _your_class_object_here__->IRQ_Handler();
@@ -612,7 +612,7 @@ NOS_ISR(USART6_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to UART7
-#if (UART_DRIVER_SUPPORT_UART7 == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART7_CFG == DEF_ENABLED)
 NOS_ISR(UART7_IRQHandler)
 {
     // _your_class_object_here__->IRQ_Handler();
@@ -622,7 +622,7 @@ NOS_ISR(UART7_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to UART8
-#if (UART_DRIVER_SUPPORT_UART8 == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART8_CFG == DEF_ENABLED)
 NOS_ISR(UART8_IRQHandler)
 {
     // _your_class_object_here__->IRQ_Handler();
@@ -632,7 +632,7 @@ NOS_ISR(UART8_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to Virtual RX UART
-#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
+#if (SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 //Example -> NOS_ISR(SPDIF_RX_IRQHandler)
 {
     // _your_class_object_here__->VirtualUartRX_IRQHandler();
@@ -642,7 +642,7 @@ NOS_ISR(UART8_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 // Interrupt Handler assign to Virtual TX UART
-#if (SUPPORT_VIRTUAL_UART == DEF_ENABLED)
+#if (SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 //Example -> NOS_ISR(SPDIF_TX_IRQHandler)
 {
     // _your_class_object_here__->VirtualUartTX_IRQHandler();

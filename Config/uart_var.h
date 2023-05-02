@@ -165,7 +165,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         IO_UART7_CTS,
       #endif
       #if (UART_ISR_RTS_CFG == DEF_ENABLED)
-        IO_UART7_RTS;
+        IO_UART7_RTS,
       #endif
         RCC_APB1ENR_UART7EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
