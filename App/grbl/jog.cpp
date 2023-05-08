@@ -36,7 +36,7 @@ uint8_t Jog_Execute(Planner_LineData_t *pl_data, Parser_Block_t *gc_block)
     pl_data->condition |= PL_COND_FLAG_NO_FEED_OVERRIDE;
     pl_data->line_number = gc_block->values.n;
 
-    if((settings.flags & BITFLAG_SOFT_LIMIT_ENABLE) != 0)
+    if((Settings.flags & BITFLAG_SOFT_LIMIT_ENABLE) != 0)
     {
         if(System_CheckTravelLimits(gc_block->values.xyz))
         {
@@ -46,11 +46,11 @@ uint8_t Jog_Execute(Planner_LineData_t *pl_data, Parser_Block_t *gc_block)
 
     // Valid jog command. Plan, set state, and execute.
     MC_Line(gc_block->values.xyz, pl_data);
-    if(sys.state == STATE_IDLE)
+    if(System.state == STATE_IDLE)
     {
         if (Planner_GetCurrentBlock() != 0)   // Check if there is a block to execute.
         {
-            sys.state = STATE_JOG;
+            System.state = STATE_JOG;
             Stepper_PrepareBuffer();
             Stepper_WakeUp();  // NOTE: Manual start. No state machine required.
         }

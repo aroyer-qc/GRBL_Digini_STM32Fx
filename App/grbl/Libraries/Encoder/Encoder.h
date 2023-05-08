@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 
-void Encoder_Init(void);
+void Encoder_Initialize(void);
 void Encoder_Reset(void);
 
 uint32_t Encoder_GetValue(void);

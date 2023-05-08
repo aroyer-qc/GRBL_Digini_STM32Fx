@@ -81,7 +81,10 @@
 #define CONTROL_FEED_HOLD_BIT       1
 #define CONTROL_CYCLE_START_BIT     2
 #define CONTROL_SAFETY_DOOR_BIT     3
-#define CONTROL_MASK                ((1<<CONTROL_RESET_BIT) | (1<<CONTROL_FEED_HOLD_BIT) | (1<<CONTROL_CYCLE_START_BIT) | (1<<CONTROL_SAFETY_DOOR_BIT))
+#define CONTROL_MASK                ((1<<CONTROL_RESET_BIT)       | \
+                                     (1<<CONTROL_FEED_HOLD_BIT)   | \
+                                     (1<<CONTROL_CYCLE_START_BIT) | \
+                                     (1<<CONTROL_SAFETY_DOOR_BIT))
 
 
 #define DELAY_MODE_DWELL            0
@@ -97,7 +100,7 @@
 // Conversions
 #define MM_PER_INCH                 (25.40)
 #define INCH_PER_MM                 (0.0393701)
-#define TICKS_PER_MICROSECOND       (24UL)
+#define TICKS_PER_MICROSECOND       (24UL)   // todo AR (F_CPU/1000000)??  to do change this
 
 
 #define SOME_LARGE_VALUE            1.0E+38
@@ -117,6 +120,14 @@
 #define isequal_position_vector(a,b)    !(memcmp(a, b, sizeof(float)*N_AXIS))
 
 
+// Delays variable-defined milliseconds.
+#define delay_ms(a)                             nOS_Sleep(a)
+
+// Delays variable-defined microseconds. Compiler compatibility fix for _delay_us().
+#define delay_us(a)                             nOS_Yield()     // ARGO todo use timer
+//void delay_us(uint32_t us);
+
+
 // Read a floating point value from a string. Line points to the input buffer, char_counter
 // is the indexer pointing to the current character of the line, while float_ptr is
 // a pointer to the result variable. Returns true when it succeeds
@@ -129,7 +140,7 @@ void PrintFloat_CoordValue(float n);
 void PrintFloat_RateValue(float n);
 
 // Non-blocking delay function used for general operation and suspend features.
-void Delay_sec(float seconds, uint8_t mode);
+//void Delay_sec(float seconds, uint8_t mode);
 
 // Computes hypotenuse, avoiding avr-gcc's bloated version and the extra error checking.
 float hypot_f(float x, float y);

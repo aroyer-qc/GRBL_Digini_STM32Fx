@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 
-uint8_t ServerTCP_Init(uint8_t sock, uint16_t port);
+uint8_t ServerTCP_Initialize(uint8_t sock, uint16_t port);
 void ServerTCP_DeInit(uint8_t sock);
 
 uint8_t ServerTCP_Send(uint8_t sock, uint8_t *data, uint16_t len);

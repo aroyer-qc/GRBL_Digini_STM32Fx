@@ -15,6 +15,7 @@
   You should have received a copy of the GNU General Public License
   along with program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "lib_digini.h"
 #include "W5500.h"
 #include "System32.h"
 
@@ -38,14 +39,14 @@ static inline uint16_t ReadSnArray(SOCKET _s, uint16_t _addr, uint8_t *_buf, uin
 static inline uint16_t WriteSnArray(SOCKET _s, uint16_t _addr, uint8_t *_buf, uint16_t len);
 
 
-void W5500_Init(void)
+void W5500_Initialize(void)
 {
     IO_PinInit(IO_W5500_RESET);
 
-    Spi_Init(SPI_W5500, SPI_MODE0);
+    //Spi_Init(SPI_W5500, SPI_MODE0);
 
     // Set clock to 21 Mhz (W5500 should support up to about 80 Mhz)
-    Spi_SetPrescaler(SPI_W5500, SPI_PRESCALER_2);
+    //Spi_SetPrescaler(SPI_W5500, SPI_PRESCALER_2);
 
     IO_SetPinLow(IO_W5500_RESET);
     Delay_ms(40);
@@ -246,14 +247,14 @@ uint8_t W5500_GetPHYCFGR(void)
 
 static inline void Write(uint16_t _addr, uint8_t _cb, uint8_t _data)
 {
-    Spi_ChipSelect(SPI_W5500, true);
+    //Spi_ChipSelect(SPI_W5500, true);
 
-    Spi_WriteByte(SPI_W5500, _addr >> 8);
-    Spi_WriteByte(SPI_W5500, _addr & 0xFF);
-    Spi_WriteByte(SPI_W5500, _cb);
-    Spi_WriteByte(SPI_W5500, _data);
+    //Spi_WriteByte(SPI_W5500, _addr >> 8);
+    //Spi_WriteByte(SPI_W5500, _addr & 0xFF);
+    //Spi_WriteByte(SPI_W5500, _cb);
+    //Spi_WriteByte(SPI_W5500, _data);
 
-    Spi_ChipSelect(SPI_W5500, false);
+    //Spi_ChipSelect(SPI_W5500, false);
     __ASM("nop");
     __ASM("nop");
 }
@@ -261,18 +262,18 @@ static inline void Write(uint16_t _addr, uint8_t _cb, uint8_t _data)
 
 static inline uint16_t WriteArray(uint16_t _addr, uint8_t _cb, const uint8_t *_buf, uint16_t _len)
 {
-    Spi_ChipSelect(SPI_W5500, true);
+    //Spi_ChipSelect(SPI_W5500, true);
 
-    Spi_WriteByte(SPI_W5500, _addr >> 8);
-    Spi_WriteByte(SPI_W5500, _addr & 0xFF);
-    Spi_WriteByte(SPI_W5500, _cb);
+    //Spi_WriteByte(SPI_W5500, _addr >> 8);
+    //Spi_WriteByte(SPI_W5500, _addr & 0xFF);
+    //Spi_WriteByte(SPI_W5500, _cb);
 
     for(uint16_t i = 0; i < _len; i++)
     {
-        Spi_WriteByte(SPI_W5500, _buf[i]);
+        //Spi_WriteByte(SPI_W5500, _buf[i]);
     }
 
-    Spi_ChipSelect(SPI_W5500, false);
+   // Spi_ChipSelect(SPI_W5500, false);
     __ASM("nop");
     __ASM("nop");
 
@@ -282,15 +283,15 @@ static inline uint16_t WriteArray(uint16_t _addr, uint8_t _cb, const uint8_t *_b
 
 static inline uint8_t Read(uint16_t _addr, uint8_t _cb)
 {
-    Spi_ChipSelect(SPI_W5500, true);
+    //Spi_ChipSelect(SPI_W5500, true);
 
-    Spi_WriteByte(SPI_W5500, _addr >> 8);
-    Spi_WriteByte(SPI_W5500, _addr & 0xFF);
-    Spi_WriteByte(SPI_W5500, _cb);
+    //Spi_WriteByte(SPI_W5500, _addr >> 8);
+    //Spi_WriteByte(SPI_W5500, _addr & 0xFF);
+    //Spi_WriteByte(SPI_W5500, _cb);
 
-    uint8_t _data = Spi_ReadByte(SPI_W5500);
+    uint8_t _data =0;// Spi_ReadByte(SPI_W5500);
 
-    Spi_ChipSelect(SPI_W5500, false);
+    //Spi_ChipSelect(SPI_W5500, false);
     __ASM("nop");
     __ASM("nop");
 
@@ -300,18 +301,18 @@ static inline uint8_t Read(uint16_t _addr, uint8_t _cb)
 
 static inline uint16_t ReadArray(uint16_t _addr, uint8_t _cb, uint8_t *_buf, uint16_t _len)
 {
-    Spi_ChipSelect(SPI_W5500, true);
+    //Spi_ChipSelect(SPI_W5500, true);
 
-    Spi_WriteByte(SPI_W5500, _addr >> 8);
-    Spi_WriteByte(SPI_W5500, _addr & 0xFF);
-    Spi_WriteByte(SPI_W5500, _cb);
+    //Spi_WriteByte(SPI_W5500, _addr >> 8);
+    //Spi_WriteByte(SPI_W5500, _addr & 0xFF);
+    //Spi_WriteByte(SPI_W5500, _cb);
 
     for(uint16_t i = 0; i < _len; i++)
     {
-        _buf[i] = Spi_ReadByte(SPI_W5500);
+       // _buf[i] = Spi_ReadByte(SPI_W5500);
     }
 
-    Spi_ChipSelect(SPI_W5500, false);
+    //Spi_ChipSelect(SPI_W5500, false);
     __ASM("nop");
     __ASM("nop");
 

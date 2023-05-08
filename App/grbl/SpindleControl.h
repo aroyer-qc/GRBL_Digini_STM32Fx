@@ -41,7 +41,7 @@
 
 
 // Initializes spindle pins and hardware PWM, if enabled.
-void Spindle_Init(void);
+void Spindle_Initialize(void);
 
 // Stop and start spindle routines. Called by all spindle routines and stepper ISR.
 void Spindle_Stop(void);

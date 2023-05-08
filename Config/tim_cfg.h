@@ -83,7 +83,7 @@
 #define GRBL_STEPPER                            TIM_DRIVER_ID_9
 #define GRBL_STEPPER_USE_UPDATE_IRQ             true
 #define GRBL_STEPPER_MODE                       TIM_OP_MODE_REPETITIVE_UP_COUNT
-#define GRBL_STEPPER_PRESCALER                  SYS_APB2_TIMER_CLOCK_FREQUENCY / (DEBOUNCE_TIME_CHECK) / 100
+#define GRBL_STEPPER_PRESCALER                  SYS_APB2_TIMER_CLOCK_FREQUENCY / 10 /*(DEBOUNCE_TIME_CHECK)  TODO AR check previous version of GRBL*/  / 100
 #define GRBL_STEPPER_RELOAD                     100
 
 #define GRBL_LIMITS_DEBOUNCE                    TIM_DRIVER_ID_2

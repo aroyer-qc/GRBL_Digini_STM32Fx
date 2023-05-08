@@ -66,11 +66,11 @@ void Protocol_MainLoop(void)
 {
     // Perform some machine checks to make sure everything is good to go.
 #ifdef CHECK_LIMITS_AT_INIT
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
     {
         if(Limits_GetState())
         {
-            sys.state = STATE_ALARM; // Ensure alarm state is active.
+            System.state = STATE_ALARM; // Ensure alarm state is active.
             Report_FeedbackMessage(MESSAGE_CHECK_LIMITS);
         }
     }
@@ -79,15 +79,15 @@ void Protocol_MainLoop(void)
     // Check for and report alarm state after a reset, error, or an initial power up.
     // NOTE: Sleep mode disables the stepper drivers and position can't be guaranteed.
     // Re-initialize the sleep state as an ALARM mode to ensure user homes or acknowledges.
-    if(sys.state & (STATE_ALARM | STATE_SLEEP))
+    if(System.state & (STATE_ALARM | STATE_SLEEP))
     {
         Report_FeedbackMessage(MESSAGE_ALARM_LOCK);
-        sys.state = STATE_ALARM; // Ensure alarm state is set.
+        System.state = STATE_ALARM; // Ensure alarm state is set.
     }
     else
     {
         // Check if the safety door is open.
-        sys.state = STATE_IDLE;
+        System.state = STATE_IDLE;
         if(System_CheckSafetyDoorAjar())
         {
             BIT_TRUE(sys_rt_exec_state, EXEC_SAFETY_DOOR);
@@ -117,7 +117,7 @@ void Protocol_MainLoop(void)
             {
                 Protocol_ExecuteRealtime(); // Runtime command check point.
 
-                if(sys.abort)
+                if(System.abort)
                 {
                     // Bail to calling function upon system abort
                     return;
@@ -145,7 +145,7 @@ void Protocol_MainLoop(void)
                     // Grbl '$' system command
                     Report_StatusMessage(System_ExecuteLine(line));
                 }
-                else if(sys.state & (STATE_ALARM | STATE_JOG | STATE_TOOL_CHANGE))
+                else if(System.state & (STATE_ALARM | STATE_JOG | STATE_TOOL_CHANGE))
                 {
                     // Everything else is gcode. Block if in alarm or jog mode.
                     Report_StatusMessage(STATUS_SYSTEM_GC_LOCK);
@@ -230,7 +230,7 @@ void Protocol_MainLoop(void)
 
         Protocol_ExecuteRealtime();  // Runtime command check point.
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Bail to main() program loop to reset system.
             return;
@@ -251,13 +251,13 @@ void Protocol_BufferSynchronize(void)
     {
         Protocol_ExecuteRealtime();   // Check and execute run-time commands
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Check for system abort
             return;
         }
     }
-    while(Planner_GetCurrentBlock() || (sys.state == STATE_CYCLE));
+    while(Planner_GetCurrentBlock() || (System.state == STATE_CYCLE));
 }
 
 
@@ -307,7 +307,7 @@ void Protocol_ExecuteRealtime(void)
     (void)packet;
 #endif
 
-    if(sys.suspend)
+    if(System.suspend)
     {
         Protocol_ExecRtSuspend();
     }
@@ -327,7 +327,7 @@ void Protocol_ExecRtSystem(void)
         // System alarm. Everything has shutdown by something that has gone severely wrong. Report
         // the source of the error to the user. If critical, Grbl disables by entering an infinite
         // loop until system reset/abort.
-        sys.state = STATE_ALARM; // Set system alarm state
+        System.state = STATE_ALARM; // Set system alarm state
         Report_AlarmMessage(rt_exec);
 
         // Halt everything upon a critical event flag. Currently hard and soft limits flag this.
@@ -356,7 +356,7 @@ void Protocol_ExecRtSystem(void)
         // Execute system abort.
         if(rt_exec & EXEC_RESET)
         {
-            sys.abort = true;  // Only place this is set true.
+            System.abort = true;  // Only place this is set true.
 
             return; // Nothing else to do but exit.
         }
@@ -373,30 +373,30 @@ void Protocol_ExecRtSystem(void)
         if(rt_exec & (EXEC_MOTION_CANCEL | EXEC_FEED_HOLD | EXEC_SAFETY_DOOR | EXEC_SLEEP))
         {
             // State check for allowable states for hold methods.
-            if(!(sys.state & (STATE_ALARM | STATE_CHECK_MODE)))
+            if(!(System.state & (STATE_ALARM | STATE_CHECK_MODE)))
             {
                 // If in CYCLE or JOG states, immediately initiate a motion HOLD.
-                if(sys.state & (STATE_CYCLE | STATE_JOG))
+                if(System.state & (STATE_CYCLE | STATE_JOG))
                 {
-                    if(!(sys.suspend & (SUSPEND_MOTION_CANCEL | SUSPEND_JOG_CANCEL)))   // Block, if already holding.
+                    if(!(System.suspend & (SUSPEND_MOTION_CANCEL | SUSPEND_JOG_CANCEL)))   // Block, if already holding.
                     {
                         Stepper_UpdatePlannerBlockParams(); // Notify stepper module to recompute for hold deceleration.
-                        sys.step_control = STEP_CONTROL_EXECUTE_HOLD; // Initiate suspend state with active flag.
+                        System.step_control = STEP_CONTROL_EXECUTE_HOLD; // Initiate suspend state with active flag.
 
-                        if(sys.state == STATE_JOG)   // Jog cancelled upon any hold event, except for sleeping.
+                        if(System.state == STATE_JOG)   // Jog cancelled upon any hold event, except for sleeping.
                         {
                             if (!(rt_exec & EXEC_SLEEP))
                             {
-                                sys.suspend |= SUSPEND_JOG_CANCEL;
+                                System.suspend |= SUSPEND_JOG_CANCEL;
                             }
                         }
                     }
                 }
 
                 // If IDLE, Grbl is not in motion. Simply indicate suspend state and hold is complete.
-                if(sys.state == STATE_IDLE)
+                if(System.state == STATE_IDLE)
                 {
-                    sys.suspend = SUSPEND_HOLD_COMPLETE;
+                    System.suspend = SUSPEND_HOLD_COMPLETE;
                 }
 
                 // Execute and flag a motion cancel with deceleration and return to idle. Used primarily by probing cycle
@@ -406,9 +406,9 @@ void Protocol_ExecRtSystem(void)
                     // MOTION_CANCEL only occurs during a CYCLE, but a HOLD and SAFETY_DOOR may been initiated beforehand
                     // to hold the CYCLE. Motion cancel is valid for a single planner block motion only, while jog cancel
                     // will handle and clear multiple planner block motions.
-                    if(!(sys.state & STATE_JOG))
+                    if(!(System.state & STATE_JOG))
                     {
-                        sys.suspend |= SUSPEND_MOTION_CANCEL;
+                        System.suspend |= SUSPEND_MOTION_CANCEL;
                     } // NOTE: State is STATE_CYCLE.
                 }
 
@@ -416,9 +416,9 @@ void Protocol_ExecRtSystem(void)
                 if(rt_exec & EXEC_FEED_HOLD)
                 {
                     // Block SAFETY_DOOR, JOG, and SLEEP states from changing to HOLD state.
-                    if(!(sys.state & (STATE_SAFETY_DOOR | STATE_JOG | STATE_SLEEP)))
+                    if(!(System.state & (STATE_SAFETY_DOOR | STATE_JOG | STATE_SLEEP)))
                     {
-                        sys.state = STATE_HOLD;
+                        System.state = STATE_HOLD;
                     }
                 }
 
@@ -430,47 +430,47 @@ void Protocol_ExecRtSystem(void)
                     Report_FeedbackMessage(MESSAGE_SAFETY_DOOR_AJAR);
 
                     // If jogging, block safety door methods until jog cancel is complete. Just flag that it happened.
-                    if(!(sys.suspend & SUSPEND_JOG_CANCEL))
+                    if(!(System.suspend & SUSPEND_JOG_CANCEL))
                     {
                         // Check if the safety re-opened during a restore parking motion only. Ignore if
                         // already retracting, parked or in sleep state.
-                        if(sys.state == STATE_SAFETY_DOOR)
+                        if(System.state == STATE_SAFETY_DOOR)
                         {
-                            if(sys.suspend & SUSPEND_INITIATE_RESTORE)   // Actively restoring
+                            if(System.suspend & SUSPEND_INITIATE_RESTORE)   // Actively restoring
                             {
 #ifdef PARKING_ENABLE
                                 // Set hold and reset appropriate control flags to restart parking sequence.
-                                if(sys.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+                                if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
                                 {
                                     Stepper_UpdatePlannerBlockParams(); // Notify stepper module to recompute for hold deceleration.
-                                    sys.step_control = (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION);
-                                    sys.suspend &= ~(SUSPEND_HOLD_COMPLETE);
+                                    System.step_control = (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION);
+                                    System.suspend &= ~(SUSPEND_HOLD_COMPLETE);
                                 } // else NO_MOTION is active.
 #endif
-                                sys.suspend &= ~(SUSPEND_RETRACT_COMPLETE | SUSPEND_INITIATE_RESTORE | SUSPEND_RESTORE_COMPLETE);
-                                sys.suspend |= SUSPEND_RESTART_RETRACT;
+                                System.suspend &= ~(SUSPEND_RETRACT_COMPLETE | SUSPEND_INITIATE_RESTORE | SUSPEND_RESTORE_COMPLETE);
+                                System.suspend |= SUSPEND_RESTART_RETRACT;
                             }
                         }
 
-                        if(sys.state != STATE_SLEEP)
+                        if(System.state != STATE_SLEEP)
                         {
-                            sys.state = STATE_SAFETY_DOOR;
+                            System.state = STATE_SAFETY_DOOR;
                         }
                     }
-                    // NOTE: This flag doesn't change when the door closes, unlike sys.state. Ensures any parking motions
+                    // NOTE: This flag doesn't change when the door closes, unlike System.state. Ensures any parking motions
                     // are executed if the door switch closes and the state returns to HOLD.
-                    sys.suspend |= SUSPEND_SAFETY_DOOR_AJAR;
+                    System.suspend |= SUSPEND_SAFETY_DOOR_AJAR;
                 }
             }
 
             if(rt_exec & EXEC_SLEEP)
             {
-                if(sys.state == STATE_ALARM)
+                if(System.state == STATE_ALARM)
                 {
-                    sys.suspend |= (SUSPEND_RETRACT_COMPLETE | SUSPEND_HOLD_COMPLETE);
+                    System.suspend |= (SUSPEND_RETRACT_COMPLETE | SUSPEND_HOLD_COMPLETE);
                 }
 
-                sys.state = STATE_SLEEP;
+                System.state = STATE_SLEEP;
             }
 
             System_ClearExecStateFlag((EXEC_MOTION_CANCEL | EXEC_FEED_HOLD | EXEC_SAFETY_DOOR | EXEC_SLEEP));
@@ -484,46 +484,46 @@ void Protocol_ExecRtSystem(void)
             if(!(rt_exec & (EXEC_FEED_HOLD | EXEC_MOTION_CANCEL | EXEC_SAFETY_DOOR)))
             {
                 // Resume door state when parking motion has retracted and door has been closed.
-                if((sys.state == STATE_SAFETY_DOOR) && !(sys.suspend & SUSPEND_SAFETY_DOOR_AJAR))
+                if((System.state == STATE_SAFETY_DOOR) && !(System.suspend & SUSPEND_SAFETY_DOOR_AJAR))
                 {
-                    if(sys.suspend & SUSPEND_RESTORE_COMPLETE)
+                    if(System.suspend & SUSPEND_RESTORE_COMPLETE)
                     {
-                        sys.state = STATE_IDLE; // Set to IDLE to immediately resume the cycle.
+                        System.state = STATE_IDLE; // Set to IDLE to immediately resume the cycle.
                     }
-                    else if(sys.suspend & SUSPEND_RETRACT_COMPLETE)
+                    else if(System.suspend & SUSPEND_RETRACT_COMPLETE)
                     {
                         // Flag to re-energize powered components and restore original position, if disabled by SAFETY_DOOR.
                         // NOTE: For a safety door to resume, the switch must be closed, as indicated by HOLD state, and
                         // the retraction execution is complete, which implies the initial feed hold is not active. To
                         // restore normal operation, the restore procedures must be initiated by the following flag. Once,
                         // they are complete, it will call CYCLE_START automatically to resume and exit the suspend.
-                        sys.suspend |= SUSPEND_INITIATE_RESTORE;
+                        System.suspend |= SUSPEND_INITIATE_RESTORE;
                     }
                 }
 
                 // Cycle start only when IDLE or when a hold is complete and ready to resume.
-                if((sys.state == STATE_IDLE) || ((sys.state & STATE_HOLD) && (sys.suspend & SUSPEND_HOLD_COMPLETE)))
+                if((System.state == STATE_IDLE) || ((System.state & STATE_HOLD) && (System.suspend & SUSPEND_HOLD_COMPLETE)))
                 {
-                    if (sys.state == STATE_HOLD && sys.spindle_stop_ovr)
+                    if (System.state == STATE_HOLD && System.spindle_stop_ovr)
                     {
-                        sys.spindle_stop_ovr |= SPINDLE_STOP_OVR_RESTORE_CYCLE; // Set to restore in suspend routine and cycle start after.
+                        System.spindle_stop_ovr |= SPINDLE_STOP_OVR_RESTORE_CYCLE; // Set to restore in suspend routine and cycle start after.
                     }
                     else
                     {
                         // Start cycle only if queued motions exist in planner buffer and the motion is not canceled.
-                        sys.step_control = STEP_CONTROL_NORMAL_OP; // Restore step control to normal operation
+                        System.step_control = STEP_CONTROL_NORMAL_OP; // Restore step control to normal operation
 
-                        if(Planner_GetCurrentBlock() && BIT_IS_FALSE(sys.suspend, SUSPEND_MOTION_CANCEL))
+                        if(Planner_GetCurrentBlock() && BIT_IS_FALSE(System.suspend, SUSPEND_MOTION_CANCEL))
                         {
-                            sys.suspend = SUSPEND_DISABLE; // Break suspend state.
-                            sys.state = STATE_CYCLE;
+                            System.suspend = SUSPEND_DISABLE; // Break suspend state.
+                            System.state = STATE_CYCLE;
                             Stepper_PrepareBuffer(); // Initialize step segment buffer before beginning cycle.
                             Stepper_WakeUp();
                         }
                         else   // Otherwise, do nothing. Set and resume IDLE state.
                         {
-                            sys.suspend = SUSPEND_DISABLE; // Break suspend state.
-                            sys.state = STATE_IDLE;
+                            System.suspend = SUSPEND_DISABLE; // Break suspend state.
+                            System.state = STATE_IDLE;
                         }
                     }
                 }
@@ -539,25 +539,25 @@ void Protocol_ExecRtSystem(void)
             // NOTE: Bresenham algorithm variables are still maintained through both the planner and stepper
             // cycle reinitializations. The stepper path should continue exactly as if nothing has happened.
             // NOTE: EXEC_CYCLE_STOP is set by the stepper subsystem when a cycle or feed hold completes.
-            if((sys.state & (STATE_HOLD|STATE_SAFETY_DOOR|STATE_SLEEP)) && !(sys.soft_limit) && !(sys.suspend & SUSPEND_JOG_CANCEL))
+            if((System.state & (STATE_HOLD|STATE_SAFETY_DOOR|STATE_SLEEP)) && !(System.soft_limit) && !(System.suspend & SUSPEND_JOG_CANCEL))
             {
                 // Hold complete. Set to indicate ready to resume.  Remain in HOLD or DOOR states until user
                 // has issued a resume command or reset.
                 Planner_CycleReinitialize();
 
-                if(sys.step_control & STEP_CONTROL_EXECUTE_HOLD)
+                if(System.step_control & STEP_CONTROL_EXECUTE_HOLD)
                 {
-                    sys.suspend |= SUSPEND_HOLD_COMPLETE;
+                    System.suspend |= SUSPEND_HOLD_COMPLETE;
                 }
-                BIT_FALSE(sys.step_control,(STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION));
+                BIT_FALSE(System.step_control,(STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION));
             }
             else
             {
                 // Motion complete. Includes CYCLE/JOG/HOMING states and jog cancel/motion cancel/soft limit events.
                 // NOTE: Motion and jog cancel both immediately return to idle after the hold completes.
-                if(sys.suspend & SUSPEND_JOG_CANCEL)     // For jog cancel, flush buffers and sync positions.
+                if(System.suspend & SUSPEND_JOG_CANCEL)     // For jog cancel, flush buffers and sync positions.
                 {
-                    sys.step_control = STEP_CONTROL_NORMAL_OP;
+                    System.step_control = STEP_CONTROL_NORMAL_OP;
                     Planner_Reset();
                     Stepper_Reset();
                     GC_SyncPosition();
@@ -565,16 +565,16 @@ void Protocol_ExecRtSystem(void)
                     MC_SyncBacklashPosition();
                 }
 
-                if(sys.suspend & SUSPEND_SAFETY_DOOR_AJAR)   // Only occurs when safety door opens during jog.
+                if(System.suspend & SUSPEND_SAFETY_DOOR_AJAR)   // Only occurs when safety door opens during jog.
                 {
-                    sys.suspend &= ~(SUSPEND_JOG_CANCEL);
-                    sys.suspend |= SUSPEND_HOLD_COMPLETE;
-                    sys.state = STATE_SAFETY_DOOR;
+                    System.suspend &= ~(SUSPEND_JOG_CANCEL);
+                    System.suspend |= SUSPEND_HOLD_COMPLETE;
+                    System.state = STATE_SAFETY_DOOR;
                 }
                 else
                 {
-                    sys.suspend = SUSPEND_DISABLE;
-                    sys.state = STATE_IDLE;
+                    System.suspend = SUSPEND_DISABLE;
+                    System.state = STATE_IDLE;
                 }
             }
 
@@ -584,11 +584,11 @@ void Protocol_ExecRtSystem(void)
 
     // Execute overrides.
     rt_exec = sys_rt_exec_motion_override; // Copy volatile sys_rt_exec_motion_override
-    if(rt_exec && !sys.sync_move)
+    if(rt_exec && !System.sync_move)
     {
         System_ClearExecMotionOverride(); // Clear all motion override flags.
 
-        uint8_t new_f_override = sys.f_override;
+        uint8_t new_f_override = System.f_override;
 
         if(rt_exec & EXEC_FEED_OVR_RESET)
         {
@@ -614,7 +614,7 @@ void Protocol_ExecRtSystem(void)
         new_f_override = min(new_f_override,MAX_FEED_RATE_OVERRIDE);
         new_f_override = max(new_f_override,MIN_FEED_RATE_OVERRIDE);
 
-        uint8_t new_r_override = sys.r_override;
+        uint8_t new_r_override = System.r_override;
 
         if(rt_exec & EXEC_RAPID_OVR_RESET)
         {
@@ -629,11 +629,11 @@ void Protocol_ExecRtSystem(void)
             new_r_override = RAPID_OVERRIDE_LOW;
         }
 
-        if((new_f_override != sys.f_override) || (new_r_override != sys.r_override))
+        if((new_f_override != System.f_override) || (new_r_override != System.r_override))
         {
-            sys.f_override = new_f_override;
-            sys.r_override = new_r_override;
-            sys.report_ovr_counter = 0; // Set to report change immediately
+            System.f_override = new_f_override;
+            System.r_override = new_r_override;
+            System.report_ovr_counter = 0; // Set to report change immediately
 
             Planner_UpdateVelocityProfileParams();
             Planner_CycleReinitialize();
@@ -646,7 +646,7 @@ void Protocol_ExecRtSystem(void)
         System_ClearExecAccessoryOverrides(); // Clear all accessory override flags.
 
         // NOTE: Unlike motion overrides, spindle overrides do not require a planner reinitialization.
-        uint8_t last_s_override =  sys.spindle_speed_ovr;
+        uint8_t last_s_override =  System.spindle_speed_ovr;
 
         if(rt_exec & EXEC_SPINDLE_OVR_RESET)
         {
@@ -672,34 +672,34 @@ void Protocol_ExecRtSystem(void)
         last_s_override = min(last_s_override,MAX_SPINDLE_SPEED_OVERRIDE);
         last_s_override = max(last_s_override,MIN_SPINDLE_SPEED_OVERRIDE);
 
-        if(last_s_override != sys.spindle_speed_ovr)
+        if(last_s_override != System.spindle_speed_ovr)
         {
-            sys.spindle_speed_ovr = last_s_override;
+            System.spindle_speed_ovr = last_s_override;
             // NOTE: Spindle speed overrides during HOLD state are taken care of by suspend function.
-            if (sys.state == STATE_IDLE)
+            if (System.state == STATE_IDLE)
             {
                 Spindle_SetState(gc_state.modal.spindle, gc_state.spindle_speed);
             }
             else
             {
-                BIT_TRUE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+                BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
             }
-            sys.report_ovr_counter = 0; // Set to report change immediately
+            System.report_ovr_counter = 0; // Set to report change immediately
         }
 
         if(rt_exec & EXEC_SPINDLE_OVR_STOP)
         {
             // Spindle stop override allowed only while in HOLD state.
             // NOTE: Report counters are set in spindle_set_state() when spindle stop is executed.
-            if(sys.state == STATE_HOLD)
+            if(System.state == STATE_HOLD)
             {
-                if(!(sys.spindle_stop_ovr))
+                if(!(System.spindle_stop_ovr))
                 {
-                    sys.spindle_stop_ovr = SPINDLE_STOP_OVR_INITIATE;
+                    System.spindle_stop_ovr = SPINDLE_STOP_OVR_INITIATE;
                 }
-                else if(sys.spindle_stop_ovr & SPINDLE_STOP_OVR_ENABLED)
+                else if(System.spindle_stop_ovr & SPINDLE_STOP_OVR_ENABLED)
                 {
-                    sys.spindle_stop_ovr |= SPINDLE_STOP_OVR_RESTORE;
+                    System.spindle_stop_ovr |= SPINDLE_STOP_OVR_RESTORE;
                 }
             }
         }
@@ -709,7 +709,7 @@ void Protocol_ExecRtSystem(void)
         // NOTE: Coolant overrides only operate during IDLE, CYCLE, HOLD, and JOG states. Ignored otherwise.
         if(rt_exec & (EXEC_COOLANT_FLOOD_OVR_TOGGLE | EXEC_COOLANT_MIST_OVR_TOGGLE))
         {
-            if((sys.state == STATE_IDLE) || (sys.state & (STATE_CYCLE | STATE_HOLD | STATE_JOG)))
+            if((System.state == STATE_IDLE) || (System.state & (STATE_CYCLE | STATE_HOLD | STATE_JOG)))
             {
                 uint8_t coolant_state = gc_state.modal.coolant;
 #ifdef ENABLE_M7
@@ -761,7 +761,7 @@ void Protocol_ExecRtSystem(void)
 #endif
 
     // Reload step segment buffer
-    if(sys.state & (STATE_CYCLE | STATE_HOLD | STATE_SAFETY_DOOR | STATE_HOMING | STATE_SLEEP| STATE_JOG))
+    if(System.state & (STATE_CYCLE | STATE_HOLD | STATE_SAFETY_DOOR | STATE_HOMING | STATE_SLEEP| STATE_JOG))
     {
         Stepper_PrepareBuffer();
     }
@@ -804,15 +804,15 @@ static void Protocol_ExecRtSuspend(void)
         restore_spindle_speed = block->spindle_speed;
     }
 #ifdef DISABLE_LASER_DURING_HOLD
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_LASER_MODE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
     {
         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);
     }
 #endif
 
-    while(sys.suspend)
+    while(System.suspend)
     {
-        if(sys.abort)
+        if(System.abort)
         {
             return;
         }
@@ -832,18 +832,18 @@ static void Protocol_ExecRtSuspend(void)
 #endif
 
         // Block until initial hold is complete and the machine has stopped motion.
-        if(sys.suspend & SUSPEND_HOLD_COMPLETE)
+        if(System.suspend & SUSPEND_HOLD_COMPLETE)
         {
             // Parking manager. Handles de/re-energizing, switch state checks, and parking motions for
             // the safety door and sleep states.
-            if(sys.state & (STATE_SAFETY_DOOR | STATE_SLEEP))
+            if(System.state & (STATE_SAFETY_DOOR | STATE_SLEEP))
             {
                 // Handles retraction motions and de-energizing.
-                if(BIT_IS_FALSE(sys.suspend,SUSPEND_RETRACT_COMPLETE))
+                if(BIT_IS_FALSE(System.suspend,SUSPEND_RETRACT_COMPLETE))
                 {
 
                     // Ensure any prior spindle stop override is disabled at start of safety door routine.
-                    sys.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED;
+                    System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED;
 
 #ifndef PARKING_ENABLE
                     Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
@@ -852,7 +852,7 @@ static void Protocol_ExecRtSuspend(void)
 
                     // Get current position and store restore location and spindle retract waypoint.
                     System_ConvertArraySteps2Mpos(parking_target,sys_position);
-                    if(BIT_IS_FALSE(sys.suspend,SUSPEND_RESTART_RETRACT))
+                    if(BIT_IS_FALSE(System.suspend,SUSPEND_RESTART_RETRACT))
                     {
                         memcpy(restore_target,parking_target,sizeof(parking_target));
 
@@ -864,15 +864,15 @@ static void Protocol_ExecRtSuspend(void)
                     // current location not exceeding the parking target location, and laser mode disabled.
                     // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                    if((BIT_IS_TRUE(settings.flags, BITFLAG_HOMING_ENABLE)) &&
+                    if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
                             (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
-                            BIT_IS_FALSE(settings.flags,BITFLAG_LASER_MODE) &&
-                            (sys.override_ctrl == OVERRIDE_PARKING_MOTION))
+                            BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE) &&
+                            (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                     {
 #else
-                    if((BIT_IS_TRUE(settings.flags, BITFLAG_HOMING_ENABLE)) &&
+                    if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
                             (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
-                            BIT_IS_FALSE(settings.flags,BITFLAG_LASER_MODE))
+                            BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE))
                     {
 #endif
                         // Retract spindle by pullout distance. Ensure retraction motion moves away from
@@ -912,13 +912,13 @@ static void Protocol_ExecRtSuspend(void)
 
 #endif
 
-                    sys.suspend &= ~(SUSPEND_RESTART_RETRACT);
-                    sys.suspend |= SUSPEND_RETRACT_COMPLETE;
+                    System.suspend &= ~(SUSPEND_RESTART_RETRACT);
+                    System.suspend |= SUSPEND_RETRACT_COMPLETE;
 
                 }
                 else
                 {
-                    if(sys.state == STATE_SLEEP)
+                    if(System.state == STATE_SLEEP)
                     {
                         Report_FeedbackMessage(MESSAGE_SLEEP_MODE);
 
@@ -927,7 +927,7 @@ static void Protocol_ExecRtSuspend(void)
                         Coolant_SetState(COOLANT_DISABLE); // De-energize
                         Stepper_Disable(0); // Disable steppers
 
-                        while(!(sys.abort))
+                        while(!(System.abort))
                         {
                             Protocol_ExecRtSystem();
                         } // Do nothing until reset.
@@ -936,27 +936,27 @@ static void Protocol_ExecRtSuspend(void)
                     }
 
                     // Allows resuming from parking/safety door. Actively checks if safety door is closed and ready to resume.
-                    if(sys.state == STATE_SAFETY_DOOR)
+                    if(System.state == STATE_SAFETY_DOOR)
                     {
                         if(!(System_CheckSafetyDoorAjar()))
                         {
-                            sys.suspend &= ~(SUSPEND_SAFETY_DOOR_AJAR); // Reset door ajar flag to denote ready to resume.
+                            System.suspend &= ~(SUSPEND_SAFETY_DOOR_AJAR); // Reset door ajar flag to denote ready to resume.
                         }
                     }
 
                     // Handles parking restore and safety door resume.
-                    if(sys.suspend & SUSPEND_INITIATE_RESTORE)
+                    if(System.suspend & SUSPEND_INITIATE_RESTORE)
                     {
 
 #ifdef PARKING_ENABLE
                         // Execute fast restore motion to the pull-out position. Parking requires homing enabled.
                         // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                        if(((settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (sys.override_ctrl == OVERRIDE_PARKING_MOTION))
+                        if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
+                                (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                         {
 #else
-                        if((settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
+                        if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
                         {
 #endif
                             // Check to ensure the motion doesn't move below pull-out position.
@@ -974,17 +974,17 @@ static void Protocol_ExecRtSuspend(void)
                         if(gc_state.modal.spindle != SPINDLE_DISABLE)
                         {
                             // Block if safety door re-opened during prior restore actions.
-                            if(BIT_IS_FALSE(sys.suspend,SUSPEND_RESTART_RETRACT))
+                            if(BIT_IS_FALSE(System.suspend,SUSPEND_RESTART_RETRACT))
                             {
-                                if(BIT_IS_TRUE(settings.flags, BITFLAG_LASER_MODE))
+                                if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
                                 {
                                     // When in laser mode, ignore spindle spin-up delay. Set to turn on laser when cycle starts.
-                                    BIT_TRUE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+                                    BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
                                 }
                                 else
                                 {
                                     Spindle_SetState((restore_condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW)), restore_spindle_speed);
-                                    Delay_sec(SAFETY_DOOR_SPINDLE_DELAY, DELAY_MODE_SYS_SUSPEND);
+                                    //TODO AR Delay_sec(SAFETY_DOOR_SPINDLE_DELAY, DELAY_MODE_SYS_SUSPEND);
                                 }
                             }
                         }
@@ -992,26 +992,26 @@ static void Protocol_ExecRtSuspend(void)
                         if(gc_state.modal.coolant != COOLANT_DISABLE)
                         {
                             // Block if safety door re-opened during prior restore actions.
-                            if(BIT_IS_FALSE(sys.suspend, SUSPEND_RESTART_RETRACT))
+                            if(BIT_IS_FALSE(System.suspend, SUSPEND_RESTART_RETRACT))
                             {
                                 // NOTE: Laser mode will honor this delay. An exhaust system is often controlled by this pin.
                                 Coolant_SetState((restore_condition & (PL_COND_FLAG_COOLANT_FLOOD | PL_COND_FLAG_COOLANT_MIST)));
-                                Delay_sec(SAFETY_DOOR_COOLANT_DELAY, DELAY_MODE_SYS_SUSPEND);
+                                // TODO AR Delay_sec(SAFETY_DOOR_COOLANT_DELAY, DELAY_MODE_SYS_SUSPEND);
                             }
                         }
 
 #ifdef PARKING_ENABLE
                         // Execute slow plunge motion from pull-out position to resume position.
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                        if(((settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (sys.override_ctrl == OVERRIDE_PARKING_MOTION))
+                        if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
+                                (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                         {
 #else
-                        if((settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
+                        if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
                         {
 #endif
                             // Block if safety door re-opened during prior restore actions.
-                            if(BIT_IS_FALSE(sys.suspend,SUSPEND_RESTART_RETRACT))
+                            if(BIT_IS_FALSE(System.suspend,SUSPEND_RESTART_RETRACT))
                             {
                                 // Regardless if the retract parking motion was a valid/safe motion or not, the
                                 // restore parking motion should logically be valid, either by returning to the
@@ -1025,9 +1025,9 @@ static void Protocol_ExecRtSuspend(void)
                         }
 #endif
 
-                        if(BIT_IS_FALSE(sys.suspend, SUSPEND_RESTART_RETRACT))
+                        if(BIT_IS_FALSE(System.suspend, SUSPEND_RESTART_RETRACT))
                         {
-                            sys.suspend |= SUSPEND_RESTORE_COMPLETE;
+                            System.suspend |= SUSPEND_RESTORE_COMPLETE;
                             System_SetExecStateFlag(EXEC_CYCLE_START); // Set to resume program.
                         }
                     }
@@ -1038,53 +1038,53 @@ static void Protocol_ExecRtSuspend(void)
             {
                 // Feed hold manager. Controls spindle stop override states.
                 // NOTE: Hold ensured as completed by condition check at the beginning of suspend routine.
-                if(sys.spindle_stop_ovr)
+                if(System.spindle_stop_ovr)
                 {
                     // Handles beginning of spindle stop
-                    if(sys.spindle_stop_ovr & SPINDLE_STOP_OVR_INITIATE)
+                    if(System.spindle_stop_ovr & SPINDLE_STOP_OVR_INITIATE)
                     {
                         if(gc_state.modal.spindle != SPINDLE_DISABLE)
                         {
                             Spindle_SetState(SPINDLE_DISABLE,0.0); // De-energize
-                            sys.spindle_stop_ovr = SPINDLE_STOP_OVR_ENABLED; // Set stop override state to enabled, if de-energized.
+                            System.spindle_stop_ovr = SPINDLE_STOP_OVR_ENABLED; // Set stop override state to enabled, if de-energized.
                         }
                         else
                         {
-                            sys.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED; // Clear stop override state
+                            System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED; // Clear stop override state
                         }
                         // Handles restoring of spindle state
                     }
-                    else if(sys.spindle_stop_ovr & (SPINDLE_STOP_OVR_RESTORE | SPINDLE_STOP_OVR_RESTORE_CYCLE))
+                    else if(System.spindle_stop_ovr & (SPINDLE_STOP_OVR_RESTORE | SPINDLE_STOP_OVR_RESTORE_CYCLE))
                     {
                         if (gc_state.modal.spindle != SPINDLE_DISABLE)
                         {
                             Report_FeedbackMessage(MESSAGE_SPINDLE_RESTORE);
-                            if(BIT_IS_TRUE(settings.flags, BITFLAG_LASER_MODE))
+                            if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
                             {
                                 // When in laser mode, ignore spindle spin-up delay. Set to turn on laser when cycle starts.
-                                BIT_TRUE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+                                BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
                             }
                             else
                             {
                                 Spindle_SetState((restore_condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW)), restore_spindle_speed);
                             }
                         }
-                        if(sys.spindle_stop_ovr & SPINDLE_STOP_OVR_RESTORE_CYCLE)
+                        if(System.spindle_stop_ovr & SPINDLE_STOP_OVR_RESTORE_CYCLE)
                         {
                             System_SetExecStateFlag(EXEC_CYCLE_START);  // Set to resume program.
                         }
 
-                        sys.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED; // Clear stop override state
+                        System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED; // Clear stop override state
                     }
                 }
                 else
                 {
                     // Handles spindle state during hold. NOTE: Spindle speed overrides may be altered during hold state.
                     // NOTE: STEP_CONTROL_UPDATE_SPINDLE_PWM is automatically reset upon resume in step generator.
-                    if(BIT_IS_TRUE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM))
+                    if(BIT_IS_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM))
                     {
                         Spindle_SetState((restore_condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW)), restore_spindle_speed);
-                        BIT_FALSE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+                        BIT_FALSE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
                     }
                 }
             }

@@ -32,7 +32,7 @@
 #define SETTINGS_VERSION                    7  // NOTE: Check settings_reset() when moving to next version.
 
 
-// Define bit flag masks for the boolean settings in settings.system_flags
+// Define bit flag masks for the boolean settings in Settings.system_flags
 #define BITFLAG_INVERT_RESET_PIN            BIT(0)
 #define BITFLAG_INVERT_FEED_PIN             BIT(1)
 #define BITFLAG_INVERT_CYCLE_PIN            BIT(2)
@@ -40,7 +40,7 @@
 #define BITFLAG_ENABLE_LIMITS               BIT(4)
 #define BITFLAG_FORCE_HARD_LIMIT_CHECK      BIT(5)
 
-// Define bit flag masks for the boolean settings in settings.flag.
+// Define bit flag masks for the boolean settings in Settings.flag.
 #define BITFLAG_REPORT_INCHES               BIT(0)
 #define BITFLAG_LASER_MODE                  BIT(1)
 #define BITFLAG_INVERT_ST_ENABLE            BIT(2)
@@ -50,10 +50,10 @@
 #define BITFLAG_INVERT_LIMIT_PINS           BIT(6)
 #define BITFLAG_INVERT_PROBE_PIN            BIT(7)
 
-// Define bit flag masks for the boolean settings in settings.flag2.
+// Define bit flag masks for the boolean settings in Settings.flag2.
 #define BITFLAG_LATHE_MODE                  BIT(0)
 
-// Define status reporting boolean enable bit flags in settings.status_report_mask
+// Define status reporting boolean enable bit flags in Settings.status_report_mask
 #define BITFLAG_RT_STATUS_POSITION_TYPE     BIT(0)
 #define BITFLAG_RT_STATUS_BUFFER_STATE      BIT(1)
 
@@ -92,6 +92,19 @@
 #define SETTINGS_RESTORE_ALL                0xFF // All bitflags
 #endif
 
+// TODO move this to better place
+// Added for the machine type as all type of machine can be configure at run time
+#define MAC_AXIS_X      1
+#define MAC_AXIS_Y      2
+#define MAC_AXIS_Z      4
+#define MAC_AXIS_A      8
+#define MAC_AXIS_B      16
+#define MAC_AXIS_C      32
+#define MACHINE_XY      (MAC_AXIS_X | MAC_AXIS_Y)
+#define MACHINE_ZX      (MAC_AXIS_Z | MAC_AXIS_X)
+#define MACHINE_XYZ     (MAC_AXIS_X | MAC_AXIS_Y | MAC_AXIS_Z)
+#define MACHINE_MASK    (MAC_AXIS_X | MAC_AXIS_Y | MAC_AXIS_Z)
+#define OPTION_MAC_MASK (MAC_AXIS_A | MAC_AXIS_B | MAC_AXIS_C)
 
 #pragma pack(push, 1) // exact fit - no padding
 // Global persistent settings (Stored from byte EEPROM_ADDR_GLOBAL onwards); 111 Bytes
@@ -133,15 +146,16 @@ typedef struct
     float homing_seek_rate;
     uint16_t homing_debounce_delay;
     float homing_pulloff;
+	uint32_t Machine;
 } Settings_t;
 #pragma pack(pop)
 
 
-extern Settings_t settings;
+extern Settings_t Settings;
 
 
 // Initialize the configuration subsystem (load settings from EEPROM)
-void Settings_Init(void);
+void Settings_Initialize(void);
 
 // Helper function to clear and restore EEPROM defaults
 void Settings_Restore(uint8_t restore_flag);

@@ -34,7 +34,7 @@
 
 
 // Initializes coolant control pins.
-void Coolant_Init(void);
+void Coolant_Initialize(void);
 
 // Immediately disables coolant pins.
 void Coolant_Stop(void);

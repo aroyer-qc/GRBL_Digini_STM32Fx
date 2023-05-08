@@ -42,7 +42,7 @@ static uint8_t Socket = 0;
 static uint8_t Interface = IF_USB;
 
 
-void ComIf_Init(uint8_t interface, uint8_t sock)
+void ComIf_Initialize(uint8_t interface, uint8_t sock)
 {
     Head = 0, Tail = 0, Size = 0;
     memset(RxBuffer, 0, COMIF_BUFFER_SIZE);
@@ -53,7 +53,7 @@ void ComIf_Init(uint8_t interface, uint8_t sock)
 
 void ComIf_DeInit(void)
 {
-    ComIf_Init(Interface, 0);
+    ComIf_Initialize(Interface, 0);
 }
 
 

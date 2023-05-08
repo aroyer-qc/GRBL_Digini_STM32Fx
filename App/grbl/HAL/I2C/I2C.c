@@ -1,8 +1,6 @@
 #include "I2C.h"
 #include "Print.h"
 #include "System32.h"
-#include "stm32f7xx_hal_i2c.h"
-#include "stm32f7xx_hal_gpio.h"
 #include "stm32f7xx_it.h"
 
 

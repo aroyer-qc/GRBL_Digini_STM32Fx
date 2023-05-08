@@ -43,7 +43,7 @@ typedef struct
 #pragma pack(pop)
 
 
-void TT_Init(void);
+void TT_Initialize(void);
 void TT_Reset(void);
 
 void TT_GetToolParams(uint8_t tool_nr, ToolParams_t *params);

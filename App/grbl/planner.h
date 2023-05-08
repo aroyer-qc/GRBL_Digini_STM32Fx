@@ -92,7 +92,7 @@ typedef struct
 
 
 // Initialize and reset the motion plan subsystem
-void Planner_Init(void);
+void Planner_Initialize(void);
 void Planner_Reset(void);       // Reset all
 void Planner_ResetBuffer(void); // Reset buffer only.
 

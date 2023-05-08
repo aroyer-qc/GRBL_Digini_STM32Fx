@@ -135,77 +135,36 @@
 			<Add option="-lm" />
 		</Linker>
 		<Unit filename="..\..\AntiqueRadio\Module\Digini\Peripheral\inc\FatFs\diskio_typedef.h" />
-		<Unit filename="..\App\grbl\grbl\Config.h" />
-		<Unit filename="..\App\grbl\grbl\CoolantControl.cpp">
+		<Unit filename="..\App\grbl\CoolantControl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\App\grbl\CoolantControl.h" />
+		<Unit filename="..\App\grbl\defaults.h" />
+		<Unit filename="..\App\grbl\gcode.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\gcode.h" />
+		<Unit filename="..\App\grbl\grbl\Config.h" />
 		<Unit filename="..\App\grbl\grbl\CoolantControl.h" />
 		<Unit filename="..\App\grbl\grbl\defaults.h" />
-		<Unit filename="..\App\grbl\grbl\GCode.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\GCode.h" />
 		<Unit filename="..\App\grbl\grbl\grbl_advance.h" />
-		<Unit filename="..\App\grbl\grbl\Jog.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Jog.h" />
-		<Unit filename="..\App\grbl\grbl\Limits.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Limits.h" />
-		<Unit filename="..\App\grbl\grbl\MotionControl.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\MotionControl.h" />
-		<Unit filename="..\App\grbl\grbl\Nvm.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Nvm.h" />
-		<Unit filename="..\App\grbl\grbl\Planner.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Planner.h" />
-		<Unit filename="..\App\grbl\grbl\Probe.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Probe.h" />
-		<Unit filename="..\App\grbl\grbl\Protocol.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Protocol.h" />
-		<Unit filename="..\App\grbl\grbl\Report.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Report.h" />
-		<Unit filename="..\App\grbl\grbl\Settings.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Settings.h" />
-		<Unit filename="..\App\grbl\grbl\SpindleControl.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\SpindleControl.h" />
-		<Unit filename="..\App\grbl\grbl\Stepper.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\Stepper.h" />
-		<Unit filename="..\App\grbl\grbl\System.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\System.h" />
-		<Unit filename="..\App\grbl\grbl\ToolChange.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\ToolChange.h" />
-		<Unit filename="..\App\grbl\grbl\ToolTable.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\ToolTable.h" />
-		<Unit filename="..\App\grbl\grbl\util.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\App\grbl\grbl\util.h" />
+		<Unit filename="..\App\grbl\grbl_advance.h" />
 		<Unit filename="..\App\grbl\HAL\FLASH\eeprom.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -220,37 +179,40 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\HAL\System32.h" />
-		<Unit filename="..\App\grbl\Libraries\CRC\CRC.c">
+		<Unit filename="..\App\grbl\jog.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\App\grbl\Libraries\CRC\CRC.h" />
-		<Unit filename="..\App\grbl\Libraries\EEPROM\M24C0X.c">
+		<Unit filename="..\App\grbl\jog.h" />
+		<Unit filename="..\App\grbl\Libraries\EEPROM\M24C0X.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\EEPROM\M24C0X.h" />
-		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.c">
+		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.h" />
+		<Unit filename="..\App\grbl\Libraries\Ethernet\Ethernet.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Ethernet\Ethernet.h" />
-		<Unit filename="..\App\grbl\Libraries\Ethernet\ServerTCP.c">
+		<Unit filename="..\App\grbl\Libraries\Ethernet\ServerTCP.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Ethernet\ServerTCP.h" />
-		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\socket.c">
+		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\socket.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\socket.h" />
 		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\util2.h" />
-		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\W5500.c">
+		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\W5500.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Ethernet\utility\W5500.h" />
-		<Unit filename="..\App\grbl\Libraries\GrIP\ComIf.c">
+		<Unit filename="..\App\grbl\Libraries\GrIP\ComIf.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\GrIP\ComIf.h" />
-		<Unit filename="..\App\grbl\Libraries\GrIP\GrIP.c">
+		<Unit filename="..\App\grbl\Libraries\GrIP\GrIP.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\GrIP\GrIP.h" />
@@ -258,7 +220,68 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\Libraries\Printf\Print.h" />
+		<Unit filename="..\App\grbl\limits.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\limits.h" />
+		<Unit filename="..\App\grbl\MotionControl.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\MotionControl.h" />
+		<Unit filename="..\App\grbl\Nvm.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\Nvm.h" />
+		<Unit filename="..\App\grbl\planner.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\planner.h" />
+		<Unit filename="..\App\grbl\probe.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\probe.h" />
+		<Unit filename="..\App\grbl\protocol.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\protocol.h" />
+		<Unit filename="..\App\grbl\report.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\report.h" />
+		<Unit filename="..\App\grbl\settings.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\settings.h" />
+		<Unit filename="..\App\grbl\SpindleControl.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\SpindleControl.h" />
+		<Unit filename="..\App\grbl\Src\debug.h" />
+		<Unit filename="..\App\grbl\Src\PID.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\Src\PID.h" />
 		<Unit filename="..\App\grbl\Src\Platform.h" />
+		<Unit filename="..\App\grbl\stepper.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\stepper.h" />
+		<Unit filename="..\App\grbl\system.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\system.h" />
+		<Unit filename="..\App\grbl\ToolChange.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\ToolChange.h" />
+		<Unit filename="..\App\grbl\ToolTable.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\ToolTable.h" />
+		<Unit filename="..\App\grbl\util.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\grbl\util.h" />
 		<Unit filename="..\App\inc\bsp.h" />
 		<Unit filename="..\App\inc\error.h" />
 		<Unit filename="..\App\inc\service.h" />
@@ -294,8 +317,6 @@
 		</Unit>
 		<Unit filename="..\App\src\terminal.cpp">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
 		</Unit>
 		<Unit filename="..\App\startup_stm32f7xx.S">
 			<Option compilerVar="CC" />
@@ -342,6 +363,7 @@
 		<Unit filename="..\Config\tim_var.h" />
 		<Unit filename="..\Config\uart_cfg.h" />
 		<Unit filename="..\Config\uart_var.h" />
+		<Unit filename="..\Config\util_cfg.h" />
 		<Unit filename="..\Config\vt100_cfg.h" />
 		<Unit filename="..\Config\vt100_var.h" />
 		<Unit filename="..\Config\widget_cfg.h" />
@@ -588,6 +610,9 @@
 		<Unit filename="..\Module\Digini\Peripheral\src\FatFS\diskio.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\FatFS\lib_class_fatfs_ram_disk.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -722,6 +747,9 @@
 		<Unit filename="..\Module\module_FatFs\inc\ffconf_template.h" />
 		<Unit filename="..\Module\module_FatFs\inc\integer.h" />
 		<Unit filename="..\Module\module_FatFs\src\ff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\module_FatFs\src\ffunicode.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\module_jpg\jpeg.c">

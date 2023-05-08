@@ -59,11 +59,11 @@ float in = 0.0, out = 0.0, set = 0.0;
 PID_t pid;
 
 
-void MC_Init(void)
+void MC_Initialize(void)
 {
     for(uint8_t i = 0; i < N_AXIS; i++)
     {
-        dir_negative[i] = (settings.homing_dir_mask >> i) & 0x1;
+        dir_negative[i] = (Settings.homing_dir_mask >> i) & 0x1;
     }
 
     MC_SyncBacklashPosition();
@@ -71,7 +71,7 @@ void MC_Init(void)
     for(uint8_t i = 0; i < N_AXIS; i++)
     {
         // Don't do backlash move, if all axis are 0.0
-        if(settings.backlash[i] > 0.0001)
+        if(Settings.backlash[i] > 0.0001)
         {
             backlash_enable = 1;
         }
@@ -117,17 +117,17 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
 
     // If enabled, check for soft limit violations. Placed here all line motions are picked up
     // from everywhere in Grbl.
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_SOFT_LIMIT_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_SOFT_LIMIT_ENABLE))
     {
         // NOTE: Block jog state. Jogging is a special case and soft limits are handled independently.
-        if(sys.state != STATE_JOG)
+        if(System.state != STATE_JOG)
         {
             Limits_SoftCheck(target);
         }
     }
 
     // If in check gcode mode, prevent motion by blocking planner. Soft limits still work.
-    if(sys.state == STATE_CHECK_MODE)
+    if(System.state == STATE_CHECK_MODE)
     {
         return;
     }
@@ -153,7 +153,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Bail, if system abort.
             return;
@@ -184,7 +184,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
             if(dir_negative[i] == DIR_NEGATIV)
             {
                 dir_negative[i] = DIR_POSITIV;
-                target_prev[i] += settings.backlash[i];
+                target_prev[i] += Settings.backlash[i];
 
                 backlash_update = 1;
             }
@@ -196,7 +196,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
             if(dir_negative[i] == DIR_POSITIV)
             {
                 dir_negative[i] = DIR_NEGATIV;
-                target_prev[i] -= settings.backlash[i];
+                target_prev[i] -= Settings.backlash[i];
 
                 backlash_update = 1;
             }
@@ -216,7 +216,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Bail, if system abort.
             return;
@@ -240,7 +240,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     // Plan and queue motion into planner buffer
     if(Planner_BufferLine(target, pl_data) == PLAN_EMPTY_BLOCK)
     {
-        if(BIT_IS_TRUE(settings.flags, BITFLAG_LASER_MODE))
+        if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
         {
             // Correctly set spindle state, if there is a coincident position passed. Forces a buffer
             // sync while in M3 laser mode only.
@@ -255,10 +255,10 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
 
 void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
 {
-    uint8_t old_f_override = sys.f_override;
+    uint8_t old_f_override = System.f_override;
 
     // Put in hold state -  no moves will be started
-    sys.state = STATE_HOLD;
+    System.state = STATE_HOLD;
 
     sync_pitch = pitch;
 
@@ -276,8 +276,8 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     }
 
     // Disable feed override
-    sys.f_override = DEFAULT_FEED_OVERRIDE;
-    sys.report_ovr_counter = 0; // Set to report change immediately
+    System.f_override = DEFAULT_FEED_OVERRIDE;
+    System.report_ovr_counter = 0; // Set to report change immediately
 
     Planner_UpdateVelocityProfileParams();
     Planner_CycleReinitialize();
@@ -289,22 +289,22 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     float feed = pl_data->feed_rate / 60.0;
 
     // Calculate distance [mm] which is needed for acceleration; ToDo: Include x-axis
-    float s_d = ((feed * feed) / ((settings.acceleration[Z_AXIS] / 3600) * 2));
+    float s_d = ((feed * feed) / ((Settings.acceleration[Z_AXIS] / 3600) * 2));
     // Increase it by a small amount
     s_d += 0.05;
 
     // Calculate position, when feedrate is reached
-    pos_z -= (int32_t)(s_d * settings.steps_per_mm[Z_AXIS]);
+    pos_z -= (int32_t)(s_d * Settings.steps_per_mm[Z_AXIS]);
 
     MC_Line(target, pl_data);
-    sys.sync_move = 1;
+    System.sync_move = 1;
 
     // Wait for spindle sync
     while(wait_spindle == 0)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Bail, if system abort.
             return;
@@ -312,7 +312,7 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     }
 
     // Set state back to idle - queued move will be started
-    sys.state = STATE_IDLE;
+    System.state = STATE_IDLE;
 
     // Trigger immediate start of cycle
     Protocol_AutoCycleStart();
@@ -320,14 +320,14 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
 
     // Wait till sync move is finished
     Protocol_BufferSynchronize();
-    sys.sync_move = 0;
+    System.sync_move = 0;
     start_sync = 0;
     wait_spindle = 0;
     Stepper_Ovr(0.0);
 
     // Restore old override
-    sys.f_override = old_f_override;
-    sys.report_ovr_counter = 0; // Set to report change immediately
+    System.f_override = old_f_override;
+    System.report_ovr_counter = 0; // Set to report change immediately
 
     Planner_UpdateVelocityProfileParams();
     Planner_CycleReinitialize();
@@ -342,7 +342,7 @@ void MC_LineSyncStart(void)
 
 void MC_UpdateSyncMove(void)
 {
-    if(sys.sync_move)
+    if(System.sync_move)
     {
         if(start_sync == 0)
         {
@@ -385,7 +385,7 @@ void MC_UpdateSyncMove(void)
             float dist_expected = rev_actual * sync_pitch;
 
             // Expected distance since start
-            float dist_act = ((sys_position[Z_AXIS] - pos_z) / settings.steps_per_mm[Z_AXIS]) * -1.0;
+            float dist_act = ((sys_position[Z_AXIS] - pos_z) / Settings.steps_per_mm[Z_AXIS]) * -1.0;
 
             // Error
             in = dist_expected - dist_act;
@@ -408,7 +408,7 @@ void MC_UpdateSyncMove(void)
 // the direction of helical travel, radius == circle radius, isclockwise boolean. Used
 // for vector transformation direction.
 // The arc is approximated by generating a huge number of tiny, linear segments. The chordal tolerance
-// of each segment is configured in settings.arc_tolerance, which is defined to be the maximum normal
+// of each segment is configured in Settings.arc_tolerance, which is defined to be the maximum normal
 // distance from segment to the circle when the end points both lie on the circle.
 void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *offset, float radius,
             uint8_t axis_0, uint8_t axis_1, uint8_t axis_linear, uint8_t is_clockwise_arc)
@@ -438,10 +438,10 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
     }
 
     // NOTE: Segment end points are on the arc, which can lead to the arc diameter being smaller by up to
-    // (2x) settings.arc_tolerance. For 99% of users, this is just fine. If a different arc segment fit
+    // (2x) Settings.arc_tolerance. For 99% of users, this is just fine. If a different arc segment fit
     // is desired, i.e. least-squares, midpoint on arc, just change the mm_per_arc_segment calculation.
     // For the intended uses of Grbl, this value shouldn't exceed 2000 for the strictest of cases.
-    uint16_t segments = floor(fabs(0.5*angular_travel*radius) / sqrt(settings.arc_tolerance*(2*radius - settings.arc_tolerance)));
+    uint16_t segments = floor(fabs(0.5*angular_travel*radius) / sqrt(Settings.arc_tolerance*(2*radius - Settings.arc_tolerance)));
 
     if(segments)
     {
@@ -522,7 +522,7 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
             MC_Line(position, pl_data);
 
             // Bail mid-circle on system abort. Runtime command check already performed by mc_line.
-            if(sys.abort)
+            if(System.abort)
             {
                 return;
             }
@@ -537,14 +537,14 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
 // Execute dwell in seconds.
 void MC_Dwell(float seconds)
 {
-    if(sys.state == STATE_CHECK_MODE)
+    if(System.state == STATE_CHECK_MODE)
     {
         return;
     }
 
-    // TODO: DWELL sys.state
+    // TODO: DWELL System.state
     Protocol_BufferSynchronize();
-    Delay_sec(seconds, DELAY_MODE_DWELL);
+   // Delay_sec(seconds, DELAY_MODE_DWELL);
 }
 
 
@@ -595,7 +595,7 @@ void MC_HomigCycle(uint8_t cycle_mask)
     }
 
     Protocol_ExecuteRealtime(); // Check for reset and set system abort.
-    if(sys.abort)
+    if(System.abort)
     {
         // Did not complete. Alarm state set by mc_alarm.
         return;
@@ -609,7 +609,7 @@ void MC_HomigCycle(uint8_t cycle_mask)
     Planner_SyncPosition();
 
     // If hard limits feature enabled, re-enable hard limits pin change register after homing cycle.
-    Limits_Init();
+    Limits_Initialize();
 }
 
 
@@ -618,14 +618,14 @@ void MC_HomigCycle(uint8_t cycle_mask)
 uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser_flags)
 {
     // TODO: Need to update this cycle so it obeys a non-auto cycle start.
-    if(sys.state == STATE_CHECK_MODE)
+    if(System.state == STATE_CHECK_MODE)
     {
         return GC_PROBE_CHECK_MODE;
     }
 
     // Finish all queued commands and empty planner buffer before starting probe cycle.
     Protocol_BufferSynchronize();
-    if(sys.abort)
+    if(System.abort)
     {
         // Return if system reset has been issued.
         return GC_PROBE_ABORT;
@@ -635,7 +635,7 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     uint8_t is_probe_away = BIT_IS_TRUE(parser_flags,GC_PARSER_PROBE_IS_AWAY);
     uint8_t is_no_error = BIT_IS_TRUE(parser_flags,GC_PARSER_PROBE_IS_NO_ERROR);
 
-    sys.probe_succeeded = false; // Re-initialize probe history before beginning cycle.
+    System.probe_succeeded = false; // Re-initialize probe history before beginning cycle.
     Probe_ConfigureInvertMask(is_probe_away);
 
     // After syncing, check if probe is already triggered. If so, halt and issue alarm.
@@ -661,12 +661,12 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     {
         Protocol_ExecuteRealtime();
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Check for system abort
             return(GC_PROBE_ABORT);
         }
-    } while(sys.state != STATE_IDLE);
+    } while(System.state != STATE_IDLE);
 
     // Probing cycle complete!
 
@@ -684,7 +684,7 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     }
     else
     {
-        sys.probe_succeeded = true; // Indicate to system the probing cycle completed successfully.
+        System.probe_succeeded = true; // Indicate to system the probing cycle completed successfully.
     }
 
     sys_probe_state = PROBE_OFF; // Ensure probe state monitor is disabled.
@@ -702,7 +702,7 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     Report_ProbeParams();
 #endif
 
-    if(sys.probe_succeeded)
+    if(System.probe_succeeded)
     {
         // Successful probe cycle.
         return GC_PROBE_FOUND;
@@ -720,12 +720,12 @@ void MC_OverrideCtrlUpdate(uint8_t override_state)
     // Finish all queued commands before altering override control state
     Protocol_BufferSynchronize();
 
-    if(sys.abort)
+    if(System.abort)
     {
         return;
     }
 
-    sys.override_ctrl = override_state;
+    System.override_ctrl = override_state;
 }
 #endif
 
@@ -735,7 +735,7 @@ void MC_OverrideCtrlUpdate(uint8_t override_state)
 #ifdef PARKING_ENABLE
 void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
 {
-    if(sys.abort)
+    if(System.abort)
     {
         // Block during abort.
         return;
@@ -745,8 +745,8 @@ void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
 
     if(plan_status)
     {
-        BIT_TRUE(sys.step_control, STEP_CONTROL_EXECUTE_SYS_MOTION);
-        BIT_FALSE(sys.step_control, STEP_CONTROL_END_MOTION); // Allow parking motion to execute, if feed hold is active.
+        BIT_TRUE(System.step_control, STEP_CONTROL_EXECUTE_SYS_MOTION);
+        BIT_FALSE(System.step_control, STEP_CONTROL_END_MOTION); // Allow parking motion to execute, if feed hold is active.
         Stepper_ParkingSetupBuffer(); // Setup step segment buffer for special parking motion case
         Stepper_PrepareBuffer();
         Stepper_WakeUp();
@@ -755,18 +755,18 @@ void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
         {
             Protocol_ExecRtSystem();
 
-            if(sys.abort)
+            if(System.abort)
             {
                 return;
             }
         }
-        while (sys.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION);
+        while (System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION);
 
         Stepper_ParkingRestoreBuffer(); // Restore step segment buffer to normal run state.
     }
     else
     {
-        BIT_FALSE(sys.step_control, STEP_CONTROL_EXECUTE_SYS_MOTION);
+        BIT_FALSE(System.step_control, STEP_CONTROL_EXECUTE_SYS_MOTION);
         Protocol_ExecRtSystem();
     }
 
@@ -794,9 +794,9 @@ void MC_Reset(void)
         // NOTE: If steppers are kept enabled via the step idle delay setting, this also keeps
         // the steppers enabled by avoiding the go_idle call altogether, unless the motion state is
         // violated, by which, all bets are off.
-        if((sys.state & (STATE_CYCLE | STATE_HOMING | STATE_JOG)) || (sys.step_control & (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION)))
+        if((System.state & (STATE_CYCLE | STATE_HOMING | STATE_JOG)) || (System.step_control & (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION)))
         {
-            if(sys.state == STATE_HOMING)
+            if(System.state == STATE_HOMING)
             {
                 if(!sys_rt_exec_alarm)
                 {

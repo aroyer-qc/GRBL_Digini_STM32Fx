@@ -26,7 +26,7 @@
 #include "Config.h"
 
 
-void Coolant_Init(void)
+void Coolant_Initialize(void)
 {
   	IO_PinInit(IO_COOLANT);  // what it is... AR i fuck my pin layout
   	IO_PinInit(IO_COOLANT_FLOOD);
@@ -91,7 +91,7 @@ uint8_t Coolant_GetState(void)
 // parser program end, and g-code parser coolant_sync().
 void Coolant_SetState(uint8_t mode)
 {
-    if(sys.abort)
+    if(System.abort)
     {
         // Block during abort.
         return;
@@ -133,7 +133,7 @@ void Coolant_SetState(uint8_t mode)
     }
   #endif
 
-    sys.report_ovr_counter = 0; // Set to report change immediately
+    System.report_ovr_counter = 0; // Set to report change immediately
 }
 
 
@@ -141,7 +141,7 @@ void Coolant_SetState(uint8_t mode)
 // if an abort or check-mode is active.
 void Coolant_Sync(uint8_t mode)
 {
-    if(sys.state == STATE_CHECK_MODE)
+    if(System.state == STATE_CHECK_MODE)
     {
         return;
     }

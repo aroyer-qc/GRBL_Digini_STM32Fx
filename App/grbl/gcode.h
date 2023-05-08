@@ -278,7 +278,7 @@ extern Parser_State_t gc_state;
 
 
 // Initialize the parser
-void GC_Init(void);
+void GC_Initialize(void);
 
 // Set g-code parser position. Input in steps.
 void GC_SyncPosition(void);

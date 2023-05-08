@@ -30,8 +30,9 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "grbl.h"
+#include "grbl_advance.h"
 #include "ff.h"
+#include "nOS.h"
 
 //-------------------------------------------------------------------------------------------------
 // Global Macro
@@ -63,7 +64,7 @@ class ClassTaskGRBL
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-TASK_GRBL_EXTERN system_t             sys;
+TASK_GRBL_EXTERN System_t             System;
 TASK_GRBL_EXTERN int32_t              sys_position[N_AXIS];             // Real-time machine (aka home) position vector in steps.
 TASK_GRBL_EXTERN int32_t              sys_probe_position[N_AXIS];       // Last probe position in machine coordinates and steps.
 TASK_GRBL_EXTERN volatile uint8_t     sys_probe_state;                  // Probing state value.  Used to coordinate the probing cycle with stepper ISR.

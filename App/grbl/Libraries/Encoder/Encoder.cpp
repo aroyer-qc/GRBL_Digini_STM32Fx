@@ -24,9 +24,9 @@ static uint32_t OvfCnt = 0;
 static uint32_t CntValue = 0;
 
 
-void Encoder_Init(void)
+void Encoder_Initialize(void)
 {
-    TIM4_Init(PULSES_PER_REV);
+// TODO AR    TIM4_Init(PULSES_PER_REV);
     Encoder_Reset();
 }
 

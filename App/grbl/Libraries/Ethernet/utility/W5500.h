@@ -143,7 +143,7 @@ typedef enum
 
 
 
-void W5500_Init(void);
+void W5500_Initialize(void);
 
 void W5500_SoftReset(void);
 

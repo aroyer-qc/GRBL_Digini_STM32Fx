@@ -221,7 +221,7 @@ static uint8_t update_g96 = G96_UPDATE_CNT;
 
 
 // Initialize and start the stepper motor subsystem
-void Stepper_Init(void)
+void Stepper_Initialize(void)
 {
     IO_PinInit(IO_STEP_X);
     IO_PinInit(IO_STEP_Y);
@@ -246,7 +246,7 @@ void Stepper_Init(void)
 void Stepper_WakeUp(void)
 {
     // Enable stepper drivers.
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_INVERT_ST_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_ST_ENABLE))
     {
         IO_SetPinHigh(IO_ENABLE_DRIVE);
     }
@@ -280,11 +280,11 @@ void Stepper_Disable(uint8_t ovr_disable)
     // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
     bool pin_state = false; // Keep enabled.
 
-    if(((settings.stepper_idle_lock_time != 0xFF) || sys_rt_exec_alarm || sys.state == STATE_SLEEP) && sys.state != STATE_HOMING)
+    if(((Settings.stepper_idle_lock_time != 0xFF) || sys_rt_exec_alarm || System.state == STATE_SLEEP) && System.state != STATE_HOMING)
     {
         // Force stepper dwell to lock axes for a defined amount of time to ensure the axes come to a complete
         // stop and not drift from residual inertial forces at the end of the last movement.
-        Delay_ms(settings.stepper_idle_lock_time);
+        Delay_ms(Settings.stepper_idle_lock_time);
         pin_state = true; // Override. Disable steppers.
     }
 
@@ -294,7 +294,7 @@ void Stepper_Disable(uint8_t ovr_disable)
         pin_state = true;
     }
 
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_INVERT_ST_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_ST_ENABLE))
     {
         pin_state = !pin_state;
     } // Apply pin invert.
@@ -449,7 +449,7 @@ void Stepper_MainISR(void)
             }
 
             int32_t new_cycles_per_tick = st.exec_segment->cycles_per_tick;
-            if(sys.sync_move == 1)
+            if(System.sync_move == 1)
             {
                 new_cycles_per_tick = st.exec_segment->cycles_per_tick * tim_ovr;
                 new_cycles_per_tick = st.exec_segment->cycles_per_tick + new_cycles_per_tick;
@@ -544,8 +544,8 @@ void Stepper_MainISR(void)
             {
                 if(--update_g96 == 0)
                 {
-                    sys.x_pos = (sys_position[X_AXIS] / settings.steps_per_mm[X_AXIS]) - (gc_state.coord_system[X_AXIS]+gc_state.coord_offset[X_AXIS]+gc_state.tool_length_offset[X_AXIS]);
-                    Spindle_SetSurfaceSpeed(sys.x_pos);
+                    System.x_pos = (sys_position[X_AXIS] / Settings.steps_per_mm[X_AXIS]) - (gc_state.coord_system[X_AXIS]+gc_state.coord_offset[X_AXIS]+gc_state.tool_length_offset[X_AXIS]);
+                    Spindle_SetSurfaceSpeed(System.x_pos);
                     update_g96 = G96_UPDATE_CNT;
                 }
             }
@@ -679,9 +679,9 @@ void Stepper_MainISR(void)
     }
 
     // During a homing cycle, lock out and prevent desired axes from moving.
-    if(sys.state == STATE_HOMING)
+    if(System.state == STATE_HOMING)
     {
-        st.step_outbits &= sys.homing_axis_lock;
+        st.step_outbits &= System.homing_axis_lock;
     }
 
     st.step_count--; // Decrement step events count
@@ -773,12 +773,12 @@ void Stepper_GenerateStepDirInvertMasks(void)
 
     for(idx = 0; idx < N_AXIS; idx++)
     {
-        if(BIT_IS_TRUE(settings.step_invert_mask, BIT(idx)))
+        if(BIT_IS_TRUE(Settings.step_invert_mask, BIT(idx)))
         {
             step_port_invert_mask |= Settings_GetStepPinMask(idx);
         }
 
-        if(BIT_IS_TRUE(settings.dir_invert_mask, BIT(idx)))
+        if(BIT_IS_TRUE(Settings.dir_invert_mask, BIT(idx)))
         {
             dir_port_invert_mask |= Settings_GetDirectionPinMask(idx);
         }
@@ -906,7 +906,7 @@ void Stepper_ParkingRestoreBuffer()
 void Stepper_PrepareBuffer(void)
 {
     // Block step prep buffer, while in a suspend state and there is no suspend motion to execute.
-    if(BIT_IS_TRUE(sys.step_control,STEP_CONTROL_END_MOTION))
+    if(BIT_IS_TRUE(System.step_control,STEP_CONTROL_END_MOTION))
     {
         return;
     }
@@ -917,7 +917,7 @@ void Stepper_PrepareBuffer(void)
         if(pl_block == 0)
         {
             // Query planner for a queued block
-            if(sys.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+            if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
             {
                 pl_block = Planner_GetSystemMotionBlock();
             }
@@ -976,7 +976,7 @@ void Stepper_PrepareBuffer(void)
                 prep.req_mm_increment = REQ_MM_INCREMENT_SCALAR/prep.step_per_mm;
                 prep.dt_remainder = 0.0; // Reset for new segment block
 
-                if((sys.step_control & STEP_CONTROL_EXECUTE_HOLD) || (prep.recalculate_flag & PREP_FLAG_DECEL_OVERRIDE))
+                if((System.step_control & STEP_CONTROL_EXECUTE_HOLD) || (prep.recalculate_flag & PREP_FLAG_DECEL_OVERRIDE))
                 {
                     // New block loaded mid-hold. Override planner block entry speed to enforce deceleration.
                     prep.current_speed = prep.exit_speed;
@@ -992,7 +992,7 @@ void Stepper_PrepareBuffer(void)
                 // spindle off.
                 st_prep_block->is_pwm_rate_adjusted = false;
 
-                if(settings.flags & BITFLAG_LASER_MODE)
+                if(Settings.flags & BITFLAG_LASER_MODE)
                 {
                     if(pl_block->condition & PL_COND_FLAG_SPINDLE_CCW)
                     {
@@ -1012,7 +1012,7 @@ void Stepper_PrepareBuffer(void)
             prep.mm_complete = 0.0; // Default velocity profile complete at 0.0mm from end of block.
             float inv_2_accel = 0.5/pl_block->acceleration;
 
-            if(sys.step_control & STEP_CONTROL_EXECUTE_HOLD)   // [Forced Deceleration to Zero Velocity]
+            if(System.step_control & STEP_CONTROL_EXECUTE_HOLD)   // [Forced Deceleration to Zero Velocity]
             {
                 // Compute velocity profile parameters for a feed hold in-progress. This profile overrides
                 // the planner block profile, enforcing a deceleration to zero speed.
@@ -1040,7 +1040,7 @@ void Stepper_PrepareBuffer(void)
                 float exit_speed_sqr;
                 float nominal_speed;
 
-                if(sys.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+                if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
                 {
                     prep.exit_speed = exit_speed_sqr = 0.0; // Enforce stop at end of system motion.
                 }
@@ -1123,7 +1123,7 @@ void Stepper_PrepareBuffer(void)
                 }
             }
 
-            BIT_TRUE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM); // Force update whenever updating block.
+            BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM); // Force update whenever updating block.
         }
 
         // Initialize new segment
@@ -1278,7 +1278,7 @@ void Stepper_PrepareBuffer(void)
         Compute spindle speed PWM output for step segment
         */
 
-        if(st_prep_block->is_pwm_rate_adjusted || (sys.step_control & STEP_CONTROL_UPDATE_SPINDLE_PWM))
+        if(st_prep_block->is_pwm_rate_adjusted || (System.step_control & STEP_CONTROL_UPDATE_SPINDLE_PWM))
         {
             if(pl_block->condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW))
             {
@@ -1296,11 +1296,11 @@ void Stepper_PrepareBuffer(void)
             }
             else
             {
-                sys.spindle_speed = 0.0;
+                System.spindle_speed = 0.0;
                 prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
             }
 
-            BIT_FALSE(sys.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+            BIT_FALSE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
         }
 
         prep_segment->spindle_pwm = prep.current_spindle_pwm; // Reload segment PWM value
@@ -1324,11 +1324,11 @@ void Stepper_PrepareBuffer(void)
         // Bail if we are at the end of a feed hold and don't have a step to execute.
         if(prep_segment->n_step == 0)
         {
-            if(sys.step_control & STEP_CONTROL_EXECUTE_HOLD)
+            if(System.step_control & STEP_CONTROL_EXECUTE_HOLD)
             {
                 // Less than one step to decelerate to zero speed, but already very close. AMASS
                 // requires full steps to execute. So, just bail.
-                BIT_TRUE(sys.step_control, STEP_CONTROL_END_MOTION);
+                BIT_TRUE(System.step_control, STEP_CONTROL_END_MOTION);
 #ifdef PARKING_ENABLE
                 if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
                 {
@@ -1411,7 +1411,7 @@ void Stepper_PrepareBuffer(void)
                 // Reset prep parameters for resuming and then bail. Allow the stepper ISR to complete
                 // the segment queue, where realtime protocol will set new state upon receiving the
                 // cycle stop flag from the ISR. Prep_segment is blocked until then.
-                BIT_TRUE(sys.step_control, STEP_CONTROL_END_MOTION);
+                BIT_TRUE(System.step_control, STEP_CONTROL_END_MOTION);
 #ifdef PARKING_ENABLE
                 if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
                 {
@@ -1423,9 +1423,9 @@ void Stepper_PrepareBuffer(void)
             else   // End of planner block
             {
                 // The planner block is complete. All steps are set to be executed in the segment buffer.
-                if(sys.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+                if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
                 {
-                    BIT_TRUE(sys.step_control, STEP_CONTROL_END_MOTION);
+                    BIT_TRUE(System.step_control, STEP_CONTROL_END_MOTION);
 
                     return;
                 }
@@ -1444,7 +1444,7 @@ void Stepper_PrepareBuffer(void)
 // divided by the ACCELERATION TICKS PER SECOND in seconds.
 float Stepper_GetRealtimeRate(void)
 {
-    if(sys.state & (STATE_CYCLE | STATE_HOMING | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+    if(System.state & (STATE_CYCLE | STATE_HOMING | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
     {
         return prep.current_speed;
     }

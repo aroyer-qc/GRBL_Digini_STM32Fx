@@ -1,11 +1,7 @@
 #include "lib_digini.h"
 #include "M24C0X.h"
-#include "I2C.h"
 #include "System32.h"
-#include "stm32f7xx_hal_i2c.h"
-#include "stm32f7xx_hal_gpio.h"
 #include "stm32f7xx_it.h"
-
 
 #define I2C_SPEED               200000
 
@@ -17,7 +13,7 @@
 
 // Define I2C peripheral
 #ifndef M24C0X_I2C
-    #define M24C0X_I2C          I2C_1
+    #define M24C0X_I2C          I2C1
 #endif
 
 #define M24C0X_PAGE_SIZE        16
@@ -31,13 +27,13 @@ static inline void M24C0X_WriteProtection(uint8_t enable);
 
 
 
-void M24C0X_Init(void)
+void M24C0X_Initialize(void)
 {
     // Initialize write protection pin
     IO_PinInit(IO_E2_WP);
 
-    I2C_Mode_t mode = {I2C_SPEED, I2C_Mode_I2C, I2C_Ack_Enable};
-    I2C_Initialize(M24C0X_I2C, &mode);
+    // TODO AR I2C_Mode_t mode = {I2C_SPEED, I2C_Mode_I2C, I2C_Ack_Enable};
+    // TODO AR I2C_Initializeialize(M24C0X_I2C, &mode);
 }
 
 
@@ -51,7 +47,7 @@ uint8_t M24C0X_ReadByte(uint16_t addr)
         slave_adr |=  0x0E & (addr>>7);
     }
 
-    return I2C_ReadByte(M24C0X_I2C, slave_adr, addr);
+    return 0;//I2C_ReadByte(M24C0X_I2C, slave_adr, addr);
 }
 
 
@@ -66,7 +62,7 @@ uint8_t M24C0X_WriteByte(uint16_t addr, uint8_t data)
     }
 
     M24C0X_WriteProtection(WP_DISABLE);
-    uint8_t ret = I2C_WriteByte(M24C0X_I2C, slave_adr, addr, data);
+    uint8_t ret= 0;//= I2C_WriteByte(M24C0X_I2C, slave_adr, addr, data);
     M24C0X_WriteProtection(WP_ENABLE);
 
     Delay_ms(5);
@@ -84,7 +80,7 @@ uint8_t M24C0X_ReadByteArray(uint16_t addr, uint8_t *pData, uint16_t len)
         slave_adr |=  0x0E & (addr>>7);
     }
 
-    I2C_ReadByteArray(M24C0X_I2C, slave_adr, addr, pData, len);
+    //I2C_ReadByteArray(M24C0X_I2C, slave_adr, addr, pData, len);
 
     return 1;
 }
@@ -127,7 +123,7 @@ uint8_t M24C0X_WriteByteArray(uint16_t addr, uint8_t *pData, uint16_t len)
         }
 
         // If eeprom is busy (write takes up to 5ms), try again until success or timeout
-        while((ret = I2C_WriteByteArray(M24C0X_I2C, slave_adr, addr, &pData[bytesWritten], bytes2write)) && (timeout < 4))
+       // while((ret = I2C_WriteByteArray(M24C0X_I2C, slave_adr, addr, &pData[bytesWritten], bytes2write)) && (timeout < 4))
         {
             Delay_ms(2);
             timeout++;

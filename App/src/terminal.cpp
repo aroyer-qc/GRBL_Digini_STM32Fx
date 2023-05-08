@@ -313,26 +313,26 @@ void printFloat(float n, uint8_t decimal_places)
 //-------------------------------------------------------------------------------------------------
 void printFloat_CoordValue(float n)
 {
-    if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES)) {
         //PrintFloat(n*INCH_PER_MM, N_DECIMAL_COORDVALUE_INCH);
-        printf("%." N_DECIMAL_COORD_INCH_STR "f", n * INCH_PER_MM);
+        printf("%.4f", n * INCH_PER_MM);
     }
     else {
         //PrintFloat(n, N_DECIMAL_COORDVALUE_MM);
-        printf("%." N_DECIMAL_COORD_MM_STR "f", n);
+        printf("%.3f", n);
     }
 }
 
 
 void printFloat_RateValue(float n)
 {
-    if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES)) {
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES)) {
         //PrintFloat(n*INCH_PER_MM,N_DECIMAL_RATEVALUE_INCH);
-        printf("%." N_DECIMAL_RATE_INCH_STR "f", n * INCH_PER_MM);
+        printf("%.4f", n * INCH_PER_MM);
     }
     else {
         //PrintFloat(n, N_DECIMAL_RATEVALUE_MM);
-        printf("%." N_DECIMAL_RATE_MM_STR "f", n);
+        printf("%.3f", n);
     }
 }
 

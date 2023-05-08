@@ -51,7 +51,7 @@ static uint8_t GrIP_Response = RESPONSE_OK;
 static uint8_t GrIP_idx = 0;
 
 
-void GrIP_Init(void)
+void GrIP_Initialize(void)
 {
     // Initialize to default values
     GrIP_Status = GRIP_IDLE;
@@ -63,9 +63,9 @@ void GrIP_Init(void)
     memset(RX_Buff, 0, sizeof(RX_Buff));
 
     // Init generic interface
-    ComIf_Init(IF_ETH, 0);
+    ComIf_Initialize(IF_ETH, 0);
     // Init CRC module
-    CRC_Init();
+    // TODO AR use my own driver CRC_Init();
 }
 
 
@@ -89,12 +89,12 @@ uint8_t GrIP_Transmit(uint8_t MsgType, uint8_t ReturnCode, Pdu_t *data)
         else if(data->Length > 0)
         {
             // Calculate CRC of data
-            TX_Header.CRC8 = CRC_CalculateCRC8(data->Data, data->Length);
+            TX_Header.CRC8 = 0; // TODO AR use my own driver CRC_CalculateCRC8(data->Data, data->Length);
         }
         else
         {
             // No data, no CRC
-            TX_Header.CRC8 = 0;
+            TX_Header.CRC8 = 0;  // TO AR this is ok from original
         }
 
         // Prepare transmit buffer
@@ -250,7 +250,7 @@ void GrIP_Update(void)
             // Get payload
             //GenIf_Receive(RX_Buffer, RX_Header.Length);
             ComIf_Receive(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length);
-            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == CRC_CalculateCRC8(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length))
+            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == 0 /* // TODO AR use my own driver CRC_CalculateCRC8(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length) */)
             {
                 RX_Buff[GrIP_idx].isValid = 1;
 

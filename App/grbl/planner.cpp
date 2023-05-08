@@ -54,7 +54,7 @@ static uint8_t next_buffer_head;      // Index of the next buffer head
 static uint8_t block_buffer_planned;  // Index of the optimally planned block
 
 
-void Planner_Init(void)
+void Planner_Initialize(void)
 {
     Planner_Reset();
 }
@@ -124,8 +124,8 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     }
 
 #ifdef COREXY
-    target_steps[A_MOTOR] = lround(target[A_MOTOR]*settings.steps_per_mm[A_MOTOR]);
-    target_steps[B_MOTOR] = lround(target[B_MOTOR]*settings.steps_per_mm[B_MOTOR]);
+    target_steps[A_MOTOR] = lround(target[A_MOTOR]*Settings.steps_per_mm[A_MOTOR]);
+    target_steps[B_MOTOR] = lround(target[B_MOTOR]*Settings.steps_per_mm[B_MOTOR]);
     block->steps[A_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) + (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
     block->steps[B_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) - (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
 #endif
@@ -138,7 +138,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
 #ifdef COREXY
         if(!(idx == A_MOTOR) && !(idx == B_MOTOR))
         {
-            target_steps[idx] = lround(target[idx]*settings.steps_per_mm[idx]);
+            target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
             block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
         }
 
@@ -146,21 +146,21 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
 
         if(idx == A_MOTOR)
         {
-            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] + target_steps[Y_AXIS]-position_steps[Y_AXIS])/settings.steps_per_mm[idx];
+            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] + target_steps[Y_AXIS]-position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
         }
         else if(idx == B_MOTOR)
         {
-            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] - target_steps[Y_AXIS]+position_steps[Y_AXIS])/settings.steps_per_mm[idx];
+            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] - target_steps[Y_AXIS]+position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
         }
         else
         {
-            delta_mm = (target_steps[idx] - position_steps[idx])/settings.steps_per_mm[idx];
+            delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
         }
 #else
-        target_steps[idx] = lround(target[idx]*settings.steps_per_mm[idx]);
+        target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
         block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
         block->step_event_count = max(block->step_event_count, block->steps[idx]);
-        delta_mm = (target_steps[idx] - position_steps[idx])/settings.steps_per_mm[idx];
+        delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
 #endif
         unit_vec[idx] = delta_mm; // Store unit vector numerator
 
@@ -182,8 +182,8 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     // NOTE: This calculation assumes all axes are orthogonal (Cartesian) and works with ABC-axes,
     // if they are also orthogonal/independent. Operates on the absolute value of the unit vector.
     block->millimeters = convert_delta_vector_to_unit_vector(unit_vec);
-    block->acceleration = limit_value_by_axis_maximum(settings.acceleration, unit_vec);
-    block->rapid_rate = limit_value_by_axis_maximum(settings.max_rate, unit_vec);
+    block->acceleration = limit_value_by_axis_maximum(Settings.acceleration, unit_vec);
+    block->rapid_rate = limit_value_by_axis_maximum(Settings.max_rate, unit_vec);
 
     // Store programmed rate.
     if(block->condition & PL_COND_FLAG_RAPID_MOTION)
@@ -255,10 +255,10 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
             else
             {
                 convert_delta_vector_to_unit_vector(junction_unit_vec);
-                float junction_acceleration = limit_value_by_axis_maximum(settings.acceleration, junction_unit_vec);
+                float junction_acceleration = limit_value_by_axis_maximum(Settings.acceleration, junction_unit_vec);
                 float sin_theta_d2 = sqrt(0.5*(1.0-junction_cos_theta)); // Trig half angle identity. Always positive.
 
-                block->max_junction_speed_sqr = max(MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED, (junction_acceleration * settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2));
+                block->max_junction_speed_sqr = max(MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED, (junction_acceleration * Settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2));
             }
         }
     }
@@ -360,13 +360,13 @@ float Planner_ComputeProfileNominalSpeed(Planner_Block_t *block)
 
     if(block->condition & PL_COND_FLAG_RAPID_MOTION)
     {
-        nominal_speed *= (0.01*sys.r_override);
+        nominal_speed *= (0.01*System.r_override);
     }
     else
     {
         if(!(block->condition & PL_COND_FLAG_NO_FEED_OVERRIDE))
         {
-            nominal_speed *= (0.01*sys.f_override);
+            nominal_speed *= (0.01*System.f_override);
         }
         if(nominal_speed > block->rapid_rate)
         {

@@ -38,7 +38,7 @@
 #define FLASH_SECTOR			FLASH_Sector_7
 
 
-void EE_Init(void);
+void EE_Initialize(void);
 
 uint8_t EE_ReadByte(uint16_t VirtAddress);
 void EE_WriteByte(uint16_t VirtAddress, uint8_t Data);

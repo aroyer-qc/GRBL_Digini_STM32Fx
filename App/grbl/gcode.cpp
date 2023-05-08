@@ -63,7 +63,7 @@ Parser_State_t gc_state;
 static Parser_Block_t gc_block;
 
 
-void GC_Init(void)
+void GC_Initialize(void)
 {
     memset(&gc_state, 0, sizeof(Parser_State_t));
 
@@ -191,7 +191,7 @@ uint8_t GC_ExecuteLine(char *line)
             {
             case 7:
                 // Lathe Diameter Mode
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G12;
                     gc_block.modal.lathe_mode = LATHE_DIAMETER_MODE;
@@ -204,7 +204,7 @@ uint8_t GC_ExecuteLine(char *line)
 
             case 8:
                 // Lathe Radius Mode (default)
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G12;
                     gc_block.modal.lathe_mode = LATHE_RADIUS_MODE;
@@ -250,7 +250,7 @@ uint8_t GC_ExecuteLine(char *line)
 
             case 33:
                 // Spindle Synchronized Motion
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G1;
                     gc_block.modal.motion = int_value;
@@ -264,7 +264,7 @@ uint8_t GC_ExecuteLine(char *line)
 
             case 76:
                 // Threading Cycle
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G1;
                     gc_block.modal.motion = int_value;
@@ -278,7 +278,7 @@ uint8_t GC_ExecuteLine(char *line)
 
             case 96:
                 // Constant Surface Speed
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G14;
                     gc_block.modal.spindle_mode = SPINDLE_SURFACE_MODE;
@@ -291,7 +291,7 @@ uint8_t GC_ExecuteLine(char *line)
 
             case 97:
                 // RPM Mode (default)
-                if(settings.flags2 & BITFLAG_LATHE_MODE)
+                if(Settings.flags2 & BITFLAG_LATHE_MODE)
                 {
                     word_bit = MODAL_GROUP_G14;
                     gc_block.modal.spindle_mode = SPINDLE_RPM_MODE;
@@ -1627,7 +1627,7 @@ uint8_t GC_ExecuteLine(char *line)
     Planner_LineData_t *pl_data = &plan_data;
     memset(pl_data, 0, sizeof(Planner_LineData_t)); // Zero pl_data struct
 
-    if((settings.flags2 & BITFLAG_LATHE_MODE) && gc_block.modal.lathe_mode == LATHE_DIAMETER_MODE)
+    if((Settings.flags2 & BITFLAG_LATHE_MODE) && gc_block.modal.lathe_mode == LATHE_DIAMETER_MODE)
     {
         gc_block.values.xyz[X_AXIS] /= 2.0;
     }
@@ -1664,7 +1664,7 @@ uint8_t GC_ExecuteLine(char *line)
     }
 
     // If in laser mode, setup laser power based on current and past parser conditions.
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_LASER_MODE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
     {
         if(!((gc_block.modal.motion == MOTION_MODE_LINEAR) || (gc_block.modal.motion == MOTION_MODE_CW_ARC) || (gc_block.modal.motion == MOTION_MODE_CCW_ARC)))
         {
@@ -1767,9 +1767,9 @@ uint8_t GC_ExecuteLine(char *line)
     gc_state.tool = gc_block.values.t;
 
     // [6. Change tool ]: M6
-    if(change_tool && (settings.tool_change > 0))
+    if(change_tool && (Settings.tool_change > 0))
     {
-        if(sys.is_homed)
+        if(System.is_homed)
         {
             TC_ChangeCurrentTool();
         }
@@ -1778,9 +1778,9 @@ uint8_t GC_ExecuteLine(char *line)
             return STATUS_MACHINE_NOT_HOMED;
         }
     }
-    if(apply_tool && (settings.tool_change == 3))
+    if(apply_tool && (Settings.tool_change == 3))
     {
-        if(sys.is_homed)
+        if(System.is_homed)
         {
             TC_ApplyToolOffset();
         }
@@ -2288,7 +2288,7 @@ uint8_t GC_ExecuteLine(char *line)
 
         if(gc_state.modal.program_flow == PROGRAM_FLOW_PAUSED)
         {
-            if(sys.state != STATE_CHECK_MODE)
+            if(System.state != STATE_CHECK_MODE)
             {
                 System_SetExecStateFlag(EXEC_FEED_HOLD); // Use feed hold for program pause.
                 Protocol_ExecuteRealtime(); // Execute suspend.
@@ -2317,13 +2317,13 @@ uint8_t GC_ExecuteLine(char *line)
 #endif
 
 #ifdef RESTORE_OVERRIDES_AFTER_PROGRAM_END
-            sys.f_override = DEFAULT_FEED_OVERRIDE;
-            sys.r_override = DEFAULT_RAPID_OVERRIDE;
-            sys.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE;
+            System.f_override = DEFAULT_FEED_OVERRIDE;
+            System.r_override = DEFAULT_RAPID_OVERRIDE;
+            System.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE;
 #endif
 
             // Execute coordinate change and spindle/coolant stop.
-            if(sys.state != STATE_CHECK_MODE)
+            if(System.state != STATE_CHECK_MODE)
             {
                 if(!(Settings_ReadCoordData(gc_state.modal.coord_select, gc_state.coord_system)))
                 {
@@ -2335,7 +2335,7 @@ uint8_t GC_ExecuteLine(char *line)
                 Coolant_SetState(COOLANT_DISABLE);
             }
             // Reset tool change - May not be in accordance with LinuxCNC
-            TC_Init();
+            TC_Initialize();
 
             Report_FeedbackMessage(MESSAGE_PROGRAM_END);
         }

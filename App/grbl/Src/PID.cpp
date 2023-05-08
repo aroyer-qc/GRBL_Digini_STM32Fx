@@ -4,7 +4,8 @@
 #define TICK_SECOND     1000
 
 
-extern uint32_t millis(void);
+// todo AR extern uint32_t millis(void);
+uint32_t millis() { return 0; }
 
 
 PID_t *PID_Create(PID_t *pid, float* in, float* out, float* set, float kp, float ki, float kd)

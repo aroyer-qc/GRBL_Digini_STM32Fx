@@ -123,7 +123,7 @@ typedef struct
 /**
   * Initialize the module
   */
-void GrIP_Init(void);
+void GrIP_Initialize(void);
 
 /**
   * Transmit a message over GrIP

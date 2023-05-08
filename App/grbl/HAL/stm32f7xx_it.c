@@ -97,7 +97,7 @@ void ProcessReceive(char c)
 			{
 			case CMD_SAFETY_DOOR: System_SetExecStateFlag(EXEC_SAFETY_DOOR); break; // Set as true
 			case CMD_JOG_CANCEL:
-				if(sys.state & STATE_JOG) { // Block all other states from invoking motion cancel.
+				if(System.state & STATE_JOG) { // Block all other states from invoking motion cancel.
 					System_SetExecStateFlag(EXEC_MOTION_CANCEL);
 				}
 				break;
@@ -132,106 +132,11 @@ void ProcessReceive(char c)
 
 
 /**
-  * @brief  This function handles NMI exception.
-  * @param  None
-  * @retval None
-  */
-void NMI_Handler(void)
-{
-}
-
-
-/**
-  * @brief  This function handles Hard Fault exception.
-  * @param  None
-  * @retval None
-  */
-void HardFault_Handler(void)
-{
-  /* Go to infinite loop when Hard Fault exception occurs */
-  while (1)
-  {
-  }
-}
-
-
-/**
-  * @brief  This function handles Memory Manage exception.
-  * @param  None
-  * @retval None
-  */
-void MemManage_Handler(void)
-{
-  /* Go to infinite loop when Memory Manage exception occurs */
-  while (1)
-  {
-  }
-}
-
-
-/**
-  * @brief  This function handles Bus Fault exception.
-  * @param  None
-  * @retval None
-  */
-void BusFault_Handler(void)
-{
-  /* Go to infinite loop when Bus Fault exception occurs */
-  while (1)
-  {
-  }
-}
-
-
-/**
-  * @brief  This function handles Usage Fault exception.
-  * @param  None
-  * @retval None
-  */
-void UsageFault_Handler(void)
-{
-  /* Go to infinite loop when Usage Fault exception occurs */
-  while (1)
-  {
-  }
-}
-
-
-/**
-  * @brief  This function handles SVCall exception.
-  * @param  None
-  * @retval None
-  */
-void SVC_Handler(void)
-{
-}
-
-
-/**
-  * @brief  This function handles Debug Monitor exception.
-  * @param  None
-  * @retval None
-  */
-void DebugMon_Handler(void)
-{
-}
-
-
-/**
-  * @brief  This function handles PendSVC exception.
-  * @param  None
-  * @retval None
-  */
-void PendSV_Handler(void)
-{
-}
-
-
-/**
   * @brief  This function handles SysTick Handler.
   * @param  None
   * @retval None
   */
+  #if 0
 void SysTick_Handler(void)
 {
 	/*
@@ -243,7 +148,7 @@ void SysTick_Handler(void)
 	if(limits)
     {
 		// X-Y-Z Limit
-		if((DebounceCounterLimits == 0) && (settings.system_flags & BITFLAG_ENABLE_LIMITS))
+		if((DebounceCounterLimits == 0) && (Settings.system_flags & BITFLAG_ENABLE_LIMITS))
         {
 			DebounceCounterLimits = 20;
 			Limit_PinChangeISR();
@@ -309,7 +214,7 @@ void SysTick_Handler(void)
         tim4_cnt_prev = cnt;
     }
 }
-
+#endif
 
 /******************************************************************************/
 /*                 STM32F4xx Peripherals Interrupt Handlers                   */
@@ -323,9 +228,9 @@ void SysTick_Handler(void)
   * @param  None
   * @retval None
   */
+#if 0 // // TODO AR Remove temp
 void TIM1_BRK_TIM9_IRQHandler(void)
 {
-    #if 0 // // TODO AR Remove temp
 	/* TIM9_CH1 */
 	if(TIM_GetITStatus(TIM9, TIM_IT_CC1) != RESET)
     {
@@ -341,25 +246,25 @@ void TIM1_BRK_TIM9_IRQHandler(void)
 
 		TIM_ClearITPendingBit(TIM9, TIM_IT_Update);
 	}
-	#endif
 }
+#endif
 
 
+#if 0 // TODO AR Remove temp
 void TIM3_IRQHandler(void)
 {
-    #if 0 // TODO AR Remove temp
     if(TIM_GetITStatus(TIM3, TIM_IT_CC4) == SET)
     {
         /* Clear TIM3 Capture compare interrupt pending bit */
         TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);
     }
-    #endif
 }
+#endif
 
 
+#if 0 // TODO AR Remove temp
 void TIM4_IRQHandler(void)
 {
-    #if 0 // TODO AR Remove temp
     if(TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
     {
 		// OVF
@@ -368,23 +273,14 @@ void TIM4_IRQHandler(void)
 		Encoder_OvfISR();
 
         // Spindle at zero position
-        if(sys.sync_move && sys.state == STATE_HOLD)
+        if(System.sync_move && System.state == STATE_HOLD)
         {
             MC_LineSyncStart();
         }
 	}
-    #endif
 }
+#endif
 
-
-/**
-  * @brief  This function handles External lines 9 to 5 interrupt request.
-  * @param  None
-  * @retval None
-  */
-void EXTI9_5_IRQHandler(void)
-{
-}
 
 
 /**
@@ -392,9 +288,9 @@ void EXTI9_5_IRQHandler(void)
   * @param  None
   * @retval None
   */
+#if 0 // TODO AR Remove temp
 void USART1_IRQHandler(void)
 {
-    #if 0 // TODO AR Remove temp
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
 		/* Read one byte from the receive data register */
@@ -426,8 +322,8 @@ void USART1_IRQHandler(void)
     {
 		(void)USART_ReceiveData(USART1);
 	}
-	#endif
 }
+#endif
 
 
 /**
@@ -435,9 +331,9 @@ void USART1_IRQHandler(void)
   * @param  None
   * @retval None
   */
+#if 0 // TODO AR Remove temp
 void USART2_IRQHandler(void)
 {
-    #if 0 // TODO AR Remove temp
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET) {
 		/* Read one byte from the receive data register */
 		unsigned char c = (USART_ReceiveData(USART2) & 0xFF);
@@ -463,8 +359,8 @@ void USART2_IRQHandler(void)
 	if(USART_GetFlagStatus(USART2, USART_FLAG_ORE) != RESET) {
 		(void)USART_ReceiveData(USART2);
 	}
-    #endif
 }
+#endif
 
 
 /**
@@ -472,9 +368,9 @@ void USART2_IRQHandler(void)
   * @param  None
   * @retval None
   */
+#if 0 // TODO AR Remove temp
 void USART6_IRQHandler(void)
 {
-    #if 0 // TODO AR Remove temp
 	if(USART_GetITStatus(USART6, USART_IT_RXNE) != RESET) {
 		/* Read one byte from the receive data register */
 		unsigned char c = (USART_ReceiveData(USART6) & 0xFF);
@@ -501,8 +397,8 @@ void USART6_IRQHandler(void)
 	if(USART_GetFlagStatus(USART6, USART_FLAG_ORE) != RESET) {
 		(void)USART_ReceiveData(USART6);
 	}
-    #endif
 }
+#endif
 
 /**
   * @}

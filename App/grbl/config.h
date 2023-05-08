@@ -52,6 +52,48 @@
 // Uncomment for lathe mode
 //#define LATHE_MODE
 
+// this way of defining axis is easier for digini to handle axis display information (only choose one)
+//#define GRBL_MACHINE_USE_AXIS_XY      // Some plasma cutter setup (to be verified)
+//#define GRBL_MACHINE_USE_AXIS_XZ      // Lathe and some plasma cutter
+#define GRBL_MACHINE_USE_AXIS_XYZ       // Milling machine
+//#define GRBL_MACHINE_USE_AXIS_XYZA      // Milling machine with rotary axis
+
+#ifdef GRBL_MACHINE_USE_AXIS_XY
+    #define GRBL_USE_AXIS_Y
+#endif
+
+#ifdef GRBL_MACHINE_USE_AXIS_XZ
+    #define GRBL_USE_AXIS_Z
+#endif
+
+#ifdef GRBL_MACHINE_USE_AXIS_XYZ
+    #define GRBL_USE_AXIS_Y
+    #define GRBL_USE_AXIS_Z
+#endif
+
+#ifdef GRBL_MACHINE_USE_AXIS_XYZA
+    #define GRBL_USE_AXIS_Y
+    #define GRBL_USE_AXIS_Z
+    #define GRBL_USE_AXIS_A
+#endif
+
+//Uncomment to enable.
+//#define GRBL_USE_AXIS_B
+//#define GRBL_USE_LIMIT_A
+//#define GRBL_USE_LIMIT_B
+//#define GRBL_USE_LIMIT_C
+#define GRBL_USE_CONTROL_PROBE
+
+#define GRBL_USE_COOLANT_FLOOD
+// for COOLANT MIST look for ENABLE_M7
+
+// Spindle section
+//#define GRBL_USE_SPINDLE_ENABLE
+#define GRBL_USE_SPINDLE_PWM
+//#define GRBL_USE_SPINDLE_DIRECTION
+
+
+
 
 // Define realtime command special characters. These characters are 'picked-off' directly from the
 // serial read data stream and are not passed to the grbl line execution parser. Select characters

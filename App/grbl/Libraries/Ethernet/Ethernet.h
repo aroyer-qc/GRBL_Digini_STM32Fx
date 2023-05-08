@@ -15,7 +15,7 @@ extern "C" {
 #endif
 
 
-void Ethernet_Init(uint8_t *mac_address, IPAddress_t *local_ip, IPAddress_t *dns_server, IPAddress_t *gateway, IPAddress_t *subnet);
+void Ethernet_Initialize(uint8_t *mac_address, IPAddress_t *local_ip, IPAddress_t *dns_server, IPAddress_t *gateway, IPAddress_t *subnet);
 
 IPAddress_t Ethernet_LocalIP(void);
 IPAddress_t Ethernet_SubnetMask(void);

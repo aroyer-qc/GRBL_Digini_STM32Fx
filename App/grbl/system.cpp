@@ -31,7 +31,7 @@
 #include "System32.h"
 
 
-void System_Init(void)
+void System_Initialize(void)
 {
     IO_PinInit(IO_CONTROL_RESET);
     IO_PinInit(IO_CONTROL_FEED);
@@ -47,11 +47,11 @@ void System_Init(void)
 
 void System_Clear(void)
 {
-    memset(&sys, 0, sizeof(System_t)); // Clear system struct variable.
+    memset(&System, 0, sizeof(System_t)); // Clear system struct variable.
 
-    sys.f_override = DEFAULT_FEED_OVERRIDE;  // Set to 100%
-    sys.r_override = DEFAULT_RAPID_OVERRIDE; // Set to 100%
-    sys.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE; // Set to 100%
+    System.f_override = DEFAULT_FEED_OVERRIDE;  // Set to 100%
+    System.r_override = DEFAULT_RAPID_OVERRIDE; // Set to 100%
+    System.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE; // Set to 100%
 }
 
 
@@ -74,7 +74,7 @@ uint8_t System_GetControlState(void)
                    (IO_GetInputPin(IO_SAFETY_DOOR)   << CONTROL_SAFETY_DOOR_BIT));
 
     // Invert control pins if necessary
-    pin ^= CONTROL_MASK & settings.system_flags;
+    pin ^= CONTROL_MASK & Settings.system_flags;
 
     if(pin)
     {
@@ -189,7 +189,7 @@ uint8_t System_ExecuteLine(char *line)
 
     case 'J': // Jogging
         // Execute only if in IDLE or JOG states.
-        if(sys.state != STATE_IDLE && sys.state != STATE_JOG)
+        if(System.state != STATE_IDLE && System.state != STATE_JOG)
         {
             return STATUS_IDLE_ERROR;
         }
@@ -212,7 +212,7 @@ uint8_t System_ExecuteLine(char *line)
         switch(line[1])
         {
         case '$': // Prints Grbl settings
-            if(sys.state & (STATE_CYCLE | STATE_HOLD))
+            if(System.state & (STATE_CYCLE | STATE_HOLD))
             {
                 return(STATUS_IDLE_ERROR);
             } // Block during cycle. Takes too long to print.
@@ -231,26 +231,26 @@ uint8_t System_ExecuteLine(char *line)
             // Perform reset when toggling off. Check g-code mode should only work if Grbl
             // is idle and ready, regardless of alarm locks. This is mainly to keep things
             // simple and consistent.
-            if(sys.state == STATE_CHECK_MODE )
+            if(System.state == STATE_CHECK_MODE )
             {
                 MC_Reset();
                 Report_FeedbackMessage(MESSAGE_DISABLED);
             }
             else
             {
-                if(sys.state)
+                if(System.state)
                 {
                     // Requires no alarm mode.
                     return STATUS_IDLE_ERROR;
                 }
 
-                sys.state = STATE_CHECK_MODE;
+                System.state = STATE_CHECK_MODE;
                 Report_FeedbackMessage(MESSAGE_ENABLED);
             }
             break;
 
         case 'X': // Disable alarm lock [ALARM]
-            if(sys.state == STATE_ALARM)
+            if(System.state == STATE_ALARM)
             {
                 // Block if safety door is ajar.
                 if(System_CheckSafetyDoorAjar())
@@ -259,7 +259,7 @@ uint8_t System_ExecuteLine(char *line)
                 }
 
                 Report_FeedbackMessage(MESSAGE_ALARM_UNLOCK);
-                sys.state = STATE_IDLE;
+                System.state = STATE_IDLE;
                 Stepper_WakeUp();
                 // Don't run startup script. Prevents stored moves in startup from causing accidents.
             } // Otherwise, no effect.
@@ -272,16 +272,16 @@ uint8_t System_ExecuteLine(char *line)
         {
             // Tool change finished. Continue execution
             System_ClearExecStateFlag(EXEC_TOOL_CHANGE);
-            sys.state = STATE_IDLE;
+            System.state = STATE_IDLE;
 
             // Check if machine is homed
-            if(sys.is_homed)
+            if(System.is_homed)
             {
                 // Change tool with probing
-                if(settings.tool_change == 2)
+                if(Settings.tool_change == 2)
                 {
                     // Check if TLS is valid
-                    if(settings.tls_valid)
+                    if(Settings.tls_valid)
                     {
                         // Probe new tool
                         TC_ProbeTLS();
@@ -291,7 +291,7 @@ uint8_t System_ExecuteLine(char *line)
                         return STATUS_TLS_NOT_SET;
                     }
                 }
-                else if(settings.tool_change == 3)
+                else if(Settings.tool_change == 3)
                 {
                     // Change tool with tool table
                     TC_ApplyToolOffset();
@@ -364,7 +364,7 @@ uint8_t System_ExecuteLine(char *line)
         break;
 
     case 'P':
-        if(sys.is_homed)
+        if(System.is_homed)
         {
             Settings_StoreTlsPosition();
         }
@@ -377,7 +377,7 @@ uint8_t System_ExecuteLine(char *line)
 
     default:
         // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
-        if(!(sys.state == STATE_IDLE || sys.state == STATE_ALARM) )
+        if(!(System.state == STATE_IDLE || System.state == STATE_ALARM) )
         {
             return(STATUS_IDLE_ERROR);
         }
@@ -396,7 +396,7 @@ uint8_t System_ExecuteLine(char *line)
             break;
 
         case 'H': // Perform homing cycle [IDLE/ALARM]
-            if(BIT_IS_FALSE(settings.flags, BITFLAG_HOMING_ENABLE))
+            if(BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
             {
                 return(STATUS_SETTING_DISABLED);
             }
@@ -406,7 +406,7 @@ uint8_t System_ExecuteLine(char *line)
                 return STATUS_CHECK_DOOR;
             }
 
-            sys.state = STATE_HOMING; // Set system state variable
+            System.state = STATE_HOMING; // Set system state variable
 
             if(line[2] == 0)
             {
@@ -447,9 +447,9 @@ uint8_t System_ExecuteLine(char *line)
                 return STATUS_INVALID_STATEMENT;
             }
 
-            if(!sys.abort)    // Execute startup scripts after successful homing.
+            if(!System.abort)    // Execute startup scripts after successful homing.
             {
-                sys.state = STATE_IDLE; // Set to IDLE when complete.
+                System.state = STATE_IDLE; // Set to IDLE when complete.
                 Stepper_Disable(0); // Set steppers to the settings idle state before returning.
 
                 if(line[2] == 0)
@@ -547,7 +547,7 @@ uint8_t System_ExecuteLine(char *line)
             }
             else   // Store startup line [IDLE Only] Prevents motion during ALARM.
             {
-                if(sys.state != STATE_IDLE)
+                if(System.state != STATE_IDLE)
                 {
                     // Store only when idle.
                     return STATUS_IDLE_ERROR;
@@ -616,7 +616,7 @@ void System_FlagWcoChange(void)
 #ifdef FORCE_BUFFER_SYNC_DURING_WCO_CHANGE
     Protocol_BufferSynchronize();
 #endif
-    sys.report_wco_counter = 0;
+    System.report_wco_counter = 0;
 }
 
 
@@ -630,20 +630,20 @@ float System_ConvertAxisSteps2Mpos(const int32_t *steps, const uint8_t idx)
 #ifdef COREXY
     if(idx == X_AXIS)
     {
-        pos = (float)system_convert_corexy_to_x_axis_steps(steps) / settings.steps_per_mm[idx];
+        pos = (float)system_convert_corexy_to_x_axis_steps(steps) / Settings.steps_per_mm[idx];
     }
     else if (idx == Y_AXIS)
     {
-        pos = (float)system_convert_corexy_to_y_axis_steps(steps) / settings.steps_per_mm[idx];
+        pos = (float)system_convert_corexy_to_y_axis_steps(steps) / Settings.steps_per_mm[idx];
     }
     else
     {
-        pos = steps[idx]/settings.steps_per_mm[idx];
+        pos = steps[idx]/Settings.steps_per_mm[idx];
     }
 #else
-    if(settings.steps_per_mm[idx] != 0)
+    if(Settings.steps_per_mm[idx] != 0)
     {
-        pos = steps[idx] / settings.steps_per_mm[idx];
+        pos = steps[idx] / Settings.steps_per_mm[idx];
     }
 
 #endif
@@ -689,23 +689,23 @@ uint8_t System_CheckTravelLimits(float *target)
 #ifdef HOMING_FORCE_SET_ORIGIN
         // When homing forced set origin is enabled, soft limits checks need to account for directionality.
         // NOTE: max_travel is stored as negative
-        if(BIT_IS_TRUE(settings.homing_dir_mask, BIT(idx)))
+        if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
         {
-            if(target[idx] < 0 || target[idx] > -settings.max_travel[idx])
+            if(target[idx] < 0 || target[idx] > -Settings.max_travel[idx])
             {
                 return true;
             }
         }
         else
         {
-            if(target[idx] > 0 || target[idx] < settings.max_travel[idx])
+            if(target[idx] > 0 || target[idx] < Settings.max_travel[idx])
             {
                 return true;
             }
         }
 #else
         // NOTE: max_travel is stored as negative
-        if(target[idx] > 0 || target[idx] < settings.max_travel[idx])
+        if(target[idx] > 0 || target[idx] < Settings.max_travel[idx])
         {
             return true;
         }

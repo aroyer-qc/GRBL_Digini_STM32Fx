@@ -26,7 +26,7 @@
 static ToolTable_t tool_table = {0};
 
 
-void TT_Init(void)
+void TT_Initialize(void)
 {
     for(uint8_t i = 0; i < MAX_TOOL_NR; i++)
     {

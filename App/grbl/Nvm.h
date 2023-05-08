@@ -30,7 +30,7 @@
 #define NVM_SIZE                1024
 
 
-void Nvm_Init(void);
+void Nvm_Initialize(void);
 
 uint8_t Nvm_ReadByte(uint16_t Address);
 void Nvm_WriteByte(uint16_t Address, uint8_t Data);

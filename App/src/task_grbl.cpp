@@ -181,30 +181,30 @@ void ClassTaskGRBL::Run(void)
 
     // --------------------------------------------------------------------------------------------
 
-    TERM_Initialize();         // Init terminal (UART or Virtual)
-    system_init();
-    stepper_init();
-    settings_init();
-    system_reset_position();
+    // TODO AR fix this ERM_Initialize();         // Init terminal (UART or Virtual)
+    System_Initialize();
+    Stepper_Initialize();
+    Settings_Initialize();
+    System_ResetPosition();
 
 #ifdef ETH_IF
     // Initialize W5500
-//argo    Ethernet_Init(MAC, &IP, &MyDns, &GatewayIP, &SubnetMask);
+//argo    Ethernet_Initialize(MAC, &IP, &MyDns, &GatewayIP, &SubnetMask);
 
     // Initialize TCP server
-//argo    ServerTCP_Init(ETH_SOCK, ETH_PORT);
+//argo    ServerTCP_Initialize(ETH_SOCK, ETH_PORT);
 #endif
 
     // Initialize GrIP protocol
-//argo    GrIP_Init();
+//argo    GrIP_Initialize();
 
-    if(bit_istrue(settings.flags, BITFLAG_HOMING_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE))
     {
-        sys.state = STATE_ALARM;
+        System.state = STATE_ALARM;
     }
     else
     {
-        sys.state = STATE_IDLE;
+        System.state = STATE_IDLE;
     }
 
     // Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
@@ -213,14 +213,14 @@ void ClassTaskGRBL::Run(void)
     for(;;)
     {
         // Reset system variables.
-        uint16_t prior_state = sys.state;
-        uint8_t home_state = sys.is_homed;
+        uint16_t prior_state = System.state;
+        uint8_t home_state = System.is_homed;
 
-        system_clear();
-        sys.state = prior_state;
-        sys.is_homed = home_state;
+        System_Clear();
+        System.state = prior_state;
+        System.is_homed = home_state;
 
-        probe_reset();
+        Probe_Reset();
 
         sys_probe_state = 0;
         sys_rt_exec_state = 0;
@@ -229,30 +229,30 @@ void ClassTaskGRBL::Run(void)
         sys_rt_exec_accessory_override = 0;
 
         // Reset Grbl-Advanced primary systems.
-         gc_init();
-        planner_init();
-         mc_init();
-        TC_Init();
+        GC_Initialize();
+        Planner_Initialize();
+        MC_Initialize();
+        TC_Initialize();
 
-        coolant_init();
-        limits_init();
-        probe_init();
-        spindle_init();
-        st_reset();
+        Coolant_Initialize();
+        Limits_Initialize();
+        Probe_Initialize();
+        Spindle_Initialize();
+        Stepper_Reset();
 
         // Sync cleared gcode and planner positions to current system position.
-        plan_sync_position();
-        gc_sync_position();
+        Planner_SyncPosition();
+        GC_SyncPosition();
 
         // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
-        report_init_message();
+        Report_InitializeMessage();
 
         //-- Start Grbl-Advanced main loop. Processes program inputs and executes them. --//
-        protocol_main_loop();
+        Protocol_MainLoop();
         //--------------------------------------------------------------------------------//
 
         // Clear serial buffer after soft reset to prevent undefined behavior
-        //  FifoUsart_Init(); it's DMA... so not needed!! no buffer allocated
+        //  FifoUsart_Initialize(); it's DMA... so not needed!! no buffer allocated
     }
 }
 
@@ -275,39 +275,39 @@ bool GRBL_RealTimeCommand(char RealTimeCommand)
 
     switch(RealTimeCommand)
     {
-        case CMD_RESET:         mc_reset();                                     break; // Call motion control reset routine.
-        case CMD_STATUS_REPORT: system_set_exec_state_flag(EXEC_STATUS_REPORT); break; // Set as true
-        case CMD_CYCLE_START:   system_set_exec_state_flag(EXEC_CYCLE_START);   break; // Set as true
-        case CMD_FEED_HOLD:     system_set_exec_state_flag(EXEC_FEED_HOLD);     break; // Set as true
+        case CMD_RESET:         MC_Reset();                                     break; // Call motion control reset routine.
+        case CMD_STATUS_REPORT: System_SetExecStateFlag(EXEC_STATUS_REPORT); break; // Set as true
+        case CMD_CYCLE_START:   System_SetExecStateFlag(EXEC_CYCLE_START);   break; // Set as true
+        case CMD_FEED_HOLD:     System_SetExecStateFlag(EXEC_FEED_HOLD);     break; // Set as true
 
         // Real-time control characters extended ASCII only.
-        case CMD_SAFETY_DOOR:   system_set_exec_state_flag(EXEC_SAFETY_DOOR);   break; // Set as true
+        case CMD_SAFETY_DOOR:   System_SetExecStateFlag(EXEC_SAFETY_DOOR);   break; // Set as true
         case CMD_JOG_CANCEL:
         {
-            if(sys.state & STATE_JOG)    // Block all other states from invoking motion cancel.
+            if(System.state & STATE_JOG)    // Block all other states from invoking motion cancel.
             {
-                system_set_exec_state_flag(EXEC_MOTION_CANCEL);
+                System_SetExecStateFlag(EXEC_MOTION_CANCEL);
             }
         }
         break;
 
-        case CMD_FEED_OVR_RESET:            system_set_exec_motion_override_flag(EXEC_FEED_OVR_RESET);              break;
-        case CMD_FEED_OVR_COARSE_PLUS:      system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_PLUS);        break;
-        case CMD_FEED_OVR_COARSE_MINUS:     system_set_exec_motion_override_flag(EXEC_FEED_OVR_COARSE_MINUS);       break;
-        case CMD_FEED_OVR_FINE_PLUS:        system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_PLUS);          break;
-        case CMD_FEED_OVR_FINE_MINUS:       system_set_exec_motion_override_flag(EXEC_FEED_OVR_FINE_MINUS);         break;
-        case CMD_RAPID_OVR_RESET:           system_set_exec_motion_override_flag(EXEC_RAPID_OVR_RESET);             break;
-        case CMD_RAPID_OVR_MEDIUM:          system_set_exec_motion_override_flag(EXEC_RAPID_OVR_MEDIUM);            break;
-        case CMD_RAPID_OVR_LOW:             system_set_exec_motion_override_flag(EXEC_RAPID_OVR_LOW);               break;
-        case CMD_SPINDLE_OVR_RESET:         system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_RESET);        break;
-        case CMD_SPINDLE_OVR_COARSE_PLUS:   system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_PLUS);  break;
-        case CMD_SPINDLE_OVR_COARSE_MINUS:  system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
-        case CMD_SPINDLE_OVR_FINE_PLUS:     system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_PLUS);    break;
-        case CMD_SPINDLE_OVR_FINE_MINUS:    system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
-        case CMD_SPINDLE_OVR_STOP:          system_set_exec_accessory_override_flag(EXEC_SPINDLE_OVR_STOP);         break;
-        case CMD_COOLANT_FLOOD_OVR_TOGGLE:  system_set_exec_accessory_override_flag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
+        case CMD_FEED_OVR_RESET:            System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_RESET);              break;
+        case CMD_FEED_OVR_COARSE_PLUS:      System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_PLUS);        break;
+        case CMD_FEED_OVR_COARSE_MINUS:     System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_MINUS);       break;
+        case CMD_FEED_OVR_FINE_PLUS:        System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_PLUS);          break;
+        case CMD_FEED_OVR_FINE_MINUS:       System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_MINUS);         break;
+        case CMD_RAPID_OVR_RESET:           System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_RESET);             break;
+        case CMD_RAPID_OVR_MEDIUM:          System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_MEDIUM);            break;
+        case CMD_RAPID_OVR_LOW:             System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_LOW);               break;
+        case CMD_SPINDLE_OVR_RESET:         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_RESET);        break;
+        case CMD_SPINDLE_OVR_COARSE_PLUS:   System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_PLUS);  break;
+        case CMD_SPINDLE_OVR_COARSE_MINUS:  System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
+        case CMD_SPINDLE_OVR_FINE_PLUS:     System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_PLUS);    break;
+        case CMD_SPINDLE_OVR_FINE_MINUS:    System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
+        case CMD_SPINDLE_OVR_STOP:          System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);         break;
+        case CMD_COOLANT_FLOOD_OVR_TOGGLE:  System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
       #ifdef ENABLE_M7
-        case CMD_COOLANT_MIST_OVR_TOGGLE:   system_set_exec_accessory_override_flag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
+        case CMD_COOLANT_MIST_OVR_TOGGLE:   System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
       #endif
 
         default:

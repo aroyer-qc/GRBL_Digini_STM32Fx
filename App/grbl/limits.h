@@ -26,7 +26,7 @@
 
 
 // Initialize the limits module
-void Limits_Init(void);
+void Limits_Initialize(void);
 
 // Disables hard limits.
 void Limits_Disable(void);

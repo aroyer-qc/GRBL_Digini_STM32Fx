@@ -156,7 +156,7 @@ typedef struct
     float x_pos;                // Current x-position of tool (for G96)
 } System_t;
 
-extern System_t sys;
+extern System_t System;
 
 // NOTE: These position variables may need to be declared as volatiles, if problems arise.
 extern int32_t sys_position[N_AXIS];      // Real-time machine (aka home) position vector in steps.
@@ -170,7 +170,7 @@ extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime execu
 
 
 // Initialize the serial protocol
-void System_Init(void);
+void System_Initialize(void);
 
 void System_Clear(void);
 

@@ -189,7 +189,7 @@ uint8_t ExtractFloat(char *line, int start_idx, char *float_char)
 //  - RateValue: Handles feed rate and current velocity in inches or mm reporting.
 void PrintFloat_CoordValue(float n)
 {
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_REPORT_INCHES))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES))
     {
         Printf_Float(n*INCH_PER_MM,N_DECIMAL_COORDVALUE_INCH);
     }
@@ -202,7 +202,7 @@ void PrintFloat_CoordValue(float n)
 
 void PrintFloat_RateValue(float n)
 {
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_REPORT_INCHES))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES))
     {
         Printf_Float(n*INCH_PER_MM,N_DECIMAL_RATEVALUE_INCH);
     }
@@ -220,7 +220,7 @@ void Delay_sec(float seconds, uint8_t mode)
 
     while(i-- > 0)
     {
-        if(sys.abort)
+        if(System.abort)
         {
             return;
         }
@@ -234,7 +234,7 @@ void Delay_sec(float seconds, uint8_t mode)
             // Execute rt_system() only to avoid nesting suspend loops.
             Protocol_ExecRtSystem();
 
-            if(sys.suspend & SUSPEND_RESTART_RETRACT)
+            if(System.suspend & SUSPEND_RESTART_RETRACT)
             {
                 // Bail, if safety door reopens.
                 return;

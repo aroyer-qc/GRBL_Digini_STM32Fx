@@ -38,7 +38,7 @@ extern "C" {
  * \return None.
  *
  */
-void ComIf_Init(uint8_t interface, uint8_t sock);
+void ComIf_Initialize(uint8_t interface, uint8_t sock);
 
 /** \brief Deinitalize communication interface.
  *

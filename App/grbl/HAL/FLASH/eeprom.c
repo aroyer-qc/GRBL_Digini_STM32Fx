@@ -5,7 +5,7 @@
 static uint8_t EepromData[EEPROM_SIZE];
 
 
-void EE_Init(void)
+void EE_Initialize(void)
 {
 	// TODO AR Remove temp memcpy(EepromData, (uint8_t*)EEPROM_START_ADDRESS, EEPROM_SIZE);
 }

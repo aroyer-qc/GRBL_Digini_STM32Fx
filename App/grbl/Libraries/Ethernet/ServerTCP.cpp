@@ -13,7 +13,7 @@
 static uint8_t mSock = 0;
 static uint16_t mPort = 0;
 
-uint8_t ServerTCP_Init(uint8_t sock, uint16_t port)
+uint8_t ServerTCP_Initialize(uint8_t sock, uint16_t port)
 {
     mSock = sock;
 	mPort = port;
@@ -99,11 +99,11 @@ void ServerTCP_Update(void)
 	if(ret == SnSR_CLOSE_WAIT)
 	{
 		ServerTCP_DeInit(mSock);
-		ServerTCP_Init(mSock, mPort);
+		ServerTCP_Initialize(mSock, mPort);
 	}
 
 	if(ret == SnSR_CLOSED)
     {
-        ServerTCP_Init(mSock, mPort);
+        ServerTCP_Initialize(mSock, mPort);
     }
 }

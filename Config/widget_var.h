@@ -35,6 +35,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #include "grbl_advance.h"
+#include "defaults.h"
 #include "bsp.h"  // for TestInput
 
 //-------------------------------------------------------------------------------------------------
@@ -88,17 +89,17 @@ InputFloat_t InputSpindleMin_Cfg
 {
     EXCHANGE_INPUT_TYPE_FLOAT,
     LBL_MIN_SPINDLE,
-    &settings.rpm_min,                      // Variables to take data from, and deposit after edit
+    &Settings.rpm_min,                      // Variables to take data from, and deposit after edit
     LBL_SPEED_FLOAT,
-    RPM_MIN,                                // Minimum value for edit
-    RPM_MAX,                                // Maximum value for edit to evaluate
+    DEFAULT_SPINDLE_RPM_MIN,               // Minimum value for edit
+    DEFAULT_SPINDLE_RPM_MAX,               // Maximum value for edit to evaluate
 };
 
 InputFloat_t InputSpindleMax_Cfg
 {
     EXCHANGE_INPUT_TYPE_FLOAT,
     LBL_MAX_SPINDLE,
-    &settings.rpm_max,                      // Variables to take data from, and deposit after edit
+    &Settings.rpm_max,                      // Variables to take data from, and deposit after edit
     LBL_SPEED_FLOAT,
     510,                                    // Minimum value for edit
     99999,                                  // Maximum value for edit to evaluate

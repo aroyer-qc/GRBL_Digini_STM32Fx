@@ -102,7 +102,7 @@ void Report_AlarmMessage(uint8_t alarm_code);
 void Report_FeedbackMessage(uint8_t message_code);
 
 // Prints welcome message
-void Report_InitMessage(void);
+void Report_InitializeMessage(void);
 
 // Prints Grbl help and current global settings
 void Report_GrblHelp(void);

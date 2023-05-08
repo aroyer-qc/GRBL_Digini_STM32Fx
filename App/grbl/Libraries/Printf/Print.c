@@ -15,7 +15,7 @@ static char buf[512] = {0};
 static uint16_t buf_idx = 0;
 
 
-void Printf_Init(void)
+void Printf_Initialize(void)
 {
    // TODO AR Usart_Init(STDOUT, BAUD_RATE);
 }

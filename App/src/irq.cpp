@@ -145,19 +145,19 @@ NOS_ISR(EXTI15_10_IRQHandler)
 NOS_ISR(SDMMC1_IRQHandler)
 {
     // Process All SDIO Interrupt Sources
-    pSDIO->SDMMC1_IRQHandler();
+    // TODO AR pSDIO->SDMMC1_IRQHandler();
 }
 
 NOS_ISR(DMA2_Stream3_IRQHandler)
 {
     // Process DMA2 Stream3
-    pSDIO->DMA_Stream3IRQHandler();
+    // TODO AR pSDIO->DMA_Stream3IRQHandler();
 }
 
 NOS_ISR(DMA2_Stream6_IRQHandler)
 {
     // Process DMA2 Stream6
-    pSDIO->DMA_Stream6IRQHandler();
+    // TODO AR pSDIO->DMA_Stream6IRQHandler();
 }
 #endif
 
@@ -289,7 +289,7 @@ NOS_ISR(TIM1_CC_IRQHandler)
 #if (TIM_DRIVER_SUPPORT_TIM2_CFG == DEF_ENABLED)
 NOS_ISR(TIM2_IRQHandler)
 {
-    myTIM_GRBL_LimitsDebounce.CallBack(true);
+   // myTIM_GRBL_LimitsDebounce.CallBack(true);
 }
 #endif
 

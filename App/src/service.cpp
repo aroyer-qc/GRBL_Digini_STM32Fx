@@ -42,7 +42,7 @@ Service type 7 - Return data to override position of a widget (Must be a memory 
 
 #include "lib_digini.h"
 #ifdef DIGINI_USE_GRAFX
-#include "grbl.h"
+#include "grbl_advance.h"
 #include "project_def.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -154,16 +154,16 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
         {
             if(SubOffset < 3)  // linear axis
             {
-                if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+                if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES))
                 {
-                    snprintf(pBuffer, 20, "%c%6lX%8." N_DECIMAL_COORD_INCH_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate * INCH_PER_MM);
+                    snprintf(pBuffer, 20, "%c%6lX%8.4f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate * INCH_PER_MM);
                 }
                 else
                 {
-                    snprintf(pBuffer, 20, "%c%6lX%8." N_DECIMAL_COORD_MM_STR "f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate);
+                    snprintf(pBuffer, 20, "%c%6lX%8.3f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate);
                 }
             }
-            else if(SubOffset <= 5)  // rotationnal axis
+            else if(SubOffset <= 5)  // rotational axis
             {
                 snprintf(pBuffer, 20, "%c%6lX%7.2f%c%2X°", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate, ASCII_SINGLE_FONT_OVERRIDE, FT_ARIAL_16);
             }
@@ -407,7 +407,7 @@ static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubSer
     {
         if(SubService == 0) // Subservice 0 is for word Inch or MM
         {
-            if(bit_istrue(settings.flags, BITFLAG_REPORT_INCHES))
+            if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES))
             {
                 snprintf(pBuffer, 5, "Inch");
             }
@@ -429,7 +429,7 @@ static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubSer
         {
             if((pService = GetServiceStruct(SERVICE_RETURN_TYPE1)) != nullptr)
             {
-                ((ServiceType1_t*)pService)->Data = bit_istrue(settings.flags, BITFLAG_REPORT_INCHES) ? 1 : 0;
+                ((ServiceType1_t*)pService)->Data = BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES) ? 1 : 0;
                 *pServiceState = SERVICE_REFRESH;
             }
         }
@@ -630,12 +630,12 @@ static ServiceReturn_t* SERV_MACH(ServiceEvent_e* pServiceState, uint16_t SubSer
     {
         if(*pServiceState == SERVICE_START)
         {
-            //Machine = settings.Machine;
+            //Machine = Settings.Machine;
         }
         else if(*pServiceState == SERVICE_FINALIZE)
         // Save new settings if different
         {
-            settings.Machine = Machine;
+            Settings.Machine = Machine;
            // write_global_settings();
         }
     }
@@ -933,8 +933,8 @@ static ServiceReturn_t* SERV_SPIN(ServiceEvent_e* pServiceState, uint16_t SubSer
                 switch(SubService)
                 {
                     case 0: ((ServiceType1_t*)pService)->Data = uint32_t(gc_state.spindle_speed); break;
-                    case 1: ((ServiceType1_t*)pService)->Data = uint32_t(settings.rpm_min);       break;
-                    case 2: ((ServiceType1_t*)pService)->Data = uint32_t(settings.rpm_max);       break;
+                    case 1: ((ServiceType1_t*)pService)->Data = uint32_t(Settings.rpm_min);       break;
+                    case 2: ((ServiceType1_t*)pService)->Data = uint32_t(Settings.rpm_max);       break;
                 }
 
                 *pServiceState = SERVICE_REFRESH;
@@ -948,10 +948,10 @@ static ServiceReturn_t* SERV_SPIN(ServiceEvent_e* pServiceState, uint16_t SubSer
                 {
                     switch(SubService)
                     {
-                        case 3: settings.rpm_min -= 10; break;
-                        case 4: settings.rpm_min += 10; break;
-                        case 5: settings.rpm_max -= 10; break;
-                        case 6: settings.rpm_max += 10; break;
+                        case 3: Settings.rpm_min -= 10; break;
+                        case 4: Settings.rpm_min += 10; break;
+                        case 5: Settings.rpm_max -= 10; break;
+                        case 6: Settings.rpm_max += 10; break;
                     }
                 }
             }

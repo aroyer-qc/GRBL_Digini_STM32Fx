@@ -30,7 +30,7 @@ static uint8_t probe_invert_mask;
 
 
 // Probe pin initialization routine.
-void Probe_Init(void)
+void Probe_Initialize(void)
 {
     IO_PinInit(IO_PROBE);
     Probe_ConfigureInvertMask(false); // Initialize invert mask.*/
@@ -51,7 +51,7 @@ void Probe_ConfigureInvertMask(uint8_t is_probe_away)
 {
     probe_invert_mask = 0; // Initialize as zero.
 
-    if(BIT_IS_FALSE(settings.flags, BITFLAG_INVERT_PROBE_PIN))
+    if(BIT_IS_FALSE(Settings.flags, BITFLAG_INVERT_PROBE_PIN))
     {
         probe_invert_mask ^= 1;
     }

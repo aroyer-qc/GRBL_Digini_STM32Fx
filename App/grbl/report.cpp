@@ -215,7 +215,7 @@ void Report_FeedbackMessage(uint8_t message_code)
 
 
 // Welcome message
-void Report_InitMessage(void)
+void Report_InitializeMessage(void)
 {
     //Printf("\r\nGRBL-Advanced %s ['$' for help]\r\n", GRBL_VERSION);
     Printf("\r\nGrbl %s [Advanced Edition | '$' for help]\r\n", GRBL_VERSION);
@@ -233,35 +233,35 @@ void Report_GrblHelp(void)
 
 
 // Grbl global settings print out.
-// NOTE: The numbering scheme here must correlate to storing in settings.c
+// NOTE: The numbering scheme here must correlate to storing in Settings.c
 void Report_GrblSettings(void)
 {
     // Print Grbl settings.
-    report_util_uint8_setting(0, settings.system_flags);
-    report_util_uint8_setting(1, settings.stepper_idle_lock_time);
-    report_util_uint8_setting(2, settings.step_invert_mask);
-    report_util_uint8_setting(3, settings.dir_invert_mask);
-    report_util_uint8_setting(4, BIT_IS_TRUE(settings.flags, BITFLAG_INVERT_ST_ENABLE));
-    report_util_uint8_setting(5, BIT_IS_TRUE(settings.flags, BITFLAG_INVERT_LIMIT_PINS));
-    report_util_uint8_setting(6, BIT_IS_TRUE(settings.flags, BITFLAG_INVERT_PROBE_PIN));
-    report_util_uint8_setting(10, settings.status_report_mask);
-    report_util_float_setting(11, settings.junction_deviation, N_DECIMAL_SETTINGVALUE);
-    report_util_float_setting(12, settings.arc_tolerance, N_DECIMAL_SETTINGVALUE);
-    report_util_uint8_setting(13, BIT_IS_TRUE(settings.flags, BITFLAG_REPORT_INCHES));
-    report_util_uint8_setting(14, settings.tool_change);
-    report_util_uint8_setting(20, BIT_IS_TRUE(settings.flags, BITFLAG_SOFT_LIMIT_ENABLE));
-    report_util_uint8_setting(21, BIT_IS_TRUE(settings.flags, BITFLAG_HARD_LIMIT_ENABLE));
-    report_util_uint8_setting(22, BIT_IS_TRUE(settings.flags, BITFLAG_HOMING_ENABLE));
-    report_util_uint8_setting(23, settings.homing_dir_mask);
-    report_util_float_setting(24, settings.homing_feed_rate, N_DECIMAL_SETTINGVALUE);
-    report_util_float_setting(25, settings.homing_seek_rate, N_DECIMAL_SETTINGVALUE);
-    report_util_uint8_setting(26, settings.homing_debounce_delay);
-    report_util_float_setting(27, settings.homing_pulloff, N_DECIMAL_SETTINGVALUE);
-    report_util_float_setting(30, settings.rpm_max, N_DECIMAL_RPMVALUE);
-    report_util_float_setting(31, settings.rpm_min, N_DECIMAL_RPMVALUE);
+    report_util_uint8_setting(0, Settings.system_flags);
+    report_util_uint8_setting(1, Settings.stepper_idle_lock_time);
+    report_util_uint8_setting(2, Settings.step_invert_mask);
+    report_util_uint8_setting(3, Settings.dir_invert_mask);
+    report_util_uint8_setting(4, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_ST_ENABLE));
+    report_util_uint8_setting(5, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_LIMIT_PINS));
+    report_util_uint8_setting(6, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_PROBE_PIN));
+    report_util_uint8_setting(10, Settings.status_report_mask);
+    report_util_float_setting(11, Settings.junction_deviation, N_DECIMAL_SETTINGVALUE);
+    report_util_float_setting(12, Settings.arc_tolerance, N_DECIMAL_SETTINGVALUE);
+    report_util_uint8_setting(13, BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES));
+    report_util_uint8_setting(14, Settings.tool_change);
+    report_util_uint8_setting(20, BIT_IS_TRUE(Settings.flags, BITFLAG_SOFT_LIMIT_ENABLE));
+    report_util_uint8_setting(21, BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE));
+    report_util_uint8_setting(22, BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE));
+    report_util_uint8_setting(23, Settings.homing_dir_mask);
+    report_util_float_setting(24, Settings.homing_feed_rate, N_DECIMAL_SETTINGVALUE);
+    report_util_float_setting(25, Settings.homing_seek_rate, N_DECIMAL_SETTINGVALUE);
+    report_util_uint8_setting(26, Settings.homing_debounce_delay);
+    report_util_float_setting(27, Settings.homing_pulloff, N_DECIMAL_SETTINGVALUE);
+    report_util_float_setting(30, Settings.rpm_max, N_DECIMAL_RPMVALUE);
+    report_util_float_setting(31, Settings.rpm_min, N_DECIMAL_RPMVALUE);
 
-    report_util_uint8_setting(32, BIT_IS_TRUE(settings.flags,BITFLAG_LASER_MODE));
-    report_util_uint8_setting(33, BIT_IS_TRUE(settings.flags2,BITFLAG_LATHE_MODE));
+    report_util_uint8_setting(32, BIT_IS_TRUE(Settings.flags,BITFLAG_LASER_MODE));
+    report_util_uint8_setting(33, BIT_IS_TRUE(Settings.flags2,BITFLAG_LATHE_MODE));
 
     Delay_ms(5);
 
@@ -276,23 +276,23 @@ void Report_GrblSettings(void)
             switch(set_idx)
             {
             case 0:
-                report_util_float_setting(val+idx,settings.steps_per_mm[idx],N_DECIMAL_SETTINGVALUE);
+                report_util_float_setting(val+idx,Settings.steps_per_mm[idx],N_DECIMAL_SETTINGVALUE);
                 break;
 
             case 1:
-                report_util_float_setting(val+idx,settings.max_rate[idx],N_DECIMAL_SETTINGVALUE);
+                report_util_float_setting(val+idx,Settings.max_rate[idx],N_DECIMAL_SETTINGVALUE);
                 break;
 
             case 2:
-                report_util_float_setting(val+idx,settings.acceleration[idx]/(60*60),N_DECIMAL_SETTINGVALUE);
+                report_util_float_setting(val+idx,Settings.acceleration[idx]/(60*60),N_DECIMAL_SETTINGVALUE);
                 break;
 
             case 3:
-                report_util_float_setting(val+idx,-settings.max_travel[idx],N_DECIMAL_SETTINGVALUE);
+                report_util_float_setting(val+idx,-Settings.max_travel[idx],N_DECIMAL_SETTINGVALUE);
                 break;
 
             case 4:
-                report_util_float_setting(val+idx,settings.backlash[idx],N_DECIMAL_SETTINGVALUE);
+                report_util_float_setting(val+idx,Settings.backlash[idx],N_DECIMAL_SETTINGVALUE);
                 break;
 
             default:
@@ -318,7 +318,7 @@ void Report_ProbeParams(void)
     System_ConvertArraySteps2Mpos(print_position, sys_probe_position);
     Report_AxisValue(print_position);
     Putc(':');
-    Printf("%d", sys.probe_succeeded);
+    Printf("%d", System.probe_succeeded);
     report_util_feedback_line_feed();
 }
 
@@ -330,7 +330,7 @@ void Report_TLSParams(void)
 
     // Report in terms of machine position.
     Printf("[TLS:");
-    System_ConvertArraySteps2Mpos(print_position, settings.tls_position);
+    System_ConvertArraySteps2Mpos(print_position, Settings.tls_position);
 
     for(idx = 0; idx < 3; idx++)
     {
@@ -343,7 +343,7 @@ void Report_TLSParams(void)
     }
 
     Putc(':');
-    Printf("%d", settings.tls_valid);
+    Printf("%d", Settings.tls_valid);
     report_util_feedback_line_feed();
 }
 
@@ -527,7 +527,7 @@ void Report_GCodeModes(void)
 #endif
 
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    if(sys.override_ctrl == OVERRIDE_PARKING_MOTION)
+    if(System.override_ctrl == OVERRIDE_PARKING_MOTION)
     {
         report_util_gcode_modes_M();
         Printf("%d", 56);
@@ -677,7 +677,7 @@ void Report_RealtimeStatus(void)
     // Report current machine state and sub-states
     Putc('<');
 
-    switch(sys.state)
+    switch(System.state)
     {
     case STATE_IDLE:
         Printf("Idle");
@@ -688,11 +688,11 @@ void Report_RealtimeStatus(void)
         break;
 
     case STATE_HOLD:
-        if(!(sys.suspend & SUSPEND_JOG_CANCEL))
+        if(!(System.suspend & SUSPEND_JOG_CANCEL))
         {
             Printf("Hold:");
 
-            if(sys.suspend & SUSPEND_HOLD_COMPLETE)
+            if(System.suspend & SUSPEND_HOLD_COMPLETE)
             {
                 Putc('0');
             } // Ready to resume
@@ -717,15 +717,15 @@ void Report_RealtimeStatus(void)
         break;
     case STATE_SAFETY_DOOR:
         Printf("Door:");
-        if (sys.suspend & SUSPEND_INITIATE_RESTORE)
+        if (System.suspend & SUSPEND_INITIATE_RESTORE)
         {
             Putc('3'); // Restoring
         }
         else
         {
-            if(sys.suspend & SUSPEND_RETRACT_COMPLETE)
+            if(System.suspend & SUSPEND_RETRACT_COMPLETE)
             {
-                if(sys.suspend & SUSPEND_SAFETY_DOOR_AJAR)
+                if(System.suspend & SUSPEND_SAFETY_DOOR_AJAR)
                 {
                     Putc('1'); // Door ajar
                 }
@@ -758,7 +758,7 @@ void Report_RealtimeStatus(void)
     }
 
     float wco[N_AXIS];
-    if(BIT_IS_FALSE(settings.status_report_mask,BITFLAG_RT_STATUS_POSITION_TYPE) || (sys.report_wco_counter == 0) )
+    if(BIT_IS_FALSE(Settings.status_report_mask,BITFLAG_RT_STATUS_POSITION_TYPE) || (System.report_wco_counter == 0) )
     {
         for (idx = 0; idx < N_AXIS; idx++)
         {
@@ -767,7 +767,7 @@ void Report_RealtimeStatus(void)
 
             wco[idx] += gc_state.tool_length_offset[idx];
 
-            if(BIT_IS_FALSE(settings.status_report_mask, BITFLAG_RT_STATUS_POSITION_TYPE))
+            if(BIT_IS_FALSE(Settings.status_report_mask, BITFLAG_RT_STATUS_POSITION_TYPE))
             {
                 print_position[idx] -= wco[idx];
             }
@@ -775,7 +775,7 @@ void Report_RealtimeStatus(void)
     }
 
     // Report machine position
-    if(BIT_IS_TRUE(settings.status_report_mask, BITFLAG_RT_STATUS_POSITION_TYPE))
+    if(BIT_IS_TRUE(Settings.status_report_mask, BITFLAG_RT_STATUS_POSITION_TYPE))
     {
         Printf("|MPos:");
     }
@@ -788,7 +788,7 @@ void Report_RealtimeStatus(void)
 
     // Returns planner and serial read buffer states.
 #ifdef REPORT_FIELD_BUFFER_STATE
-    if(BIT_IS_TRUE(settings.status_report_mask, BITFLAG_RT_STATUS_BUFFER_STATE))
+    if(BIT_IS_TRUE(Settings.status_report_mask, BITFLAG_RT_STATUS_BUFFER_STATE))
     {
         Printf("|Bf:");
         Printf("%d", Planner_GetBlockBufferAvailable());
@@ -817,7 +817,7 @@ void Report_RealtimeStatus(void)
     Printf("|FS:");
     PrintFloat_RateValue(Stepper_GetRealtimeRate());
     Putc(',');
-    Printf_Float(sys.spindle_speed, N_DECIMAL_RPMVALUE);
+    Printf_Float(System.spindle_speed, N_DECIMAL_RPMVALUE);
 #endif
 
 #ifdef REPORT_FIELD_PIN_STATE
@@ -872,24 +872,24 @@ void Report_RealtimeStatus(void)
 #endif
 
 #ifdef REPORT_FIELD_WORK_COORD_OFFSET
-    if(sys.report_wco_counter > 0)
+    if(System.report_wco_counter > 0)
     {
-        sys.report_wco_counter--;
+        System.report_wco_counter--;
     }
     else
     {
-        if(sys.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+        if(System.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
         {
-            sys.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
+            System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
         }
         else
         {
-            sys.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT-1);
+            System.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT-1);
         }
 
-        if(sys.report_ovr_counter == 0)
+        if(System.report_ovr_counter == 0)
         {
-            sys.report_ovr_counter = 1;
+            System.report_ovr_counter = 1;
         } // Set override on next report.
 
         Printf("|WCO:");
@@ -898,27 +898,27 @@ void Report_RealtimeStatus(void)
 #endif
 
 #ifdef REPORT_FIELD_OVERRIDES
-    if(sys.report_ovr_counter > 0)
+    if(System.report_ovr_counter > 0)
     {
-        sys.report_ovr_counter--;
+        System.report_ovr_counter--;
     }
     else
     {
-        if(sys.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+        if(System.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
         {
-            sys.report_ovr_counter = (REPORT_OVR_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
+            System.report_ovr_counter = (REPORT_OVR_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
         }
         else
         {
-            sys.report_ovr_counter = (REPORT_OVR_REFRESH_IDLE_COUNT-1);
+            System.report_ovr_counter = (REPORT_OVR_REFRESH_IDLE_COUNT-1);
         }
 
         Printf("|Ov:");
-        Printf("%d", sys.f_override);
+        Printf("%d", System.f_override);
         Putc(',');
-        Printf("%d", sys.r_override);
+        Printf("%d", System.r_override);
         Putc(',');
-        Printf("%d", sys.spindle_speed_ovr);
+        Printf("%d", System.spindle_speed_ovr);
 
         uint8_t sp_state = Spindle_GetState();
         uint8_t cl_state = Coolant_GetState();

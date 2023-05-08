@@ -29,7 +29,7 @@
 #define PROBE_ACTIVE        1 // Actively watching the input pin.
 
 // Probe pin initialization routine.
-void Probe_Init(void);
+void Probe_Initialize(void);
 
 void Probe_Reset(void);
 

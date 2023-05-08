@@ -9,9 +9,9 @@
 IPAddress_t _dnsServerAddress = {{0, 0, 0, 0}};
 
 
-void Ethernet_Init(uint8_t *mac, IPAddress_t *local_ip, IPAddress_t *dns_server, IPAddress_t *gateway, IPAddress_t *subnet)
+void Ethernet_Initialize(uint8_t *mac, IPAddress_t *local_ip, IPAddress_t *dns_server, IPAddress_t *gateway, IPAddress_t *subnet)
 {
-    W5500_Init();
+    W5500_Initialize();
     W5500_SetMACAddress(mac);
     W5500_SetIPAddress(local_ip->IP);
     W5500_SetGatewayIp(gateway->IP);

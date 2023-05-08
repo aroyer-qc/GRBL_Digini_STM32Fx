@@ -40,7 +40,7 @@ static int32_t toolReferenz = 0;
 static float tc_pos[N_AXIS] = {0};
 
 
-void TC_Init(void)
+void TC_Initialize(void)
 {
     isFirstTC = 1;
     toolOffset = 0;
@@ -63,7 +63,7 @@ void TC_ChangeCurrentTool(void)
     float position[N_AXIS] = {0.0};
 
 
-    if(sys.state == STATE_CHECK_MODE)
+    if(System.state == STATE_CHECK_MODE)
     {
         return;
     }
@@ -93,11 +93,11 @@ void TC_ChangeCurrentTool(void)
     Protocol_BufferSynchronize();
 
     // Wait until move is finished
-    while(sys.state != STATE_IDLE)
+    while(System.state != STATE_IDLE)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(sys.abort)
+        if(System.abort)
         {
             // Bail, if system abort.
             return;
@@ -105,7 +105,7 @@ void TC_ChangeCurrentTool(void)
     }
 
 
-    sys.state = STATE_TOOL_CHANGE;
+    System.state = STATE_TOOL_CHANGE;
 
     GC_SyncPosition();
 }
@@ -118,13 +118,13 @@ void TC_ProbeTLS(void)
     uint8_t flags = 0;
 
 
-    if(sys.state == STATE_CHECK_MODE || settings.tls_valid == 0)
+    if(System.state == STATE_CHECK_MODE || Settings.tls_valid == 0)
     {
         return;
     }
 
     // Move to XY position of TLS
-    System_ConvertArraySteps2Mpos(position, settings.tls_position);
+    System_ConvertArraySteps2Mpos(position, Settings.tls_position);
     position[TOOL_LENGTH_OFFSET_AXIS] = 0.0;
 
     // Set-up planer
@@ -138,7 +138,7 @@ void TC_ProbeTLS(void)
     MC_Line(position, &pl_data);
 
     // Move down with offset (for tool)
-    position[TOOL_LENGTH_OFFSET_AXIS] = (settings.tls_position[TOOL_LENGTH_OFFSET_AXIS] / settings.steps_per_mm[TOOL_LENGTH_OFFSET_AXIS]) + TOOL_SENSOR_OFFSET;
+    position[TOOL_LENGTH_OFFSET_AXIS] = (Settings.tls_position[TOOL_LENGTH_OFFSET_AXIS] / Settings.steps_per_mm[TOOL_LENGTH_OFFSET_AXIS]) + TOOL_SENSOR_OFFSET;
     MC_Line(position, &pl_data);
 
     // Wait until queue is processed
@@ -188,7 +188,7 @@ void TC_ProbeTLS(void)
 
         // Apply offset as dynamic tool length offset
         gc_state.modal.tool_length = TOOL_LENGTH_OFFSET_ENABLE_DYNAMIC;
-        gc_state.tool_length_offset[TOOL_LENGTH_OFFSET_AXIS] = toolOffset / settings.steps_per_mm[TOOL_LENGTH_OFFSET_AXIS];
+        gc_state.tool_length_offset[TOOL_LENGTH_OFFSET_AXIS] = toolOffset / Settings.steps_per_mm[TOOL_LENGTH_OFFSET_AXIS];
     }
 
     Delay_ms(5);

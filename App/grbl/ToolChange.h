@@ -25,7 +25,7 @@
 #include <stdint.h>
 
 
-void TC_Init(void);
+void TC_Initialize(void);
 void TC_ChangeCurrentTool(void);
 void TC_ProbeTLS(void);
 void TC_ApplyToolOffset(void);

@@ -37,7 +37,7 @@
 #define HOMING_CYCLE_B                  BIT(B_AXIS)
 
 
-void MC_Init(void);
+void MC_Initialize(void);
 
 void MC_SyncBacklashPosition(void);
 

@@ -41,7 +41,7 @@
 #endif
 
 
-void Limits_Init(void)
+void Limits_Initialize(void)
 {
     IO_PinInit(IO_LIMIT_X);
   #if !defined(LATHE_MODE)
@@ -59,9 +59,9 @@ void Limits_Init(void)
 #endif
 
     // TODO: Hard limits via interrupt
-    if(BIT_IS_TRUE(settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
     {
-        settings.system_flags |= BITFLAG_ENABLE_LIMITS;
+        Settings.system_flags |= BITFLAG_ENABLE_LIMITS;
     }
     else
     {
@@ -73,7 +73,7 @@ void Limits_Init(void)
 // Disables hard limits.
 void Limits_Disable(void)
 {
-    settings.system_flags &= ~BITFLAG_ENABLE_LIMITS;
+    Settings.system_flags &= ~BITFLAG_ENABLE_LIMITS;
 }
 
 
@@ -97,7 +97,7 @@ uint8_t Limits_GetState(void)
     limit_state |= (IO_GetOutputPin(GPIOC, GPIO_PIN_6) << Z2_LIMIT_BIT);
 */
 
-    if(BIT_IS_FALSE(settings.flags, BITFLAG_INVERT_LIMIT_PINS))
+    if(BIT_IS_FALSE(Settings.flags, BITFLAG_INVERT_LIMIT_PINS))
     {
         limit_state ^= LIMIT_MASK;
     }
@@ -129,11 +129,11 @@ void Limit_PinChangeISR(void) // DEFAULT: Limit pin change interrupt process.
     // moves in the planner and serial buffers are all cleared and newly sent blocks will be
     // locked out until a homing cycle or a kill lock command. Allows the user to disable the hard
     // limit setting if their limits are constantly triggering after a reset and move their axes.
-    if(sys.state != STATE_ALARM)
+    if(System.state != STATE_ALARM)
     {
         if(!(sys_rt_exec_alarm))
         {
-            if((settings.system_flags & BITFLAG_FORCE_HARD_LIMIT_CHECK) !=0)
+            if((Settings.system_flags & BITFLAG_FORCE_HARD_LIMIT_CHECK) !=0)
             {
                 uint8_t lim = Limits_GetState();
 
@@ -163,7 +163,7 @@ void Limit_PinChangeISR(void) // DEFAULT: Limit pin change interrupt process.
 // TODO: Move limit pin-specific calls to a general function for portability.
 void Limits_GoHome(uint8_t cycle_mask)
 {
-    if(sys.abort)
+    if(System.abort)
     {
         // Block if system reset has been issued.
         return;
@@ -197,14 +197,14 @@ void Limits_GoHome(uint8_t cycle_mask)
         if(BIT_IS_TRUE(cycle_mask, BIT(idx)))
         {
             // Set target based on max_travel setting. Ensure homing switches engaged with search scalar.
-            // NOTE: settings.max_travel[] is stored as a negative value.
-            max_travel = max(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*settings.max_travel[idx]);
+            // NOTE: Settings.max_travel[] is stored as a negative value.
+            max_travel = max(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*Settings.max_travel[idx]);
         }
     }
 
     // Set search mode with approach at seek rate to quickly engage the specified cycle_mask limit switches.
     bool approach = true;
-    float homing_rate = settings.homing_seek_rate;
+    float homing_rate = Settings.homing_seek_rate;
 
     uint8_t limit_state, axislock, n_active_axis;
     do
@@ -241,7 +241,7 @@ void Limits_GoHome(uint8_t cycle_mask)
 #endif
                 // Set target direction based on cycle mask and homing cycle approach state.
                 // NOTE: This happens to compile smaller than any other implementation tried.
-                if(BIT_IS_TRUE(settings.homing_dir_mask, BIT(idx)))
+                if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
                 {
                     if (approach)
                     {
@@ -270,13 +270,13 @@ void Limits_GoHome(uint8_t cycle_mask)
         }
 
         homing_rate *= sqrt(n_active_axis); // [sqrt(N_AXIS)] Adjust so individual axes all move at homing rate.
-        sys.homing_axis_lock = axislock;
+        System.homing_axis_lock = axislock;
 
         // Perform homing cycle. Planner buffer should be empty, as required to initiate the homing cycle.
         pl_data->feed_rate = homing_rate; // Set current homing rate.
         Planner_BufferLine(target, pl_data); // Bypass mc_line(). Directly plan homing motion.
 
-        sys.step_control = STEP_CONTROL_EXECUTE_SYS_MOTION; // Set to execute homing motion and clear existing flags.
+        System.step_control = STEP_CONTROL_EXECUTE_SYS_MOTION; // Set to execute homing motion and clear existing flags.
         Stepper_PrepareBuffer(); // Prep and fill segment buffer from newly planned block.
         Stepper_WakeUp(); // Initiate motion
 
@@ -308,7 +308,7 @@ void Limits_GoHome(uint8_t cycle_mask)
                     }
                 }
 
-                sys.homing_axis_lock = axislock;
+                System.homing_axis_lock = axislock;
             }
 
             Stepper_PrepareBuffer(); // Check and prep segment buffer. NOTE: Should take no longer than 200us.
@@ -357,7 +357,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         while(0x3F & axislock);
 
         Stepper_Reset(); // Immediately force kill steppers and reset step segment buffer.
-        Delay_ms(settings.homing_debounce_delay); // Delay to allow transient dynamics to dissipate.
+        Delay_ms(Settings.homing_debounce_delay); // Delay to allow transient dynamics to dissipate.
 
         // Reverse direction and reset homing rate for locate cycle(s).
         approach = !approach;
@@ -365,13 +365,13 @@ void Limits_GoHome(uint8_t cycle_mask)
         // After first cycle, homing enters locating phase. Shorten search to pull-off distance.
         if(approach)
         {
-            max_travel = settings.homing_pulloff*HOMING_AXIS_LOCATE_SCALAR;
-            homing_rate = settings.homing_feed_rate;
+            max_travel = Settings.homing_pulloff*HOMING_AXIS_LOCATE_SCALAR;
+            homing_rate = Settings.homing_feed_rate;
         }
         else
         {
-            max_travel = settings.homing_pulloff;
-            homing_rate = settings.homing_seek_rate;
+            max_travel = Settings.homing_pulloff;
+            homing_rate = Settings.homing_seek_rate;
         }
 
     }
@@ -387,19 +387,19 @@ void Limits_GoHome(uint8_t cycle_mask)
     // Set machine positions for homed limit switches. Don't update non-homed axes.
     for(idx = 0; idx < N_AXIS; idx++)
     {
-        // NOTE: settings.max_travel[] is stored as a negative value.
+        // NOTE: Settings.max_travel[] is stored as a negative value.
         if(cycle_mask & BIT(idx))
         {
 #ifdef HOMING_FORCE_SET_ORIGIN
             set_axis_position = 0;
 #else
-            if(BIT_IS_TRUE(settings.homing_dir_mask, BIT(idx)))
+            if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
             {
-                set_axis_position = lround((settings.max_travel[idx]+settings.homing_pulloff)*settings.steps_per_mm[idx]);
+                set_axis_position = lround((Settings.max_travel[idx]+Settings.homing_pulloff)*Settings.steps_per_mm[idx]);
             }
             else
             {
-                set_axis_position = lround(-settings.homing_pulloff*settings.steps_per_mm[idx]);
+                set_axis_position = lround(-Settings.homing_pulloff*Settings.steps_per_mm[idx]);
             }
 #endif
 
@@ -428,10 +428,10 @@ void Limits_GoHome(uint8_t cycle_mask)
     }
 
     // Necessary for backlash compensation
-    MC_Init();
+    MC_Initialize();
 
-    sys.step_control = STEP_CONTROL_NORMAL_OP; // Return step control to normal operation.
-    sys.is_homed = 1;   // Machine is homed and knows its position
+    System.step_control = STEP_CONTROL_NORMAL_OP; // Return step control to normal operation.
+    System.is_homed = 1;   // Machine is homed and knows its position
 }
 
 
@@ -442,24 +442,24 @@ void Limits_SoftCheck(float *target)
 {
     if(System_CheckTravelLimits(target))
     {
-        sys.soft_limit = true;
+        System.soft_limit = true;
 
         // Force feed hold if cycle is active. All buffered blocks are guaranteed to be within
         // workspace volume so just come to a controlled stop so position is not lost. When complete
         // enter alarm mode.
-        if(sys.state == STATE_CYCLE)
+        if(System.state == STATE_CYCLE)
         {
             System_SetExecStateFlag(EXEC_FEED_HOLD);
             do
             {
                 Protocol_ExecuteRealtime();
 
-                if(sys.abort)
+                if(System.abort)
                 {
                     return;
                 }
             }
-            while(sys.state != STATE_IDLE);
+            while(System.state != STATE_IDLE);
         }
 
         MC_Reset(); // Issue system reset and ensure spindle and coolant are shutdown.

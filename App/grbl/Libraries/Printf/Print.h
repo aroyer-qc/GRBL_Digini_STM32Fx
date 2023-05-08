@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 
-void Printf_Init(void);
+void Printf_Initialize(void);
 int Printf(const char *str, ...);
 void Printf_Float(float n, uint8_t decimal_places);
 int8_t Getc(char *c);

@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 
-void M24C0X_Init(void);
+void M24C0X_Initialize(void);
 
 uint8_t M24C0X_ReadByte(uint16_t addr);
 uint8_t M24C0X_WriteByte(uint16_t addr, uint8_t data);
