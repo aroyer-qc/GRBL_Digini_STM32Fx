@@ -4,7 +4,7 @@
 
   Copyright (c) 2012-2016 Sungeun K. Jeon for Gnea Research LLC
   Copyright (c) 2009-2011 Simen Svale Skogsrud
-  Copyright (c)	2017 Patrick F.
+  Copyright (c) 2017 Patrick F.
 
   Grbl-Advanced is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -19,26 +19,28 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef LIMITS_H
+#define LIMITS_H
 
-#ifndef limits_h
-#define limits_h
+#include <stdint.h>
 
 
 // Initialize the limits module
-void limits_init();
+void Limits_Init(void);
 
 // Disables hard limits.
-void limits_disable();
+void Limits_Disable(void);
 
 // Returns limit state as a bit-wise uint8 variable.
-uint8_t limits_get_state();
+uint8_t Limits_GetState(void);
 
-void limit_pin_changeISR(void);
+void Limit_PinChangeISR(void);
 
 // Perform one portion of the homing cycle based on the input settings.
-void limits_go_home(uint8_t cycle_mask);
+void Limits_GoHome(uint8_t cycle_mask);
 
 // Check for soft limit violations
-void limits_soft_check(float *target);
+void Limits_SoftCheck(float *target);
 
-#endif
+
+#endif // LIMITS_H

@@ -3,7 +3,7 @@
   Part of Grbl-Advanced
 
   Copyright (c) 2014-2016 Sungeun K. Jeon for Gnea Research LLC
-  Copyright (c)	2017 Patrick F.
+  Copyright (c) 2017 Patrick F.
 
   Grbl-Advanced is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -18,52 +18,66 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-#include "grbl.h"
+#include "lib_digini.h"
+#include <string.h>
+#include "Probe.h"
+#include "Settings.h"
+#include "System.h"
 
 
 // Inverts the probe pin state depending on user settings and probing cycle mode.
-uint8_t probe_invert_mask;
+static uint8_t probe_invert_mask;
 
 
 // Probe pin initialization routine.
-void probe_init()
+void Probe_Init(void)
 {
-	probe_configure_invert_mask(false); // Initialize invert mask.*/
+    IO_PinInit(IO_PROBE);
+    Probe_ConfigureInvertMask(false); // Initialize invert mask.*/
 }
 
 
-void probe_reset()
+void Probe_Reset(void)
 {
-	// Clear probe position.
-	memset(sys_probe_position, 0 , sizeof(sys_probe_position));
+    // Clear probe position.
+    memset(sys_probe_position, 0 , sizeof(sys_probe_position));
 }
 
 
 // Called by probe_init() and the mc_probe() routines. Sets up the probe pin invert mask to
 // appropriately set the pin logic according to setting for normal-high/normal-low operation
 // and the probing cycle modes for toward-workpiece/away-from-workpiece.
-void probe_configure_invert_mask(uint8_t is_probe_away)
+void Probe_ConfigureInvertMask(uint8_t is_probe_away)
 {
-	probe_invert_mask = 0; // Initialize as zero.
+    probe_invert_mask = 0; // Initialize as zero.
 
-	if(bit_isfalse(settings.flags, BITFLAG_INVERT_PROBE_PIN)) { probe_invert_mask ^= PROBE_MASK; }
-	if(is_probe_away) { probe_invert_mask ^= PROBE_MASK; }
+    if(BIT_IS_FALSE(settings.flags, BITFLAG_INVERT_PROBE_PIN))
+    {
+        probe_invert_mask ^= 1;
+    }
+    if(is_probe_away)
+    {
+        probe_invert_mask ^= 1;
+    }
 }
 
 
 // Returns the probe pin state. Triggered = true. Called by gcode parser and probe state monitor.
-uint8_t probe_get_state() { return (IO_GetInputPin(IO_PROBE) ^ probe_invert_mask); }
+uint8_t Probe_GetState(void)
+{
+    return (IO_GetOutputPin(IO_PROBE) ^ probe_invert_mask);
+}
 
 
 // Monitors probe pin state and records the system position when detected. Called by the
 // stepper ISR per ISR tick.
 // NOTE: This function must be extremely efficient as to not bog down the stepper ISR.
-void probe_state_monitor()
+void Probe_StateMonitor(void)
 {
-	if(probe_get_state()) {
-		sys_probe_state = PROBE_OFF;
-		memcpy(sys_probe_position, sys_position, sizeof(sys_position));
-		bit_true(sys_rt_exec_state, EXEC_MOTION_CANCEL);
-	}
+    if(Probe_GetState())
+    {
+        sys_probe_state = PROBE_OFF;
+        memcpy(sys_probe_position, sys_position, sizeof(sys_position));
+        BIT_TRUE(sys_rt_exec_state, EXEC_MOTION_CANCEL);
+    }
 }

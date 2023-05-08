@@ -3,6 +3,7 @@
   Part of Grbl-Advanced
 
   Copyright (c) 2012-2016 Sungeun K. Jeon for Gnea Research LLC
+  Copyright (c) 2017 Patrick F.
 
   Grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,31 +18,35 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef COOLANTCONTROL_H
+#define COOLANTCONTROL_H
 
-#ifndef coolant_control_h
-#define coolant_control_h
 
-#define COOLANT_NO_SYNC     	false
-#define COOLANT_FORCE_SYNC  	true
+#include <stdint.h>
 
-#define COOLANT_STATE_DISABLE   0  // Must be zero
-#define COOLANT_STATE_FLOOD     PL_COND_FLAG_COOLANT_FLOOD
-#define COOLANT_STATE_MIST      PL_COND_FLAG_COOLANT_MIST
+
+#define COOLANT_NO_SYNC             false
+#define COOLANT_FORCE_SYNC          true
+
+#define COOLANT_STATE_DISABLE       0  // Must be zero
+#define COOLANT_STATE_FLOOD         BIT(0)
+#define COOLANT_STATE_MIST          BIT(1)
 
 
 // Initializes coolant control pins.
-void coolant_init();
-
-// Returns current coolant output state. Overrides may alter it from programmed state.
-uint8_t coolant_get_state();
+void Coolant_Init(void);
 
 // Immediately disables coolant pins.
-void coolant_stop();
+void Coolant_Stop(void);
+
+// Returns current coolant output state. Overrides may alter it from programmed state.
+uint8_t Coolant_GetState(void);
 
 // Sets the coolant pins according to state specified.
-void coolant_set_state(uint8_t mode);
+void Coolant_SetState(uint8_t mode);
 
 // G-code parser entry-point for setting coolant states. Checks for and executes additional conditions.
-void coolant_sync(uint8_t mode);
+void Coolant_Sync(uint8_t mode);
 
-#endif
+
+#endif // COOLANTCONTROL_H

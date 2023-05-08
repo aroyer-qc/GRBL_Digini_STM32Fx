@@ -30,6 +30,32 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+// in orginal code
+/**
+ * Timer 1
+ * Outputs 10 KHz on D11
+ * Used for Variable Spindle PWM
+ **/
+/**
+ * Timer 2
+ * Used for Encoder
+ **/
+/**
+ * Timer 3
+ * Used for Input capture
+ **/
+/**
+ * Timer 4
+ * Used for Encoder
+ **/
+/**
+ * Timer 9
+ * Base clock: 24 MHz
+ * Used for Stepper Interrupt
+ * On CC1, Main Stepper Interrupt is called
+ * On Update, Stepper Port Reset is called
+ **/
+
 //-------------------------------------------------------------------------------------------------
 //
 //          Parameter 1:  This is the ID of the IO pin
@@ -205,31 +231,34 @@
     X_IO( IO_STEP_Y,            GPIOB,      5,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_STEP_Z,            GPIOG,      7,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_STEP_A,            GPIOA,      4,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-/*  X_IO( IO_STEP_B,            GPIOx,      y,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
-/*  X_IO( IO_STEP_C,            GPIOx,      y,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
+    X_IO( IO_STEP_B,            GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_STEP_C,            GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_X,             GPIOI,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_Y,             GPIOH,      6,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_Z,             GPIOI,      3,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_A,             GPIOC,      6,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-/*  X_IO( IO_DIR_B,             GPIOx,      y,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
-/*  X_IO( IO_DIR_C,             GPIOx,      y,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
+    X_IO( IO_DIR_B,             GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIR_C,             GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_X,           GPIOA,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_Y,           GPIOA,      8,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_Z,           GPIOB,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_A,           GPIOG,      9,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-/*  X_IO( IO_LIMIT_B,           GPIOx,      y,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)            */  \
-/*  X_IO( IO_LIMIT_C,           GPIOx,      y,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)            */  \
-/*  X_IO( IO_SPINDLE_ENABLE,    GPIOB,      14,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
-    X_IO( IO_SPINDLE_PWM,       GPIOB,      14,     IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          IO_AF1_TIM1)      \
-/*  X_IO( IO_SPINDLE_DIRECTION, GPIOB,      14,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
+    X_IO( IO_LIMIT_B,           GPIOx,      0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_C,           GPIOx,      0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_SPINDLE_ENABLE,    GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_SPINDLE_PWM,       GPIOx,      0,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          IO_AF1_TIM1)      \
+    X_IO( IO_SPINDLE_DIRECTION, GPIOx,      14,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_COOLANT,           GPIOC,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_COOLANT_FLOOD,     GPIOF,      8,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-/*  X_IO( IO_COOLANT_MIST,      GPIOB,      8,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)            */  \
+    X_IO( IO_COOLANT_MIST,      GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_PROBE,             GPIOC,      7,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
-/*  X_IO( IO_SAFETY_DOOR        GPIOx,      y,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)            */  \
+    X_IO( IO_SAFETY_DOOR,       GPIOx,      0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_CONTROL_RESET,     GPIOA,      0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_CONTROL_FEED,      GPIOF,      10,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_CONTROL_START,     GPIOF,      9,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+/* Misc --------------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO( IO_E2_WP,             GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
+    X_IO( IO_W5500_RESET,       GPIOx,      0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
 
 

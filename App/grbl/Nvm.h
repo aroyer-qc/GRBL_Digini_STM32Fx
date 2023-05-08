@@ -1,8 +1,10 @@
 /*
-  ToolChange.h - Changing tool
+  Nvm.h - Non-volatile-memory interface.
   Part of Grbl-Advanced
 
-  Copyright (c)	2018-2019 Patrick F.
+  Copyright (c) 2011-2016 Sungeun K. Jeon for Gnea Research LLC
+  Copyright (c) 2009-2011 Simen Svale Skogsrud
+  Copyright (c) 2019-2020 Patrick F.
 
   Grbl-Advanced is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,17 +19,26 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-
-#ifndef TOOLCHANGE_H_INCLUDED
-#define TOOLCHANGE_H_INCLUDED
+#ifndef NVM_H_INCLUDED
+#define NVM_H_INCLUDED
 
 
 #include <stdint.h>
 
 
-void TC_Init(void);
-void TC_ChangeCurrentTool(void);
-void TC_ProbeTLS(void);
+// EEPROM size in bytes
+#define NVM_SIZE                1024
 
 
-#endif /* TOOLCHANGE_H_INCLUDED */
+void Nvm_Init(void);
+
+uint8_t Nvm_ReadByte(uint16_t Address);
+void Nvm_WriteByte(uint16_t Address, uint8_t Data);
+
+uint8_t Nvm_Read(uint8_t *DataOut, uint16_t Address, uint16_t size);
+uint8_t Nvm_Write(uint16_t Address, uint8_t *DataIn, uint16_t size);
+
+void Nvm_Update(void);
+
+
+#endif /* NVM_H_INCLUDED */
