@@ -59,15 +59,19 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 
   ## Required Module:
   
-  Digini                        (Branch Develop)
-  module_FatFs                  (Branch main)
-  module_jpg                    (Branch main)
-  Module_Network_CMSIS_For_LWIP (WIP - Branch Main)
-  lwip                          (Branch STABLE_2_1_x)
-  module_picopng                (Branch main)
-  module_STM32F7xx              (Branch main)
-  nOS                           (Branch master)
->
+![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
+
+  ## Required Module:
+  
+>    *   Digini                        (Branch Develop)
+>    * module_FatFs                  (Branch main)
+>    *   module_jpg                    (Branch main)
+>    * Module_Network_CMSIS_For_LWIP (WIP - Branch Main)
+>    *   lwip                          (Branch STABLE_2_1_x)
+>    *   module_picopng                (Branch main)
+>    *   module_STM32F7xx              (Branch main)
+>    *   nOS                           (Branch master)
+
   ## Known issues
   
 >    * Stepper not yet working, I need to test the STM32 timer and integrate them into the GRBL code.
