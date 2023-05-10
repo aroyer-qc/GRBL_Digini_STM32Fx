@@ -56,3 +56,14 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >    * SERV_ID_XCHG    Service to exchange data via structure between page. (title, min, max, value, edit type)
   
 ![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
+
+  ## Required Module:
+  
+>    *   Digini                        (Branch Develop)
+>    * module_FatFs                  (Branch main)
+>    *   module_jpg                    (Branch main)
+>    * Module_Network_CMSIS_For_LWIP (WIP - Branch Main)
+>    *   lwip                          (Branch STABLE_2_1_x)
+>    *   module_picopng                (Branch main)
+>    *   module_STM32F7xx              (Branch main)
+>    *   nOS                           (Branch master)
