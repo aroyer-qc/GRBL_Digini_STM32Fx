@@ -88,7 +88,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
     ServiceReturn_t* pService              = nullptr;
     float            Coordinate            = 0;
     uint16_t         SubOffset;
-    s32_t            Color;
+    struct32_t       Color;
     bool             IsItBlank;
 
     // Handling of memory allocation while service is active (Shared for all active SERV_AXIS SubService)
@@ -976,7 +976,7 @@ static ServiceReturn_t* SERV_SPIN(ServiceEvent_e* pServiceState, uint16_t SubSer
 ServiceReturn_t* ServiceCallApp(Service_t* pService, ServiceEvent_e* pServiceState)
 {
     ServiceReturn_t* pServiceReturn = nullptr;
-    s32_t            ServiceRange;
+    struct32_t       ServiceRange;
 
     ServiceRange.u_32 = pService->ID;
 
