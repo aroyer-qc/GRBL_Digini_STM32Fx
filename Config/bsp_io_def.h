@@ -217,6 +217,17 @@
     X_IO( IO_LCD_TFT_DE,        GPIOK,      7,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,    IO_AF14_LTDC)     \
     X_IO( IO_LCD_TFT_DISPLAY,   GPIOI,      12,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,    0)                \
     X_IO( IO_LCD_TFT_BL_CTRL,   GPIOK,      3,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,    0)                \
+/* Ethernet IO's -----------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO( IO_MX_ETH_MDC,        GPIOC,      1,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_MDIO,       GPIOA,      2,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_TXD0,       GPIOG,      13,     IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_TXD1,       GPIOG,      14,     IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_RXD0,       GPIOC,      4,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_RXD1,       GPIOC,      5,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_TX_EN,      GPIOG,      11,     IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_RX_ER,      GPIOG,      2,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_CRS_DV,     GPIOA,      7,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
+    X_IO( IO_MX_ETH_REF_CLK,    GPIOA,      1,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,    IO_AF11_ETH)      \
 /* SDIO IO's ---------------------------------------------------------------------------------------------------------------------------------*/\
     X_IO( IO_SD_D0,             GPIOC,      8,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,    IO_AF12_SDMMC1)   \
     X_IO( IO_SD_D1,             GPIOC,      9,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,    IO_AF12_SDMMC1)   \
