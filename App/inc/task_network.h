@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : main.cpp
+//  File : task_network.h
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -24,41 +24,64 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+#pragma once
+
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "bsp.h"
-#include "Task_grbl.h"
-#include "Task_loading.h"
-#include "Task_network.h"
+#include "nOS.h"
 
 //-------------------------------------------------------------------------------------------------
-//
-// Name:           main
-// Parameter(s):   void
-// Return:         int
-//
-// Description:    main() what more can be said
-//
-// Note(s):        Here we create the task that will start all the other
-//
+// Global Macro
 //-------------------------------------------------------------------------------------------------
-int main()
+
+#ifdef TASK_NETWORK_GLOBAL
+    #define TASK_NETWORK_EXTERN
+#else
+    #define TASK_NETWORK_EXTERN extern
+#endif
+
+//-------------------------------------------------------------------------------------------------
+// Define(s)
+//-------------------------------------------------------------------------------------------------
+
+#define TASK_NETWORK_STACK_SIZE              4096
+#define TASK_NETWORK_PRIO                    4
+
+//-------------------------------------------------------------------------------------------------
+// Class definition(s)
+//-------------------------------------------------------------------------------------------------
+
+class ClassTaskNetwork
 {
-    // Prevent stepping in every IRQ
-    //(DBGMCU)->APB1FZ = 0x7E01BFF;
-    //(DBGMCU)->APB2FZ = 0x70003;
+  public:
 
-    ISR_Disable();
-    nOS_Init();
-    BSP_Initialize();     // All hardware and system initialization
-    pTaskLoading->Initialize();
-    pTaskNetwork->Initialize();
-    nOS_Start();
-    BSP_PostOS_Initialize();
-    pTaskGRBL->Run();                     // It is the idle task..
-    return 0;
-}
+    void            Run                (void);
+    nOS_Error       Initialize         (void);
+
+  private:
+
+    nOS_Thread      m_Handle;
+    nOS_Stack       m_Stack[TASK_NETWORK_STACK_SIZE];
+};
+
+//-------------------------------------------------------------------------------------------------
+// Global variable(s) and constant(s)
+//-------------------------------------------------------------------------------------------------
+
+TASK_NETWORK_EXTERN class ClassTaskNetwork  TaskNetwork;
+
+#ifdef TASK_NETWORK_GLOBAL
+                 class ClassTaskNetwork* pTaskNetwork = &TaskNetwork;
+#else
+    extern       class ClassTaskNetwork* pTaskNetwork;
+#endif
+
+//-------------------------------------------------------------------------------------------------
+// Function prototype(s)
+//-------------------------------------------------------------------------------------------------
+
+extern "C" void TaskNetwork_Wrapper(void* pvParameters);
 
 //-------------------------------------------------------------------------------------------------

@@ -29,7 +29,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define TASK_GRBL_GLOBAL
-#include "Task_grbl.h"
+#include "task_grbl.h"
 #undef TASK_GRBL_GLOBAL
 #include "lib_digini.h"
 
@@ -38,25 +38,8 @@
 #include "MotionControl.h"
 #include "Settings.h"
 
-//#include "Ethernet.h"      TODO modify for lwip and lan8742...
-//#include "librairiGrIP.h"
-//#include "ServerTCP.h"
 #include "Print.h"
 #include "ComIf.h"
-#endif
-
-//-------------------------------------------------------------------------------------------------
-// Private variable(s) and constant(s)
-//-------------------------------------------------------------------------------------------------
-
-#ifdef ETH_IF
-    uint8_t MAC[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-
-    // IP Address of tcp server
-    IPAddress_t IP         = {{192, 168, 1, 20}};
-    IPAddress_t GatewayIP  = {{192, 168, 1, 1}};
-    IPAddress_t SubnetMask = {{255, 255, 255, 0}};
-    IPAddress_t MyDns      = {{8, 8, 8, 8}};
 #endif
 
 //-------------------------------------------------------------------------------------------------
@@ -186,14 +169,6 @@ void ClassTaskGRBL::Run(void)
     Stepper_Initialize();
     Settings_Initialize();
     System_ResetPosition();
-
-#ifdef ETH_IF
-    // Initialize W5500
-//argo    Ethernet_Initialize(MAC, &IP, &MyDns, &GatewayIP, &SubnetMask);
-
-    // Initialize TCP server
-//argo    ServerTCP_Initialize(ETH_SOCK, ETH_PORT);
-#endif
 
     // Initialize GrIP protocol
 //argo    GrIP_Initialize();
