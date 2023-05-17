@@ -45,7 +45,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 #include "lib_digini.h"
-CRC_Calc TestCRC(CRC_16_AUG_CCITT);
+CRC_Calc TestCRC(CRC_16_DNP);
 
 
 int main()
