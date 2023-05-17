@@ -50,7 +50,7 @@ typedef enum
     MSG_RESPONSE            = 5,
     MSG_ERROR               = 6,
     MSG_MAX_NUM             = 7
-} MessageType_e;
+} GRIP_MessageType_e;
 
 
 /**
@@ -66,7 +66,7 @@ typedef enum
     RET_WRONG_MAGIC         = 4,
     RET_WRONG_PARAM         = 5,
     RET_WRONG_TYPE          = 6
-} ReturnType_e;
+} GRIP_ReturnType_e;
 
 
 /**

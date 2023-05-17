@@ -39,7 +39,6 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define DIGINI_USE_GRAFX
 #define GRAFX_SKIN_FILENAME                       "grbl.skn"
 #define GRAFX_USE_A_SKIN
 #define GRAFX_USE_POINTING_DEVICE

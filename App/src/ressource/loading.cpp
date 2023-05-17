@@ -29,7 +29,7 @@
 //---------------------------------------------
 
 #include "lib_digini.h"
-#ifdef DIGINI_USE_GRAFX
+#if (DIGINI_USE_GRAFX == DEF_ENABLED)
 
 const uint8_t loading[18999] =
 {

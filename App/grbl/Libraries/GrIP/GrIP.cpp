@@ -15,14 +15,11 @@
   You should have received a copy of the GNU General Public License
   along with program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "lib_digini.h"
 #include "GrIP.h"
-#include "CRC.h"
 #include "util2.h"
 #include "ComIf.h"
 #include "Print.h"
-#include <stdio.h>
-#include <string.h>
-
 
 // GrIP states
 #define GRIP_IDLE               0

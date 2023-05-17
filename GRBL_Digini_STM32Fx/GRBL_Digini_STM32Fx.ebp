@@ -339,6 +339,7 @@
 		<Unit filename="..\Config\color_cfg.h" />
 		<Unit filename="..\Config\console_cfg.h" />
 		<Unit filename="..\Config\console_var.h" />
+		<Unit filename="..\Config\crc_cfg.h" />
 		<Unit filename="..\Config\database_cfg.h" />
 		<Unit filename="..\Config\device_cfg.h" />
 		<Unit filename="..\Config\device_var.h" />
@@ -699,13 +700,10 @@
 		<Unit filename="..\Module\Digini\String\src\lib_strnchr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Utility\inc\crc.h" />
 		<Unit filename="..\Module\Digini\Utility\inc\lib_compression.h" />
+		<Unit filename="..\Module\Digini\Utility\inc\lib_crc.h" />
 		<Unit filename="..\Module\Digini\Utility\inc\lib_fifo.h" />
 		<Unit filename="..\Module\Digini\Utility\inc\lib_utility.h" />
-		<Unit filename="..\Module\Digini\Utility\src\crc.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_1aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -731,6 +729,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_compression.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Utility\src\lib_crc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_fifo.cpp">

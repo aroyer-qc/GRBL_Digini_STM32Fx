@@ -44,11 +44,20 @@
 // Note(s):        Here we create the task that will start all the other
 //
 //-------------------------------------------------------------------------------------------------
+#include "lib_digini.h"
+CRC_Calc TestCRC(CRC_16_AUG_CCITT);
+
+
 int main()
 {
+    static uint16_t Result;
     // Prevent stepping in every IRQ
     //(DBGMCU)->APB1FZ = 0x7E01BFF;
     //(DBGMCU)->APB2FZ = 0x70003;
+
+    TestCRC.Start();
+    TestCRC.CalculateBuffer("Poutine", 7);
+    Result = uint16_t(TestCRC.Done());
 
     ISR_Disable();
     nOS_Init();

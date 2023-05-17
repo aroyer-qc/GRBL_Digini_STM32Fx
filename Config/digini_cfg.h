@@ -71,7 +71,7 @@
 // FAT FS Peripheral support
 //
 
-#define DIGINI_USE_FATFS
+#define DIGINI_USE_FATFS                                DEF_ENABLED
 
 #define DIGINI_FATFS_USE_SPI_FLASH_CHIP                 DEF_DISABLED  // to be added to peripheral list
 #define DIGINI_FATFS_USE_QSPI                           DEF_DISABLED  // to be added to peripheral list
@@ -84,7 +84,7 @@
 // GRAFX Configuration
 //
 
-#define DIGINI_USE_GRAFX
+#define DIGINI_USE_GRAFX                                DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // CRC Configuration
