@@ -45,19 +45,19 @@
 //
 //-------------------------------------------------------------------------------------------------
 #include "lib_digini.h"
-CRC_Calc TestCRC(CRC_16_DNP);
+CRC_Calc TestCRC(CRC_8_OPENSAFETY);
 
 
 int main()
 {
-    static uint16_t Result;
+    static uint32_t Result;
     // Prevent stepping in every IRQ
     //(DBGMCU)->APB1FZ = 0x7E01BFF;
     //(DBGMCU)->APB2FZ = 0x70003;
 
-    TestCRC.Start();
-    TestCRC.CalculateBuffer("Poutine", 7);
-    Result = uint16_t(TestCRC.Done());
+     TestCRC.Start();
+    TestCRC.CalculateBuffer("123456789", 9);
+    Result = TestCRC.Done() ;
 
     ISR_Disable();
     nOS_Init();
