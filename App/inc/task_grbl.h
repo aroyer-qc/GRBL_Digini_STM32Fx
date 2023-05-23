@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2023 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -48,16 +48,24 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define TASK_GRBL_STACK_SIZE              1024
+#define TASK_GRBL_PRIO                    4
+
 //-------------------------------------------------------------------------------------------------
 // Class definition(s)
 //-------------------------------------------------------------------------------------------------
 
 class ClassTaskGRBL
 {
-  public:
+    public:
 
-    void            Run                (void);
-    nOS_Error       Initialize         (void);
+        void            Run                (void);
+        nOS_Error       Initialize         (void);
+
+    private:
+
+        nOS_Thread      m_Handle;
+        nOS_Stack       m_Stack[TASK_GRBL_STACK_SIZE];
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -84,6 +92,7 @@ TASK_GRBL_EXTERN class ClassTaskGRBL  TaskGRBL;
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-extern      bool GRBL_RealTimeCommand(char);
+extern "C" void TaskGRBL_Wrapper        (void* pvParameters);
+extern     bool GRBL_RealTimeCommand    (char);
 
 //-------------------------------------------------------------------------------------------------

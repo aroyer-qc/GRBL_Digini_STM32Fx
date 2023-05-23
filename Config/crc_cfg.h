@@ -30,6 +30,28 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define DIGINI_USE_CRC_LESS_THAN_8_BITS     DEF_DISABLED
+#define DIGINI_USE_CRC_8_TO_32_BITS         DEF_ENABLED
+#define DIGINI_USE_CRC_MORE_THAN_32_BITS    DEF_DISABLED
+
+// Will be available only if DIGINI_USE_CRC_LESS_THAN_8_BITS is DEF_ENABLED
+#define DIGINI_USE_CRC_3_GSM                DEF_ENABLED
+#define DIGINI_USE_CRC_3_ROHC               DEF_ENABLED
+#define DIGINI_USE_CRC_4_G_704              DEF_ENABLED
+#define DIGINI_USE_CRC_4_INTERLAKEN         DEF_ENABLED
+#define DIGINI_USE_CRC_5_EPC_C1G2           DEF_ENABLED
+#define DIGINI_USE_CRC_5_G_704              DEF_ENABLED
+#define DIGINI_USE_CRC_5_USB                DEF_ENABLED
+#define DIGINI_USE_CRC_6_CDMA2000_A         DEF_ENABLED
+#define DIGINI_USE_CRC_6_CDMA2000_B         DEF_ENABLED
+#define DIGINI_USE_CRC_6_DARC               DEF_ENABLED
+#define DIGINI_USE_CRC_6_G_704              DEF_ENABLED
+#define DIGINI_USE_CRC_6_GSM                DEF_ENABLED
+#define DIGINI_USE_CRC_7_MMC                DEF_ENABLED
+#define DIGINI_USE_CRC_7_ROHC               DEF_ENABLED
+#define DIGINI_USE_CRC_7_UMTS               DEF_ENABLED
+
+// Will be available only if DIGINI_USE_CRC_8_TO_32_BITS is DEF_ENABLED
 #define DIGINI_USE_CRC_8                    DEF_ENABLED
 #define DIGINI_USE_CRC_8_AUTOSAR            DEF_ENABLED
 #define DIGINI_USE_CRC_8_BLUETOOTH          DEF_ENABLED
@@ -118,32 +140,21 @@
 #define DIGINI_USE_CRC_32_SATA              DEF_ENABLED
 #define DIGINI_USE_CRC_32_XFER              DEF_ENABLED
 
-#if 0
-#define DIGINI_USE_CRC_3_GSM                DEF_ENABLED
-#define DIGINI_USE_CRC_3_ROHC               DEF_ENABLED
-#define DIGINI_USE_CRC_4_G_704              DEF_ENABLED
-#define DIGINI_USE_CRC_4_INTERLAKEN         DEF_ENABLED
-#define DIGINI_USE_CRC_5_EPC_C1G2           DEF_ENABLED
-#define DIGINI_USE_CRC_5_G_704              DEF_ENABLED
-#define DIGINI_USE_CRC_5_USB                DEF_ENABLED
-#define DIGINI_USE_CRC_6_CDMA2000_A         DEF_ENABLED
-#define DIGINI_USE_CRC_6_CDMA2000_B         DEF_ENABLED
-#define DIGINI_USE_CRC_6_DARC               DEF_ENABLED
-#define DIGINI_USE_CRC_6_G_704              DEF_ENABLED
-#define DIGINI_USE_CRC_6_GSM                DEF_ENABLED
-#define DIGINI_USE_CRC_7_MMC                DEF_ENABLED
-#define DIGINI_USE_CRC_7_ROHC               DEF_ENABLED
-#define DIGINI_USE_CRC_7_UMTS               DEF_ENABLED
-#endif
+// Will be available only if DIGINI_USE_CRC_MORE_THAN_32_BITS is DEF_ENABLED
+#define DIGINI_USE_CRC_40_GSM               DEF_DISABLED
+#define DIGINI_USE_CRC_64_ECMA_182          DEF_DISABLED
+#define DIGINI_USE_CRC_64_GO_ISO            DEF_DISABLED
+#define DIGINI_USE_CRC_64_MS                DEF_DISABLED
+#define DIGINI_USE_CRC_64_WE                DEF_ENABLED
+#define DIGINI_USE_CRC_64_XZ                DEF_DISABLED
 
-// ---- CRC module configuration ----
+// No support planned yet
+#define DIGINI_USE_CRC_82_DARC              DEF_DISABLED
 
-//#define CRC_8_USE_TABLE
-//#define CRC_16_MODBUS_USE_TABLE
-//#define CRC_16_MODBUS_USE_TABLE
-//#define CRC_16_CCITT_USE_TABLE
-//#define CRC_32_IEEE_USE_TABLE
-//#define CRC_NORMAL_USE_TABLE
+
+
+
+
 
 //-------------------------------------------------------------------------------------------------
 

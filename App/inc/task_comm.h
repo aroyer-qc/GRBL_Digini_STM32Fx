@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : digini_cfg.h
+//  File : task_comm.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2023 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -23,73 +23,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
-//
-// NOTE(S) For Graphic related configuration, see grafx_cfg.h
-//
-//-------------------------------------------------------------------------------------------------
 
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-//  Define(s)
+// Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#define ETH_SOCK                                        0
-#define ETH_PORT                                        30501
-
-
-#define DIGINI_USE_ASSERT                               DEF_DISABLED
-
-#define DIGINI_RESTRICT_MEMORY_ALLOC_TO_BLOCK_SIZE      DEF_DISABLED    // LIB_Memory.x. If Enable we allow only closest block size that are greater to be allocated
-
-//#define DIGINI_APP_USE_TICK_HOOK                      DEF_ENABLED
-
-#define DIGINI_USE_CONSOLE                              DEF_ENABLED
-#define DIGINI_USE_CMD_LINE                             DEF_ENABLED
-#define DIGINI_USE_VT100_MENU                           DEF_ENABLED
+#include "task_comm.h"
+#include "nOS.h"
 
 //-------------------------------------------------------------------------------------------------
-// High level Peripheral
-//
-//#define DIGINI_USE_SPI_DEVICE
-#define DIGINI_SD_CARD_DETECT_IO                        DETECT_SD_CARD
+// Global Macro
+//-------------------------------------------------------------------------------------------------
+
+#ifdef TASK_COMM_GLOBAL
+    #define TASK_COMM_EXTERN
+#else
+    #define TASK_COMM_EXTERN extern
+#endif
 
 //-------------------------------------------------------------------------------------------------
-// EEPROM support
-//
-
-#define DIGINI_USE_EEPROM			                    DEF_DISABLED
+// Define(s)
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// Multi language support
-//
-// Note: If it is DEF_ENABLED then you need to add to a database the item DIGINI_SYSTEM_LANGUAGE
+// Class definition(s)
+//-------------------------------------------------------------------------------------------------
 
-#define DIGINI_USE_MULTI_LANGUAGE_SUPPORT               DEF_DISABLED
+class ClassTaskCOMM
+{
+  public:
+
+    void            Run                (void);
+    nOS_Error       Initialize         (void);
+};
 
 //-------------------------------------------------------------------------------------------------
-// FAT FS Peripheral support
-//
+// Global variable(s) and constant(s)
+//-------------------------------------------------------------------------------------------------
 
-#define DIGINI_USE_FATFS                                DEF_ENABLED
-
-#define DIGINI_FATFS_USE_SPI_FLASH_CHIP                 DEF_DISABLED  // to be added to peripheral list
-#define DIGINI_FATFS_USE_QSPI                           DEF_DISABLED  // to be added to peripheral list
-#define DIGINI_FATFS_USE_SDIO_SD_CARD                   DEF_DISABLED
-#define DIGINI_FATFS_USE_SPI_SD_CARD                    DEF_DISABLED
-#define DIGINI_FATFS_USE_USB_KEY                        DEF_DISABLED
-#define DIGINI_FATFS_USE_RAM_DISK                       DEF_ENABLED
+#ifdef TASK_COMM_EXTERN
+#else
+#endif
 
 //-------------------------------------------------------------------------------------------------
-// GRAFX Configuration
-//
-
-#define DIGINI_USE_GRAFX                                DEF_ENABLED
-
+// Function prototype(s)
 //-------------------------------------------------------------------------------------------------
-// CRC Configuration
-//
-
-#define DIGINI_USE_CRC                                  DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------

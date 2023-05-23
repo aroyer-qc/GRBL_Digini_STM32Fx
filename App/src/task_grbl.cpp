@@ -29,7 +29,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define TASK_GRBL_GLOBAL
-#include "task_grbl.h"
+#include "Task_grbl.h"
 #undef TASK_GRBL_GLOBAL
 #include "lib_digini.h"
 
@@ -41,6 +41,24 @@
 #include "Print.h"
 #include "ComIf.h"
 #endif
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           TaskGRBL_Wrapper
+//
+//  Parameter(s):   void* pvParameters
+//  Return:         void
+//
+//  Description:    main() for the taskGRBL
+//
+//  Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+extern "C" void TaskGRBL_Wrapper(void* pvParameters)
+{
+    (static_cast<ClassTaskGRBL*>(pvParameters))->Run();
+}
+
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -56,7 +74,7 @@
 //-------------------------------------------------------------------------------------------------
 nOS_Error ClassTaskGRBL::Initialize(void)
 {
-    nOS_Error Error = NOS_OK;
+    nOS_Error Error;
 
     // ------------------------
     // Stepper drive IO
@@ -137,6 +155,13 @@ nOS_Error ClassTaskGRBL::Initialize(void)
    #endif
   #endif
  #endif
+
+    Error = nOS_ThreadCreate(&this->m_Handle,
+                             TaskGRBL_Wrapper,
+                             this,
+                             &this->m_Stack[0],
+                             TASK_GRBL_STACK_SIZE,
+                             TASK_GRBL_PRIO);
 
     return Error;
 }

@@ -28,9 +28,9 @@
 
 void Coolant_Initialize(void)
 {
-  	IO_PinInit(IO_COOLANT);  // what it is... AR i fuck my pin layout
+  	IO_PinInit(IO_COOLANT);
   	IO_PinInit(IO_COOLANT_FLOOD);
-  	//IO_PinInit(IO_COOLANT_MIST);   // TODO AR assign a pin.. not yet done
+  	IO_PinInit(IO_COOLANT_MIST);
 }
 
 

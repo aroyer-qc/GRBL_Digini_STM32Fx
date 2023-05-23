@@ -63,6 +63,7 @@
     X_LABEL( LBL_DEL,                    "Del",                             "Del"                                ) \
     X_LABEL( LBL_SIGN,                   "-",                               "-"                                  ) \
     X_LABEL( LBL_TOGGLE_SIGN,            "+/-",                             "+/-"                                ) \
+    X_LABEL( LBL_VT100_MENU_TITLE,       "GRBL Configuration Menu",         "Menu de Configuration GRBL"         ) \
     X_LABEL( LBL_SETTINGS,               "Settings",                        "Configurations "                    ) \
     X_LABEL( LBL_RANGE,                  "Ranges",                          "Plages"                             ) \
     X_LABEL( LBL_LIMITS,                 "Limits",                          "Limites"                            ) \

@@ -33,19 +33,16 @@
 #define GRIP_HEADER_SIZE        (sizeof(GrIP_PacketHeader_t))
 
 
-static uint8_t CheckHeader(GrIP_PacketHeader_t *paket);
+static uint8_t              CheckHeader(GrIP_PacketHeader_t *paket);
 
 
-static GrIP_PacketHeader_t TX_Header;
-
-// Transmit Buffer
-static uint8_t TX_Buffer[GRIP_BUFFER_SIZE + GRIP_HEADER_SIZE];
-// Receive Data Array
-static RX_Packet_t RX_Buff[GRIP_RX_NUM] = {0};
-
-static uint8_t GrIP_Status = GRIP_IDLE;
-static uint8_t GrIP_Response = RESPONSE_OK;
-static uint8_t GrIP_idx = 0;
+static GrIP_PacketHeader_t  TX_Header;
+static uint8_t              TX_Buffer[GRIP_BUFFER_SIZE + GRIP_HEADER_SIZE];     // Transmit Buffer
+static RX_Packet_t          RX_Buff[GRIP_RX_NUM] = {0};                         // Receive Data Array
+static uint8_t              GrIP_Status = GRIP_IDLE;
+static uint8_t              GrIP_Response = RESPONSE_OK;
+static uint8_t              GrIP_idx = 0;
+static CRC_Calc             GrIO_CRC(CRC_8_SAE_J1850);
 
 
 void GrIP_Initialize(void)
@@ -55,14 +52,11 @@ void GrIP_Initialize(void)
     GrIP_idx = 0;
 
     memset(&TX_Header, 0, GRIP_HEADER_SIZE);
-
     memset(TX_Buffer, 0, GRIP_BUFFER_SIZE + GRIP_HEADER_SIZE);
     memset(RX_Buff, 0, sizeof(RX_Buff));
 
     // Init generic interface
     ComIf_Initialize(IF_ETH, 0);
-    // Init CRC module
-    // TODO AR use my own driver CRC_Init();
 }
 
 
@@ -86,12 +80,12 @@ uint8_t GrIP_Transmit(uint8_t MsgType, uint8_t ReturnCode, Pdu_t *data)
         else if(data->Length > 0)
         {
             // Calculate CRC of data
-            TX_Header.CRC8 = 0; // TODO AR use my own driver CRC_CalculateCRC8(data->Data, data->Length);
+            TX_Header.CRC8 = uint8_t(GrIO_CRC.CalculateFullBuffer(data->Data, size_t(data->Length)));
         }
         else
         {
             // No data, no CRC
-            TX_Header.CRC8 = 0;  // TO AR this is ok from original
+            TX_Header.CRC8 = 0;
         }
 
         // Prepare transmit buffer
@@ -104,6 +98,7 @@ uint8_t GrIP_Transmit(uint8_t MsgType, uint8_t ReturnCode, Pdu_t *data)
 
         // Check if we are expecting a response
         GrIP_Response = RESPONSE_OK;
+
         if(MsgType == MSG_DATA)
         {
             GrIP_Response = RESPONSE_WAIT;
@@ -189,17 +184,11 @@ void GrIP_Update(void)
         {
             uint8_t head_buff[GRIP_HEADER_SIZE] = {0};
 
-            // Get header
-            ComIf_Receive(head_buff, GRIP_HEADER_SIZE);
+            ComIf_Receive(head_buff, GRIP_HEADER_SIZE);                                     // Get header
+            memcpy(&RX_Buff[GrIP_idx].RX_Header, head_buff, GRIP_HEADER_SIZE);              // Fill structure
+            RX_Buff[GrIP_idx].RX_Header.Length = ntohs(RX_Buff[GrIP_idx].RX_Header.Length); // Convert length to host order
+            uint8_t ret = CheckHeader(&RX_Buff[GrIP_idx].RX_Header);                        // Check if header is valid
 
-            // Fill struct
-            memcpy(&RX_Buff[GrIP_idx].RX_Header, head_buff, GRIP_HEADER_SIZE);
-
-            // Convert length to host order
-            RX_Buff[GrIP_idx].RX_Header.Length = ntohs(RX_Buff[GrIP_idx].RX_Header.Length);
-
-            // Check if header is valid
-            uint8_t ret = CheckHeader(&RX_Buff[GrIP_idx].RX_Header);
             if(ret != RET_OK)
             {
                 // Header is invalid
@@ -207,6 +196,7 @@ void GrIP_Update(void)
                 //Printf("Wrong header: %d\n", ret);
                 break;
             }
+
             if(RX_Buff[GrIP_idx].RX_Header.Length > GRIP_BUFFER_SIZE)
             {
                 // Payload too big
@@ -223,8 +213,7 @@ void GrIP_Update(void)
             }
             else
             {
-                // No payload
-                GrIP_Status = GRIP_IDLE;
+                GrIP_Status = GRIP_IDLE;                                                        // No payload
 
                 RX_Buff[GrIP_idx].isValid = 1;
 
@@ -247,7 +236,8 @@ void GrIP_Update(void)
             // Get payload
             //GenIf_Receive(RX_Buffer, RX_Header.Length);
             ComIf_Receive(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length);
-            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == 0 /* // TODO AR use my own driver CRC_CalculateCRC8(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length) */)
+
+            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == uint8_t(GrIO_CRC.CalculateFullBuffer(RX_Buff[GrIP_idx].Data, size_t(RX_Buff[GrIP_idx].RX_Header.Length))))
             {
                 RX_Buff[GrIP_idx].isValid = 1;
 

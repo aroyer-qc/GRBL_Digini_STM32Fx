@@ -150,26 +150,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\gcode.h" />
-		<Unit filename="..\App\grbl\grbl\Config.h" />
-		<Unit filename="..\App\grbl\grbl\CoolantControl.h" />
-		<Unit filename="..\App\grbl\grbl\defaults.h" />
-		<Unit filename="..\App\grbl\grbl\GCode.h" />
-		<Unit filename="..\App\grbl\grbl\grbl_advance.h" />
-		<Unit filename="..\App\grbl\grbl\Jog.h" />
-		<Unit filename="..\App\grbl\grbl\Limits.h" />
-		<Unit filename="..\App\grbl\grbl\MotionControl.h" />
-		<Unit filename="..\App\grbl\grbl\Nvm.h" />
-		<Unit filename="..\App\grbl\grbl\Planner.h" />
-		<Unit filename="..\App\grbl\grbl\Probe.h" />
-		<Unit filename="..\App\grbl\grbl\Protocol.h" />
-		<Unit filename="..\App\grbl\grbl\Report.h" />
-		<Unit filename="..\App\grbl\grbl\Settings.h" />
-		<Unit filename="..\App\grbl\grbl\SpindleControl.h" />
-		<Unit filename="..\App\grbl\grbl\Stepper.h" />
-		<Unit filename="..\App\grbl\grbl\System.h" />
-		<Unit filename="..\App\grbl\grbl\ToolChange.h" />
-		<Unit filename="..\App\grbl\grbl\ToolTable.h" />
-		<Unit filename="..\App\grbl\grbl\util.h" />
 		<Unit filename="..\App\grbl\grbl_advance.h" />
 		<Unit filename="..\App\grbl\HAL\FLASH\eeprom.c">
 			<Option compilerVar="CC" />
@@ -291,6 +271,7 @@
 		<Unit filename="..\App\inc\bsp.h" />
 		<Unit filename="..\App\inc\error.h" />
 		<Unit filename="..\App\inc\service.h" />
+		<Unit filename="..\App\inc\task_comm.h" />
 		<Unit filename="..\App\inc\task_grbl.h" />
 		<Unit filename="..\App\inc\task_loading.h" />
 		<Unit filename="..\App\inc\task_network.h" />
@@ -316,6 +297,9 @@
 		<Unit filename="..\App\src\service.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\App\src\task_comm.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\App\src\task_grbl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -327,6 +311,8 @@
 		</Unit>
 		<Unit filename="..\App\src\terminal.cpp">
 			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
 		</Unit>
 		<Unit filename="..\App\startup_stm32f7xx.S">
 			<Option compilerVar="CC" />
@@ -380,6 +366,27 @@
 		<Unit filename="..\Config\vt100_var.h" />
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
+		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli.h" />
+		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli_expanding_macro.h" />
+		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli_command.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Comm\Console\inc\lib_console.h" />
+		<Unit filename="..\Module\Digini\Comm\Console\src\lib_console.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100.h" />
+		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100_expanding_macro.h" />
+		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100_label.h" />
+		<Unit filename="..\Module\Digini\Comm\VT100\src\lib_vt100.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Comm\VT100\src\lib_vt100_callback.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Database\inc\lib_class_database.h" />
 		<Unit filename="..\Module\Digini\Database\inc\lib_class_eeprom_dbase.h" />
 		<Unit filename="..\Module\Digini\Database\inc\lib_class_hard_dbase.h" />
@@ -409,6 +416,7 @@
 		<Unit filename="..\Module\Digini\Database\src\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Digini\inc\lib_advanced_macro.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_assert.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_define.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_digini.h" />
@@ -574,6 +582,7 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_EEprom.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_FT5336.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_pulse_counter.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_qspi_n25Qxxx.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_fatfs_disk.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio.h" />
@@ -612,6 +621,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_i2c_FT5336.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_pulse_counter.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_qspi_N25Qxxx.cpp">
@@ -726,6 +738,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_6aschex.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Utility\src\lib_bit_reversal.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_compression.cpp">
