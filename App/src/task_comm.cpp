@@ -30,7 +30,7 @@
 
 #define TASK_COMM_GLOBAL
 #include "task_comm.h"
-#undef TASK_COMM_GLOBAL
+#undef  TASK_COMM_GLOBAL
 #include "lib_digini.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ nOS_Error ClassTaskCOMM::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskCOMM::Run(void)
 {
-//    this->Initialize();         // Needed if task is not at the idle level, otherwise remove it
+    this->Initialize();          // Needed if task is at the idle level, otherwise remove it
 
     while(SKIN_pTask->IsSkinLoaded() == false)
     {

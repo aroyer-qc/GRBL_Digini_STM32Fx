@@ -32,6 +32,7 @@
 #include "Task_grbl.h"
 #include "Task_loading.h"
 #include "Task_network.h"
+#include "Task_comm.h"
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -64,9 +65,11 @@ int main()
     BSP_Initialize();     // All hardware and system initialization
     pTaskLoading->Initialize();
     pTaskNetwork->Initialize();
+    pTaskGRBL->Initialize();
     nOS_Start();
     BSP_PostOS_Initialize();
-    pTaskGRBL->Run();                     // It is the idle task..
+
+    pTaskCOMM->Run();                     // It is the idle task..
     return 0;
 }
 

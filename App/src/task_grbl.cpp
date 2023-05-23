@@ -180,8 +180,6 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskGRBL::Run(void)
 {
-    this->Initialize();         // Needed if task is not at the idle level, otherwise remove it
-
     while(SKIN_pTask->IsSkinLoaded() == false)
     {
         nOS_Sleep(100);
