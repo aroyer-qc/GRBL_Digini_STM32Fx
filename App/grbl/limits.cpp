@@ -198,7 +198,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         {
             // Set target based on max_travel setting. Ensure homing switches engaged with search scalar.
             // NOTE: Settings.max_travel[] is stored as a negative value.
-            max_travel = max(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*Settings.max_travel[idx]);
+            max_travel = LIB_max(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*Settings.max_travel[idx]);
         }
     }
 

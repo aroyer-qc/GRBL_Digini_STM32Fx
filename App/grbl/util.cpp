@@ -294,7 +294,7 @@ float limit_value_by_axis_maximum(float *max_value, float *unit_vec)
     {
         if(unit_vec[idx] != 0)    // Avoid divide by zero.
         {
-            limit_value = min(limit_value,fabs(max_value[idx]/unit_vec[idx]));
+            limit_value = LIB_min(limit_value,fabs(max_value[idx]/unit_vec[idx]));
         }
     }
 

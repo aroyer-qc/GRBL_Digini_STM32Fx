@@ -109,8 +109,8 @@
 #define ACCEL_TICKS_PER_SECOND      100
 
 
-#define max(a,b)                    (((a) > (b)) ? (a) : (b))
-#define min(a,b)                    (((a) < (b)) ? (a) : (b))
+#define LIB_max(a,b)                    (((a) > (b)) ? (a) : (b))
+#define LIB_min(a,b)                    (((a) < (b)) ? (a) : (b))
 
 
 #define clear_vector(a)                 (memset(a,0,sizeof(a)))

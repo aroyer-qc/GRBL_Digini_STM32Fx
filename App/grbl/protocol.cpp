@@ -611,8 +611,8 @@ void Protocol_ExecRtSystem(void)
             new_f_override -= FEED_OVERRIDE_FINE_INCREMENT;
         }
 
-        new_f_override = min(new_f_override,MAX_FEED_RATE_OVERRIDE);
-        new_f_override = max(new_f_override,MIN_FEED_RATE_OVERRIDE);
+        new_f_override = LIB_min(new_f_override,MAX_FEED_RATE_OVERRIDE);
+        new_f_override = LIB_max(new_f_override,MIN_FEED_RATE_OVERRIDE);
 
         uint8_t new_r_override = System.r_override;
 
@@ -669,8 +669,8 @@ void Protocol_ExecRtSystem(void)
             last_s_override -= SPINDLE_OVERRIDE_FINE_INCREMENT;
         }
 
-        last_s_override = min(last_s_override,MAX_SPINDLE_SPEED_OVERRIDE);
-        last_s_override = max(last_s_override,MIN_SPINDLE_SPEED_OVERRIDE);
+        last_s_override = LIB_min(last_s_override,MAX_SPINDLE_SPEED_OVERRIDE);
+        last_s_override = LIB_max(last_s_override,MIN_SPINDLE_SPEED_OVERRIDE);
 
         if(last_s_override != System.spindle_speed_ovr)
         {

@@ -266,7 +266,7 @@ void Spindle_SetSurfaceSpeed(float x_pos)
     // Limit Max RPM
     if(gc_state.spindle_limit > 0)
     {
-        rpm = min(rpm, gc_state.spindle_limit);
+        rpm = LIB_min(rpm, gc_state.spindle_limit);
     }
     System.spindle_speed = rpm;
 

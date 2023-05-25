@@ -2118,7 +2118,7 @@ uint8_t GC_ExecuteLine(char *line)
                 float peak = gc_block.values.ijk[X_AXIS];
                 float doc = gc_block.values.ijk[Y_AXIS];
                 float final_depth = gc_block.values.ijk[Z_AXIS];
-                float regression = min(gc_block.values.r, 6.0);
+                float regression = LIB_min(gc_block.values.r, 6.0);
                 uint8_t spring_passes = gc_block.values.h;
                 float angle = gc_block.values.q;
                 //float taper_dist = gc_block.values.e;

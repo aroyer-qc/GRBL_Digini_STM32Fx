@@ -159,7 +159,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
 #else
         target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
         block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
-        block->step_event_count = max(block->step_event_count, block->steps[idx]);
+        block->step_event_count = LIB_max(block->step_event_count, block->steps[idx]);
         delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
 #endif
         unit_vec[idx] = delta_mm; // Store unit vector numerator
@@ -258,7 +258,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
                 float junction_acceleration = limit_value_by_axis_maximum(Settings.acceleration, junction_unit_vec);
                 float sin_theta_d2 = sqrt(0.5*(1.0-junction_cos_theta)); // Trig half angle identity. Always positive.
 
-                block->max_junction_speed_sqr = max(MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED, (junction_acceleration * Settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2));
+                block->max_junction_speed_sqr = LIB_max(MINIMUM_JUNCTION_SPEED*MINIMUM_JUNCTION_SPEED, (junction_acceleration * Settings.junction_deviation * sin_theta_d2)/(1.0-sin_theta_d2));
             }
         }
     }
@@ -576,7 +576,7 @@ static void Planner_Recalculate(void)
     Planner_Block_t *current = &block_buffer[block_index];
 
     // Calculate maximum entry speed for last block in buffer, where the exit speed is always zero.
-    current->entry_speed_sqr = min( current->max_entry_speed_sqr, 2*current->acceleration*current->millimeters);
+    current->entry_speed_sqr = LIB_min( current->max_entry_speed_sqr, 2*current->acceleration*current->millimeters);
 
     block_index = Planner_PrevBlockIndex(block_index);
     if(block_index == block_buffer_planned)   // Only two plannable blocks in buffer. Reverse pass complete.
