@@ -42,7 +42,7 @@ static RX_Packet_t          RX_Buff[GRIP_RX_NUM] = {0};                         
 static uint8_t              GrIP_Status = GRIP_IDLE;
 static uint8_t              GrIP_Response = RESPONSE_OK;
 static uint8_t              GrIP_idx = 0;
-static CRC_Calc             GrIO_CRC(CRC_8_SAE_J1850);
+static CRC_Calc             GrIP_CRC(CRC_8_SAE_J1850);
 
 
 void GrIP_Initialize(void)
@@ -80,7 +80,7 @@ uint8_t GrIP_Transmit(uint8_t MsgType, uint8_t ReturnCode, Pdu_t *data)
         else if(data->Length > 0)
         {
             // Calculate CRC of data
-            TX_Header.CRC8 = uint8_t(GrIO_CRC.CalculateFullBuffer(data->Data, size_t(data->Length)));
+            TX_Header.CRC8 = uint8_t(GrIP_CRC.CalculateFullBuffer(data->Data, size_t(data->Length)));
         }
         else
         {
@@ -237,7 +237,7 @@ void GrIP_Update(void)
             //GenIf_Receive(RX_Buffer, RX_Header.Length);
             ComIf_Receive(RX_Buff[GrIP_idx].Data, RX_Buff[GrIP_idx].RX_Header.Length);
 
-            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == uint8_t(GrIO_CRC.CalculateFullBuffer(RX_Buff[GrIP_idx].Data, size_t(RX_Buff[GrIP_idx].RX_Header.Length))))
+            if(RX_Buff[GrIP_idx].RX_Header.CRC8 == uint8_t(GrIP_CRC.CalculateFullBuffer(RX_Buff[GrIP_idx].Data, size_t(RX_Buff[GrIP_idx].RX_Header.Length))))
             {
                 RX_Buff[GrIP_idx].isValid = 1;
 

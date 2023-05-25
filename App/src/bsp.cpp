@@ -133,11 +133,11 @@ void BSP_Initialize(void)
     //BSP_CPU_CacheEnable();
   #endif
 
+    ISR_Initialize();
     BSP_SDRAM_Initialize();
     LED_Init(IO_LED1);
     IO_TogglePin(IO_LED1);
     DIGINI_Initialize();
-
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
     myConsole.Initialize(&myUART_Terminal);
@@ -190,7 +190,6 @@ SystemState_e BSP_PostOS_Initialize(void)
 {
     SystemState_e State = SYS_READY;
 
-    ISR_Initialize();
     pMemory = new CMem();
     //QSPI.Initialize();
     State = DIGINI_PostInitialize();
