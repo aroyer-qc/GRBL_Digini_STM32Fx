@@ -64,6 +64,14 @@ struct netif gnetif;
 
 static void Netif_Config(void);
 
+//-------------------------------------------------------------------------------------------------
+//
+//   Static Variables
+//
+//-------------------------------------------------------------------------------------------------
+
+nOS_Thread ClassTaskNetwork::m_Handle;
+nOS_Stack  ClassTaskNetwork::m_Stack[TASK_NETWORK_STACK_SIZE];
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -98,10 +106,10 @@ nOS_Error ClassTaskNetwork::Initialize(void)
 {
     nOS_Error Error;
 
-    Error = nOS_ThreadCreate(&this->m_Handle,
+    Error = nOS_ThreadCreate(&m_Handle,
                              TaskNetwork_Wrapper,
                              this,
-                             &this->m_Stack[0],
+                             &m_Stack[0],
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
 

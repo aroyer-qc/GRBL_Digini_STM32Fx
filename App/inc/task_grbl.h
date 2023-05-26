@@ -48,7 +48,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define TASK_GRBL_STACK_SIZE              1024
+#define TASK_GRBL_STACK_SIZE              512
 #define TASK_GRBL_PRIO                    4
 
 //-------------------------------------------------------------------------------------------------
@@ -59,13 +59,13 @@ class ClassTaskGRBL
 {
     public:
 
-        void            Run                (void);
-        nOS_Error       Initialize         (void);
+        void                Run                (void);
+        nOS_Error           Initialize         (void);
 
     private:
 
-        nOS_Thread      m_Handle;
-        nOS_Stack       m_Stack[TASK_GRBL_STACK_SIZE];
+        static nOS_Thread   m_Handle;
+        static nOS_Stack    m_Stack[TASK_GRBL_STACK_SIZE];
 };
 
 //-------------------------------------------------------------------------------------------------

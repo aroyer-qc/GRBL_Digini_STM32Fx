@@ -34,7 +34,6 @@
 #include "Task_network.h"
 #include "Task_comm.h"
 
-#include <malloc.h>
 //-------------------------------------------------------------------------------------------------
 //
 // Name:           main
@@ -48,16 +47,6 @@
 //-------------------------------------------------------------------------------------------------
 int main()
 {
-    static uint32_t Result;
-
-
-    uint8_t* pBuffer = nullptr;
-    struct mallinfo mi;
-
-    mi = mallinfo();
-    pBuffer = malloc(1024);
-    mi = mallinfo();
-
     // Prevent stepping in every IRQ
     //(DBGMCU)->APB1FZ = 0x7E01BFF;
     //(DBGMCU)->APB2FZ = 0x70003;
@@ -68,10 +57,7 @@ int main()
     pTaskNetwork->Initialize();
     pTaskGRBL->Initialize();
     nOS_Start();
-    mi = mallinfo();
-
     BSP_PostOS_Initialize();
-
     pTaskCOMM->Run();                     // It is the idle task..
     return 0;
 }

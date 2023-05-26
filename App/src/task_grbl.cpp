@@ -44,6 +44,15 @@
 
 //-------------------------------------------------------------------------------------------------
 //
+//   Static Variables
+//
+//-------------------------------------------------------------------------------------------------
+
+nOS_Thread   ClassTaskGRBL::m_Handle;
+nOS_Stack    ClassTaskGRBL::m_Stack[TASK_GRBL_STACK_SIZE];
+
+//-------------------------------------------------------------------------------------------------
+//
 //  Name:           TaskGRBL_Wrapper
 //
 //  Parameter(s):   void* pvParameters
@@ -156,10 +165,10 @@ nOS_Error ClassTaskGRBL::Initialize(void)
   #endif
  #endif
 
-    Error = nOS_ThreadCreate(&this->m_Handle,
+    Error = nOS_ThreadCreate(&m_Handle,
                              TaskGRBL_Wrapper,
                              this,
-                             &this->m_Stack[0],
+                             &m_Stack[0],
                              TASK_GRBL_STACK_SIZE,
                              TASK_GRBL_PRIO);
 

@@ -46,7 +46,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define TASK_LOADING_STACK_SIZE              1024
+#define TASK_LOADING_STACK_SIZE              512
 #define TASK_LOADING_PRIO                    4
 
 //-------------------------------------------------------------------------------------------------
@@ -62,8 +62,8 @@ class ClassTaskLoading
 
   private:
 
-    nOS_Thread      m_Handle;
-    nOS_Stack       m_Stack[TASK_LOADING_STACK_SIZE];
+    static nOS_Thread      m_Handle;
+    static nOS_Stack       m_Stack[TASK_LOADING_STACK_SIZE];
     //nOS_Flag        m_Flag;
    // const char*     m_pDrive;
    // FATFS           m_FS;

@@ -46,7 +46,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define TASK_NETWORK_STACK_SIZE              4096
+#define TASK_NETWORK_STACK_SIZE              1024
 #define TASK_NETWORK_PRIO                    4
 
 //-------------------------------------------------------------------------------------------------
@@ -62,8 +62,8 @@ class ClassTaskNetwork
 
   private:
 
-    nOS_Thread      m_Handle;
-    nOS_Stack       m_Stack[TASK_NETWORK_STACK_SIZE];
+    static nOS_Thread      m_Handle;
+    static nOS_Stack       m_Stack[TASK_NETWORK_STACK_SIZE];
 };
 
 //-------------------------------------------------------------------------------------------------

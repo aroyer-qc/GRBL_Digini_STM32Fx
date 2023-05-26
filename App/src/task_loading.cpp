@@ -41,6 +41,15 @@
 
 //-------------------------------------------------------------------------------------------------
 //
+//   Static Variables
+//
+//-------------------------------------------------------------------------------------------------
+
+nOS_Thread ClassTaskLoading::m_Handle;
+nOS_Stack  ClassTaskLoading::m_Stack[TASK_LOADING_STACK_SIZE];
+
+//-------------------------------------------------------------------------------------------------
+//
 //  Name:           TaskLoading_Wrapper
 //
 //  Parameter(s):   void* pvParameters
@@ -75,10 +84,10 @@ nOS_Error ClassTaskLoading::Initialize(void)
 //    snprintf(m_Path, 15, "%s%s", MY_DRIVE, MY_PLAYLIST);
     //m_pDrive = MY_DRIVE;
 
-    Error = nOS_ThreadCreate(&this->m_Handle,
+    Error = nOS_ThreadCreate(&m_Handle,
                              TaskLoading_Wrapper,
                              this,
-                             &this->m_Stack[0],
+                             &m_Stack[0],
                              TASK_LOADING_STACK_SIZE,
                              TASK_LOADING_PRIO);
 
