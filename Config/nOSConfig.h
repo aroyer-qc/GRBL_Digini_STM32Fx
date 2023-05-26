@@ -7,7 +7,7 @@
  *   1. Can be disable when application will be debugged to decrease flash space used.                                *
  *                                                                                                                    *
  **********************************************************************************************************************/
-#define NOS_CONFIG_DEBUG                            0
+#define NOS_CONFIG_DEBUG                            1           // Needed if you are using LIB_stacktistic
 
 /**********************************************************************************************************************
  *                                                                                                                    *

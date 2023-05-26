@@ -190,7 +190,6 @@ SystemState_e BSP_PostOS_Initialize(void)
 {
     SystemState_e State = SYS_READY;
 
-    pMemory = new CMem();
     //QSPI.Initialize();
     State = DIGINI_PostInitialize();
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
