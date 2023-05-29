@@ -5,6 +5,7 @@
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
 		<Option compiler="armgcc_eb" />
+		<Option extended_obj_names="1" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin\Debug\grbl.elf" />
@@ -76,8 +77,8 @@
 			<Add option="$device=cortex-m7" />
 			<Add option="$fpu=fpv4-sp-d16" />
 			<Add option="$lscript=./stm32f746x_flash.ld" />
-			<Add option="$stack=0x0500" />
-			<Add option="$heap=0x2000" />
+			<Add option="$stack=0x0600" />
+			<Add option="$heap=0x1000" />
 		</Device>
 		<Compiler>
 			<Add option="-mfloat-abi=hard" />
@@ -134,7 +135,6 @@
 			<Add option="-Wa,-ahls=$objects_output_dir\$file_name.lst" />
 		</Assembler>
 		<Linker>
-			<Add option="-u _printf_float" />
 			<Add option="-eb_lib=n" />
 			<Add option="-lstdc++" />
 			<Add option="-eb_start_files" />

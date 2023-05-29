@@ -28,10 +28,11 @@ _Min_Stack_Size = __STACK_SIZE;   /* required amount of stack */
 MEMORY
 {
     FLASH          (rx)  : ORIGIN = 0x08000000, LENGTH = 1024K
-    RAM            (rwx) : ORIGIN = 0x20000000, LENGTH = 320K - 64K
+    RAM            (rwx) : ORIGIN = 0x20000000, LENGTH = 320K /*240K*/
+   /* TCM            (rwx) : ORIGIN = 0x20000000, LENGTH = 64K*/
     GFX_DISPLAY    (rwx) : ORIGIN = 0xC0000000, LENGTH = 7M
-    GFX_RAM_DBASE  (rwx) : ORIGIN = 0xC0700000, LENGTH = 1M - 65536
-    RAM_DBASE      (rwx) : ORIGIN = 0xC07F0000, LENGTH = 65536
+    GFX_RAM_DBASE  (rwx) : ORIGIN = 0xC0700000, LENGTH = 1M - 64K
+    RAM_DBASE      (rwx) : ORIGIN = 0xC07F0000, LENGTH = 64K
     GFX_QSPI_DBASE (rx)  : ORIGIN = 0x90000000, LENGTH = 128K
 }
 
@@ -149,12 +150,12 @@ SECTIONS
 
 
   /* Remove information from the standard libraries */
-  /DISCARD/ :
-  {
-    libc.a ( * )
-    libm.a ( * )
-    libgcc.a ( * )
-  }
+/*  /DISCARD/ : */
+/*  {*/
+    /*libc.a ( * )*/
+    /*libm.a ( * )*/
+    /*libgcc.a ( * )*/
+  /*}*/
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 

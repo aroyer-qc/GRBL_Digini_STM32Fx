@@ -113,13 +113,13 @@ nOS_Error ClassTaskNetwork::Initialize(void)
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
 
-  /* Initialize the LwIP stack */
+  // Initialize the LwIP stack
   lwip_init();
 
-  /* Configure the Network interface */
+  // Configure the Network interface
   Netif_Config();
 
-  /* tcp echo server Init */
+  // tcp echo server Init
 //  udp_echoserver_init();
 
 
