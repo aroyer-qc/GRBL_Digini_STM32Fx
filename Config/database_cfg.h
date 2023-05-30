@@ -74,12 +74,12 @@
 // TODO there is a mixup with the RTC cossin
 
 
-//                  Enum ID          Items QTY,        Items SubQTY     Item Size
+//                  Enum ID             EepromID,         Items QTY,        Items SubQTY     Item Size
 /*
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
-    X_EEPROM_DBASE( SYSTEM_LANGUAGE, 1,                1,               sizeof(Language_e)         )
-
+    X_EEPROM_DBASE( SYSTEM_LANGUAGE,    FLASH_E2_1        1,                1,               sizeof(Language_e)         )
 */
+
 //                Enum ID                 Items QTY,       Items SubQTY       Item Size               Get/Set Callback
 #define HARD_DBASE_DEF(X_HARD_DBASE) \
     X_HARD_DBASE( REC_TIME,               1,               1,                 sizeof(Time_t),          AccessTime)         \

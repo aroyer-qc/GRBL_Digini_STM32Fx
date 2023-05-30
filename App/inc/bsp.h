@@ -47,7 +47,6 @@
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-BSP_EXTERN class CRTC*                      BSP_pRTC;                   // Pointer on the 'Real Time Clock class
 //BSP_EXTERN class CTimer*                    BSP_pTimer;
 
 

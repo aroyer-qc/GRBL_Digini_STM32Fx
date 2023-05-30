@@ -97,7 +97,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == true)
         {
             IsItFirstServiceStart = false;
-            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+            pBuffer = (char*)pMemoryPool->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
@@ -106,7 +106,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == false)
         {
             IsItFirstServiceStart = true;
-            pMemory->Free((void**)&pBuffer);
+            pMemoryPool->Free((void**)&pBuffer);
         }
     }
     else
@@ -210,7 +210,7 @@ static ServiceReturn_t* SERV_COOR(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == true)
         {
             IsItFirstServiceStart = false;
-            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+            pBuffer = (char*)pMemoryPool->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
@@ -219,7 +219,7 @@ static ServiceReturn_t* SERV_COOR(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == false)
         {
             IsItFirstServiceStart = true;
-            pMemory->Free((void**)&pBuffer);
+            pMemoryPool->Free((void**)&pBuffer);
         }
     }
     else
@@ -326,7 +326,7 @@ static ServiceReturn_t* SERV_GCOD(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == true)
         {
             IsItFirstServiceStart = false;
-            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+            pBuffer = (char*)pMemoryPool->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
@@ -335,7 +335,7 @@ static ServiceReturn_t* SERV_GCOD(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == false)
         {
             IsItFirstServiceStart = true;
-            pMemory->Free((void**)&pBuffer);
+            pMemoryPool->Free((void**)&pBuffer);
         }
     }
     else
@@ -391,7 +391,7 @@ static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == true)
         {
             IsItFirstServiceStart = false;
-            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+            pBuffer = (char*)pMemoryPool->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
@@ -400,7 +400,7 @@ static ServiceReturn_t* SERV_INCH(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == false)
         {
             IsItFirstServiceStart = true;
-            pMemory->Free((void**)&pBuffer);
+            pMemoryPool->Free((void**)&pBuffer);
         }
     }
     else
@@ -461,7 +461,7 @@ static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == true)
         {
             IsItFirstServiceStart = false;
-            pBuffer = (char*)pMemory->Alloc(SERVICE_PRINT_BUFFER_SIZE);
+            pBuffer = (char*)pMemoryPool->Alloc(SERVICE_PRINT_BUFFER_SIZE);
         }
     }
 
@@ -470,7 +470,7 @@ static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(IsItFirstServiceStart == false)
         {
             IsItFirstServiceStart = true;
-            pMemory->Free((void**)&pBuffer);
+            pMemoryPool->Free((void**)&pBuffer);
         }
     }
     else

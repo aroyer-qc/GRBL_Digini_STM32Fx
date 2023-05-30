@@ -80,8 +80,8 @@ static void TERM_TX_Callback(void* pContext)
     TERM_QueueDataInfo_t* pQ_Data;
 
     pQ_Data = (TERM_QueueDataInfo_t *)pContext;
-    pMemory->Free((void**)&pQ_Data->pBuffer);
-    pMemory->Free((void**)&pQ_Data);
+    pMemoryPool->Free((void**)&pQ_Data->pBuffer);
+    pMemoryPool->Free((void**)&pQ_Data);
 }
 #pragma GCC diagnostic pop
 
@@ -115,18 +115,18 @@ static void TERM_RX_Callback(void* pContext)
     {
         if(GRBL_RealTimeCommand(*Q_Data.pBuffer) == true)
         {
-            pMemory->Free((void**)&Q_Data.pBuffer);
+            pMemoryPool->Free((void**)&Q_Data.pBuffer);
         }
         else
         {
             if(Q_RX_Data.Send(&Q_Data) != true)
             {
-                pMemory->Free((void**)&Q_Data.pBuffer);     // Discarded as the controller might stuck doing a job
+                pMemoryPool->Free((void**)&Q_Data.pBuffer);     // Discarded as the controller might stuck doing a job
             }
         }
     }
 
-    if((pBuffer = (uint8_t*)pMemory->Alloc(TERM_RX_BUFFER_SIZE)) != nullptr)
+    if((pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE)) != nullptr)
     {
         myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
         return;
@@ -164,7 +164,7 @@ void TERM_Initialize(void)
   // myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
 
     // Provide first RX buffer
-    pBuffer = (uint8_t*)pMemory->Alloc(TERM_RX_BUFFER_SIZE);
+    pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE);
     myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
 }
 
@@ -205,7 +205,7 @@ int8_t Getc(char *c)
         if(Q_DataRX.Size == Pointer)     // this buffer has been extracted, free the block
         {
             Processing = false;
-            pMemory->Free((void**)&Q_DataRX.pBuffer);
+            pMemoryPool->Free((void**)&Q_DataRX.pBuffer);
         }
 
         return 0;
@@ -375,9 +375,9 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
   #else
     if(Length != 0)
     {
-        if((pQ_Data = (TERM_QueueDataInfo_t*)pMemory->Alloc(sizeof(TERM_QueueDataInfo_t))) != nullptr)
+        if((pQ_Data = (TERM_QueueDataInfo_t*)pMemoryPool->Alloc(sizeof(TERM_QueueDataInfo_t))) != nullptr)
         {
-            if((pQ_Data->pBuffer = (uint8_t*)pMemory->Alloc(Length)) != nullptr)
+            if((pQ_Data->pBuffer = (uint8_t*)pMemoryPool->Alloc(Length)) != nullptr)
             {
                 memcpy(pQ_Data->pBuffer, pBuf, Length);
                 pQ_Data->Size = Length;
@@ -393,13 +393,13 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
 
             if(Success == false)
             {
-                pMemory->Free((void**)&pQ_Data->pBuffer);
-                pMemory->Free((void**)&pQ_Data);
+                pMemoryPool->Free((void**)&pQ_Data->pBuffer);
+                pMemoryPool->Free((void**)&pQ_Data);
             }
         }
         else
         {
-            pMemory->Free((void**)&pQ_Data);
+            pMemoryPool->Free((void**)&pQ_Data);
 
         }
 

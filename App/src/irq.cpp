@@ -184,37 +184,20 @@ NOS_ISR(DMA2_Stream6_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 
 #if (USE_RTC_DRIVER  == DEF_ENABLED)
-
-//-------------------------------------------------------------------------------------------------
-
 NOS_ISR(RTC_WKUP_IRQHandler)
 {
-    if(BSP_pRTC != nullptr)
-    {
-        //BSP_pRTC->WakeUp_IRQ_Handler();
-    }
+    myRTC.WakeUp_IRQ_Handler();
 }
 
 NOS_ISR(TAMP_STAMP_IRQHandler)
 {
-    if(BSP_pRTC != nullptr)
-    {
-        //BSP_pRTC->Stamp_IRQ_Handler();
-    }
+    myRTC.Stamp_IRQ_Handler();
 }
 
 NOS_ISR(RTC_Alarm_IRQHandler)
 {
-    if(BSP_pRTC != nullptr)
-    {
-
-        //BSP_pRTC->Alarm_IRQ_Handler();
-    }
+    myRTC.Alarm_IRQ_Handler();
 }
-//#endif
-
-//-------------------------------------------------------------------------------------------------
-
 #endif // USE_RTC_DRIVER
 
 //-------------------------------------------------------------------------------------------------

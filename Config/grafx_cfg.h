@@ -69,11 +69,20 @@
 
 // Du to memory limitation (8M), we use unused layer for temp decoding
 #define GRAFX_RAW_INPUT_DATA_ADDRESS        0xC00BF400   // 128K
+#define GRAFX_RAW_INPUT_DATA_SIZE           (128 * 1024)
 #define GRAFX_DECODE_ARRAY_ADDRESS          0xC00DF400   // 224K
+#define GRAFX_DECODE_ARRAY_SIZE             (224 * 1024)
 #define GRAFX_APPEND_ARRAY_ADDRESS          0xC0117400   // 224K
+#define GRAFX_APPEND_ARRAY_SIZE             (224 * 1024)
 #define GRAFX_PREFIX_ARRAY_ADDRESS          0xC014F400   // 224K
+#define GRAFX_PREFIX_ARRAY_SIZE             (224 * 1024)
 #define GRAFX_DECOMPRESS_METHOD_ADDRESS     0xC0187400   // 8K
+//#define GRAFX_DECOMPRESS_METHOD_SIZE        (8 * 1024)
 #define GRAFX_DATA_SIZE_ADDRESS             0xC0189400   // 8K
+//#define GRAFX_DATA_SIZE_ADDRESS_SIZE        (8 * 1024)
+
+#define GRAFX_DATA_FREE_TOP_MEMORY          0xC07C0000
+
 
 //-------------------------------------------------------------------------------------------------
 
