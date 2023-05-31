@@ -88,7 +88,7 @@ uint8_t M24C0X_ReadByteArray(uint16_t addr, uint8_t *pData, uint16_t len)
 
 uint8_t M24C0X_WriteByteArray(uint16_t addr, uint8_t *pData, uint16_t len)
 {
-    uint8_t ret = 0;
+   // uint8_t ret = 0;
     uint16_t bytes2write = len;
     uint16_t remainingBytes = len;
     uint16_t bytesWritten = 0;

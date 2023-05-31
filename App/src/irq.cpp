@@ -145,19 +145,19 @@ NOS_ISR(EXTI15_10_IRQHandler)
 NOS_ISR(SDMMC1_IRQHandler)
 {
     // Process All SDIO Interrupt Sources
-    // TODO AR pSDIO->SDMMC1_IRQHandler();
+    mySDIO.SDMMC1_IRQHandler();
 }
 
 NOS_ISR(DMA2_Stream3_IRQHandler)
 {
     // Process DMA2 Stream3
-    // TODO AR pSDIO->DMA_Stream3IRQHandler();
+    mySDIO.DMA_Stream3IRQHandler();
 }
 
 NOS_ISR(DMA2_Stream6_IRQHandler)
 {
     // Process DMA2 Stream6
-    // TODO AR pSDIO->DMA_Stream6IRQHandler();
+    mySDIO.DMA_Stream6IRQHandler();
 }
 #endif
 

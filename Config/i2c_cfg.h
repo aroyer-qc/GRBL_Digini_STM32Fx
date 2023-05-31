@@ -43,5 +43,7 @@
 // If set to DEF_DISABLED, Addressing mode will be 7 bits. no dual address mode, no slave support
 #define I2C_DRIVER_SUPPORT_ADVANCED_MODE_CFG    DEF_DISABLED
 
+#define I2C_DRIVER_SUPPORT_CLK_SELECTION_CFG    DEF_DISABLED
+
 //-------------------------------------------------------------------------------------------------
 

@@ -169,13 +169,13 @@
 / Drive/Volume Configurations
 /---------------------------------------------------------------------------*/
 
-#define FF_VOLUMES		       2        // Will be override by enum DiskMedia_e
+#define FF_VOLUMES		       1        // Will be override by enum DiskMedia_e
 /* Number of volumes (logical drives) to be used. (1-10) */
 
 
 #define FF_STR_VOLUME_ID	0
 // USE X-Macro
-#define _VOLUME_STRS	"SD","FLASH"
+#define _VOLUME_STRS	"SD" /*,"RAM"*/
 /* FF_STR_VOLUME_ID switches support for volume ID in arbitrary strings.
 /  When FF_STR_VOLUME_ID is set to 1 or 2, arbitrary strings can be used as drive
 /  number in the path name. FF_VOLUME_STRS defines the volume ID strings for each
