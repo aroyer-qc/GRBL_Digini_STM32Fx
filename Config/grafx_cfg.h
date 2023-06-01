@@ -67,7 +67,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-// Du to memory limitation (8M), we use unused layer for temp decoding
+// Du to memory limitation (8M), we use unused layer for temporary decoding
 #define GRAFX_RAW_INPUT_DATA_ADDRESS        0xC00BF400   // 128K
 #define GRAFX_DECODE_ARRAY_ADDRESS          0xC00DF400   // 224K
 #define GRAFX_APPEND_ARRAY_ADDRESS          0xC0117400   // 224K
@@ -79,7 +79,7 @@
 
 // Special section use in this project
 #define GRAFX_USE_DISPLAY_RAM
-#define GRAFX_USE_RAM_DATA
+#define GRAFX_USE_RAM_DATA                    // this setting is not very clear at this point... probably for LCD with ram access
 //#define GRAFX_USE_ROM_DATA
 
 #define GRAFX_USE_MULTI_LINE
@@ -112,8 +112,8 @@
 #endif
 
 #define GRAFX_USE_LOAD_SKIN
-#define GRAFX_USE_PDI_MULTI_EVENT                                                  // Set Multi-touch is supported
-//#define GRAFX_PDI_INTERRUPT_IO                                                    // not available on DISCO746
+#define GRAFX_USE_PDI_MULTI_EVENT                                                  // Enable support for Multi-touch
+//#define GRAFX_PDI_INTERRUPT_IO                                                   // Pointing device (touch) IRQ is not available on DISCO746
 
 
 //#define GRAFX_USE_TIMED_WIDGET
@@ -141,13 +141,13 @@
 #define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
 
 // Default service available in Grafx
-#define USE_SERV_DATE
-#define USE_SERV_INPD
-#define USE_SERV_INPF
-#define USE_SERV_INPH
-//#define USE_SERV_INPS
-#define USE_SERV_TIME
-#define USE_SERV_XCHG
+#define USE_SERV_DATE                                                   // Service to provide the date
+#define USE_SERV_INPD                                                   // Service to input a decimal value
+#define USE_SERV_INPF                                                   // Service to input a float value
+#define USE_SERV_INPH                                                   // Service to input a Hexa value
+//#define USE_SERV_INPS                                                 // Service to input a string
+#define USE_SERV_TIME                                                   // Service to provide time
+#define USE_SERV_XCHG                                                   // Special service to exchange data.
 
 //-------------------------------------------------------------------------------------------------
 

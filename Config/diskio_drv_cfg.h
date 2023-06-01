@@ -31,4 +31,14 @@
 // #include "lib_class_fatfs_my_custom_driver.h"
 // #include etc..
 
+#if 0   // Example of custom driver (as anything is possible)
+
+#define FAT_FS_CUSTOM_DRIVE_DEF(X_DRIVE)\
+/*  Will create custom drive */\
+    X_DRIVE( DISK_EEPROM,    FatFS_Eeprom,     I2C_Eeprom,  &myI2C_Eeprom))\
+    X_DRIVE( DISK_ROM,       FatFS_ROM_memory, ROM_Memory,  &myROM_Memory))\
+    X_DRIVE( DISK_ETEHERNET, FatFS_Ethernet,   ETH_File,    &myEth_File  ))\
+
+#endif
+
 //-------------------------------------------------------------------------------------------------
