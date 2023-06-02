@@ -70,7 +70,7 @@ void ClassTaskCOMM::Run(void)
 
     while(SKIN_pTask->IsSkinLoaded() == false)
     {
-        nOS_Sleep(100);
+        nOS_Yield(); //nOs_Sleep(100);
     };
 
     for(;;)

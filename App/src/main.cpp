@@ -48,7 +48,7 @@
 int main()
 {
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-   // STACK_FillIdle();           // Use to initialize the stack for monitoring of the stack usage
+    STACK_FillIdle();           // Use to initialize the stack for monitoring of the stack usage
   #endif
 
     // Prevent stepping in every IRQ
