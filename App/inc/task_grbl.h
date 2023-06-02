@@ -59,11 +59,14 @@ class ClassTaskGRBL
 {
     public:
 
+                            ClassTaskGRBL      () { IsItInitialize = false; }
+
         void                Run                (void);
         nOS_Error           Initialize         (void);
 
     private:
 
+        bool                IsItInitialize;
         static nOS_Thread   m_Handle;
         static nOS_Stack    m_Stack[TASK_GRBL_STACK_SIZE];
 };

@@ -83,7 +83,7 @@
     ENTRY(VT100_MenuMain           ) \
     ENTRY(VT100_MenuBoot           ) \
     ENTRY(VT100_MenuDebug          ) \
-    ENTRY(VT100_MenuTest1          ) \
+    ENTRY(VT100_MenuTest           ) \
     ENTRY(VT100_MenuSetting        ) \
     ENTRY(VT100_MenuSettingTime    ) \
     ENTRY(VT100_MenuSetMisc        ) \
@@ -135,9 +135,10 @@
         ENTRY  (MENU,  VT100_MenuSetting,       VT100_ID_MISC_MENU,            nullptr,                                 VT100_MenuSetMisc,                      LBL_VT100_MISCELLEANEOUS                        ) \
         ENTRY  (MENU,  VT100_MenuSetting,       VT100_ID_TIME_MENU,            nullptr,                                 VT100_MenuSettingTime,                  LBL_VT100_TIME_AND_DATE                         ) \
 \
-        ENTRY  (MENU,  VT100_MenuTest1,         VT100_ID_DBG_LVL_10,           nullptr,                                 VT100_MenuRedirection,                  LBL_VT100_TEST_1                                ) \
-        ENTRY  (MENU,  VT100_MenuTest1,         VT100_ID_DBG_LVL_10,           nullptr,                                 VT100_MenuTest1,                        LBL_VT100_POUTINE_1                             ) \
-        ENTRY  (MENU,  VT100_MenuTest1,         VT100_ID_DBG_LVL_11,           nullptr,                                 VT100_MenuTest1,                        LBL_VT100_POUTINE_2                             ) \
+        ENTRY  (MENU,  VT100_MenuTest,          VT100_ID_DBG_STACK,            CALLBACK_DebugStack,                     VT100_MenuTest,                         LBL_VT100_STACKTISTIC                           ) \
+        ENTRY  (MENU,  VT100_MenuTest,          VT100_ID_DBG_LVL_10,           nullptr,                                 VT100_MenuRedirection,                  LBL_VT100_TEST_1                                ) \
+        ENTRY  (MENU,  VT100_MenuTest,          VT100_ID_DBG_LVL_10,           nullptr,                                 VT100_MenuTest,                         LBL_VT100_POUTINE_1                             ) \
+        ENTRY  (MENU,  VT100_MenuTest,          VT100_ID_DBG_LVL_11,           nullptr,                                 VT100_MenuTest,                         LBL_VT100_POUTINE_2                             ) \
 \
 		ENTRY  (MENU,  VT100_MenuSettingTime,   VT100_ID_TIME_DATE_TITLE,      nullptr,                                 VT100_MenuSetting,                      LBL_VT100_TIME_AND_DATE_CONFIGURATION           ) \
         ENTRY  (MENU,  VT100_MenuSettingTime,   VT100_ID_HOUR,                 CALLBACK_TimeDateCfg,                    VT100_MenuSettingTime,                  LBL_VT100_HOUR                                  ) \
@@ -190,13 +191,13 @@
 // For each line here you need a const declaration in console_var.h
 //                     Menu ID                  Ptr menu declaration
 #define VT100_MENU_DEF(X_VT100_MENU)  \
-    X_VT100_MENU    ( VT100_MenuMain,          VT100_Terminal::m_MENU_Main                 )  \
-    X_VT100_MENU    ( VT100_MenuBoot,          VT100_Terminal::m_MENU_Boot                 )  \
-    X_VT100_MENU    ( VT100_MenuDebug,         VT100_Terminal::m_MENU_Debug                )  \
-    X_VT100_MENU    ( VT100_MenuTest1,        VT100_Terminal::m_MENU_Test                  )  \
-    X_VT100_MENU    ( VT100_MenuSetting,       VT100_Terminal::m_MENU_Setting              )  \
-    X_VT100_MENU    ( VT100_MenuSettingTime,  VT100_Terminal::m_MENU_SettingTimeDate       )  \
-    X_VT100_MENU    ( VT100_MenuSetMisc,      VT100_Terminal::m_MENU_SettingMisc           )  \
+    X_VT100_MENU    ( VT100_MenuMain,           VT100_Terminal::m_MENU_Main                 )  \
+    X_VT100_MENU    ( VT100_MenuBoot,           VT100_Terminal::m_MENU_Boot                 )  \
+    X_VT100_MENU    ( VT100_MenuDebug,          VT100_Terminal::m_MENU_Debug                )  \
+    X_VT100_MENU    ( VT100_MenuTest1,          VT100_Terminal::m_MENU_Test                 )  \
+    X_VT100_MENU    ( VT100_MenuSetting,        VT100_Terminal::m_MENU_Setting              )  \
+    X_VT100_MENU    ( VT100_MenuSettingTime,    VT100_Terminal::m_MENU_SettingTimeDate      )  \
+    X_VT100_MENU    ( VT100_MenuSetMisc,        VT100_Terminal::m_MENU_SettingMisc          )  \
 
 //    X_VT100_MENU    ( VT100_MENU_SELECT_MENU,   VT100_Terminal::m_MENU_Select               )
 
@@ -213,6 +214,7 @@
 /* --- Test menu callback                                       --- */\
     X_VT100_CALLBACK (  VT100_Terminal:CALL_InputReading             )\
     X_VT100_CALLBACK (  VT100_Terminal:CALL_LedControl               )\
+    X_VT100_CALLBACK (  VT100_Terminal:CALL_Stacktistic              )\
 /*------------------------------------------------------------------*/\
 /* --- Main setting menu                                        --- */\
     X_VT100_CALLBACK (  VT100_Terminal:CALL_SettingCfg               )\

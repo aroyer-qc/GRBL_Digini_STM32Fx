@@ -92,16 +92,16 @@ const VT100_MenuDef_t VT100_Terminal::m_MENU_Debug[] =
 // Definition for the 'test 1 Menu'
 const VT100_MenuDef_t VT100_Terminal::m_MENU_Test[] =
 {
-    { LBL_DEBUG_MENU, nullptr,                      VT100_MenuMain  },
-    { LBL_DEBUG_OPT1, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT2, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT3, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT4, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT5, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT6, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT7, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_DEBUG_OPT8, CALL_DebugLevelSetting,       VT100_MenuDebug },
-    { LBL_TEST_OPT2,  CALL_InputReading,            VT100_MenuTest1 },
+    { LBL_DEBUG_MENU,      nullptr,                      VT100_MenuMain  },
+    { LBL_DEBUG_OPT1,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT2,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT3,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT4,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT5,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT6,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+    { LBL_DEBUG_OPT7,      CALL_DebugLevelSetting,       VT100_MenuDebug },
+  //  { LBL_VT100_STATISTIC, CALL_DebugStack,              VT100_MenuTest  },
+    { LBL_TEST_OPT2,       CALL_InputReading,            VT100_MenuTest  },
 };
 
 // Definition for the 'Setting Menu'

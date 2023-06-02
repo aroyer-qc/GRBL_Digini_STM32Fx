@@ -140,11 +140,6 @@ void BSP_Initialize(void)
     DIGINI_Initialize();
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
-
-    // Uart console Command Line and VT100 terminal
-    myConsole.Initialize(&myUART_Terminal);
-    myCommandLine.Initialize(&myConsole);
-   // myVT100_Terminal.Initialize(&myConsole, myLabel.GetPointer(LBL_VT100_MENU_TITLE));
 }
 
 //-------------------------------------------------------------------------------------------------

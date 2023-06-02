@@ -83,7 +83,7 @@ extern "C" void TaskGRBL_Wrapper(void* pvParameters)
 //-------------------------------------------------------------------------------------------------
 nOS_Error ClassTaskGRBL::Initialize(void)
 {
-    nOS_Error Error;
+    nOS_Error Error = NOS_OK;
 
     // ------------------------
     // Stepper drive IO
@@ -165,12 +165,74 @@ nOS_Error ClassTaskGRBL::Initialize(void)
   #endif
  #endif
 
-    Error = nOS_ThreadCreate(&m_Handle,
-                             TaskGRBL_Wrapper,
-                             this,
-                             &m_Stack[0],
-                             TASK_GRBL_STACK_SIZE,
-                             TASK_GRBL_PRIO);
+    // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
+    System_Initialize();
+    Stepper_Initialize();
+    Settings_Initialize();
+    System_ResetPosition();
+
+    // Initialize GrIP protocol
+//argo    GrIP_Initialize();
+
+    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE))
+    {
+        System.state = STATE_ALARM;
+    }
+    else
+    {
+        System.state = STATE_IDLE;
+    }
+
+    // Reset system variables.
+    uint16_t prior_state = System.state;
+    uint8_t home_state = System.is_homed;
+
+    System_Clear();
+    System.state = prior_state;
+    System.is_homed = home_state;
+
+    Probe_Reset();
+
+    sys_probe_state = 0;
+    sys_rt_exec_state = 0;
+    sys_rt_exec_alarm = 0;
+    sys_rt_exec_motion_override = 0;
+    sys_rt_exec_accessory_override = 0;
+
+    // Reset Grbl-Advanced primary systems.
+    GC_Initialize();
+    Planner_Initialize();
+    MC_Initialize();
+    TC_Initialize();
+
+    Coolant_Initialize();
+    Limits_Initialize();
+    Probe_Initialize();
+    Spindle_Initialize();
+    Stepper_Reset();
+
+    // Sync cleared gcode and planner positions to current system position.
+    Planner_SyncPosition();
+    GC_SyncPosition();
+
+    // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
+   // not sure if it is needed
+    Report_InitializeMessage();
+
+    if(IsItInitialize == false)
+    {
+        while(SKIN_pTask->IsSkinLoaded() == false)
+        {
+            nOS_Sleep(100);
+        };
+
+        Error = nOS_ThreadCreate(&m_Handle,
+                                 TaskGRBL_Wrapper,
+                                 this,
+                                 &m_Stack[0],
+                                 TASK_GRBL_STACK_SIZE,
+                                 TASK_GRBL_PRIO);
+    }
 
     return Error;
 }
@@ -189,77 +251,14 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskGRBL::Run(void)
 {
-    while(SKIN_pTask->IsSkinLoaded() == false)
-    {
-        nOS_Sleep(100);
-    };
-
-    // --------------------------------------------------------------------------------------------
-
-    // TODO AR fix this ERM_Initialize();         // Init terminal (UART or Virtual)
-    System_Initialize();
-    Stepper_Initialize();
-    Settings_Initialize();
-    System_ResetPosition();
-
-    // Initialize GrIP protocol
-//argo    GrIP_Initialize();
-
-    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE))
-    {
-        System.state = STATE_ALARM;
-    }
-    else
-    {
-        System.state = STATE_IDLE;
-    }
-
-    // Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
-    // will return to this loop to be cleanly re-initialized.
-
     for(;;)
     {
-        // Reset system variables.
-        uint16_t prior_state = System.state;
-        uint8_t home_state = System.is_homed;
+        // Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
+        // will return to this loop to be cleanly re-initialized.
+        Initialize();
 
-        System_Clear();
-        System.state = prior_state;
-        System.is_homed = home_state;
-
-        Probe_Reset();
-
-        sys_probe_state = 0;
-        sys_rt_exec_state = 0;
-        sys_rt_exec_alarm = 0;
-        sys_rt_exec_motion_override = 0;
-        sys_rt_exec_accessory_override = 0;
-
-        // Reset Grbl-Advanced primary systems.
-        GC_Initialize();
-        Planner_Initialize();
-        MC_Initialize();
-        TC_Initialize();
-
-        Coolant_Initialize();
-        Limits_Initialize();
-        Probe_Initialize();
-        Spindle_Initialize();
-        Stepper_Reset();
-
-        // Sync cleared gcode and planner positions to current system position.
-        Planner_SyncPosition();
-        GC_SyncPosition();
-
-        // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
-        Report_InitializeMessage();
-
-        //-- Start Grbl-Advanced main loop. Processes program inputs and executes them. --//
+        // Start Grbl-Advanced main loop. Processes program inputs and executes them.
         Protocol_MainLoop();
-        //--------------------------------------------------------------------------------//
-
-        // Clear serial buffer after soft reset to prevent undefined behavior
-        //  FifoUsart_Initialize(); it's DMA... so not needed!! no buffer allocated
     }
 }
 
@@ -282,7 +281,7 @@ bool GRBL_RealTimeCommand(char RealTimeCommand)
 
     switch(RealTimeCommand)
     {
-        case CMD_RESET:         MC_Reset();                                     break; // Call motion control reset routine.
+        case CMD_RESET:         MC_Reset();                                  break; // Call motion control reset routine.
         case CMD_STATUS_REPORT: System_SetExecStateFlag(EXEC_STATUS_REPORT); break; // Set as true
         case CMD_CYCLE_START:   System_SetExecStateFlag(EXEC_CYCLE_START);   break; // Set as true
         case CMD_FEED_HOLD:     System_SetExecStateFlag(EXEC_FEED_HOLD);     break; // Set as true

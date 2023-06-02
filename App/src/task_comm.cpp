@@ -23,6 +23,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
+//
+//  This is the idle task
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -49,6 +53,11 @@ nOS_Error ClassTaskCOMM::Initialize(void)
 {
     nOS_Error Error = NOS_OK;
 
+    // Uart console Command Line and VT100 terminal
+    myConsole.Initialize(&myUART_Terminal);
+    myCommandLine.Initialize(&myConsole);
+   // myVT100_Terminal.Initialize(&myConsole, myLabel.GetPointer(LBL_VT100_MENU_TITLE));
+
     return Error;
 }
 
@@ -66,16 +75,17 @@ nOS_Error ClassTaskCOMM::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskCOMM::Run(void)
 {
-    this->Initialize();          // Needed if task is at the idle level, otherwise remove it
+    Initialize();
 
     while(SKIN_pTask->IsSkinLoaded() == false)
     {
-        nOS_Yield(); //nOs_Sleep(100);
+        nOS_Sleep(100);
     };
 
     for(;;)
     {
-        nOS_Sleep(100);
+        myConsole.Process();
+        nOS_Yield();
     }
 }
 

@@ -33,7 +33,6 @@
 #undef TASK_NETWORK_GLOBAL
 #include "lib_digini.h"
 
-
 #include "lwip/opt.h"
 #include "lwip/init.h"
 #include "lwip/netif.h"

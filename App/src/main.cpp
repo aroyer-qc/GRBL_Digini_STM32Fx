@@ -59,7 +59,7 @@ int main()
     BSP_Initialize();     // All hardware and system initialization
     //pTaskLoading->Initialize();
     //pTaskNetwork->Initialize();
-    //pTaskGRBL->Initialize();
+    pTaskGRBL->Initialize();
     nOS_Start();
     BSP_PostOS_Initialize();
     pTaskCOMM->Run();                     // It is the idle task..
