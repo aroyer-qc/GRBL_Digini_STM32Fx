@@ -107,7 +107,7 @@
 #define DIGINI_USE_CRC_24_OS_9              DEF_DISABLED
 #define DIGINI_USE_CRC_30_CDMA              DEF_DISABLED
 #define DIGINI_USE_CRC_31_PHILIPS           DEF_DISABLED
-#define DIGINI_USE_CRC_32                   DEF_DISABLED
+#define DIGINI_USE_CRC_32                   DEF_ENABLED
 #define DIGINI_USE_CRC_32_AUTOSAR           DEF_DISABLED
 #define DIGINI_USE_CRC_32_BZIP2             DEF_DISABLED
 #define DIGINI_USE_CRC_32_C                 DEF_DISABLED
@@ -129,11 +129,6 @@
 #define DIGINI_USE_CRC_64_MS                DEF_DISABLED
 #define DIGINI_USE_CRC_64_WE                DEF_DISABLED
 #define DIGINI_USE_CRC_64_XZ                DEF_DISABLED
-
-
-
-
-
 
 //-------------------------------------------------------------------------------------------------
 

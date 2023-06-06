@@ -39,6 +39,7 @@
 #define USE_ADC_DRIVER              DEF_DISABLED
 #define USE_DAC_DRIVER              DEF_DISABLED
 #define USE_IO_BUS_DRIVER           DEF_DISABLED
+#define USE_ETH_DRIVER              DEF_ENABLED
 #define USE_I2C_DRIVER              DEF_ENABLED
 #define USE_I2S_DRIVER              DEF_DISABLED
 #define USE_PWM_DRIVER              DEF_DISABLED
@@ -54,7 +55,10 @@
     #define USE_USB_OTG_HS_CODE     DEF_DISABLED
 
 
-// Driver and/or peripheral to use with this board
+// Driver and/or peripheral to use with this project
+
+// ETH PHY Driver               
+#define PHY_DRIVER_INCLUDE                  "lib_class_phy_LAN8742A.h"
 
 // LCD Display
 #define GRAFX_DRIVER_INCLUDE                "lib_STM32F7_lcd_480x272 - RK043FN48H.h"

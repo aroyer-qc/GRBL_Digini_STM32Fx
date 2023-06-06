@@ -584,6 +584,7 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_EEprom.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_FT5336.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_phy_LAN8742A.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_pulse_counter.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_qspi_n25Qxxx.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_fatfs_disk.h" />
@@ -609,6 +610,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_isr.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_eth.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_i2c.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_qspi.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_rtc.h" />
@@ -625,6 +627,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_i2c_FT5336.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_phy_LAN8742A.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_pulse_counter.cpp">
@@ -653,6 +658,9 @@
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_eth.cpp">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_i2c.cpp">
 			<Option compilerVar="CC" />
@@ -967,26 +975,14 @@
 		</Unit>
 		<Unit filename="..\Module\module_jpg\jpeg.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\arch\cc.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\arch\sys_arch.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\arch\sys_arch.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_common.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH_MAC.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH_PHY.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\MAC\ST\EMAC_STM32F7xx.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\MAC\ST\EMAC_STM32F7xx.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\PHY\ETH\PHY_LAN8742A.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\PHY\ETH\PHY_LAN8742A.h" />
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\DIGINI_EthernetDriver.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\ethernetif.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\ethernetif.h" />
 		<Unit filename="..\Module\module_picopng\picopng.c">
 			<Option compilerVar="CC" />

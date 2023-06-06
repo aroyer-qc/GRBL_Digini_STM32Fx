@@ -34,9 +34,8 @@
 //  Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define ETH_SOCK                                        0
-#define ETH_PORT                                        30501
-
+//#define ETH_SOCK                                        0
+//#define ETH_PORT                                        30501
 
 #define DIGINI_USE_ASSERT                               DEF_DISABLED
 
