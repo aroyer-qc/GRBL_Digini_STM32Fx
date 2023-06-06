@@ -57,7 +57,7 @@ int main()
 
     nOS_Init();
     BSP_Initialize();     // All hardware and system initialization
-    //pTaskLoading->Initialize();
+    pTaskLoading->Initialize();
     //pTaskNetwork->Initialize();
     pTaskGRBL->Initialize();
     nOS_Start();

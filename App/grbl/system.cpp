@@ -33,15 +33,6 @@
 
 void System_Initialize(void)
 {
-    IO_PinInit(IO_CONTROL_RESET);
-    IO_PinInit(IO_CONTROL_FEED);
-    IO_PinInit(IO_CONTROL_START);
-    IO_PinInit(IO_SAFETY_DOOR);
-
-#ifdef ETH_IF
-    // W5500 Reset Pin
-    IO_PinInit(IO_W5500_RESET);
-#endif
 }
 
 

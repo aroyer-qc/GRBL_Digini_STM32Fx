@@ -92,9 +92,6 @@
 			<Add symbol="xUSE_USB_FS" />
 			<Add symbol="STM32F746xx" />
 			<Add symbol="STM32F7xx" />
-			<Add directory=".\inc" />
-			<Add directory=".\src" />
-			<Add directory=".\cmsis" />
 			<Add directory="..\App\grbl\" />
 			<Add directory="..\module\Digini\Peripheral\inc\port\STM32F7xx" />
 			<Add directory="..\module\Digini\Peripheral\inc\port\fatfs" />
@@ -115,11 +112,7 @@
 			<Add directory="..\module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include" />
 			<Add directory="..\module\module_STM32F7xx\CMSIS\Include" />
 			<Add directory="..\module\lwip\src\include" />
-			<Add directory="..\module\Module_Network_CMSIS_For_LWIP" />
-			<Add directory="..\module\Module_Network_CMSIS_For_LWIP\CMSIS" />
-			<Add directory="..\module\Module_Network_CMSIS_For_LWIP\CMSIS\PHY\ETH" />
-			<Add directory="..\module\Module_Network_CMSIS_For_LWIP\CMSIS\MAC\ST" />
-			<Add directory="..\module\Module_Network_CMSIS_For_LWIP\arch" />
+			<Add directory="..\module\lwip\src" />
 		</Compiler>
 		<Cpp>
 			<Add option="-mfloat-abi=hard" />

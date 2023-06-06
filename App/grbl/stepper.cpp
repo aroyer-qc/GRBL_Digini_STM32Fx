@@ -223,19 +223,6 @@ static uint8_t update_g96 = G96_UPDATE_CNT;
 // Initialize and start the stepper motor subsystem
 void Stepper_Initialize(void)
 {
-    IO_PinInit(IO_STEP_X);
-    IO_PinInit(IO_STEP_Y);
-    IO_PinInit(IO_STEP_Z);
-    //IO_PinInit(IO_STEP_A); TODO AR  no pin assign at this time
-    //IO_PinInit(IO_STEP_B); TODO AR   no pin assign at this time
-    IO_PinInit(IO_DIR_X);
-    IO_PinInit(IO_DIR_Y);
-    IO_PinInit(IO_DIR_Z);
-    //IO_PinInit(IO_DIR_A); TODO AR
-    //IO_PinInit(IO_DIR_B); TODO AR
-
-    IO_PinInit(IO_ENABLE_DRIVE);
-
     // Init TIM9
    // TIM9_Init();  TODO AR
 }

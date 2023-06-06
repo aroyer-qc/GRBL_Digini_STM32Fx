@@ -85,60 +85,15 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 {
     nOS_Error Error = NOS_OK;
 
-    // ------------------------
-    // Stepper drive IO
-    IO_PinInit(IO_ENABLE_DRIVE);
-    IO_PinInit(IO_STEP_X);
-    IO_PinInit(IO_DIR_X);
-
   #ifdef ENABLE_DUAL_AXIS
     IO_PinInit(IO_STEP_DUAL_AXIS);
     IO_PinInit(IO_DIR_DUAL_AXIS);
   #endif
 
-  #ifdef GRBL_USE_AXIS_Y
-    IO_PinInit(IO_STEP_Y);
-    IO_PinInit(IO_DIR_Y);
-  #endif
-  #ifdef GRBL_USE_AXIS_Z
-    IO_PinInit(IO_STEP_Z);
-    IO_PinInit(IO_DIR_Z);
-  #endif
-  #ifdef GRBL_USE_AXIS_A
-    IO_PinInit(IO_STEP_A);
-    IO_PinInit(IO_DIR_A);
-  #endif
-  #ifdef GRBL_USE_AXIS_B
-    IO_PinInit(IO_STEP_B);
-    IO_PinInit(IO_DIR_B);
-  #endif
-
-    // ------------------------
-    // Limit switch IO
-    IO_PinInit(IO_LIMIT_X);
-  #ifdef GRBL_USE_AXIS_Y
-    IO_PinInit(IO_LIMIT_Y);
-  #endif
-  #ifdef GRBL_USE_AXIS_Z
-    IO_PinInit(IO_LIMIT_Z);
-  #endif
-
-  #ifdef GRBL_USE_AXIS_A
-    IO_PinInit(IO_LIMIT_A);
-  #endif
-
-  #ifdef GRBL_USE_AXIS_B
-    IO_PinInit(IO_LIMIT_B);
-  #endif
-
     // ------------------------
     // Coolant IO
-  #ifdef GRBL_USE_COOLANT_FLOOD
     IO_PinInit(IO_COOLANT_FLOOD);
-  #endif
-  #ifdef ENABLE_M7
     IO_PinInit(IO_COOLANT_MIST);
-  #endif
 
     // ------------------------
     // Probe IO
@@ -165,9 +120,46 @@ nOS_Error ClassTaskGRBL::Initialize(void)
   #endif
  #endif
 
+    // ------------------------
+    // User Control Input
+    IO_PinInit(IO_CONTROL_RESET);
+    IO_PinInit(IO_CONTROL_FEED);
+    IO_PinInit(IO_CONTROL_START);
+    IO_PinInit(IO_SAFETY_DOOR);
+
+#ifdef ETH_IF
+    // W5500 Reset Pin
+    IO_PinInit(IO_W5500_RESET);
+#endif
+
+    // ------------------------
+    // Stepper Control Output
+    IO_PinInit(IO_STEP_X);
+    IO_PinInit(IO_STEP_Y);
+    IO_PinInit(IO_STEP_Z);
+    IO_PinInit(IO_STEP_A);
+    IO_PinInit(IO_STEP_B);
+    IO_PinInit(IO_STEP_C);
+    IO_PinInit(IO_DIR_X);
+    IO_PinInit(IO_DIR_Y);
+    IO_PinInit(IO_DIR_Z);
+    IO_PinInit(IO_DIR_A);
+    IO_PinInit(IO_DIR_B);
+    IO_PinInit(IO_DIR_C);
+    IO_PinInit(IO_ENABLE_DRIVE);
+
+    // ------------------------
+    // Limit switch Input
+    IO_PinInit(IO_LIMIT_X);
+    IO_PinInit(IO_LIMIT_Y);
+    IO_PinInit(IO_LIMIT_Z);
+    IO_PinInit(IO_LIMIT_A);
+    IO_PinInit(IO_LIMIT_B);
+    IO_PinInit(IO_LIMIT_C);
+
+
     // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
-    System_Initialize();
-    Stepper_Initialize();
+    Stepper_Initialize();       // timer!!
     Settings_Initialize();
     System_ResetPosition();
 
@@ -218,14 +210,9 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
    // not sure if it is needed
     Report_InitializeMessage();
-
+/*
     if(IsItInitialize == false)
     {
-        while(SKIN_pTask->IsSkinLoaded() == false)
-        {
-            nOS_Sleep(100);
-        };
-
         Error = nOS_ThreadCreate(&m_Handle,
                                  TaskGRBL_Wrapper,
                                  this,
@@ -233,7 +220,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
                                  TASK_GRBL_STACK_SIZE,
                                  TASK_GRBL_PRIO);
     }
-
+*/
     return Error;
 }
 
@@ -251,6 +238,12 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassTaskGRBL::Run(void)
 {
+
+    while(SKIN_pTask->IsSkinLoaded() == false)
+    {
+        nOS_Sleep(100);
+    };
+
     for(;;)
     {
         // Grbl-Advanced initialization loop upon power-up or a system abort. For the latter, all processes
