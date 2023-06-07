@@ -361,6 +361,10 @@
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli_expanding_macro.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli.cpp">
@@ -589,6 +593,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\lib_class_fatfs_ram_disk.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_pointing_device_interface.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_spi_sd_card.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\lib_ethernet_typedef.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_sdio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_usb.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_i2c.h" />
