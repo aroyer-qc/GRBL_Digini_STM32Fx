@@ -361,6 +361,9 @@
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
