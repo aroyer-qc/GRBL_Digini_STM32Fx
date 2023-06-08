@@ -31,6 +31,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #include "nOS.h"
+#include "lwip/err.h"
 
 //-------------------------------------------------------------------------------------------------
 // Global Macro
@@ -46,42 +47,68 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define TASK_NETWORK_STACK_SIZE              1024
+#define TASK_WEBSERVER_STACK_SIZE            500
+#define TASK_WEBSERVER_PRIO                  6
+
+#define TASK_NETWORK_STACK_SIZE              500
 #define TASK_NETWORK_PRIO                    4
+
+//#define TASK_NETWORK_STACK_SIZE              1024
+//#define TASK_NETWORK_PRIO                    4
 
 //-------------------------------------------------------------------------------------------------
 // Class definition(s)
 //-------------------------------------------------------------------------------------------------
 
-class ClassTaskNetwork
+class ClassNetwork
 {
   public:
 
-    void            Run                (void);
-    nOS_Error       Initialize         (void);
+
+    // Task
+    void            Network                     (void);
+    void            WebServer                   (void);
+
+
+
+    nOS_Error       Initialize                  (void);
+
 
   private:
 
-    static nOS_Thread      m_Handle;
-    static nOS_Stack       m_Stack[TASK_NETWORK_STACK_SIZE];
+    void            WebServer_Serve             (void);
+    void            WebServer_DynamicPage       (void);
+
+    void            TCP_EchoServer_Initialize   (void);
+    err_t           TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
+
+    static nOS_Thread      m_WebServerHandle;
+    static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];
+    static nOS_Thread      m_NetworkHandle;
+    static nOS_Stack       m_NetworkStack       [TASK_NETWORK_STACK_SIZE];
+
+    struct netconn*        m_WebServerConn;
+    struct netconn*        m_WebServerNewConn;
+
 };
 
 //-------------------------------------------------------------------------------------------------
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-TASK_NETWORK_EXTERN class ClassTaskNetwork  TaskNetwork;
+TASK_NETWORK_EXTERN class ClassNetwork  Network;
 
 #ifdef TASK_NETWORK_GLOBAL
-                 class ClassTaskNetwork* pTaskNetwork = &TaskNetwork;
+                 class ClassNetwork* pNetwork = &Network;
 #else
-    extern       class ClassTaskNetwork* pTaskNetwork;
+    extern       class ClassNetwork* pNetwork;
 #endif
 
 //-------------------------------------------------------------------------------------------------
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-extern "C" void TaskNetwork_Wrapper(void* pvParameters);
+extern "C" void TaskWebServer_Wrapper       (void* pvParameters);
+extern "C" void TaskNetwork_Wrapper         (void* pvParameters);
 
 //-------------------------------------------------------------------------------------------------

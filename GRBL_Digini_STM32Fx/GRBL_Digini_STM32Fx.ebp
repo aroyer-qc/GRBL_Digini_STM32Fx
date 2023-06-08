@@ -361,9 +361,14 @@
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cc.h" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cpu.h" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\lwip_errno.h" />
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\perf.h" />
 		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.h" />
 		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -771,6 +776,9 @@
 		<Unit filename="..\Module\Digini\Utility\src\lib_crc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Utility\src\lib_fast_memcpy.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\lib_fifo.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -945,6 +953,7 @@
 		<Unit filename="..\Module\lwip\src\core\udp.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\lwip\src\include\lwip\api.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\arch.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\def.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\etharp.h" />
@@ -975,16 +984,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\module_jpg\jpeg.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\arch\cc.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\arch\sys_arch.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_common.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH_MAC.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\Driver_ETH_PHY.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\MAC\ST\EMAC_STM32F7xx.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\CMSIS\PHY\ETH\PHY_LAN8742A.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\DIGINI_EthernetDriver.h" />
-		<Unit filename="..\Module\Module_Network_CMSIS_For_LWIP\ethernetif.h" />
 		<Unit filename="..\Module\module_picopng\picopng.c">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
