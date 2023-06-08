@@ -230,7 +230,7 @@ nOS_Error ClassNetwork::Initialize(void)
   #endif
 
     // Add the network interface
-   // netif_add(&gnetif, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &ethernet_input);
+    netif_add(&gnetif, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
 
     // Registers the default network interface
     netif_set_default(&gnetif);
