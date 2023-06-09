@@ -30,13 +30,16 @@
 // define(s)
 //-------------------------------------------------------------------------------------------------
 
-// MAC address configuration.
+// MAC address configuration using GUID of the CPU.
 #define MAC_ADDR0	                            (((char *)0x1FFF7A10)[0])
 #define MAC_ADDR1	                            (((char *)0x1FFF7A10)[2])
 #define MAC_ADDR2	                            (((char *)0x1FFF7A10)[4])
 #define MAC_ADDR3	                            (((char *)0x1FFF7A10)[6])
 #define MAC_ADDR4	                            (((char *)0x1FFF7A10)[8])
 #define MAC_ADDR5	                            (((char *)0x1FFF7A10)[10])
+
+#define ETH_USE_PHY_LINK_IRQ                    DEF_DISABLED
+#define ETH_PHY_LINK_IO                         IO_NOT_DEFINED
 
 #define netifMTU                                1500
 #define netifGUARD_BLOCK_TIME			        250
@@ -47,7 +50,12 @@
 #define TASK_ETHERNET_IF_PRIO                   4
 
 // Define those to better describe your network interface.
-#define IFNAME0 'e'
-#define IFNAME1 'n'
+#define IFNAME0 'd'
+#define IFNAME1 'g'
+
+// ETH PHY Driver               
+#define PHY_DRIVER_INCLUDE                      "lib_class_phy_LAN8742A.h"
+#define PHY_DRIVER_INTERFACE                    PHY_LAN8742A_Driver
+
 
 //-------------------------------------------------------------------------------------------------

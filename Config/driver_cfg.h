@@ -57,9 +57,6 @@
 
 // Driver and/or peripheral to use with this project
 
-// ETH PHY Driver               
-#define PHY_DRIVER_INCLUDE                  "lib_class_phy_LAN8742A.h"
-
 // LCD Display
 #define GRAFX_DRIVER_INCLUDE                "lib_STM32F7_lcd_480x272 - RK043FN48H.h"
 #define GRAFX_DRIVER_ARGUMENT               nullptr                                     // this driver does not have argument (ex. pointer on structure and/or peripheral)

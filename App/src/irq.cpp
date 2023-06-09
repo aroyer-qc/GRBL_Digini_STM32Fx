@@ -88,7 +88,6 @@ NOS_ISR(EXTI9_5_IRQHandler)
         IO_CallBack(IO_ISR_LIMIT_Y);
     }
 
-
         EXTI->PR = IO_PIN_MASK_9;  // bug
 }
 
