@@ -34,7 +34,6 @@
 #include "lib_digini.h"
 
 #include "ethernetif.h"
-#include "lwip/netif.h"
 #include "lwip/tcpip.h"
 #include "lwip/api.h"
 
@@ -148,14 +147,11 @@ static const unsigned char PAGE_START[] = {
 0x6e,0x61,0x3b,0x22,0x3e,0x4e,0x75,0x6d,0x62,0x65,0x72,0x20,0x6f,0x66,0x20,0x70,
 0x61,0x67,0x65,0x20,0x68,0x69,0x74,0x73,0x3a,0x0d,0x0a,0x00};
 
-
 //-------------------------------------------------------------------------------------------------
 // Private variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
 uint8_t MAC[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-
-struct netif gnetif;
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -230,17 +226,17 @@ nOS_Error ClassNetwork::Initialize(void)
   #endif
 
     // Add the network interface
-    netif_add(&gnetif, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
+    netif_add(&m_NetIf, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
 
     // Registers the default network interface
-    netif_set_default(&gnetif);
+    netif_set_default(&m_NetIf);
 
 
-    //ethernet_link_status_updated(&gnetif);
+    //ethernet_link_status_updated(&m_NetIf);
 
 
   #if LWIP_NETIF_LINK_CALLBACK
-     netif_set_link_callback(&gnetif, ethernet_link_status_updated);        // done in ethernetif.c?
+     netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
   #endif
 
   #if LWIP_DHCP
@@ -289,12 +285,14 @@ nOS_Error ClassNetwork::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassNetwork::Network(void)
 {
-    struct netconn *conn, *newconn;
- err_t err, accept_err;
- struct netbuf *buf;
- void *data;
- u16_t len;
- err_t recv_err;
+    struct netconn* conn;
+    struct netconn* newconn;
+    err_t           err;
+    err_t           accept_err;
+    struct netbuf*  buf;
+    void*           data;
+    u16_t           len;
+    err_t           recv_err;
 
     // Create a new connection identifier.
     conn = netconn_new_with_proto_and_callback(NETCONN_TCP, 0, nullptr);            // maybe move this and not create the task if ethernet is not working
@@ -420,10 +418,10 @@ void ClassNetwork::WebServer(void)
   */
 void ClassNetwork::WebServer_Serve(void)
 {
-    struct netbuf *inbuf;
-    err_t recv_err;
-    char* buf;
-    u16_t buflen;
+    struct netbuf*  inbuf;
+    err_t           recv_err;
+    char*           buf;
+    u16_t           buflen;
     //struct fs_file file;
 
     /* Read the data from the port, blocking if nothing yet there. We assume the request (the part we care about) is in one netbuf */
@@ -497,24 +495,29 @@ void ClassNetwork::WebServer_Serve(void)
   */
 void ClassNetwork::WebServer_DynamicPage(void)
 {
-  char PAGE_BODY[512];
-  char pagehits[10] = {0};
+    char* pPageBody;
+    char* pPageHits;
 
-  memset(PAGE_BODY, 0,512);
+// TODO Add protection
+    pPageBody = (char*)pMemoryPool->AllocAndClear(512);
+    pPageHits = (char*)pMemoryPool->AllocAndClear(10);
 
-  /* Update the hit count */
-  nPageHits++;
-  sprintf(pagehits, "%d", (int)nPageHits);
-  strcat(PAGE_BODY, pagehits);
-  strcat((char *)PAGE_BODY, "<pre><br>Name          State  Priority  Stack   Num" );
-  strcat((char *)PAGE_BODY, "<br>---------------------------------------------<br>");
+    // Update the hit count
+    nPageHits++;
+    sprintf(pPageHits, "%d", (int)nPageHits);
+    strcat(pPageBody, pPageHits);
+    strcat((char *)pPageBody, "<pre><br>Name          State  Priority  Stack   Num" );
+    strcat((char *)pPageBody, "<br>---------------------------------------------<br>");
 
-  /* The list of tasks and their status */
-  //osThreadList((unsigned char *)(PAGE_BODY + strlen(PAGE_BODY)));
-  strcat((char *)PAGE_BODY, "<br><br>---------------------------------------------");
-  strcat((char *)PAGE_BODY, "<br>B : Blocked, R : Ready, D : Deleted, S : Suspended<br>");
+    // The list of tasks and their status
+    //osThreadList((unsigned char *)(pPageBody + strlen(pPageBody)));
+    strcat((char *)pPageBody, "<br><br>---------------------------------------------");
+    strcat((char *)pPageBody, "<br>B : Blocked, R : Ready, D : Deleted, S : Suspended<br>");
 
-  /* Send the dynamically generated page */
-  netconn_write(m_WebServerNewConn, PAGE_START, strlen((char*)PAGE_START), NETCONN_COPY);
-  netconn_write(m_WebServerNewConn, PAGE_BODY, strlen(PAGE_BODY), NETCONN_COPY);
+    // Send the dynamically generated page
+    netconn_write(m_WebServerNewConn, PAGE_START, strlen((char*)PAGE_START), NETCONN_COPY);
+    netconn_write(m_WebServerNewConn, pPageBody, strlen(pPageBody), NETCONN_COPY);
+
+    pMemoryPool->Free((void**)&pPageBody);
+    pMemoryPool->Free((void**)&pPageHits);
 }

@@ -1,5 +1,5 @@
 
-#include "diskio.h"
+//#include "diskio.h"
 
 /*---------------------------------------------------------------------------/
 /  Configurations of FatFs Module

@@ -328,6 +328,7 @@
 		<Unit filename="..\Config\driver_cfg.h" />
 		<Unit filename="..\Config\eeprom_cfg.h" />
 		<Unit filename="..\Config\eeprom_var.h" />
+		<Unit filename="..\Config\ethernet_cfg.h" />
 		<Unit filename="..\Config\FatFs_cfg.h" />
 		<Unit filename="..\Config\ffconf.h" />
 		<Unit filename="..\Config\font_cfg.lst" />
@@ -599,6 +600,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_drv.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_interface.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\lib_class_fatfs_ram_disk.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_ethernet_phy_interface.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_pointing_device_interface.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_spi_sd_card.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_ethernet_typedef.h" />

@@ -32,6 +32,7 @@
 
 #include "nOS.h"
 #include "lwip/err.h"
+#include "lwip/netif.h"
 
 //-------------------------------------------------------------------------------------------------
 // Global Macro
@@ -89,6 +90,9 @@ class ClassNetwork
 
     struct netconn*        m_WebServerConn;
     struct netconn*        m_WebServerNewConn;
+    struct netif           m_NetIf;
+
+
 
 };
 
