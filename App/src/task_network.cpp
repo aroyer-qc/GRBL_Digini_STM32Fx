@@ -215,9 +215,9 @@ nOS_Error ClassNetwork::Initialize(void)
     ip_addr_t GatewayIP;
 
   #if LWIP_DHCP
-    ip_addr_set_zero_ip4(&IP_Address);
-    ip_addr_set_zero_ip4(&SubnetMask);
-    ip_addr_set_zero_ip4(&GatewayIP);
+    //ip_addr_set_zero_ip4(&IP_Address); // this is done into netif_add
+    //ip_addr_set_zero_ip4(&SubnetMask);
+    //ip_addr_set_zero_ip4(&GatewayIP);
   #else
     // use IP from ethernet_cfg.h
     IP_ADDR4(&IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);

@@ -30,7 +30,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define UART_ISR_RX_CFG                         DEF_DISABLED                // rename to RX bytes
+#define UART_ISR_RX_BYTE_CFG                    DEF_DISABLED
 #define UART_ISR_RX_ERROR_CFG                   DEF_DISABLED
 #define UART_ISR_RX_IDLE_CFG                    DEF_ENABLED
 #define UART_ISR_TX_EMPTY_CFG                   DEF_DISABLED

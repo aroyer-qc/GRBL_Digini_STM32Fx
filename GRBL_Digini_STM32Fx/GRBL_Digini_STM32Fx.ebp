@@ -426,6 +426,7 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Digini\inc\lib_advanced_macro.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_assert.h" />
+		<Unit filename="..\Module\Digini\Digini\inc\lib_class_cbi.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_define.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_digini.h" />
 		<Unit filename="..\Module\Digini\Digini\inc\lib_label.h" />

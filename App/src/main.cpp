@@ -52,13 +52,13 @@ int main()
   #endif
 
     // Prevent stepping in every IRQ
-    //(DBGMCU)->APB1FZ = 0x7E01BFF;
-    //(DBGMCU)->APB2FZ = 0x70003;
+    (DBGMCU)->APB1FZ = 0x7E01BFF;
+    (DBGMCU)->APB2FZ = 0x70003;
 
     nOS_Init();
     BSP_Initialize();     // All hardware and system initialization
     pTaskLoading->Initialize();
-    //pTaskNetwork->Initialize();
+ //   pTaskNetwork->Initialize();
     pTaskGRBL->Initialize();
     nOS_Start();
     BSP_PostOS_Initialize();

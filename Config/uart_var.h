@@ -52,7 +52,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         USART1_IRQn,                // IRQn_Channel
         7,                          // PreempPrio
         UART_Config_e(UART_CONFIG_N_8_1 | UART_OVER_8),
-        UART_BAUD_921600,
+        UART_BAUD_115200,
     },
   #endif
 

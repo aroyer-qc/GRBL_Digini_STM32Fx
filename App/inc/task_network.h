@@ -100,12 +100,12 @@ class ClassNetwork
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-TASK_NETWORK_EXTERN class ClassNetwork  Network;
+TASK_NETWORK_EXTERN class ClassNetwork  TaskNetwork;
 
 #ifdef TASK_NETWORK_GLOBAL
-                 class ClassNetwork* pNetwork = &Network;
+                 class ClassNetwork* pTaskNetwork = &TaskNetwork;
 #else
-    extern       class ClassNetwork* pNetwork;
+    extern       class ClassNetwork* pTaskNetwork;
 #endif
 
 //-------------------------------------------------------------------------------------------------
