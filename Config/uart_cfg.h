@@ -31,14 +31,12 @@
 //-------------------------------------------------------------------------------------------------
 
 #define UART_ISR_RX_BYTE_CFG                    DEF_DISABLED
-#define UART_ISR_RX_ERROR_CFG                   DEF_DISABLED
+#define UART_ISR_RX_ERROR_CFG                   DEF_ENABLED                 // need this because we need to flush buffer if any error since they are dynamically assign.
 #define UART_ISR_RX_IDLE_CFG                    DEF_ENABLED
 #define UART_ISR_TX_EMPTY_CFG                   DEF_DISABLED
 #define UART_ISR_TX_COMPLETED_CFG               DEF_ENABLED
 #define UART_ISR_CTS_CFG                        DEF_DISABLED                // Not tested
-#define UART_ISR_RTS_CFG                        DEF_DISABLED                // Not tested
-
-#define UART_CONTEXT_OVERRIDE_CFG               DEF_DISABLED
+#define UART_RTS_CFG                            DEF_DISABLED                // Not tested / and no support yet
 
 #define NB_OF_UART_SUPPORTED_CFG                8
 #define NB_OF_UART_DMA_SUPPORTED_CFG            8

@@ -44,7 +44,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART1_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART1_RTS,
       #endif
         RCC_APB2ENR_USART1EN,       // RCC_APBxENR
@@ -64,7 +64,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART2_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_ISR_CFG == DEF_ENABLED)
         IO_UART2_RTS,
       #endif
         RCC_APB1ENR_USART2EN,       // RCC_APBxENR
@@ -84,7 +84,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART3_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART3_RTS,
       #endif
         RCC_APB1ENR_USART3EN,       // RCC_APBxENR
@@ -104,7 +104,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART4_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART4_RTS,
       #endif
         RCC_APB1ENR_UART4EN,        // RCC_APBxENR
@@ -124,7 +124,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART5_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART5_RTS,
       #endif
         RCC_APB1ENR_UART5EN,        // RCC_APBxENR
@@ -144,7 +144,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART6_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART6_RTS,
       #endif
         RCC_APB2ENR_USART6EN,       // RCC_APBxENR
@@ -164,7 +164,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART7_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART7_RTS,
       #endif
         RCC_APB1ENR_UART7EN,        // RCC_APBxENR
@@ -184,7 +184,7 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
       #if (UART_ISR_CTS_CFG == DEF_ENABLED)
         IO_UART8_CTS,
       #endif
-      #if (UART_ISR_RTS_CFG == DEF_ENABLED)
+      #if (UART_RTS_CFG == DEF_ENABLED)
         IO_UART8_RTS,
       #endif
         RCC_APB1ENR_UART8EN,        // RCC_APBxENR
