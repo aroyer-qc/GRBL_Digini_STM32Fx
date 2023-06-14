@@ -38,6 +38,8 @@
 #define UART_ISR_CTS_CFG                        DEF_DISABLED                // Not tested
 #define UART_ISR_RTS_CFG                        DEF_DISABLED                // Not tested
 
+#define UART_CONTEXT_OVERRIDE_CFG               DEF_DISABLED
+
 #define NB_OF_UART_SUPPORTED_CFG                8
 #define NB_OF_UART_DMA_SUPPORTED_CFG            8
 

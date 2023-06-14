@@ -533,7 +533,6 @@ NOS_ISR(I2C4_ER_IRQHandler)
 //
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to USART1
 #if (UART_DRIVER_SUPPORT_UART1_CFG == DEF_ENABLED)
 NOS_ISR(USART1_IRQHandler)
 {
@@ -543,7 +542,6 @@ NOS_ISR(USART1_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to USART2
 #if (UART_DRIVER_SUPPORT_UART2_CFG == DEF_ENABLED)
 NOS_ISR(USART2_IRQHandler)
 {
@@ -553,7 +551,6 @@ NOS_ISR(USART2_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to USART3
 #if (UART_DRIVER_SUPPORT_UART3_CFG == DEF_ENABLED)
 NOS_ISR(USART3_IRQHandler)
 {
@@ -563,7 +560,6 @@ NOS_ISR(USART3_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to UART4
 #if (UART_DRIVER_SUPPORT_UART4_CFG == DEF_ENABLED)
 NOS_ISR(UART4_IRQHandler)
 {
@@ -573,7 +569,6 @@ NOS_ISR(UART4_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to UART5
 #if (UART_DRIVER_SUPPORT_UART5_CFG == DEF_ENABLED)
 NOS_ISR(UART5_IRQHandler)
 {
@@ -583,7 +578,6 @@ NOS_ISR(UART5_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to USART6
 #if (UART_DRIVER_SUPPORT_UART6_CFG == DEF_ENABLED)
 NOS_ISR(USART6_IRQHandler)
 {
@@ -593,7 +587,6 @@ NOS_ISR(USART6_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to UART7
 #if (UART_DRIVER_SUPPORT_UART7_CFG == DEF_ENABLED)
 NOS_ISR(UART7_IRQHandler)
 {
@@ -603,7 +596,6 @@ NOS_ISR(UART7_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to UART8
 #if (UART_DRIVER_SUPPORT_UART8_CFG == DEF_ENABLED)
 NOS_ISR(UART8_IRQHandler)
 {
@@ -613,7 +605,6 @@ NOS_ISR(UART8_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to Virtual RX UART
 #if (SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 //Example -> NOS_ISR(SPDIF_RX_IRQHandler)
 {
@@ -623,7 +614,6 @@ NOS_ISR(UART8_IRQHandler)
 
 //-------------------------------------------------------------------------------------------------
 
-// Interrupt Handler assign to Virtual TX UART
 #if (SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 //Example -> NOS_ISR(SPDIF_TX_IRQHandler)
 {
