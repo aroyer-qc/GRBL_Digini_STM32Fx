@@ -18,6 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "lib_digini.h"
 #include "System.h"
 #include "Protocol.h"
@@ -25,14 +26,12 @@
 #include "CoolantControl.h"
 #include "Config.h"
 
-
 void Coolant_Initialize(void)
 {
   	IO_PinInit(IO_COOLANT);
   	IO_PinInit(IO_COOLANT_FLOOD);
   	IO_PinInit(IO_COOLANT_MIST);
 }
-
 
 // Directly called by coolant_init(), coolant_set_state(), and mc_reset(), which can be at
 // an interrupt-level. No report flag set, but only called by routines that don't need it.
@@ -52,7 +51,6 @@ void Coolant_Stop(void)
    #endif
   #endif
 }
-
 
 // Returns current coolant output state. Overrides may alter it from programmed state.
 uint8_t Coolant_GetState(void)
@@ -97,7 +95,7 @@ void Coolant_SetState(uint8_t mode)
         return;
     }
 
-    if (mode & COOLANT_FLOOD_ENABLE)
+    if(mode & COOLANT_FLOOD_ENABLE)
     {
       #ifdef INVERT_COOLANT_FLOOD_PIN
         IO_SetPinLow(IO_COOLANT_FLOOD);
@@ -115,7 +113,7 @@ void Coolant_SetState(uint8_t mode)
     }
 
   #ifdef ENABLE_M7
-    if (mode & COOLANT_MIST_ENABLE)
+    if(mode & COOLANT_MIST_ENABLE)
     {
       #ifdef INVERT_COOLANT_MIST_PIN
         IO_SetPinLow(IO_COOLANT_MIST);

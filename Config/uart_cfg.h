@@ -35,8 +35,6 @@
 #define UART_ISR_RX_IDLE_CFG                    DEF_ENABLED
 #define UART_ISR_TX_EMPTY_CFG                   DEF_DISABLED
 #define UART_ISR_TX_COMPLETED_CFG               DEF_ENABLED
-#define UART_ISR_CTS_CFG                        DEF_DISABLED                // Not tested
-#define UART_RTS_CFG                            DEF_DISABLED                // Not tested / and no support yet
 
 #define NB_OF_UART_SUPPORTED_CFG                8
 #define NB_OF_UART_DMA_SUPPORTED_CFG            8

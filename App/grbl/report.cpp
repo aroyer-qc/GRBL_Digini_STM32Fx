@@ -126,15 +126,15 @@ void Report_StatusMessage(uint8_t status_code)
 {
     switch(status_code)
     {
-    case STATUS_OK: // STATUS_OK
-        Printf("ok\r\n");
-        Printf_Flush();
-        break;
+        case STATUS_OK: // STATUS_OK
+            Printf("ok\r\n");
+            Printf_Flush();
+            break;
 
-    default:
-        Printf("error:");
-        Printf("%d\r\n", status_code);
-        Printf_Flush();
+        default:
+            Printf("error:");
+            Printf("%d\r\n", status_code);
+            Printf_Flush();
     }
 }
 
@@ -161,53 +161,53 @@ void Report_FeedbackMessage(uint8_t message_code)
 
     switch(message_code)
     {
-    case MESSAGE_CRITICAL_EVENT:
-        Printf("Reset to continue");
-        break;
+        case MESSAGE_CRITICAL_EVENT:
+            Printf("Reset to continue");
+            break;
 
-    case MESSAGE_ALARM_LOCK:
-        Printf("'$H'|'$X' to unlock");
-        break;
+        case MESSAGE_ALARM_LOCK:
+            Printf("'$H'|'$X' to unlock");
+            break;
 
-    case MESSAGE_ALARM_UNLOCK:
-        Printf("Caution: Unlocked");
-        break;
+        case MESSAGE_ALARM_UNLOCK:
+            Printf("Caution: Unlocked");
+            break;
 
-    case MESSAGE_ENABLED:
-        Printf("Enabled");
-        break;
+        case MESSAGE_ENABLED:
+            Printf("Enabled");
+            break;
 
-    case MESSAGE_DISABLED:
-        Printf("Disabled");
-        break;
+        case MESSAGE_DISABLED:
+            Printf("Disabled");
+            break;
 
-    case MESSAGE_SAFETY_DOOR_AJAR:
-        Printf("Check Door");
-        break;
+        case MESSAGE_SAFETY_DOOR_AJAR:
+            Printf("Check Door");
+            break;
 
-    case MESSAGE_CHECK_LIMITS:
-        Printf("Check Limits");
-        break;
+        case MESSAGE_CHECK_LIMITS:
+            Printf("Check Limits");
+            break;
 
-    case MESSAGE_PROGRAM_END:
-        Printf("Pgm End");
-        break;
+        case MESSAGE_PROGRAM_END:
+            Printf("Pgm End");
+            break;
 
-    case MESSAGE_RESTORE_DEFAULTS:
-        Printf("Restoring defaults");
-        break;
+        case MESSAGE_RESTORE_DEFAULTS:
+            Printf("Restoring defaults");
+            break;
 
-    case MESSAGE_SPINDLE_RESTORE:
-        Printf("Restoring spindle");
-        break;
+        case MESSAGE_SPINDLE_RESTORE:
+            Printf("Restoring spindle");
+            break;
 
-    case MESSAGE_SLEEP_MODE:
-        Printf("Sleeping");
-        break;
+        case MESSAGE_SLEEP_MODE:
+            Printf("Sleeping");
+            break;
 
-    case MESSAGE_INVALID_TOOL:
-        Printf("Invalid Tool Number");
-        break;
+        case MESSAGE_INVALID_TOOL:
+            Printf("Invalid Tool Number");
+            break;
     }
 
     report_util_feedback_line_feed();
@@ -275,28 +275,28 @@ void Report_GrblSettings(void)
         {
             switch(set_idx)
             {
-            case 0:
-                report_util_float_setting(val+idx,Settings.steps_per_mm[idx],N_DECIMAL_SETTINGVALUE);
-                break;
+                case 0:
+                    report_util_float_setting(val+idx,Settings.steps_per_mm[idx],N_DECIMAL_SETTINGVALUE);
+                    break;
 
-            case 1:
-                report_util_float_setting(val+idx,Settings.max_rate[idx],N_DECIMAL_SETTINGVALUE);
-                break;
+                case 1:
+                    report_util_float_setting(val+idx,Settings.max_rate[idx],N_DECIMAL_SETTINGVALUE);
+                    break;
 
-            case 2:
-                report_util_float_setting(val+idx,Settings.acceleration[idx]/(60*60),N_DECIMAL_SETTINGVALUE);
-                break;
+                case 2:
+                    report_util_float_setting(val+idx,Settings.acceleration[idx]/(60*60),N_DECIMAL_SETTINGVALUE);
+                    break;
 
-            case 3:
-                report_util_float_setting(val+idx,-Settings.max_travel[idx],N_DECIMAL_SETTINGVALUE);
-                break;
+                case 3:
+                    report_util_float_setting(val+idx,-Settings.max_travel[idx],N_DECIMAL_SETTINGVALUE);
+                    break;
 
-            case 4:
-                report_util_float_setting(val+idx,Settings.backlash[idx],N_DECIMAL_SETTINGVALUE);
-                break;
+                case 4:
+                    report_util_float_setting(val+idx,Settings.backlash[idx],N_DECIMAL_SETTINGVALUE);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
@@ -384,17 +384,17 @@ void Report_NgcParams(void)
         Printf("[G");
         switch(coord_select)
         {
-        case 6:
-            Printf("28");
-            break;
+            case 6:
+                Printf("28");
+                break;
 
-        case 7:
-            Printf("30");
-            break;
+            case 7:
+                Printf("30");
+                break;
 
-        default:
-            Printf("%d", coord_select+54);
-            break; // G54-G59
+            default:
+                Printf("%d", coord_select+54);
+                break; // G54-G59
 
         }
 
@@ -462,18 +462,18 @@ void Report_GCodeModes(void)
 
         switch(gc_state.modal.program_flow)
         {
-        case PROGRAM_FLOW_PAUSED:
-            Putc('0');
-            break;
+            case PROGRAM_FLOW_PAUSED:
+                Putc('0');
+                break;
 
             // case PROGRAM_FLOW_OPTIONAL_STOP : Putc('1'); break; // M1 is ignored and not supported.
-        case PROGRAM_FLOW_COMPLETED_M2:
-        case PROGRAM_FLOW_COMPLETED_M30:
-            Printf("%d", gc_state.modal.program_flow);
-            break;
+            case PROGRAM_FLOW_COMPLETED_M2:
+            case PROGRAM_FLOW_COMPLETED_M30:
+                Printf("%d", gc_state.modal.program_flow);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
@@ -481,17 +481,17 @@ void Report_GCodeModes(void)
 
     switch(gc_state.modal.spindle)
     {
-    case SPINDLE_ENABLE_CW:
-        Putc('3');
-        break;
+        case SPINDLE_ENABLE_CW:
+            Putc('3');
+            break;
 
-    case SPINDLE_ENABLE_CCW:
-        Putc('4');
-        break;
+        case SPINDLE_ENABLE_CCW:
+            Putc('4');
+            break;
 
-    case SPINDLE_DISABLE:
-        Putc('5');
-        break;
+        case SPINDLE_DISABLE:
+            Putc('5');
+            break;
     }
 
 #ifdef ENABLE_M7
@@ -679,82 +679,82 @@ void Report_RealtimeStatus(void)
 
     switch(System.state)
     {
-    case STATE_IDLE:
-        Printf("Idle");
-        break;
+        case STATE_IDLE:
+            Printf("Idle");
+            break;
 
-    case STATE_CYCLE:
-        Printf("Run");
-        break;
+        case STATE_CYCLE:
+            Printf("Run");
+            break;
 
-    case STATE_HOLD:
-        if(!(System.suspend & SUSPEND_JOG_CANCEL))
-        {
-            Printf("Hold:");
-
-            if(System.suspend & SUSPEND_HOLD_COMPLETE)
+        case STATE_HOLD:
+            if(!(System.suspend & SUSPEND_JOG_CANCEL))
             {
-                Putc('0');
-            } // Ready to resume
+                Printf("Hold:");
+
+                if(System.suspend & SUSPEND_HOLD_COMPLETE)
+                {
+                    Putc('0');
+                } // Ready to resume
+                else
+                {
+                    Putc('1');
+                } // Actively holding
+                break;
+            } // Continues to print jog state during jog cancel.
+
+        case STATE_JOG:
+            Printf("Jog");
+            break;
+        case STATE_HOMING:
+            Printf("Home");
+            break;
+        case STATE_ALARM:
+            Printf("Alarm");
+            break;
+        case STATE_CHECK_MODE:
+            Printf("Check");
+            break;
+        case STATE_SAFETY_DOOR:
+            Printf("Door:");
+            if (System.suspend & SUSPEND_INITIATE_RESTORE)
+            {
+                Putc('3'); // Restoring
+            }
             else
             {
-                Putc('1');
-            } // Actively holding
-            break;
-        } // Continues to print jog state during jog cancel.
-
-    case STATE_JOG:
-        Printf("Jog");
-        break;
-    case STATE_HOMING:
-        Printf("Home");
-        break;
-    case STATE_ALARM:
-        Printf("Alarm");
-        break;
-    case STATE_CHECK_MODE:
-        Printf("Check");
-        break;
-    case STATE_SAFETY_DOOR:
-        Printf("Door:");
-        if (System.suspend & SUSPEND_INITIATE_RESTORE)
-        {
-            Putc('3'); // Restoring
-        }
-        else
-        {
-            if(System.suspend & SUSPEND_RETRACT_COMPLETE)
-            {
-                if(System.suspend & SUSPEND_SAFETY_DOOR_AJAR)
+                if(System.suspend & SUSPEND_RETRACT_COMPLETE)
                 {
-                    Putc('1'); // Door ajar
+                    if(System.suspend & SUSPEND_SAFETY_DOOR_AJAR)
+                    {
+                        Putc('1'); // Door ajar
+                    }
+                    else
+                    {
+                        Putc('0');
+                    } // Door closed and ready to resume
                 }
                 else
                 {
-                    Putc('0');
-                } // Door closed and ready to resume
+                    Putc('2'); // Retracting
+                }
             }
-            else
-            {
-                Putc('2'); // Retracting
-            }
-        }
-        break;
+            break;
 
-    case STATE_SLEEP:
-        Printf("Sleep");
-        break;
+        case STATE_SLEEP:
+            Printf("Sleep");
+            break;
 
-    case STATE_FEED_DWELL:
-        Printf("Dwell");
-        break;
+        case STATE_FEED_DWELL:
+            Printf("Dwell");
+            break;
 
-    case STATE_TOOL_CHANGE:
-        Printf("Tool");
-        break;
+        case STATE_TOOL_CHANGE:
+            Printf("Tool");
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     float wco[N_AXIS];
@@ -793,7 +793,7 @@ void Report_RealtimeStatus(void)
         Printf("|Bf:");
         Printf("%d", Planner_GetBlockBufferAvailable());
         Putc(',');
-    //TO AR temp remove    Printf("%d", FifoUsart_Available(STDOUT_NUM));
+        //TO AR temp remove    Printf("%d", FifoUsart_Available(STDOUT_NUM));
     }
 #endif
 

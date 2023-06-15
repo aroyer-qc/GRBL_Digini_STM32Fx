@@ -215,8 +215,8 @@ void Settings_Restore(uint8_t restore_flag)
 
     if(restore_flag & SETTINGS_RESTORE_BUILD_INFO)
     {
-        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO , 0);
-        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO+1 , 0); // Checksum
+        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO, 0);
+        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO+1, 0);  // Checksum
         Nvm_Update();
     }
 
@@ -345,35 +345,35 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 // Valid axis setting found.
                 switch (set_idx)
                 {
-                case 0:
+                    case 0:
 #ifdef MAX_STEP_RATE_HZ
-                    if (value*Settings.max_rate[parameter] > (MAX_STEP_RATE_HZ*60.0))
-                    {
-                        return(STATUS_MAX_STEP_RATE_EXCEEDED);
-                    }
+                        if (value*Settings.max_rate[parameter] > (MAX_STEP_RATE_HZ*60.0))
+                        {
+                            return(STATUS_MAX_STEP_RATE_EXCEEDED);
+                        }
 #endif
-                    Settings.steps_per_mm[parameter] = value;
-                    break;
+                        Settings.steps_per_mm[parameter] = value;
+                        break;
 
-                case 1:
+                    case 1:
 #ifdef MAX_STEP_RATE_HZ
-                    if (value*Settings.steps_per_mm[parameter] > (MAX_STEP_RATE_HZ*60.0))
-                    {
-                        return(STATUS_MAX_STEP_RATE_EXCEEDED);
-                    }
+                        if (value*Settings.steps_per_mm[parameter] > (MAX_STEP_RATE_HZ*60.0))
+                        {
+                            return(STATUS_MAX_STEP_RATE_EXCEEDED);
+                        }
 #endif
-                    Settings.max_rate[parameter] = value;
-                    break;
+                        Settings.max_rate[parameter] = value;
+                        break;
 
-                case 2:
-                    Settings.acceleration[parameter] = value*60*60;
-                    break; // Convert to mm/min^2 for grbl internal use.
-                case 3:
-                    Settings.max_travel[parameter] = -value;
-                    break;  // Store as negative for grbl internal use.
-                case 4:
-                    Settings.backlash[parameter] = value;
-                    break;
+                    case 2:
+                        Settings.acceleration[parameter] = value*60*60;
+                        break; // Convert to mm/min^2 for grbl internal use.
+                    case 3:
+                        Settings.max_travel[parameter] = -value;
+                        break;  // Store as negative for grbl internal use.
+                    case 4:
+                        Settings.backlash[parameter] = value;
+                        break;
                 }
                 break; // Exit while-loop after setting has been configured and proceed to the EEPROM write call.
             }
@@ -396,172 +396,172 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
 
         switch(parameter)
         {
-        case 0:
-            //Settings.system_flags = int_value;
-            break;
+            case 0:
+                //Settings.system_flags = int_value;
+                break;
 
-        case 1:
-            Settings.stepper_idle_lock_time = int_value;
-            break;
+            case 1:
+                Settings.stepper_idle_lock_time = int_value;
+                break;
 
-        case 2:
-            Settings.step_invert_mask = int_value;
-            Stepper_GenerateStepDirInvertMasks(); // Regenerate step and direction port invert masks.
-            break;
+            case 2:
+                Settings.step_invert_mask = int_value;
+                Stepper_GenerateStepDirInvertMasks(); // Regenerate step and direction port invert masks.
+                break;
 
-        case 3:
-            Settings.dir_invert_mask = int_value;
-            Stepper_GenerateStepDirInvertMasks(); // Regenerate step and direction port invert masks.
-            break;
+            case 3:
+                Settings.dir_invert_mask = int_value;
+                Stepper_GenerateStepDirInvertMasks(); // Regenerate step and direction port invert masks.
+                break;
 
-        case 4: // Reset to ensure change. Immediate re-init may cause problems.
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_INVERT_ST_ENABLE;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_INVERT_ST_ENABLE;
-            }
-            break;
-
-        case 5: // Reset to ensure change. Immediate re-init may cause problems.
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_INVERT_LIMIT_PINS;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_INVERT_LIMIT_PINS;
-            }
-            break;
-
-        case 6: // Reset to ensure change. Immediate re-init may cause problems.
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_INVERT_PROBE_PIN;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_INVERT_PROBE_PIN;
-            }
-            Probe_ConfigureInvertMask(false);
-            break;
-
-        case 10:
-            Settings.status_report_mask = int_value;
-            break;
-
-        case 11:
-            Settings.junction_deviation = value;
-            break;
-
-        case 12:
-            Settings.arc_tolerance = value;
-            break;
-
-        case 13:
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_REPORT_INCHES;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_REPORT_INCHES;
-            }
-            System_FlagWcoChange(); // Make sure WCO is immediately updated.
-            break;
-
-        case 14:
-            Settings.tool_change = int_value;
-            break;   // Check for range?
-
-        case 20:
-            if (int_value)
-            {
-                if (BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
+            case 4: // Reset to ensure change. Immediate re-init may cause problems.
+                if (int_value)
                 {
-                    return(STATUS_SOFT_LIMIT_ERROR);
+                    Settings.flags |= BITFLAG_INVERT_ST_ENABLE;
                 }
-                Settings.flags |= BITFLAG_SOFT_LIMIT_ENABLE;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_SOFT_LIMIT_ENABLE;
-            }
-            break;
+                else
+                {
+                    Settings.flags &= ~BITFLAG_INVERT_ST_ENABLE;
+                }
+                break;
 
-        case 21:
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_HARD_LIMIT_ENABLE;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_HARD_LIMIT_ENABLE;
-            }
-            Limits_Initialize(); // Re-init to immediately change. NOTE: Nice to have but could be problematic later.
-            break;
+            case 5: // Reset to ensure change. Immediate re-init may cause problems.
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_INVERT_LIMIT_PINS;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_INVERT_LIMIT_PINS;
+                }
+                break;
 
-        case 22:
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_HOMING_ENABLE;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_HOMING_ENABLE;
-                Settings.flags &= ~BITFLAG_SOFT_LIMIT_ENABLE; // Force disable soft-limits.
-            }
-            break;
+            case 6: // Reset to ensure change. Immediate re-init may cause problems.
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_INVERT_PROBE_PIN;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_INVERT_PROBE_PIN;
+                }
+                Probe_ConfigureInvertMask(false);
+                break;
 
-        case 23:
-            Settings.homing_dir_mask = int_value;
-            break;
-        case 24:
-            Settings.homing_feed_rate = value;
-            break;
-        case 25:
-            Settings.homing_seek_rate = value;
-            break;
-        case 26:
-            Settings.homing_debounce_delay = int_value;
-            break;
-        case 27:
-            Settings.homing_pulloff = value;
-            break;
-        case 30:
-            Settings.rpm_max = value;
-            Spindle_Initialize();
-            break; // Re-initialize spindle rpm calibration
-        case 31:
-            Settings.rpm_min = value;
-            Spindle_Initialize();
-            break; // Re-initialize spindle rpm calibration
-        case 32:
-            if (int_value)
-            {
-                Settings.flags |= BITFLAG_LASER_MODE;
-            }
-            else
-            {
-                Settings.flags &= ~BITFLAG_LASER_MODE;
-            }
-            break;
+            case 10:
+                Settings.status_report_mask = int_value;
+                break;
 
-        case 33:
-            if (int_value)
-            {
-                Settings.flags2 |= BITFLAG_LATHE_MODE;
-            }
-            else
-            {
-                Settings.flags2 &= ~BITFLAG_LATHE_MODE;
-            }
-            break;
+            case 11:
+                Settings.junction_deviation = value;
+                break;
 
-        default:
-            return(STATUS_INVALID_STATEMENT);
+            case 12:
+                Settings.arc_tolerance = value;
+                break;
+
+            case 13:
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_REPORT_INCHES;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_REPORT_INCHES;
+                }
+                System_FlagWcoChange(); // Make sure WCO is immediately updated.
+                break;
+
+            case 14:
+                Settings.tool_change = int_value;
+                break;   // Check for range?
+
+            case 20:
+                if (int_value)
+                {
+                    if (BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
+                    {
+                        return(STATUS_SOFT_LIMIT_ERROR);
+                    }
+                    Settings.flags |= BITFLAG_SOFT_LIMIT_ENABLE;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_SOFT_LIMIT_ENABLE;
+                }
+                break;
+
+            case 21:
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_HARD_LIMIT_ENABLE;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_HARD_LIMIT_ENABLE;
+                }
+                Limits_Initialize(); // Re-init to immediately change. NOTE: Nice to have but could be problematic later.
+                break;
+
+            case 22:
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_HOMING_ENABLE;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_HOMING_ENABLE;
+                    Settings.flags &= ~BITFLAG_SOFT_LIMIT_ENABLE; // Force disable soft-limits.
+                }
+                break;
+
+            case 23:
+                Settings.homing_dir_mask = int_value;
+                break;
+            case 24:
+                Settings.homing_feed_rate = value;
+                break;
+            case 25:
+                Settings.homing_seek_rate = value;
+                break;
+            case 26:
+                Settings.homing_debounce_delay = int_value;
+                break;
+            case 27:
+                Settings.homing_pulloff = value;
+                break;
+            case 30:
+                Settings.rpm_max = value;
+                Spindle_Initialize();
+                break; // Re-initialize spindle rpm calibration
+            case 31:
+                Settings.rpm_min = value;
+                Spindle_Initialize();
+                break; // Re-initialize spindle rpm calibration
+            case 32:
+                if (int_value)
+                {
+                    Settings.flags |= BITFLAG_LASER_MODE;
+                }
+                else
+                {
+                    Settings.flags &= ~BITFLAG_LASER_MODE;
+                }
+                break;
+
+            case 33:
+                if (int_value)
+                {
+                    Settings.flags2 |= BITFLAG_LATHE_MODE;
+                }
+                else
+                {
+                    Settings.flags2 &= ~BITFLAG_LATHE_MODE;
+                }
+                break;
+
+            default:
+                return(STATUS_INVALID_STATEMENT);
         }
     }
 

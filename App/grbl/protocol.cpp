@@ -206,7 +206,7 @@ void Protocol_MainLoop(void)
                         // everything until the next '%' sign. This will help fix resuming issues with certain
                         // functions that empty the planner buffer to execute its task on-time.
                     }
-                    else if(char_counter >= (LINE_BUFFER_SIZE-1))
+                    else if(char_counter >= (LINE_BUFFER_SIZE - 1))
                     {
                         // Detect line buffer overflow and set flag.
                         line_flags |= LINE_FLAG_OVERFLOW;
@@ -237,7 +237,7 @@ void Protocol_MainLoop(void)
         }
     }
 
-    return; /* Never reached */
+    return; // Never reached
 }
 
 
@@ -438,7 +438,7 @@ void Protocol_ExecRtSystem(void)
                         {
                             if(System.suspend & SUSPEND_INITIATE_RESTORE)   // Actively restoring
                             {
-#ifdef PARKING_ENABLE
+                              #ifdef PARKING_ENABLE
                                 // Set hold and reset appropriate control flags to restart parking sequence.
                                 if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
                                 {
@@ -446,7 +446,7 @@ void Protocol_ExecRtSystem(void)
                                     System.step_control = (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION);
                                     System.suspend &= ~(SUSPEND_HOLD_COMPLETE);
                                 } // else NO_MOTION is active.
-#endif
+                              #endif
                                 System.suspend &= ~(SUSPEND_RETRACT_COMPLETE | SUSPEND_INITIATE_RESTORE | SUSPEND_RESTORE_COMPLETE);
                                 System.suspend |= SUSPEND_RESTART_RETRACT;
                             }
@@ -504,7 +504,7 @@ void Protocol_ExecRtSystem(void)
                 // Cycle start only when IDLE or when a hold is complete and ready to resume.
                 if((System.state == STATE_IDLE) || ((System.state & STATE_HOLD) && (System.suspend & SUSPEND_HOLD_COMPLETE)))
                 {
-                    if (System.state == STATE_HOLD && System.spindle_stop_ovr)
+                    if(System.state == STATE_HOLD && System.spindle_stop_ovr)
                     {
                         System.spindle_stop_ovr |= SPINDLE_STOP_OVR_RESTORE_CYCLE; // Set to restore in suspend routine and cycle start after.
                     }
@@ -549,6 +549,7 @@ void Protocol_ExecRtSystem(void)
                 {
                     System.suspend |= SUSPEND_HOLD_COMPLETE;
                 }
+
                 BIT_FALSE(System.step_control,(STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION));
             }
             else
@@ -584,6 +585,7 @@ void Protocol_ExecRtSystem(void)
 
     // Execute overrides.
     rt_exec = sys_rt_exec_motion_override; // Copy volatile sys_rt_exec_motion_override
+
     if(rt_exec && !System.sync_move)
     {
         System_ClearExecMotionOverride(); // Clear all motion override flags.
@@ -611,8 +613,8 @@ void Protocol_ExecRtSystem(void)
             new_f_override -= FEED_OVERRIDE_FINE_INCREMENT;
         }
 
-        new_f_override = LIB_min(new_f_override,MAX_FEED_RATE_OVERRIDE);
-        new_f_override = LIB_max(new_f_override,MIN_FEED_RATE_OVERRIDE);
+        new_f_override = LIB_min(new_f_override, MAX_FEED_RATE_OVERRIDE);
+        new_f_override = LIB_max(new_f_override, MIN_FEED_RATE_OVERRIDE);
 
         uint8_t new_r_override = System.r_override;
 
@@ -641,6 +643,7 @@ void Protocol_ExecRtSystem(void)
     }
 
     rt_exec = sys_rt_exec_accessory_override;
+
     if(rt_exec)
     {
         System_ClearExecAccessoryOverrides(); // Clear all accessory override flags.
@@ -684,6 +687,7 @@ void Protocol_ExecRtSystem(void)
             {
                 BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
             }
+
             System.report_ovr_counter = 0; // Set to report change immediately
         }
 
@@ -712,7 +716,7 @@ void Protocol_ExecRtSystem(void)
             if((System.state == STATE_IDLE) || (System.state & (STATE_CYCLE | STATE_HOLD | STATE_JOG)))
             {
                 uint8_t coolant_state = gc_state.modal.coolant;
-#ifdef ENABLE_M7
+              #ifdef ENABLE_M7
                 if(rt_exec & EXEC_COOLANT_MIST_OVR_TOGGLE)
                 {
                     if(coolant_state & COOLANT_MIST_ENABLE)
@@ -736,7 +740,7 @@ void Protocol_ExecRtSystem(void)
                         coolant_state |= COOLANT_FLOOD_ENABLE;
                     }
                 }
-#else
+              #else
                 if(coolant_state & COOLANT_FLOOD_ENABLE)
                 {
                     BIT_FALSE(coolant_state,COOLANT_FLOOD_ENABLE);
@@ -745,7 +749,7 @@ void Protocol_ExecRtSystem(void)
                 {
                     coolant_state |= COOLANT_FLOOD_ENABLE;
                 }
-#endif
+              #endif
                 Coolant_SetState(coolant_state); // Report counter set in coolant_set_state().
                 gc_state.modal.coolant = coolant_state;
             }
@@ -775,7 +779,7 @@ void Protocol_ExecRtSystem(void)
 // template
 static void Protocol_ExecRtSuspend(void)
 {
-#ifdef PARKING_ENABLE
+  #ifdef PARKING_ENABLE
     // Declare and initialize parking local variables
     float restore_target[N_AXIS];
     float parking_target[N_AXIS];
@@ -786,7 +790,7 @@ static void Protocol_ExecRtSuspend(void)
     memset(pl_data,0,sizeof(Planner_LineData_t));
     pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
     pl_data->line_number = PARKING_MOTION_LINE_NUMBER;
-#endif
+  #endif
 
     Planner_Block_t *block = Planner_GetCurrentBlock();
     uint8_t restore_condition;
@@ -803,12 +807,12 @@ static void Protocol_ExecRtSuspend(void)
         restore_condition = (block->condition & PL_COND_SPINDLE_MASK) | Coolant_GetState();
         restore_spindle_speed = block->spindle_speed;
     }
-#ifdef DISABLE_LASER_DURING_HOLD
+  #ifdef DISABLE_LASER_DURING_HOLD
     if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
     {
         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);
     }
-#endif
+  #endif
 
     while(System.suspend)
     {
@@ -817,7 +821,7 @@ static void Protocol_ExecRtSuspend(void)
             return;
         }
 
-#ifdef ETH_IF
+      #ifdef ETH_IF
         GrIP_Update();
         if(GrIP_Receive(&packet))
         {
@@ -827,9 +831,9 @@ static void Protocol_ExecRtSuspend(void)
             }
         }
         ServerTCP_Update();
-#else
+      #else
         (void)packet;
-#endif
+      #endif
 
         // Block until initial hold is complete and the machine has stopped motion.
         if(System.suspend & SUSPEND_HOLD_COMPLETE)
@@ -845,10 +849,10 @@ static void Protocol_ExecRtSuspend(void)
                     // Ensure any prior spindle stop override is disabled at start of safety door routine.
                     System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED;
 
-#ifndef PARKING_ENABLE
+                  #ifndef PARKING_ENABLE
                     Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
                     Coolant_SetState(COOLANT_DISABLE);     // De-energize
-#else
+                  #else
 
                     // Get current position and store restore location and spindle retract waypoint.
                     System_ConvertArraySteps2Mpos(parking_target,sys_position);
@@ -863,18 +867,18 @@ static void Protocol_ExecRtSuspend(void)
                     // Execute slow pull-out parking retract motion. Parking requires homing enabled, the
                     // current location not exceeding the parking target location, and laser mode disabled.
                     // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
+                   #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                     if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
                             (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
                             BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE) &&
                             (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                     {
-#else
+                   #else
                     if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
                             (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
                             BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE))
                     {
-#endif
+                   #endif
                         // Retract spindle by pullout distance. Ensure retraction motion moves away from
                         // the workpiece and waypoint motion doesn't exceed the parking target location.
                         if(parking_target[PARKING_AXIS] < retract_waypoint)
@@ -910,11 +914,10 @@ static void Protocol_ExecRtSuspend(void)
 
                     }
 
-#endif
+                  #endif
 
                     System.suspend &= ~(SUSPEND_RESTART_RETRACT);
                     System.suspend |= SUSPEND_RETRACT_COMPLETE;
-
                 }
                 else
                 {
@@ -948,17 +951,17 @@ static void Protocol_ExecRtSuspend(void)
                     if(System.suspend & SUSPEND_INITIATE_RESTORE)
                     {
 
-#ifdef PARKING_ENABLE
+                     #ifdef PARKING_ENABLE
                         // Execute fast restore motion to the pull-out position. Parking requires homing enabled.
                         // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
+                      #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                         if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
                                 (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                         {
-#else
+                      #else
                         if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
                         {
-#endif
+                      #endif
                             // Check to ensure the motion doesn't move below pull-out position.
                             if(parking_target[PARKING_AXIS] <= PARKING_TARGET)
                             {
@@ -968,7 +971,7 @@ static void Protocol_ExecRtSuspend(void)
                                 MC_ParkingMotion(parking_target, pl_data);
                             }
                         }
-#endif
+                     #endif
 
                         // Delayed Tasks: Restart spindle and coolant, delay to power-up, then resume cycle.
                         if(gc_state.modal.spindle != SPINDLE_DISABLE)
@@ -1000,16 +1003,16 @@ static void Protocol_ExecRtSuspend(void)
                             }
                         }
 
-#ifdef PARKING_ENABLE
+                      #ifdef PARKING_ENABLE
                         // Execute slow plunge motion from pull-out position to resume position.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
+                       #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                         if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
                                 (System.override_ctrl == OVERRIDE_PARKING_MOTION))
                         {
-#else
+                       #else
                         if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
                         {
-#endif
+                       #endif
                             // Block if safety door re-opened during prior restore actions.
                             if(BIT_IS_FALSE(System.suspend,SUSPEND_RESTART_RETRACT))
                             {
@@ -1023,7 +1026,7 @@ static void Protocol_ExecRtSuspend(void)
                                 MC_ParkingMotion(restore_target, pl_data);
                             }
                         }
-#endif
+                      #endif
 
                         if(BIT_IS_FALSE(System.suspend, SUSPEND_RESTART_RETRACT))
                         {

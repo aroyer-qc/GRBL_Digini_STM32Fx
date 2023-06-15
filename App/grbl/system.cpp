@@ -49,7 +49,7 @@ void System_Clear(void)
 void System_ResetPosition(void)
 {
     // Clear machine position.
-    memset(sys_position, 0 , sizeof(sys_position));
+    memset(sys_position, 0, sizeof(sys_position));
 }
 
 
@@ -174,427 +174,427 @@ uint8_t System_ExecuteLine(char *line)
 
     switch(line[char_counter])
     {
-    case 0:
-        Report_GrblHelp();
-        break;
+        case 0:
+            Report_GrblHelp();
+            break;
 
-    case 'J': // Jogging
-        // Execute only if in IDLE or JOG states.
-        if(System.state != STATE_IDLE && System.state != STATE_JOG)
-        {
-            return STATUS_IDLE_ERROR;
-        }
-        if(line[2] != '=')
-        {
-            return STATUS_INVALID_STATEMENT;
-        }
-        return GC_ExecuteLine(line); // NOTE: $J= is ignored inside g-code parser and used to detect jog motions.
-        break;
-
-    case '$':
-    case 'G':
-    case 'C':
-    case 'X':
-        if(line[2] != 0)
-        {
-            return(STATUS_INVALID_STATEMENT);
-        }
-
-        switch(line[1])
-        {
-        case '$': // Prints Grbl settings
-            if(System.state & (STATE_CYCLE | STATE_HOLD))
+        case 'J': // Jogging
+            // Execute only if in IDLE or JOG states.
+            if(System.state != STATE_IDLE && System.state != STATE_JOG)
             {
-                return(STATUS_IDLE_ERROR);
-            } // Block during cycle. Takes too long to print.
-            else
-            {
-                Report_GrblSettings();
+                return STATUS_IDLE_ERROR;
             }
-            break;
-
-        case 'G': // Prints gcode parser state
-            // TODO: Move this to realtime commands for GUIs to request this data during suspend-state.
-            Report_GCodeModes();
-            break;
-
-        case 'C': // Set check g-code mode [IDLE/CHECK]
-            // Perform reset when toggling off. Check g-code mode should only work if Grbl
-            // is idle and ready, regardless of alarm locks. This is mainly to keep things
-            // simple and consistent.
-            if(System.state == STATE_CHECK_MODE )
+            if(line[2] != '=')
             {
-                MC_Reset();
-                Report_FeedbackMessage(MESSAGE_DISABLED);
+                return STATUS_INVALID_STATEMENT;
             }
-            else
-            {
-                if(System.state)
-                {
-                    // Requires no alarm mode.
-                    return STATUS_IDLE_ERROR;
-                }
+            return GC_ExecuteLine(line); // NOTE: $J= is ignored inside g-code parser and used to detect jog motions.
+            break;
 
-                System.state = STATE_CHECK_MODE;
-                Report_FeedbackMessage(MESSAGE_ENABLED);
+        case '$':
+        case 'G':
+        case 'C':
+        case 'X':
+            if(line[2] != 0)
+            {
+                return(STATUS_INVALID_STATEMENT);
             }
-            break;
 
-        case 'X': // Disable alarm lock [ALARM]
-            if(System.state == STATE_ALARM)
+            switch(line[1])
             {
-                // Block if safety door is ajar.
-                if(System_CheckSafetyDoorAjar())
-                {
-                    return(STATUS_CHECK_DOOR);
-                }
-
-                Report_FeedbackMessage(MESSAGE_ALARM_UNLOCK);
-                System.state = STATE_IDLE;
-                Stepper_WakeUp();
-                // Don't run startup script. Prevents stored moves in startup from causing accidents.
-            } // Otherwise, no effect.
-            break;
-        }
-        break;
-
-    case 'T':
-        if(line[++char_counter] == 0)
-        {
-            // Tool change finished. Continue execution
-            System_ClearExecStateFlag(EXEC_TOOL_CHANGE);
-            System.state = STATE_IDLE;
-
-            // Check if machine is homed
-            if(System.is_homed)
-            {
-                // Change tool with probing
-                if(Settings.tool_change == 2)
-                {
-                    // Check if TLS is valid
-                    if(Settings.tls_valid)
+                case '$': // Prints Grbl settings
+                    if(System.state & (STATE_CYCLE | STATE_HOLD))
                     {
-                        // Probe new tool
-                        TC_ProbeTLS();
+                        return(STATUS_IDLE_ERROR);
+                    } // Block during cycle. Takes too long to print.
+                    else
+                    {
+                        Report_GrblSettings();
+                    }
+                    break;
+
+                case 'G': // Prints gcode parser state
+                    // TODO: Move this to realtime commands for GUIs to request this data during suspend-state.
+                    Report_GCodeModes();
+                    break;
+
+                case 'C': // Set check g-code mode [IDLE/CHECK]
+                    // Perform reset when toggling off. Check g-code mode should only work if Grbl
+                    // is idle and ready, regardless of alarm locks. This is mainly to keep things
+                    // simple and consistent.
+                    if(System.state == STATE_CHECK_MODE )
+                    {
+                        MC_Reset();
+                        Report_FeedbackMessage(MESSAGE_DISABLED);
                     }
                     else
                     {
-                        return STATUS_TLS_NOT_SET;
+                        if(System.state)
+                        {
+                            // Requires no alarm mode.
+                            return STATUS_IDLE_ERROR;
+                        }
+
+                        System.state = STATE_CHECK_MODE;
+                        Report_FeedbackMessage(MESSAGE_ENABLED);
                     }
-                }
-                else if(Settings.tool_change == 3)
+                    break;
+
+                case 'X': // Disable alarm lock [ALARM]
+                    if(System.state == STATE_ALARM)
+                    {
+                        // Block if safety door is ajar.
+                        if(System_CheckSafetyDoorAjar())
+                        {
+                            return(STATUS_CHECK_DOOR);
+                        }
+
+                        Report_FeedbackMessage(MESSAGE_ALARM_UNLOCK);
+                        System.state = STATE_IDLE;
+                        Stepper_WakeUp();
+                        // Don't run startup script. Prevents stored moves in startup from causing accidents.
+                    } // Otherwise, no effect.
+                    break;
+            }
+            break;
+
+        case 'T':
+            if(line[++char_counter] == 0)
+            {
+                // Tool change finished. Continue execution
+                System_ClearExecStateFlag(EXEC_TOOL_CHANGE);
+                System.state = STATE_IDLE;
+
+                // Check if machine is homed
+                if(System.is_homed)
                 {
-                    // Change tool with tool table
-                    TC_ApplyToolOffset();
+                    // Change tool with probing
+                    if(Settings.tool_change == 2)
+                    {
+                        // Check if TLS is valid
+                        if(Settings.tls_valid)
+                        {
+                            // Probe new tool
+                            TC_ProbeTLS();
+                        }
+                        else
+                        {
+                            return STATUS_TLS_NOT_SET;
+                        }
+                    }
+                    else if(Settings.tool_change == 3)
+                    {
+                        // Change tool with tool table
+                        TC_ApplyToolOffset();
+                    }
+                    else
+                    {
+                        return STATUS_SETTING_DISABLED;
+                    }
                 }
                 else
                 {
-                    return STATUS_SETTING_DISABLED;
+                    return STATUS_MACHINE_NOT_HOMED;
                 }
+            }
+            else
+            {
+                // Print tool params
+                char c;
+                ToolParams_t params = {};
+                char num[4] = {};
+                uint8_t idx = 0;
+
+                do
+                {
+                    c = line[char_counter++];
+                    num[idx++] = c;
+                }
+                while(isdigit(c) && idx < 3);
+                num[idx] = '\0';
+
+                if(c == '=')
+                {
+                    // Save params of new tool
+                    char tmp_float[10];
+                    int t = 0;
+                    float value_f[4] = {};
+
+                    // Read floats [x.x:x.x:x.x:x.x]
+                    for(int i = 0; i < 4; i++)
+                    {
+                        t = ExtractFloat(&line[char_counter], t, tmp_float);
+
+                        // Check if float was found
+                        if(strlen(tmp_float) > 0)
+                        {
+                            // Convert string to float
+                            sscanf(tmp_float, "%f", &value_f[i]);
+                            tmp_float[0] = '\0';
+                        }
+                        else
+                        {
+                            // Couldn't find a float value
+                            break;
+                        }
+                    }
+
+                    params.x_offset = value_f[0];
+                    params.y_offset = value_f[1];
+                    params.z_offset = value_f[2];
+                    params.reserved = value_f[3];
+
+                    // Store tool params
+                    TT_SaveToolParams(atoi(num), &params);
+                }
+                else
+                {
+                    Report_ToolParams(atoi(num));
+                }
+            }
+            break;
+
+        case 'P':
+            if(System.is_homed)
+            {
+                Settings_StoreTlsPosition();
             }
             else
             {
                 return STATUS_MACHINE_NOT_HOMED;
             }
-        }
-        else
-        {
-            // Print tool params
-            char c;
-            ToolParams_t params = {};
-            char num[4] = {};
-            uint8_t idx = 0;
 
-            do
+            break;
+
+        default:
+            // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
+            if(!(System.state == STATE_IDLE || System.state == STATE_ALARM) )
             {
-                c = line[char_counter++];
-                num[idx++] = c;
+                return(STATUS_IDLE_ERROR);
             }
-            while(isdigit(c) && idx < 3);
-            num[idx] = '\0';
 
-            if(c == '=')
+            switch(line[1])
             {
-                // Save params of new tool
-                char tmp_float[10];
-                int t = 0;
-                float value_f[4] = {};
-
-                // Read floats [x.x:x.x:x.x:x.x]
-                for(int i = 0; i < 4; i++)
-                {
-                    t = ExtractFloat(&line[char_counter], t, tmp_float);
-
-                    // Check if float was found
-                    if(strlen(tmp_float) > 0)
+                case '#': // Print Grbl NGC parameters
+                    if(line[2] != 0)
                     {
-                        // Convert string to float
-                        sscanf(tmp_float, "%f", &value_f[i]);
-                        tmp_float[0] = '\0';
+                        return STATUS_INVALID_STATEMENT;
                     }
                     else
                     {
-                        // Couldn't find a float value
-                        break;
+                        Report_NgcParams();
                     }
-                }
+                    break;
 
-                params.x_offset = value_f[0];
-                params.y_offset = value_f[1];
-                params.z_offset = value_f[2];
-                params.reserved = value_f[3];
+                case 'H': // Perform homing cycle [IDLE/ALARM]
+                    if(BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
+                    {
+                        return(STATUS_SETTING_DISABLED);
+                    }
+                    if(System_CheckSafetyDoorAjar())
+                    {
+                        // Block if safety door is ajar.
+                        return STATUS_CHECK_DOOR;
+                    }
 
-                // Store tool params
-                TT_SaveToolParams(atoi(num), &params);
-            }
-            else
-            {
-                Report_ToolParams(atoi(num));
-            }
-        }
-        break;
+                    System.state = STATE_HOMING; // Set system state variable
 
-    case 'P':
-        if(System.is_homed)
-        {
-            Settings_StoreTlsPosition();
-        }
-        else
-        {
-            return STATUS_MACHINE_NOT_HOMED;
-        }
-
-        break;
-
-    default:
-        // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
-        if(!(System.state == STATE_IDLE || System.state == STATE_ALARM) )
-        {
-            return(STATUS_IDLE_ERROR);
-        }
-
-        switch(line[1])
-        {
-        case '#': // Print Grbl NGC parameters
-            if(line[2] != 0)
-            {
-                return STATUS_INVALID_STATEMENT;
-            }
-            else
-            {
-                Report_NgcParams();
-            }
-            break;
-
-        case 'H': // Perform homing cycle [IDLE/ALARM]
-            if(BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
-            {
-                return(STATUS_SETTING_DISABLED);
-            }
-            if(System_CheckSafetyDoorAjar())
-            {
-                // Block if safety door is ajar.
-                return STATUS_CHECK_DOOR;
-            }
-
-            System.state = STATE_HOMING; // Set system state variable
-
-            if(line[2] == 0)
-            {
-                MC_HomigCycle(HOMING_CYCLE_ALL);
+                    if(line[2] == 0)
+                    {
+                        MC_HomigCycle(HOMING_CYCLE_ALL);
 #ifdef HOMING_SINGLE_AXIS_COMMANDS
-            }
-            else if(line[3] == 0)
-            {
-                switch(line[2])
-                {
-                case 'X':
-                    MC_HomigCycle(HOMING_CYCLE_X);
-                    break;
+                    }
+                    else if(line[3] == 0)
+                    {
+                        switch(line[2])
+                        {
+                            case 'X':
+                                MC_HomigCycle(HOMING_CYCLE_X);
+                                break;
 
-                case 'Y':
-                    MC_HomigCycle(HOMING_CYCLE_Y);
-                    break;
+                            case 'Y':
+                                MC_HomigCycle(HOMING_CYCLE_Y);
+                                break;
 
-                case 'Z':
-                    MC_HomigCycle(HOMING_CYCLE_Z);
-                    break;
+                            case 'Z':
+                                MC_HomigCycle(HOMING_CYCLE_Z);
+                                break;
 
-                case 'A':
-                    MC_HomigCycle(HOMING_CYCLE_A);
-                    break;
+                            case 'A':
+                                MC_HomigCycle(HOMING_CYCLE_A);
+                                break;
 
-                case 'B':
-                    MC_HomigCycle(HOMING_CYCLE_B);
-                    break;
+                            case 'B':
+                                MC_HomigCycle(HOMING_CYCLE_B);
+                                break;
 
-                default:
-                    return STATUS_INVALID_STATEMENT;
-                }
+                            default:
+                                return STATUS_INVALID_STATEMENT;
+                        }
 #endif
-            }
-            else
-            {
-                return STATUS_INVALID_STATEMENT;
-            }
+                    }
+                    else
+                    {
+                        return STATUS_INVALID_STATEMENT;
+                    }
 
-            if(!System.abort)    // Execute startup scripts after successful homing.
-            {
-                System.state = STATE_IDLE; // Set to IDLE when complete.
-                Stepper_Disable(0); // Set steppers to the settings idle state before returning.
+                    if(!System.abort)    // Execute startup scripts after successful homing.
+                    {
+                        System.state = STATE_IDLE; // Set to IDLE when complete.
+                        Stepper_Disable(0); // Set steppers to the settings idle state before returning.
 
-                if(line[2] == 0)
-                {
-                    System_ExecuteStartup(line);
-                }
-            }
-            break;
+                        if(line[2] == 0)
+                        {
+                            System_ExecuteStartup(line);
+                        }
+                    }
+                    break;
 
-        case 'S': // Puts Grbl to sleep [IDLE/ALARM]
-            if((line[2] != 'L') || (line[3] != 'P') || (line[4] != 0))
-            {
-                return(STATUS_INVALID_STATEMENT);
-            }
-            System_SetExecStateFlag(EXEC_SLEEP); // Set to execute sleep mode immediately
-            break;
+                case 'S': // Puts Grbl to sleep [IDLE/ALARM]
+                    if((line[2] != 'L') || (line[3] != 'P') || (line[4] != 0))
+                    {
+                        return(STATUS_INVALID_STATEMENT);
+                    }
+                    System_SetExecStateFlag(EXEC_SLEEP); // Set to execute sleep mode immediately
+                    break;
 
-        case 'I': // Print or store build info. [IDLE/ALARM]
-            if(line[++char_counter] == 0 )
-            {
-                Settings_ReadBuildInfo(line);
-                Report_BuildInfo(line);
+                case 'I': // Print or store build info. [IDLE/ALARM]
+                    if(line[++char_counter] == 0 )
+                    {
+                        Settings_ReadBuildInfo(line);
+                        Report_BuildInfo(line);
 #ifdef ENABLE_BUILD_INFO_WRITE_COMMAND
-            }
-            else   // Store startup line [IDLE/ALARM]
-            {
-                if(line[char_counter++] != '=')
-                {
-                    return STATUS_INVALID_STATEMENT;
-                }
+                    }
+                    else   // Store startup line [IDLE/ALARM]
+                    {
+                        if(line[char_counter++] != '=')
+                        {
+                            return STATUS_INVALID_STATEMENT;
+                        }
 
-                helper_var = char_counter; // Set helper variable as counter to start of user info line.
+                        helper_var = char_counter; // Set helper variable as counter to start of user info line.
 
-                do
-                {
-                    line[char_counter-helper_var] = line[char_counter];
-                }
-                while(line[char_counter++] != 0);
+                        do
+                        {
+                            line[char_counter-helper_var] = line[char_counter];
+                        }
+                        while(line[char_counter++] != 0);
 
-                Settings_StoreBuildInfo(line);
+                        Settings_StoreBuildInfo(line);
 #endif
-            }
-            break;
+                    }
+                    break;
 
-        case 'R': // Restore defaults [IDLE/ALARM]
-            if((line[2] != 'S') || (line[3] != 'T') || (line[4] != '=') || (line[6] != 0))
-            {
-                return(STATUS_INVALID_STATEMENT);
-            }
-            switch(line[5])
-            {
+                case 'R': // Restore defaults [IDLE/ALARM]
+                    if((line[2] != 'S') || (line[3] != 'T') || (line[4] != '=') || (line[6] != 0))
+                    {
+                        return(STATUS_INVALID_STATEMENT);
+                    }
+                    switch(line[5])
+                    {
 #ifdef ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS
-            case '$':
-                Settings_Restore(SETTINGS_RESTORE_DEFAULTS);
-                break;
+                        case '$':
+                            Settings_Restore(SETTINGS_RESTORE_DEFAULTS);
+                            break;
 #endif
 #ifdef ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS
-            case '#':
-                Settings_Restore(SETTINGS_RESTORE_PARAMETERS);
-                break;
+                        case '#':
+                            Settings_Restore(SETTINGS_RESTORE_PARAMETERS);
+                            break;
 #endif
 #ifdef ENABLE_RESTORE_EEPROM_WIPE_ALL
-            case '*':
-                Settings_Restore(SETTINGS_RESTORE_ALL);
-                break;
+                        case '*':
+                            Settings_Restore(SETTINGS_RESTORE_ALL);
+                            break;
 #endif
-            case 'T':
-                TT_Reset();
-                break;
+                        case 'T':
+                            TT_Reset();
+                            break;
 
-            default:
-                return STATUS_INVALID_STATEMENT;
-            }
+                        default:
+                            return STATUS_INVALID_STATEMENT;
+                    }
 
-            Report_FeedbackMessage(MESSAGE_RESTORE_DEFAULTS);
-            MC_Reset(); // Force reset to ensure settings are initialized correctly.
-            break;
+                    Report_FeedbackMessage(MESSAGE_RESTORE_DEFAULTS);
+                    MC_Reset(); // Force reset to ensure settings are initialized correctly.
+                    break;
 
-        case 'N': // Startup lines. [IDLE/ALARM]
+                case 'N': // Startup lines. [IDLE/ALARM]
 #if (N_STARTUP_LINE > 0)
-            if(line[++char_counter] == 0 )   // Print startup lines
-            {
-                for(helper_var = 0; helper_var < N_STARTUP_LINE; helper_var++)
-                {
-                    if (!(Settings_ReadStartupLine(helper_var, line)))
+                    if(line[++char_counter] == 0 )   // Print startup lines
                     {
-                        Report_StatusMessage(STATUS_SETTING_READ_FAIL);
+                        for(helper_var = 0; helper_var < N_STARTUP_LINE; helper_var++)
+                        {
+                            if (!(Settings_ReadStartupLine(helper_var, line)))
+                            {
+                                Report_StatusMessage(STATUS_SETTING_READ_FAIL);
+                            }
+                            else
+                            {
+                                Report_StartupLine(helper_var,line);
+                            }
+                        }
+                        break;
                     }
-                    else
+                    else   // Store startup line [IDLE Only] Prevents motion during ALARM.
                     {
-                        Report_StartupLine(helper_var,line);
+                        if(System.state != STATE_IDLE)
+                        {
+                            // Store only when idle.
+                            return STATUS_IDLE_ERROR;
+                        }
+                        helper_var = true;  // Set helper_var to flag storing method.
+                        // No break. Continues into default: to read remaining command characters.
                     }
-                }
-                break;
-            }
-            else   // Store startup line [IDLE Only] Prevents motion during ALARM.
-            {
-                if(System.state != STATE_IDLE)
-                {
-                    // Store only when idle.
-                    return STATUS_IDLE_ERROR;
-                }
-                helper_var = true;  // Set helper_var to flag storing method.
-                // No break. Continues into default: to read remaining command characters.
-            }
 #endif
 
-        default:  // Storing setting methods [IDLE/ALARM]
-            if(!Read_Float(line, &char_counter, &parameter))
-            {
-                return(STATUS_BAD_NUMBER_FORMAT);
-            }
-            if(line[char_counter++] != '=')
-            {
-                return(STATUS_INVALID_STATEMENT);
-            }
-            if(helper_var)   // Store startup line
-            {
-                // Prepare sending gcode block to gcode parser by shifting all characters
-                helper_var = char_counter; // Set helper variable as counter to start of gcode block
+                default:  // Storing setting methods [IDLE/ALARM]
+                    if(!Read_Float(line, &char_counter, &parameter))
+                    {
+                        return(STATUS_BAD_NUMBER_FORMAT);
+                    }
+                    if(line[char_counter++] != '=')
+                    {
+                        return(STATUS_INVALID_STATEMENT);
+                    }
+                    if(helper_var)   // Store startup line
+                    {
+                        // Prepare sending gcode block to gcode parser by shifting all characters
+                        helper_var = char_counter; // Set helper variable as counter to start of gcode block
 
-                do
-                {
-                    line[char_counter-helper_var] = line[char_counter];
-                }
-                while(line[char_counter++] != 0);
+                        do
+                        {
+                            line[char_counter-helper_var] = line[char_counter];
+                        }
+                        while(line[char_counter++] != 0);
 
-                // Execute gcode block to ensure block is valid.
-                helper_var = GC_ExecuteLine(line); // Set helper_var to returned status code.
+                        // Execute gcode block to ensure block is valid.
+                        helper_var = GC_ExecuteLine(line); // Set helper_var to returned status code.
 
-                if(helper_var)
-                {
-                    return(helper_var);
-                }
-                else
-                {
-                    helper_var = trunc(parameter); // Set helper_var to int value of parameter
-                    Settings_StoreStartupLine(helper_var, line);
-                }
+                        if(helper_var)
+                        {
+                            return(helper_var);
+                        }
+                        else
+                        {
+                            helper_var = trunc(parameter); // Set helper_var to int value of parameter
+                            Settings_StoreStartupLine(helper_var, line);
+                        }
+                    }
+                    else   // Store global setting.
+                    {
+                        if(!Read_Float(line, &char_counter, &value))
+                        {
+                            return STATUS_BAD_NUMBER_FORMAT;
+                        }
+                        if((line[char_counter] != 0) || (parameter > 255))
+                        {
+                            return STATUS_INVALID_STATEMENT;
+                        }
+
+                        return Settings_StoreGlobalSetting((uint8_t)parameter, value);
+                    }
             }
-            else   // Store global setting.
-            {
-                if(!Read_Float(line, &char_counter, &value))
-                {
-                    return STATUS_BAD_NUMBER_FORMAT;
-                }
-                if((line[char_counter] != 0) || (parameter > 255))
-                {
-                    return STATUS_INVALID_STATEMENT;
-                }
-
-                return Settings_StoreGlobalSetting((uint8_t)parameter, value);
-            }
-        }
     }
 
     return STATUS_OK; // If '$' command makes it to here, then everything's ok.

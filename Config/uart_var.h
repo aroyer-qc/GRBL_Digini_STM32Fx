@@ -41,12 +41,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         USART1,                     // USARTx
         IO_UART1_RX,
         IO_UART1_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART1_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART1_RTS,
-      #endif
         RCC_APB2ENR_USART1EN,       // RCC_APBxENR
         &RCC->APB2ENR,              // Register
         USART1_IRQn,                // IRQn_Channel
@@ -61,12 +55,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         USART2,                     // USARTx
         IO_UART2_RX,
         IO_UART2_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART2_CTS,
-      #endif
-      #if (UART_ISR_CFG == DEF_ENABLED)
-        IO_UART2_RTS,
-      #endif
         RCC_APB1ENR_USART2EN,       // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         USART2_IRQn,                // IRQn_Channel
@@ -81,12 +69,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         USART3,                     // USARTx
         IO_UART3_RX,
         IO_UART3_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART3_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART3_RTS,
-      #endif
         RCC_APB1ENR_USART3EN,       // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         USART3_IRQn,                // IRQn_Channel
@@ -101,12 +83,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         UART4,                      // USARTx
         IO_UART4_RX,
         IO_UART4_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART4_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART4_RTS,
-      #endif
         RCC_APB1ENR_UART4EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         UART4_IRQn,                 // IRQn_Channel
@@ -121,12 +97,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         UART5,                      // USARTx
         IO_UART5_RX,
         IO_UART5_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART5_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART5_RTS,
-      #endif
         RCC_APB1ENR_UART5EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         UART5_IRQn,                 // IRQn_Channel
@@ -141,12 +111,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         USART6,                     // USARTx
         IO_UART6_RX,
         IO_UART6_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART6_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART6_RTS,
-      #endif
         RCC_APB2ENR_USART6EN,       // RCC_APBxENR
         &RCC->APB2ENR,              // Register
         USART6_IRQn,                // IRQn_Channel
@@ -161,12 +125,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         UART7,                      // USARTx
         IO_UART7_RX,
         IO_UART7_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART7_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART7_RTS,
-      #endif
         RCC_APB1ENR_UART7EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         UART7_IRQn,                 // IRQn_Channel
@@ -181,12 +139,6 @@ const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
         UART8,                      // USARTx
         IO_UART8_RX,
         IO_UART8_TX,
-      #if (UART_ISR_CTS_CFG == DEF_ENABLED)
-        IO_UART8_CTS,
-      #endif
-      #if (UART_RTS_CFG == DEF_ENABLED)
-        IO_UART8_RTS,
-      #endif
         RCC_APB1ENR_UART8EN,        // RCC_APBxENR
         &RCC->APB1ENR,              // Register
         UART8_IRQn,                 // IRQn_Channel
