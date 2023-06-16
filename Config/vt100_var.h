@@ -141,15 +141,4 @@ const VT100_MenuDef_t VT100_Terminal::m_MENU_SettingTimeDate[] =
 
 #endif // #if 0
 
-
-#ifdef VT100_GLOBAL
-
-class VT100_Terminal myVT100_Terminal;
-
-#else
-
-extern class VT100_Terminal myVT100_Terminal;
-
-#endif // VT100_GLOBAL
-
 //-------------------------------------------------------------------------------------------------

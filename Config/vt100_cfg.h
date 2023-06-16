@@ -31,7 +31,6 @@
 //-------------------------------------------------------------------------------------------------
 
 #define DIGINI_VT100_USE_COLOR                  DEF_ENABLED
-#define DIGINI_VT100_IS_A_TASK                  DEF_ENABLED
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MAIN_MENU,                        "Main Menu",                              "Menu Principal"                              ) \
@@ -45,11 +44,18 @@
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_2,                    "Dbg level 2  - System Action   ( )",     "Dbg level 2  - Action Système  ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_3,                    "Dbg level 3  - System Health   ( )",     "Dbg level 3  - Santé Système   ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_4,                    "Dbg level 4  - Monitor/Logs    ( )",     "Dbg level 4  - Moniteur/Logs   ( )"          ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_5,                    "Dbg level 5  - Free            ( )",     "Dbg level 5  - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_5,                    "Dbg level 5  - Stack Warning   ( )",     "Dbg level 5  - Alerte Stack    ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_6,                    "Dbg level 6  - Free            ( )",     "Dbg level 6  - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_7,                    "Dbg level 7  - Free            ( )",     "Dbg level 7  - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_8,                    "Dbg level 8  - Free            ( )",     "Dbg level 8  - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_9,                    "Dbg level 9  - Free            ( )",     "Dbg level 9  - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_10,                   "Dbg level 10 - Free            ( )",     "Dbg level 10 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_11,                   "Dbg level 11 - Free            ( )",     "Dbg level 11 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_12,                   "Dbg level 12 - Free            ( )",     "Dbg level 12 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_13,                   "Dbg level 13 - Free            ( )",     "Dbg level 13 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_14,                   "Dbg level 14 - Free            ( )",     "Dbg level 14 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_15,                   "Dbg level 15 - Free            ( )",     "Dbg level 15 - Libre           ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_16,                   "Dbg level 16 - Free            ( )",     "Dbg level 16 - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_SETTING_MENU,              "System Settings Menu",                   "Menu Configuration Système"                  ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MISCELLEANEOUS,                   "Miscelleaneous",                         "Divers"                                      ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_TIME_AND_DATE,                    "Time and Date",                          "Heure et Date"                               ) \
@@ -154,12 +160,6 @@
         ENTRY  (MENU,  VT100_MenuSetMisc,       VT100_ID_MISC_OPT2,            CALLBACK_MiscCfg,                        VT100_MenuSetMisc,                      LBL_VT100_BLANK                                 ) \
         ENTRY  (MENU,  VT100_MenuSetMisc,       VT100_ID_MISC_SERIAL_NUMBER,   CALLBACK_MiscCfg,                        VT100_MenuSetMisc,                      LBL_VT100_SERIAL_NUMBER_SETTING                 ) \
         ENTRY  (MENU,  VT100_MenuSetMisc,       VT100_ID_MISC_SAVE,            CALLBACK_MiscCfg,                        VT100_MenuSetMisc,                      LBL_VT100_BLANK                                 ) \
-
-// enums ------------------------------------------------------------------------------------------------------------
-
-//TODO move to console stuff
-// Item ID and Flag for menu
-//XMENU(EXPAND_AS_MENU_ENUMS);
 
 // ------------------------------------------------------------------------------------------------------------------
 

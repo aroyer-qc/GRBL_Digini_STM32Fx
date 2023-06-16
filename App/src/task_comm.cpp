@@ -56,7 +56,8 @@ nOS_Error ClassTaskCOMM::Initialize(void)
     // Uart console Command Line and VT100 terminal
     myConsole.Initialize(&myUART_Terminal);
     myCommandLine.Initialize(&myConsole);
-   // myVT100_Terminal.Initialize(&myConsole, myLabel.GetPointer(LBL_VT100_MENU_TITLE));
+    myConsole.GiveControlToChildProcess(&myCommandLine);          // Hijack the console!
+    myVT100_Terminal.Initialize(&myConsole, myLabel.GetPointer(LBL_VT100_MENU_TITLE));
 
     return Error;
 }
