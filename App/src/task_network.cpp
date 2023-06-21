@@ -206,23 +206,15 @@ nOS_Error ClassNetwork::Initialize(void)
 {
     nOS_Error Error;
 
-    // Create tcp_ip stack thread
+    // Initialize the LwIP stack. Create tcp_ip stack thread
     tcpip_init(nullptr, nullptr);
-
-    // Initialize the LwIP stack
-    //lwip_init();
-
 
     // Initialize the LwIP stack and configure the network interface
     ip_addr_t IP_Address;
     ip_addr_t SubnetMask;
     ip_addr_t GatewayIP;
 
-  #if LWIP_DHCP
-    //ip_addr_set_zero_ip4(&IP_Address); // this is done into netif_add
-    //ip_addr_set_zero_ip4(&SubnetMask);
-    //ip_addr_set_zero_ip4(&GatewayIP);
-  #else
+  #if !LWIP_DHCP
     // use IP from ethernet_cfg.h
     IP_ADDR4(&IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);
     IP_ADDR4(&SubnetMask, ETH_SUB_NETMASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
@@ -235,16 +227,11 @@ nOS_Error ClassNetwork::Initialize(void)
     // Registers the default network interface
     netif_set_default(&m_NetIf);
 
-
-    // ethernet_link_status_updated(&m_NetIf);
-
+    if(netif_is_link_up(&gnetif))   netif_set_up(&gnetif);          // When the netif is fully configured this function must be called
+    else                            netif_set_down(&gnetif);        // When the netif link is down this function must be called
 
   #if LWIP_NETIF_LINK_CALLBACK
-     netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
-  #endif
-
-  #if LWIP_DHCP
-  #else
+  //  netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
   #endif
 
     // Webserver task
@@ -271,6 +258,9 @@ nOS_Error ClassNetwork::Initialize(void)
 
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
+
+    dhcp_start(&m_NetIf);
+
     return Error;
 }
 
