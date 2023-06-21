@@ -40,9 +40,13 @@
 #define LWIP_SOCKET                     0
 #define SYS_LIGHTWEIGHT_PROT            0
 
+#define LWIP_IPV4                       1
 #define LWIP_IPV6                       0
 #define IPV6_FRAG_COPYHEADER            1
 #define LWIP_IPV6_DUP_DETECT_ATTEMPTS   0
+
+
+#define TCPIP_MBOX_SIZE                 10
 
 /* Enable some protocols to test them */
 #define LWIP_DHCP                       1
