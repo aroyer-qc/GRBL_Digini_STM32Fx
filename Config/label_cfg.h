@@ -124,7 +124,6 @@
     X_LABEL( LBL_TEST_2,                 "Decimal",                                     " "                                             ) \
     X_LABEL( LBL_TEST_3,                 "Hexa",                                        " "                                             ) \
     X_LABEL( LBL_TEST_4,                 "String",                                      " "                                             ) \
-    X_LABEL( LBL_VT100_STATISTIC,        "Stack Usage",                                 "Usage des Stacks"                              ) \
 
 //    X_LABEL(    LBL_INPUT_DOOR,             "Input Safety Door",               "Entrée Porte de Sureté"             )
 //    X_LABEL(    LBL_INPUT_FEED,             "Input Feed",                      "Entrée ???"                         )
