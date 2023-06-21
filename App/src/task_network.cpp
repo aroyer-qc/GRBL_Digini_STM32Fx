@@ -28,10 +28,14 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
+#include "lib_digini.h"
+
+#if (DIGINI_USE_ETHERNET == DEF_ENABLED)
+
 #define TASK_NETWORK_GLOBAL
 #include "task_network.h"
 #undef TASK_NETWORK_GLOBAL
-#include "lib_digini.h"
+
 
 #include "ethernetif.h"
 #include "lwip/tcpip.h"
@@ -232,7 +236,7 @@ nOS_Error ClassNetwork::Initialize(void)
     netif_set_default(&m_NetIf);
 
 
-    //ethernet_link_status_updated(&m_NetIf);
+    // ethernet_link_status_updated(&m_NetIf);
 
 
   #if LWIP_NETIF_LINK_CALLBACK
@@ -293,6 +297,10 @@ void ClassNetwork::Network(void)
     void*           data;
     u16_t           len;
     err_t           recv_err;
+
+for(;;)
+{ nOS_Yield();}
+
 
     // Create a new connection identifier.
     conn = netconn_new_with_proto_and_callback(NETCONN_TCP, 0, nullptr);            // maybe move this and not create the task if ethernet is not working
@@ -386,6 +394,8 @@ void ClassNetwork::WebServer(void)
 {
     err_t  err;
     err_t  accept_err;
+for(;;)
+{ nOS_Yield();}
 
     m_WebServerConn = netconn_new(NETCONN_TCP);                                     // Create a new TCP connection handle
 
@@ -521,3 +531,7 @@ void ClassNetwork::WebServer_DynamicPage(void)
     pMemoryPool->Free((void**)&pPageBody);
     pMemoryPool->Free((void**)&pPageHits);
 }
+
+//-------------------------------------------------------------------------------------------------
+
+#endif
