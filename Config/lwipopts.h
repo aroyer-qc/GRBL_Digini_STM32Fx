@@ -40,6 +40,7 @@
 #define LWIP_SOCKET                     0
 #define SYS_LIGHTWEIGHT_PROT            0
 
+#define LWIP_ETHERNET                   1
 #define LWIP_IPV4                       1
 #define LWIP_IPV6                       0
 #define IPV6_FRAG_COPYHEADER            1
