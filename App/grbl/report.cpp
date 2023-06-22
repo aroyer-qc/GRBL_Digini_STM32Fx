@@ -127,13 +127,13 @@ void Report_StatusMessage(uint8_t status_code)
     switch(status_code)
     {
         case STATUS_OK: // STATUS_OK
-            Printf("ok\r\n");
+            Printf("ok\r");
             Printf_Flush();
             break;
 
         default:
             Printf("error:");
-            Printf("%d\r\n", status_code);
+            Printf("%d\r", status_code);
             Printf_Flush();
     }
 }
@@ -217,8 +217,8 @@ void Report_FeedbackMessage(uint8_t message_code)
 // Welcome message
 void Report_InitializeMessage(void)
 {
-    //Printf("\r\nGRBL-Advanced %s ['$' for help]\r\n", GRBL_VERSION);
-    Printf("\r\nGrbl %s [Advanced Edition | '$' for help]\r\n", GRBL_VERSION);
+    //Printf("\rGRBL-Advanced %s ['$' for help]\r", GRBL_VERSION);
+    Printf("\rGrbl %s [Advanced Edition | '$' for help]\r", GRBL_VERSION);
     Printf_Flush();
 }
 
@@ -226,8 +226,8 @@ void Report_InitializeMessage(void)
 // Grbl help message
 void Report_GrblHelp(void)
 {
-    Printf("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\r\n");
-    Printf("[GRBL-Advanced by Schildkroet]\r\n");
+    Printf("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\r");
+    Printf("[GRBL-Advanced by Schildkroet]\r");
     Printf_Flush();
 }
 
