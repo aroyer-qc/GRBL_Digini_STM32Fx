@@ -30,10 +30,9 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-
-
 #define DIGINI_VT100_USE_COLOR                  DEF_ENABLED
 #define VT100_STARTUP_MENU_CFG                  MenuMain
+#define VT100_USER_CALLBACK_INITIALIZE          DEF_DISABLED
 
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
@@ -118,21 +117,21 @@
 \
         ENTRY  (MENU,  MenuRedirection,   ID_REDIRECTION,          CALLBACK_MenuRedirection,                VT100_MENU_NONE,                  INVALID_LABEL                                   ) \
 \
-        ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           nullptr,                                 MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
+        ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
-        ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           nullptr,                                 MenuDebug,                        LBL_VT100_DEBUG                                 ) \
-        ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         nullptr,                                 MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
-        ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            nullptr,                                 MenuTest,                         LBL_VT100_TEST                                  ) \
+        ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
+        ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
+        ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
         ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
-		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           nullptr,                                 MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
+		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
-        ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           nullptr,                                 MenuDebug,                        LBL_VT100_DEBUG                                 ) \
-        ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         nullptr,                                 MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
-        ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            nullptr,                                 MenuTest,                         LBL_VT100_TEST                                  ) \
+        ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
+        ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
+        ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
         ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
-        ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          nullptr,                                 MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
+        ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_None,                           MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_1                         ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_1,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_2                         ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_2,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_3                         ) \
@@ -150,16 +149,16 @@
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_E,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_15                        ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_F,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_16                        ) \
 \
-        ENTRY  (MENU,  MenuSetting,       ID_SETTING_TITLE,        nullptr,                                 MenuRedirection,                  LBL_VT100_SYSTEM_SETTING_MENU                   ) \
-        ENTRY  (MENU,  MenuSetting,       ID_MISC_MENU,            nullptr,                                 MenuSetMisc,                      LBL_VT100_MISCELLEANEOUS                        ) \
-        ENTRY  (MENU,  MenuSetting,       ID_TIME_MENU,            nullptr,                                 MenuSettingTime,                  LBL_VT100_TIME_AND_DATE                         ) \
+        ENTRY  (MENU,  MenuSetting,       ID_SETTING_TITLE,        CALLBACK_None,                           MenuRedirection,                  LBL_VT100_SYSTEM_SETTING_MENU                   ) \
+        ENTRY  (MENU,  MenuSetting,       ID_MISC_MENU,            CALLBACK_None,                           MenuSetMisc,                      LBL_VT100_MISCELLEANEOUS                        ) \
+        ENTRY  (MENU,  MenuSetting,       ID_TIME_MENU,            CALLBACK_None,                           MenuSettingTime,                  LBL_VT100_TIME_AND_DATE                         ) \
 \
         ENTRY  (MENU,  MenuTest,          ID_DBG_STACK,            CALLBACK_StackUsage,                     MenuTest,                         LBL_VT100_STACKTISTIC                           ) \
-        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_10,           nullptr,                                 MenuRedirection,                  LBL_VT100_TEST_1                                ) \
-        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_11,           nullptr,                                 MenuTest,                         LBL_VT100_POUTINE_1                             ) \
-        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_12,           nullptr,                                 MenuTest,                         LBL_VT100_POUTINE_2                             ) \
+        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_10,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_TEST_1                                ) \
+        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_11,           CALLBACK_None,                           MenuTest,                         LBL_VT100_POUTINE_1                             ) \
+        ENTRY  (MENU,  MenuTest,          ID_DBG_LVL_12,           CALLBACK_None,                           MenuTest,                         LBL_VT100_POUTINE_2                             ) \
 \
-		ENTRY  (MENU,  MenuSettingTime,   ID_TIME_DATE_TITLE,      nullptr,                                 MenuSetting,                      LBL_VT100_TIME_AND_DATE_CONFIGURATION           ) \
+		ENTRY  (MENU,  MenuSettingTime,   ID_TIME_DATE_TITLE,      CALLBACK_None,                           MenuSetting,                      LBL_VT100_TIME_AND_DATE_CONFIGURATION           ) \
         ENTRY  (MENU,  MenuSettingTime,   ID_HOUR,                 CALLBACK_TimeDateCfg,                    MenuSettingTime,                  LBL_VT100_HOUR                                  ) \
         ENTRY  (MENU,  MenuSettingTime,   ID_MINUTE,               CALLBACK_TimeDateCfg,                    MenuSettingTime,                  LBL_VT100_MINUTE                                ) \
         ENTRY  (MENU,  MenuSettingTime,   ID_SECOND,               CALLBACK_TimeDateCfg,                    MenuSettingTime,                  LBL_VT100_SECOND                                ) \
@@ -168,7 +167,7 @@
         ENTRY  (MENU,  MenuSettingTime,   ID_YEAR,                 CALLBACK_TimeDateCfg,                    MenuSettingTime,                  LBL_VT100_YEAR                                  ) \
         ENTRY  (MENU,  MenuSettingTime,   ID_TIME_DATE_SAVE,       CALLBACK_TimeDateCfg,                    MenuSettingTime,                  LBL_VT100_BLANK                                 ) \
 \
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_TITLE,           nullptr,                                 MenuSetting,                      LBL_VT100_MISC_CONFIG_MENU                      ) \
+        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_TITLE,           CALLBACK_None,                           MenuSetting,                      LBL_VT100_MISC_CONFIG_MENU                      ) \
         ENTRY  (MENU,  MenuSetMisc,       ID_MISC_OPT1,            CALLBACK_MiscCfg,                        MenuSetMisc,                      LBL_VT100_BLANK                                 ) \
         ENTRY  (MENU,  MenuSetMisc,       ID_MISC_OPT2,            CALLBACK_MiscCfg,                        MenuSetMisc,                      LBL_VT100_BLANK                                 ) \
         ENTRY  (MENU,  MenuSetMisc,       ID_MISC_SERIAL_NUMBER,   CALLBACK_MiscCfg,                        MenuSetMisc,                      LBL_VT100_SERIAL_NUMBER_SETTING                 ) \
