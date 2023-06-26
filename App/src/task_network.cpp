@@ -39,6 +39,7 @@
 
 #include "ethernetif.h"
 #include "lwip/tcpip.h"
+#include "lwip/dhcp.h"
 #include "lwip/api.h"
 
 
@@ -227,8 +228,8 @@ nOS_Error ClassNetwork::Initialize(void)
     // Registers the default network interface
     netif_set_default(&m_NetIf);
 
-    if(netif_is_link_up(&gnetif))   netif_set_up(&gnetif);          // When the netif is fully configured this function must be called
-    else                            netif_set_down(&gnetif);        // When the netif link is down this function must be called
+    if(netif_is_link_up(&m_NetIf))   netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
+    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
 
   #if LWIP_NETIF_LINK_CALLBACK
   //  netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
@@ -259,7 +260,7 @@ nOS_Error ClassNetwork::Initialize(void)
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
-    dhcp_start(&m_NetIf);
+   // dhcp_start(&m_NetIf);
 
     return Error;
 }

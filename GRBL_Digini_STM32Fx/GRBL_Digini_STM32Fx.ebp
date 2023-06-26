@@ -321,7 +321,6 @@
 		<Unit filename="..\Config\clock_cfg.h" />
 		<Unit filename="..\Config\color_cfg.h" />
 		<Unit filename="..\Config\console_cfg.h" />
-		<Unit filename="..\Config\console_var.h" />
 		<Unit filename="..\Config\crc_cfg.h" />
 		<Unit filename="..\Config\database_cfg.h" />
 		<Unit filename="..\Config\device_cfg.h" />
