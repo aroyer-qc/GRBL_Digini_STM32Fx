@@ -86,7 +86,7 @@ void ClassTaskCOMM::Run(void)
 
     for(;;)
     {
-        myConsole.Process();
+      //  myConsole.Process();
         nOS_Yield();
     }
 }

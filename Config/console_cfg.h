@@ -32,6 +32,8 @@
 
 #define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading Number of child process .
 
+#define CON_DEBUG_LEVEL_ETHERNET                CON_DEBUG_LEVEL_1
+
 //-------------------------------------------------------------------------------------------------
 
 
