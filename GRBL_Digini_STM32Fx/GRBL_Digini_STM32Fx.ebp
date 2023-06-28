@@ -317,7 +317,6 @@
 		<Unit filename="..\Config\adc_cfg.h" />
 		<Unit filename="..\Config\bsp_io_def.h" />
 		<Unit filename="..\Config\cli_cfg.h" />
-		<Unit filename="..\Config\cli_var.h" />
 		<Unit filename="..\Config\clock_cfg.h" />
 		<Unit filename="..\Config\color_cfg.h" />
 		<Unit filename="..\Config\console_cfg.h" />
@@ -360,7 +359,6 @@
 		<Unit filename="..\Config\uart_var.h" />
 		<Unit filename="..\Config\util_cfg.h" />
 		<Unit filename="..\Config\vt100_cfg.h" />
-		<Unit filename="..\Config\vt100_var.h" />
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />

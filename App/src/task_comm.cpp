@@ -79,14 +79,9 @@ void ClassTaskCOMM::Run(void)
 {
     Initialize();
 
-  //  while(SKIN_pTask->IsSkinLoaded() == false)
-  //  {
-  //      nOS_Sleep(100);
-  //  };
-
     for(;;)
     {
-      //  myConsole.Process();
+        myConsole.Process();
         nOS_Yield();
     }
 }
