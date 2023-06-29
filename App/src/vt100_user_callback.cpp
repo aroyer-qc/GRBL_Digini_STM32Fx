@@ -147,7 +147,7 @@ typedef enum
 // Variable(s)
 //-------------------------------------------------------------------------------------------------
 
-static CON_DebugLevel_e         VT100_LastDebugLevel;
+//static CON_DebugLevel_e         VT100_LastDebugLevel;
 //static nOS_Time                 VT100_LastUpTime;
 //static uint8_t                  VT100_LastSecond;
 //static bool                     VT100_DrawOnlyOnce;
@@ -173,15 +173,15 @@ static void VT100_PrintVoltage(uint8_t xPos, uint8_t yPos, uint32_t Voltage)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           PrintUserMenuStaticInfo
+//  Name:           PrintMenuStaticInfo
 //
 //  Description:    Print user header/footer or static display information
 //
 //  Note(s);        Be aware of your cursor location
 //
 //-------------------------------------------------------------------------------------------------
-#if (VT100_USER_MENU_STATIC_INFO == DEF_ENABLED)
-void VT100_Terminal::PrintUserMenuStaticInfo(void)
+#if (VT100_USE_USER_MENU_STATIC_INFO == DEF_ENABLED)
+void VT100_Terminal::PrintMenuStaticInfo(void)
 {
 }
 #endif
