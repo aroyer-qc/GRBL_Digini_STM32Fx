@@ -30,9 +30,11 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define DIGINI_VT100_USE_COLOR                  DEF_ENABLED
 #define VT100_STARTUP_MENU_CFG                  MenuMain
+
+#define VT100_USE_COLOR                         DEF_ENABLED
 #define VT100_USER_CALLBACK_INITIALIZE          DEF_DISABLED
+#define VT100_USE_STANDARD_MENU_HEADER          DEF_ENABLED
 
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \

@@ -161,9 +161,7 @@ static CON_DebugLevel_e         VT100_LastDebugLevel;
 //static nOS_TickCounter          VT100_GenericTimeOut2;
 //static uint64_t                 VT100_Generic_uint64;                                                 // uint64_t that can be used by any callback
 
-//-------------------------------------------------------------------------------------------------
-// Private(s) function(s)
-//-------------------------------------------------------------------------------------------------
+
 /*
 static void VT100_PrintVoltage(uint8_t xPos, uint8_t yPos, uint32_t Voltage)
 {
@@ -172,9 +170,21 @@ static void VT100_PrintVoltage(uint8_t xPos, uint8_t yPos, uint32_t Voltage)
 }
 */
 
+
 //-------------------------------------------------------------------------------------------------
-// Public(s) function(s)
+//
+//  Name:           PrintUserMenuStaticInfo
+//
+//  Description:    Print user header/footer or static display information
+//
+//  Note(s);        Be aware of your cursor location
+//
 //-------------------------------------------------------------------------------------------------
+#if (VT100_USER_MENU_STATIC_INFO == DEF_ENABLED)
+void VT100_Terminal::PrintUserMenuStaticInfo(void)
+{
+}
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -185,7 +195,7 @@ static void VT100_PrintVoltage(uint8_t xPos, uint8_t yPos, uint32_t Voltage)
 //  Note(s):        Put in this function what you want to be initialize only once at boot up
 //
 //-------------------------------------------------------------------------------------------------
-#if (VT100_USER_CALLBACK_INITIALIZE == DEF_DEFINED)
+#if (VT100_USER_CALLBACK_INITIALIZE == DEF_ENABLED)
 void VT100_Terminal::CallbackInitialize(void)
 {
 }
@@ -220,7 +230,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
         }
     }
 
-  #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+  #if (VT100_USE_COLOR == DEF_ENABLED)
     SetForeColor(VT100_COLOR_GREEN);
   #endif
 
@@ -251,7 +261,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
 
     if(Type == VT100_CALLBACK_REFRESH)
     {
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_GREEN);
       #endif
 
@@ -296,33 +306,33 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             VT100_Generic_uint64 = 10;    // Use for refresh ADC
 
             VT100_DisplayMfg();
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_CYAN);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_TEMP_SENSOR]);
             InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_YELLOW);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_CPU_TEMP_SENSOR]);
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_CYAN);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_INPUT_ANALOG]);
             InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_YELLOW);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_12_VOLT]);
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_CPU_VDD]);
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_BATTERY_LEVEL]);
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_BACKUP_BATTERY_LEVEL]);
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_CYAN);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_INPUT_DIGITAL]);
             InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_YELLOW);
           #endif
             //InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_EXTERNAL_SWITCH]);
@@ -344,7 +354,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             }
 
             // Temperature Sensor
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetForeColor(VT100_COLOR_WHITE);
           #endif
 
@@ -369,14 +379,14 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             SetCursorPosition(28, VerticalOffset++);
             if(1)//IO_Ctrl(IO_EXT_SWITCH, STATE_READ) == STATE_SET)
             {
-              #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+              #if (VT100_USE_COLOR == DEF_ENABLED)
                 SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
               #endif
                 InMenuPrintf(VT100_SZ_NONE, " High ");
             }
             else
             {
-              #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+              #if (VT100_USE_COLOR == DEF_ENABLED)
                 SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
               #endif
                 InMenuPrintf(VT100_SZ_NONE, " Low  ");
@@ -425,7 +435,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBa
         InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_BLUETOOTH_BOX3]);
         SetCursorPosition(1, 25);
         InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_STATUS]);
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_CYAN);
       #endif
         InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
@@ -437,7 +447,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBa
     if(Type == VT100_CALLBACK_REFRESH)
     {
         // fake log
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_GREEN);
       #endif
         SetCursorPosition(1, 33);
@@ -447,14 +457,14 @@ VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBa
 
         //if(BLUETOOTH_isUserConnected() == true)
         {
-          #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+          #if (VT100_USE_COLOR == DEF_ENABLED)
             SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
           #endif
             InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_BLUETOOTH_CONNECT]);
         }
         //else
         //{
-            //#if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+            //#if (VT100_USE_COLOR == DEF_ENABLED)
         //    SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
             // #endif
         //    InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_BLUETOOTH_DISCONNECT]);
@@ -486,13 +496,13 @@ VT100_InputType_e VT100_Terminal::CALLBACK_GetRSSI(uint8_t Input, VT100_CallBack
 
     if((Type == VT100_CALLBACK_INIT) || (Type == VT100_CALLBACK_ON_INPUT))
     {
-    #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+    #if (VT100_USE_COLOR == DEF_ENABLED)
         Bargraph(23, 21, VT100_COLOR_BLUE, graphRSSI, 65, 15);
     #else
         Bargraph(23, 21, graphRSSI, 65, 15);
     #endif
         SetCursorPosition(31, 23);
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_CYAN);
       #endif
         InMenuPrintf(VT100_SZ_NONE, "%4d", (int16_t)RSSI);
@@ -534,7 +544,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
 
         /// Print the static info in the
         PosY = 24;
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_YELLOW);
       #endif
         SetCursorPosition(13, PosY++);
@@ -753,7 +763,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
     {
         PosY = 17;
 
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         PrintSaveLabel(9, PosY, (m_NewConfigFlag[0] != 0) ? VT100_COLOR_YELLOW : VT100_COLOR_BLUE);
       #else
         PrintSaveLabel(9, PosY);
@@ -762,7 +772,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
 
     if(((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_LOW) != 0) || ((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_HIGH) != 0))
     {
-      #if (DIGINI_VT100_USE_COLOR == DEF_ENABLED)
+      #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_CYAN);
       #endif
 
