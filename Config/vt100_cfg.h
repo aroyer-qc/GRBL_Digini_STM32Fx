@@ -30,10 +30,14 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define DIGINI_VT100_USE_COLOR                  DEF_ENABLED
 #define VT100_STARTUP_MENU_CFG                  MenuMain
+
+#define VT100_USE_COLOR                         DEF_ENABLED
 #define VT100_USER_CALLBACK_INITIALIZE          DEF_DISABLED
 
+// Only one of those define can be used or none of them
+#define VT100_USE_STANDARD_MENU_STATIC_INFO     DEF_ENABLED
+#define VT100_USE_USER_MENU_STATIC_INFO         DEF_DISABLED
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MENU_TITLE,                       "GRBL Configuration Menu",                "Menu de Configuration GRBL"                  ) \

@@ -31,7 +31,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define LABEL_LANGUAGE_DEF(X_LABEL)  \
-    X_LABEL( LBL_OK,                     "Ok",                                          "Ok"                                            ) \
+    X_LABEL( LBL_OK,                     "Ok",                                          nullptr                                         ) \
     X_LABEL( LBL_OUTPUT,                 "Output",                                      "Sortie"                                        ) \
     X_LABEL( LBL_CONTROLS,               "Controls",                                    "Contrôles"                                     ) \
     X_LABEL( LBL_SYSTEM_SETUP,           "System Setup",                                "Configuration Système"                         ) \
@@ -40,30 +40,30 @@
     X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
     X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Système"                                  ) \
     X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Chargement du thèmes        %%"                ) \
-    X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                               "%2d:%02d:%02d"                                 ) \
-    X_LABEL( LBL_DATE,                   "%2d %02d %04d",                               "%2d %02d %04d"                                 ) \
-    X_LABEL( LBL_PERCENT,                "%2d",                                         "%2d"                                           ) \
-    X_LABEL( LBL_0,                      "0",                                           "0"                                             ) \
-    X_LABEL( LBL_1,                      "1",                                           "1"                                             ) \
-    X_LABEL( LBL_2,                      "2",                                           "2"                                             ) \
-    X_LABEL( LBL_3,                      "3",                                           "3"                                             ) \
-    X_LABEL( LBL_4,                      "4",                                           "4"                                             ) \
-    X_LABEL( LBL_5,                      "5",                                           "5"                                             ) \
-    X_LABEL( LBL_6,                      "6",                                           "6"                                             ) \
-    X_LABEL( LBL_7,                      "7",                                           "7"                                             ) \
-    X_LABEL( LBL_8,                      "8",                                           "8"                                             ) \
-    X_LABEL( LBL_9,                      "9",                                           "9"                                             ) \
-    X_LABEL( LBL_A,                      "A",                                           "A"                                             ) \
-    X_LABEL( LBL_B,                      "B",                                           "B"                                             ) \
-    X_LABEL( LBL_C,                      "C",                                           "C"                                             ) \
-    X_LABEL( LBL_D,                      "D",                                           "D"                                             ) \
-    X_LABEL( LBL_E,                      "E",                                           "E"                                             ) \
-    X_LABEL( LBL_F,                      "F",                                           "F"                                             ) \
-    X_LABEL( LBL_DOT,                    ".",                                           "."                                             ) \
-    X_LABEL( LBL_DEL,                    "Del",                                         "Del"                                           ) \
-    X_LABEL( LBL_SIGN,                   "-",                                           "-"                                             ) \
-    X_LABEL( LBL_TOGGLE_SIGN,            "+/-",                                         "+/-"                                           ) \
-    X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations "                               ) \
+    X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                               nullptr                                         ) \
+    X_LABEL( LBL_DATE,                   "%2d %02d %04d",                               nullptr                                         ) \
+    X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
+    X_LABEL( LBL_0,                      "0",                                           nullptr                                         ) \
+    X_LABEL( LBL_1,                      "1",                                           nullptr                                         ) \
+    X_LABEL( LBL_2,                      "2",                                           nullptr                                         ) \
+    X_LABEL( LBL_3,                      "3",                                           nullptr                                         ) \
+    X_LABEL( LBL_4,                      "4",                                           nullptr                                         ) \
+    X_LABEL( LBL_5,                      "5",                                           nullptr                                         ) \
+    X_LABEL( LBL_6,                      "6",                                           nullptr                                         ) \
+    X_LABEL( LBL_7,                      "7",                                           nullptr                                         ) \
+    X_LABEL( LBL_8,                      "8",                                           nullptr                                         ) \
+    X_LABEL( LBL_9,                      "9",                                           nullptr                                         ) \
+    X_LABEL( LBL_A,                      "A",                                           nullptr                                         ) \
+    X_LABEL( LBL_B,                      "B",                                           nullptr                                         ) \
+    X_LABEL( LBL_C,                      "C",                                           nullptr                                         ) \
+    X_LABEL( LBL_D,                      "D",                                           nullptr                                         ) \
+    X_LABEL( LBL_E,                      "E",                                           nullptr                                         ) \
+    X_LABEL( LBL_F,                      "F",                                           nullptr                                         ) \
+    X_LABEL( LBL_DOT,                    ".",                                           nullptr                                         ) \
+    X_LABEL( LBL_DEL,                    "Del",                                         nullptr                                         ) \
+    X_LABEL( LBL_SIGN,                   "-",                                           nullptr                                         ) \
+    X_LABEL( LBL_TOGGLE_SIGN,            "+/-",                                         nullptr                                         ) \
+    X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
     X_LABEL( LBL_RANGE,                  "Ranges",                                      "Plages"                                        ) \
     X_LABEL( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
     X_LABEL( LBL_WARNINGS,               "Warnings",                                    "Avertissements"                                ) \
@@ -71,9 +71,9 @@
     X_LABEL( LBL_REFERENCE,              "Reference",                                   "Réference"                                     ) \
     X_LABEL( LBL_FUNCTIONS,              "Functions",                                   "Fonctions"                                     ) \
     X_LABEL( LBL_MODULES,                "Modules",                                     "Modules"                                       ) \
-    X_LABEL( LBL_AXIS_MM_BACK,           "-888.888",                                    "-888.888"                                      ) \
-    X_LABEL( LBL_AXIS_INCH_BACK,         "-88.8888",                                    "-88.8888"                                      ) \
-    X_LABEL( LBL_DEGREE_BACK,            "-888.88",                                     "-888.88"                                       ) \
+    X_LABEL( LBL_AXIS_MM_BACK,           "-888.888",                                    nullptr                                         ) \
+    X_LABEL( LBL_AXIS_INCH_BACK,         "-88.8888",                                    nullptr                                         ) \
+    X_LABEL( LBL_DEGREE_BACK,            "-888.88",                                     nullptr                                         ) \
     X_LABEL( LBL_AXIS_X,                 "Axis X",                                      "Axe X"                                         ) \
     X_LABEL( LBL_AXIS_Y,                 "Axis Y",                                      "Axe Y"                                         ) \
     X_LABEL( LBL_AXIS_Z,                 "Axis Z",                                      "Axe Z"                                         ) \
@@ -84,19 +84,19 @@
     X_LABEL( LBL_ENABLE,                 "Enabled",                                     "Activé"                                        ) \
     X_LABEL( LBL_COOLANT,                "Coolant",                                     "Coolant"                                       ) \
     X_LABEL( LBL_MIST,                   "Mist",                                        "Mist"                                          ) \
-    X_LABEL( LBL_SPEED_BACK,             "88888",                                       "88888"                                         ) \
-    X_LABEL( LBL_SPEED,                  "%5ld",                                        "%5ld"                                          ) \
-    X_LABEL( LBL_SPEED_FLOAT,            "%5.0f",                                       "%5.0f"                                         ) \
+    X_LABEL( LBL_SPEED_BACK,             "88888",                                       nullptr                                         ) \
+    X_LABEL( LBL_SPEED,                  "%5ld",                                        nullptr                                         ) \
+    X_LABEL( LBL_SPEED_FLOAT,            "%5.0f",                                       nullptr                                         ) \
     X_LABEL( LBL_MIN_SPINDLE,            "Minimum Spindle Speed",                       "Vitesse Minimal de la broche"                  ) \
     X_LABEL( LBL_MAX_SPINDLE,            "Maximum Spindle Speed",                       "Vitesse Maximal de la broche"                  ) \
-    X_LABEL( LBL_RPM,                    "RPM",                                         "RPM"                                           ) \
-    X_LABEL( LBL_DRO,                    "DRO",                                         "DRO"                                           ) \
+    X_LABEL( LBL_RPM,                    "RPM",                                         nullptr                                         ) \
+    X_LABEL( LBL_DRO,                    "DRO",                                         nullptr                                         ) \
     X_LABEL( LBL_TEST,                   "the quick brown fox jumps over the lazy dog", "portez ce vieux whisky au juge blond qui fume" ) \
     X_LABEL( LBL_MAIN_MENU,              "Main Menu",                                   "Menu Principal"                                ) \
     X_LABEL( LBL_MAC_SELECT,             "Machine Configuration",                       "Configuration Machine"                         ) \
-    X_LABEL( LBL_XY_MAC,                 "XY",                                          "XY"                                            ) \
-    X_LABEL( LBL_ZX_MAC,                 "ZX",                                          "ZX"                                            ) \
-    X_LABEL( LBL_XYZ_MAC,                "XYZ",                                         "XYZ"                                           ) \
+    X_LABEL( LBL_XY_MAC,                 "XY",                                          nullptr                                         ) \
+    X_LABEL( LBL_ZX_MAC,                 "ZX",                                          nullptr                                         ) \
+    X_LABEL( LBL_XYZ_MAC,                "XYZ",                                         nullptr                                         ) \
     X_LABEL( LBL_INPUT_CHECK,            "Diagnostic Input",                            "Diagnostique Entrée"                           ) \
     X_LABEL( LBL_LIMIT_X,                "Input Limit X",                               "Entrée Limite X"                               ) \
     X_LABEL( LBL_LIMIT_Y,                "Input Limit Y",                               "Entrée Limite Y"                               ) \
@@ -109,26 +109,25 @@
     X_LABEL( LBL_INPUT_HOLD,             "Input Hold",                                  "Entrée Maintenir"                              ) \
     X_LABEL( LBL_INPUT_PROBE,            "Input Probe",                                 "Entrée Sonde"                                  ) \
     X_LABEL( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
-    X_LABEL( LBL_INFO,                   "Information",                                 "Information"                                   ) \
+    X_LABEL( LBL_INFO,                   "Information",                                 nullptr                                         ) \
     X_LABEL( LBL_FW_NAME_INFO,           "Name:",                                       "Nom:"                                          ) \
-    X_LABEL( LBL_FW_VERSION_INFO,        "Version:",                                    "Version:"                                      ) \
+    X_LABEL( LBL_FW_VERSION_INFO,        "Version:",                                    nullptr                                         ) \
     X_LABEL( LBL_GUI_NAME_INFO,          "GUI Name:",                                   "Nom GUI:"                                      ) \
     X_LABEL( LBL_GUI_VERSION_INFO,       "GUI Version:",                                "Version GUI:"                                  ) \
     X_LABEL( LBL_HARDWARE_INFO,          "Hardware:",                                   "Matériel:"                                     ) \
     X_LABEL( LBL_SERIAL_INFO,            "Serial No.:",                                 "No. Série:"                                    ) \
     X_LABEL( LBL_COMPILE_DATE_INFO,      "Built Date:",                                 "Date logiciel:"                                ) \
     X_LABEL( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
-    X_LABEL( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      " "                                             ) \
-    X_LABEL( LBL_TEST_1,                 "Float",                                       " "                                             ) \
-    X_LABEL( LBL_TEST_2,                 "Decimal",                                     " "                                             ) \
-    X_LABEL( LBL_TEST_3,                 "Hexa",                                        " "                                             ) \
-    X_LABEL( LBL_TEST_4,                 "String",                                      " "                                             ) \
-
-//    X_LABEL(    LBL_INPUT_DOOR,             "Input Safety Door",               "Entrée Porte de Sureté"             )
-//    X_LABEL(    LBL_INPUT_FEED,             "Input Feed",                      "Entrée ???"                         )
-//    X_LABEL(    LBL_INPUT_START,            "Input Start",                     "Entrée Démarrer"                    )
-//    X_LABEL(    LBL_INPUT_RESET,            "Input Reset",                     "Entrée Reset"                       )
-//    X_LABEL(    LBL_INPUT_E_STOP,           "Input E-Stop",                    "Entrée E-Stop"                      )  // if wired on IO instead of RST pin
+    X_LABEL( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \
+    X_LABEL( LBL_TEST_1,                 "Float",                                       "Flottant"                                      ) \
+    X_LABEL( LBL_TEST_2,                 "Decimal",                                     "Décimale"                                      ) \
+    X_LABEL( LBL_TEST_3,                 "Hexa",                                        nullptr                                         ) \
+    X_LABEL( LBL_TEST_4,                 "String",                                      nullptr                                         ) \
+    X_LABEL( LBL_INPUT_DOOR,             "Input Safety Door",                           "Entrée Porte de Sureté"                        ) \
+    X_LABEL( LBL_INPUT_FEED,             "Input Feed",                                  "Entrée Feed"                                   ) \
+    X_LABEL( LBL_INPUT_START,            "Input Start",                                 "Entrée Démarrer"                               ) \
+    X_LABEL( LBL_INPUT_RESET,            "Input Reset",                                 "Entrée Remise à zéro"                          ) \
+    X_LABEL( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entrée E-Stop"                                 ) \
 
 //-------------------------------------------------------------------------------------------------
 
