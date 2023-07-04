@@ -60,12 +60,12 @@
 //....Items QTY                 is TYPE Variable [THIS][]
 //....Item Size                 Memory space reserve for the record
 
-// There is 20 uint32_t backup register in the STM32F4
+// There is 20 uint32_t backup register in the STM32F7
 // Make sure the count are 20 register or less
 // Size is fix at sizeof(uint32_t)
 //                  Enum ID                 Items QTY,  Items SubQTY
 #define BKPREG_DBASE_DEF(X_BKPREG_DBASE) \
-    X_BKPREG_DBASE( TEST1,                  1,          1             )   \
+    X_BKPREG_DBASE( SYS_DEBUG_LEVEL,        1,          1             )   \
     X_BKPREG_DBASE( TEST2,                  1,          1             )   \
     X_BKPREG_DBASE( TEST3,                  1,          1             )   \
     X_BKPREG_DBASE( TEST4,                  1,          1             )   \
