@@ -65,30 +65,19 @@ nOS_Error ClassTaskCOMM::Initialize(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           Run
+//  Name:           Process
 //
 //  Parameter(s):   void
 //  Return:         void
 //
-//  Description:    main() loop of GRBL
+//  Description:    main() loop of COMM
 //
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void ClassTaskCOMM::Run(void)
+void ClassTaskCOMM::Process(void)
 {
-    Initialize();
-
-  //  while(SKIN_pTask->IsSkinLoaded() == false)
-  //  {
-  //      nOS_Sleep(100);
-  //  };
-
-    for(;;)
-    {
-      //  myConsole.Process();
-        nOS_Yield();
-    }
+    myConsole.Process();
 }
 
 //-------------------------------------------------------------------------------------------------

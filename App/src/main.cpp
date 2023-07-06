@@ -48,7 +48,7 @@
 int main()
 {
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    STACK_FillIdle();           // Use to initialize the stack for monitoring of the stack usage
+    myStacktistic.Initialize();                                 // Initialize the Stack Check process before any task
   #endif
 
     // Prevent stepping in every IRQ
@@ -57,7 +57,7 @@ int main()
    // (DBGMCU)->APB2FZ  = 0x70003;
 
     nOS_Init();
-    BSP_Initialize();     // All hardware and system initialization
+    BSP_Initialize();               // All hardware and system initialization
     pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
@@ -66,8 +66,14 @@ int main()
     pTaskGRBL->Initialize();
     nOS_Start();
     BSP_PostOS_Initialize();
-    pTaskCOMM->Run();                     // It is the idle task..
-    return 0;
+    pTaskCOMM->Initialize();
+
+    for(;;)                                 // It is the idle task..
+    {
+        pTaskCOMM->Process();
+    }
+
+    return 0;                               // will never return
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -221,6 +221,12 @@ nOS_Error ClassTaskGRBL::Initialize(void)
                                  TASK_GRBL_PRIO);
     }
 */
+
+
+  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
+    myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE);
+  #endif
+
     return Error;
 }
 
