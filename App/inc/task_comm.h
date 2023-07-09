@@ -50,8 +50,8 @@ class ClassTaskCOMM
 {
   public:
 
-    void            Run                (void);
     nOS_Error       Initialize         (void);
+    void            Process            (void);
 };
 
 //-------------------------------------------------------------------------------------------------

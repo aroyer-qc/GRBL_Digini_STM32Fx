@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2023 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -65,25 +65,19 @@ nOS_Error ClassTaskCOMM::Initialize(void)
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           Run
+//  Name:           Process
 //
 //  Parameter(s):   void
 //  Return:         void
 //
-//  Description:    main() loop of GRBL
+//  Description:    main() loop of COMM
 //
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-void ClassTaskCOMM::Run(void)
+void ClassTaskCOMM::Process(void)
 {
-    Initialize();
-
-    for(;;)
-    {
-        myConsole.Process();
-        nOS_Yield();
-    }
+    myConsole.Process();
 }
 
 //-------------------------------------------------------------------------------------------------

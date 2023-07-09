@@ -257,6 +257,10 @@ nOS_Error ClassNetwork::Initialize(void)
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
 
+  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
+    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE);
+    myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE);
+  #endif
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 

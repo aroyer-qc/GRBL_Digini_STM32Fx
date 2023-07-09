@@ -30,6 +30,9 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define     LABEL_USE_TIME_AND_DATE             DEF_ENABLED
+#define     LABEL_USE_PRODUCT_INFO              DEF_ENABLED
+
 #define LABEL_LANGUAGE_DEF(X_LABEL)  \
     X_LABEL( LBL_OK,                     "Ok",                                          nullptr                                         ) \
     X_LABEL( LBL_OUTPUT,                 "Output",                                      "Sortie"                                        ) \
