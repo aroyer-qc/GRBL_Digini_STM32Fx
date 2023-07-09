@@ -58,7 +58,7 @@ nOS_Error ClassTaskCOMM::Initialize(void)
     myCommandLine.Initialize(&myConsole);
     myConsole.GiveControlToChildProcess(&myCommandLine);          // Hijack the console!
   #if (DIGINI_USE_VT100_MENU == DEF_ENABLED)
-    myVT100.Initialize(&myConsole, myLabel.GetPointer(LBL_VT100_MENU_TITLE));
+    myVT100.Initialize(&myConsole);
   #endif
     return Error;
 }

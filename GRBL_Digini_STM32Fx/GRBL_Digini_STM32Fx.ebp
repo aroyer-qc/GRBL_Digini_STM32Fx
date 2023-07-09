@@ -387,6 +387,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100.h" />
+		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100_code.h" />
 		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100_expanding_macro.h" />
 		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100_label.h" />
 		<Unit filename="..\module\Digini\Comm\VT100\src\lib_vt100.cpp">
