@@ -39,24 +39,24 @@
 
 //-------------------------------------------------------------------------------------------------
 
-extern const char OUR_VENDOR_NAME[7];
-extern const char OUR_MODEL_NAME[17];
-extern const char OUR_FIRMWARE_NAME[16];
-extern const char OUR_FIRMWARE_VERSION[8];
-extern const char OUR_FIRMWARE_GUI_NAME[16];
-extern const char OUR_FIRMWARE_GUI_VERSION[16];
-extern const char OUR_SERIAL_NUMBER[9];
-extern const char OUR_BUILD_DATE[24];
+extern const char OUR_VENDOR_NAME[8];
+extern const char OUR_MODEL_NAME[18];
+extern const char OUR_FIRMWARE_NAME[17];
+extern const char OUR_FIRMWARE_VERSION[9];
+extern const char OUR_FIRMWARE_GUI_NAME[17];
+extern const char OUR_FIRMWARE_GUI_VERSION[17];
+extern const char OUR_SERIAL_NUMBER[10];
+extern const char OUR_BUILD_DATE[25];
 
 #ifdef BSP_GLOBAL
-const char OUR_VENDOR_NAME[]          = { "Digini" };
-const char OUR_MODEL_NAME[]           = { "STM32F746G-DISCO" };
-const char OUR_FIRMWARE_NAME[]        = { "GRBL" };
-const char OUR_FIRMWARE_VERSION[]     = { GRBL_VERSION };
-const char OUR_FIRMWARE_GUI_NAME[]    = { "Digini GUI" };
-const char OUR_FIRMWARE_GUI_VERSION[] = { "V2.01" };
-const char OUR_SERIAL_NUMBER[]        = { "00000000" };
-const char OUR_BUILD_DATE[]           = __DATE__ " " __TIME__;
+const char OUR_VENDOR_NAME[]          = { "Digini\r"                 };
+const char OUR_MODEL_NAME[]           = { "STM32F746G-DISCO\r"       };
+const char OUR_FIRMWARE_NAME[]        = { "GRBL"                     };
+const char OUR_FIRMWARE_VERSION[]     = { GRBL_VERSION "\r"          };
+const char OUR_FIRMWARE_GUI_NAME[]    = { "Digini GUI\r"             };
+const char OUR_FIRMWARE_GUI_VERSION[] = { "V2.01\r"                  };
+const char OUR_SERIAL_NUMBER[]        = { "00000000\r"               };
+const char OUR_BUILD_DATE[]           = { __DATE__"  "__TIME__ "\r" };
 #endif
 
 //-------------------------------------------------------------------------------------------------

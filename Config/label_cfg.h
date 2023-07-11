@@ -113,13 +113,6 @@
     X_LABEL( LBL_INPUT_PROBE,            "Input Probe",                                 "Entrée Sonde"                                  ) \
     X_LABEL( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
     X_LABEL( LBL_INFO,                   "Information",                                 nullptr                                         ) \
-    X_LABEL( LBL_FW_NAME_INFO,           "Name:",                                       "Nom:"                                          ) \
-    X_LABEL( LBL_FW_VERSION_INFO,        "Version:",                                    nullptr                                         ) \
-    X_LABEL( LBL_GUI_NAME_INFO,          "GUI Name:",                                   "Nom GUI:"                                      ) \
-    X_LABEL( LBL_GUI_VERSION_INFO,       "GUI Version:",                                "Version GUI:"                                  ) \
-    X_LABEL( LBL_HARDWARE_INFO,          "Hardware:",                                   "Matériel:"                                     ) \
-    X_LABEL( LBL_SERIAL_INFO,            "Serial No.:",                                 "No. Série:"                                    ) \
-    X_LABEL( LBL_COMPILE_DATE_INFO,      "Built Date:",                                 "Date logiciel:"                                ) \
     X_LABEL( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
     X_LABEL( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \
     X_LABEL( LBL_TEST_1,                 "Float",                                       "Flottant"                                      ) \

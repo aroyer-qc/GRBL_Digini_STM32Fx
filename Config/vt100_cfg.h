@@ -86,6 +86,7 @@
 #define COMPARE_MenuRedirection(x)  x
 #define COMPARE_MenuMain(x) 		x
 #define COMPARE_MenuBoot(x)    		x
+#define COMPARE_MenuInfo(x)    		x
 #define COMPARE_MenuDebug(x)    	x
 #define COMPARE_MenuTest(x)     	x
 #define COMPARE_MenuSetting(x)		x
@@ -97,6 +98,7 @@
     ENTRY(MenuRedirection    ) \
     ENTRY(MenuMain           ) \
     ENTRY(MenuBoot           ) \
+    ENTRY(MenuInfo           ) \
     ENTRY(MenuDebug          ) \
     ENTRY(MenuTest           ) \
     ENTRY(MenuSetting        ) \
@@ -114,15 +116,15 @@
 
 // Here you define how you will navigate in the menu tree and action associated with them                   1st item of a menu
 //              Menu   Member Of          Item ID                  CALLBACK for refresh                     Navigate to this menu on <ESC>    Label ID
-//                                                                 on first if NULL there is no refresh     all other. Navigate to this menu
-//                                                                 All other items are items processing
-//                                                                 services
+//                                                                 on first if CALLBACK_None there is       all other. Navigate to this menu
+//                                                                 no refresh. All other items are
+//                                                                  items processing services
 #define VT100_MENU_TREE_DEF(ENTRY, MENU) \
 \
         ENTRY  (MENU,  MenuRedirection,   ID_REDIRECTION,          CALLBACK_MenuRedirection,                VT100_MENU_NONE,                  INVALID_LABEL                                   ) \
 \
         ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
-        ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
+        ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuInfo,                         LBL_VT100_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
@@ -134,6 +136,8 @@
         ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
         ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
+\
+        ENTRY  (MENU,  MenuInfo,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuRedirection,                  LBL_VT100_SYSTEM_INFO                           ) \
 \
         ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_None,                           MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_1                         ) \

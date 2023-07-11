@@ -51,11 +51,6 @@ int main()
     myStacktistic.Initialize();                                 // Initialize the Stack Check process before any task
   #endif
 
-    // Prevent stepping in every IRQ
-   // (DBGMCU)->MCUCR  |= 0x1F0003
-   // (DBGMCU)->APB1FZ  = 0x7E01FFF;
-   // (DBGMCU)->APB2FZ  = 0x70003;
-
     nOS_Init();
     BSP_Initialize();               // All hardware and system initialization
     pTaskLoading->Initialize();
@@ -71,6 +66,7 @@ int main()
     for(;;)                                 // It is the idle task..
     {
         pTaskCOMM->Process();
+        nOS_Yield();
     }
 
     return 0;                               // will never return

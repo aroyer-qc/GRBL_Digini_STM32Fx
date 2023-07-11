@@ -127,11 +127,6 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     IO_PinInit(IO_CONTROL_START);
     IO_PinInit(IO_SAFETY_DOOR);
 
-#ifdef ETH_IF
-    // W5500 Reset Pin
-    IO_PinInit(IO_W5500_RESET);
-#endif
-
     // ------------------------
     // Stepper Control Output
     IO_PinInit(IO_STEP_X);
@@ -156,7 +151,6 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     IO_PinInit(IO_LIMIT_A);
     IO_PinInit(IO_LIMIT_B);
     IO_PinInit(IO_LIMIT_C);
-
 
     // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
     Stepper_Initialize();       // timer!!
