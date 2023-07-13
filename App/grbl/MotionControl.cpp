@@ -19,6 +19,8 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#include "lib_digini.h"     // For PID
 #include <string.h>
 #include "Settings.h"
 #include "System.h"
@@ -34,7 +36,7 @@
 #include "CoolantControl.h"
 #include "MotionControl.h"
 #include "defaults.h"
-#include "PID.h"
+//#include "PID.h"
 #include "Encoder.h"
 
 
@@ -56,7 +58,23 @@ static uint32_t EncValue = 0;
 static float sync_pitch = 0.0;
 
 float in = 0.0, out = 0.0, set = 0.0;
-PID_t pid;
+
+
+float PidSource(void)
+{
+    return in;
+}
+
+void PidOutput(float Output)
+{
+    out = Output;
+}
+
+
+PID_Control Pid;
+
+
+
 
 
 void MC_Initialize(void)
@@ -77,9 +95,9 @@ void MC_Initialize(void)
         }
     }
 
-    PID_Create(&pid, &in, &out, &set, 1.8, 22, 0.08);
-    PID_Limits(&pid, -0.4, 0.4);
-    PID_EnableAuto(&pid);
+    Pid.Initialize(1.8, 22, 0.08, set, PidSource, PidOutput);         //PID_Create(&pid, &in, &out, &set, 1.8, 22, 0.08);
+    Pid.SetOutputLimits(-0.4, 0.4);                                   //PID_Limits(&pid, -0.4, 0.4);
+    Pid.SetEnable(true);                                              //PID_EnableAuto(&pid);
 
     pos_z = 0;
     wait_spindle = 0;
@@ -264,15 +282,15 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
 
     if(pitch < 1.1)
     {
-        PID_Tune(&pid, 1.8, 22, 0.08);
+        Pid.Tune(1.8, 22, 0.08);
     }
     else if(pitch < 1.6)
     {
-        PID_Tune(&pid, 1.6, 18, 0.06);
+        Pid.Tune(1.6, 18, 0.06);
     }
     else
     {
-        PID_Tune(&pid, 1.4, 15, 0.04);
+        Pid.Tune(1.4, 15, 0.04);
     }
 
     // Disable feed override
@@ -352,7 +370,7 @@ void MC_UpdateSyncMove(void)
                 start_sync = 1;
 
                 in = 0.0;
-                PID_Compute(&pid);
+                Pid.Process();  //PID_Compute(&pid);
 
                 // Save sys position at start
                 pos_z = sys_position[Z_AXIS];
@@ -391,7 +409,7 @@ void MC_UpdateSyncMove(void)
             in = dist_expected - dist_act;
 
             // Compute
-            PID_Compute(&pid);
+            Pid.Process(); // PID_Compute(&pid);
 
             // Apply
             Stepper_Ovr(out);

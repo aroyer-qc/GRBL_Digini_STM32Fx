@@ -67,7 +67,6 @@ void PID_Compute(PID_t *pid)
 	pid->lasttime = millis();;
 }
 
-
 void PID_Tune(PID_t *pid, float kp, float ki, float kd)
 {
 	// Check for validity
