@@ -44,7 +44,7 @@
 
 
 // Uncomment to use external I2C EEPROM
-//#define USE_EXT_EEPROM
+#define USE_EXT_EEPROM
 
 // Uncomment to use 4th/5th axis
 //#define USE_MULTI_AXIS

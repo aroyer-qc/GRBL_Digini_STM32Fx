@@ -34,38 +34,15 @@
 // Global Define(s)
 //-------------------------------------------------------------------------------------------------
 
-// list of supported device should be moved in digini
-
-// E2_M24LC32A
-#define E2_M24LC32A_SIZE            4096
-#define E2_M24LC32A_NB_OF_PAGE      32
-
-// E2_2464
-#define E2_2464_SIZE                8192
-#define E2_2464_NB_OF_PAGE          32
-
-// E2_24128
-#define E2_24128_SIZE               16384
-#define E2_24128_NB_OF_PAGE         64
-
-// E2_24256
-#define E2_24256_SIZE               32768
-#define E2_24256_NB_OF_PAGE         64
-
-// E2_24512
-#define E2_24512_SIZE               65536
-#define E2_24512_NB_OF_PAGE         128
-
-// E2_M24M01
-#define E2_M24M01_SIZE              131072
-#define E2_M24M01_NB_OF_PAGE        256
+// Enable only the E2 that will be used on the system
+#define DIGINI_USE_E2_M24LC32A          DEF_DISABLED
+#define DIGINI_USE_E2_2464              DEF_DISABLED
+#define DIGINI_USE_E2_24128             DEF_DISABLED
+#define DIGINI_USE_E2_24256             DEF_ENABLED
+#define DIGINI_USE_E2_24512             DEF_DISABLED
+#define DIGINI_USE_E2_M24M01            DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 
-// User application EEprom config
-#define GRBL_EEPROM_SIZE            E2_24256_SIZE
-#define GRBL_NB_OF_PAGE             E2_24256_NB_OF_PAGE
-#define GRBL_DEVICE_ADDRESS         0x50
 
-//-------------------------------------------------------------------------------------------------
 

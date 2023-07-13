@@ -59,7 +59,7 @@
 // EEPROM support
 //
 
-#define DIGINI_USE_EEPROM			                    DEF_DISABLED
+#define DIGINI_USE_EEPROM			                    DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // Multi language support

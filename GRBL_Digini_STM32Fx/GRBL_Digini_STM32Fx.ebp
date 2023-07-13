@@ -145,10 +145,6 @@
 		</Unit>
 		<Unit filename="..\App\grbl\gcode.h" />
 		<Unit filename="..\App\grbl\grbl_advance.h" />
-		<Unit filename="..\App\grbl\HAL\FLASH\eeprom.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\grbl\HAL\FLASH\eeprom.h" />
 		<Unit filename="..\App\grbl\HAL\stm32f7xx_conf.h" />
 		<Unit filename="..\App\grbl\HAL\stm32f7xx_hal_conf.h" />
 		<Unit filename="..\App\grbl\HAL\stm32f7xx_it.c">
@@ -163,10 +159,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\jog.h" />
-		<Unit filename="..\App\grbl\Libraries\EEPROM\M24C0X.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\grbl\Libraries\EEPROM\M24C0X.h" />
 		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -21,32 +21,35 @@
 */
 #include "Nvm.h"
 #include "Config.h"
-#include "eeprom.h"
-#include "M24C0X.h"
+#include "lib_digini.h"
 
 
 void Nvm_Initialize(void)
 {
-#ifdef USE_EXT_EEPROM
-    M24C0X_Initialize();
-#else
-    // TODO AR EE_Initialize();
-#endif
+  #ifdef USE_EXT_EEPROM
+    // M24C0X_Initialize();  nothing to do with Digini
+  #endif
 }
 
+// TODO maybe replace this by smarter method using database
 uint8_t Nvm_ReadByte(uint16_t Address)
 {
-#ifdef USE_EXT_EEPROM
-    return M24C0X_ReadByte(Address);
-#else
-    return  0 ;// TODO AR return EE_ReadByte(Address);
-#endif
+  #ifdef USE_EXT_EEPROM
+    uint8_t Data;
+
+    myGBRL_NVM.Read(uint32_t(Address), &Data, 1);
+    return Data;
+    //   return M24C0X_ReadByte(Address);
+  #else
+    return  0;
+  #endif
 }
 
 void Nvm_WriteByte(uint16_t Address, uint8_t Data)
 {
 #ifdef USE_EXT_EEPROM
-    M24C0X_WriteByte(Address, Data);
+    myGBRL_NVM.Write(uint32_t(Address), &Data, 1);
+//    M24C0X_WriteByte(Address, Data);
 #else
    // TODO AR  EE_WriteByte(Address, Data);
 #endif
@@ -55,16 +58,18 @@ void Nvm_WriteByte(uint16_t Address, uint8_t Data)
 uint8_t Nvm_Read(uint8_t *DataOut, uint16_t Address, uint16_t size)
 {
 #ifdef USE_EXT_EEPROM
-    return M24C0X_ReadByteArray(Address, DataOut, size);
+    myGBRL_NVM.Read(uint32_t(Address), &DataOut, size);
+    return size;// M24C0X_ReadByteArray(Address, DataOut, size);
 #else
-   return  0 ;// TODO AR  return EE_ReadByteArray(DataOut, Address, size);
+   return  0;
 #endif
 }
 
 uint8_t Nvm_Write(uint16_t Address, uint8_t *DataIn, uint16_t size)
 {
 #ifdef USE_EXT_EEPROM
-    return M24C0X_WriteByteArray(Address, DataIn, size);
+    myGBRL_NVM.Write(uint32_t(Address), &DataIn, size);
+    return size; //M24C0X_WriteByteArray(Address, DataIn, size);
 #else
    // TODO AR  EE_WriteByteArray(Address, DataIn, size);
     return 0;
