@@ -74,11 +74,37 @@
 // TODO there is a mixup with the RTC cossin
 
 
-//                  Enum ID             EepromID,         Items QTY,        Items SubQTY     Item Size
-/*
+//                  Enum ID                 Driver,              Items QTY,        Items SubQTY     Item Size
+
+// Do not change position of SYSTEM_LANGUAGE and GRBL_SETTINGS_VERSION.
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
-    X_EEPROM_DBASE( SYSTEM_LANGUAGE,    FLASH_E2_1        1,                1,               sizeof(Language_e)         )
-*/
+    X_EEPROM_DBASE( SYSTEM_LANGUAGE,        myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
+    X_EEPROM_DBASE( GRBL_SETTINGS_VERSION,  myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,   myE2_Setting,        1,                1,               sizeof(Settings_t)         ) \
+    X_EEPROM_DBASE( GRBL_TOOL_TABLE,        myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)       ) \
+    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,     myE2_Setting,        1,                1,               1       ) \
+
+    // don't seem to be used     X_EEPROM_DBASE( GRBL_PARAMETERS,        myE2_Setting,        1,                1,               sizeof(ToolTable_t)        )
+
+
+#define EEPROM_ADDR_GLOBAL                  1U
+#define EEPROM_ADDR_TOOLTABLE               180U
+#define EEPROM_ADDR_PARAMETERS              512U
+#define EEPROM_ADDR_STARTUP_BLOCK           768U
+#define EEPROM_ADDR_BUILD_INFO              942U
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //                Enum ID                 Items QTY,       Items SubQTY       Item Size               Get/Set Callback
 #define HARD_DBASE_DEF(X_HARD_DBASE) \

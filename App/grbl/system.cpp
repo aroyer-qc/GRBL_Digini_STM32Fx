@@ -30,12 +30,6 @@
 #include "ToolChange.h"
 #include "System32.h"
 
-
-void System_Initialize(void)
-{
-}
-
-
 void System_Clear(void)
 {
     memset(&System, 0, sizeof(System_t)); // Clear system struct variable.

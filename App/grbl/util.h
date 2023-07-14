@@ -109,10 +109,6 @@
 #define ACCEL_TICKS_PER_SECOND      100
 
 
-#define LIB_max(a,b)                    (((a) > (b)) ? (a) : (b))
-#define LIB_min(a,b)                    (((a) < (b)) ? (a) : (b))
-
-
 #define clear_vector(a)                 (memset(a,0,sizeof(a)))
 #define clear_vector_f(a)               (memset(a, 0.0, sizeof(a)))
 #define copy_vector(d,s)                (memcpy(d,s,sizeof(d)))

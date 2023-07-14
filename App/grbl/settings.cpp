@@ -19,6 +19,8 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+#include "lib_digini.h"
 #include "Config.h"
 #include "GCode.h"
 #include "Limits.h"
@@ -30,7 +32,6 @@
 #include "System.h"
 #include "Stepper.h"
 #include "defaults.h"
-#include "Nvm.h"
 #include <stdint.h>
 #include <string.h>
 
@@ -45,9 +46,8 @@ void Settings_StoreStartupLine(uint8_t n, char *line)
     Protocol_BufferSynchronize(); // A startup line may contain a motion and be executing.
 #endif
 
-    uint32_t addr = n*(STARTUP_LINE_LEN+1)+EEPROM_ADDR_STARTUP_BLOCK;
-    Nvm_Write(addr, (uint8_t*)line, STARTUP_LINE_LEN);
-    Nvm_Update();
+    uint32_t addr = n * (STARTUP_LINE_LEN + 1) + EEPROM_ADDR_STARTUP_BLOCK;
+    myE2_Setting.Write(addr, (uint8_t*)line, STARTUP_LINE_LEN);
 }
 
 
@@ -56,33 +56,29 @@ void Settings_StoreStartupLine(uint8_t n, char *line)
 void Settings_StoreBuildInfo(char *line)
 {
     // Build info can only be stored when state is IDLE.
-    Nvm_Write(EEPROM_ADDR_BUILD_INFO, (uint8_t*)line, STARTUP_LINE_LEN);
-    Nvm_Update();
+    myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO, (uint8_t*)line, STARTUP_LINE_LEN);
 }
 
 
 // Method to store coord data parameters into EEPROM
 void Settings_WriteCoordData(uint8_t coord_select, float *coord_data)
 {
-#ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
+  #ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
     Protocol_BufferSynchronize();
-#endif
+  #endif
 
     uint32_t addr = coord_select*(sizeof(float)*N_AXIS+1) + EEPROM_ADDR_PARAMETERS;
-    Nvm_Write(addr, (uint8_t*)coord_data, sizeof(float)*N_AXIS);
-
-    Nvm_Update();
+    myE2_Setting.Write(addr, (uint8_t*)coord_data, sizeof(float) * N_AXIS);
 }
 
 
 // Method to store Grbl global settings struct and version number into EEPROM
-// NOTE: This function can only be called in IDLE state.
+// NOTE: This function can only be called in IDLE state. // TODO don't expect this to be true with digini... need to be check
 void WriteGlobalSettings(void)
 {
-    Nvm_WriteByte(0, SETTINGS_VERSION);
-    Nvm_Write(EEPROM_ADDR_GLOBAL, (uint8_t*)&Settings, sizeof(Settings_t));
-
-    Nvm_Update();
+    uint8_t Version = SETTINGS_VERSION;
+    DB_Central.Set(&Version, GRBL_SETTINGS_VERSION);
+    DB_Central.Set(&Settings, GRBL_GLOBAL_SETTINGS);
 }
 
 
@@ -203,21 +199,20 @@ void Settings_Restore(uint8_t restore_flag)
     if(restore_flag & SETTINGS_RESTORE_STARTUP_LINES)
     {
 #if N_STARTUP_LINE > 0
-        Nvm_WriteByte(EEPROM_ADDR_STARTUP_BLOCK, 0);
-        Nvm_WriteByte(EEPROM_ADDR_STARTUP_BLOCK+1, 0); // Checksum
+        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK, 0);
+        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+1, 0); // Checksum
 #endif
 #if N_STARTUP_LINE > 1
-        Nvm_WriteByte(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+1), 0);
-        Nvm_WriteByte(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+2), 0); // Checksum
+        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+1), 0);
+        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+2), 0); // Checksum
 #endif
-        Nvm_Update();
     }
 
     if(restore_flag & SETTINGS_RESTORE_BUILD_INFO)
     {
-        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO, 0);
-        Nvm_WriteByte(EEPROM_ADDR_BUILD_INFO+1, 0);  // Checksum
-        Nvm_Update();
+
+        myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO, 0);
+        myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO+1, 0);  // Checksum
     }
 
     if(restore_flag & SETTINGS_RESTORE_TOOLS)
@@ -230,8 +225,10 @@ void Settings_Restore(uint8_t restore_flag)
 // Reads startup line from EEPROM. Updated pointed line string data.
 uint8_t Settings_ReadStartupLine(uint8_t n, char *line)
 {
-    uint32_t addr = n*(STARTUP_LINE_LEN+1)+EEPROM_ADDR_STARTUP_BLOCK;
-    if(!(Nvm_Read((uint8_t*)line, addr, STARTUP_LINE_LEN)))
+    uint32_t addr = n * (STARTUP_LINE_LEN + 1) + EEPROM_ADDR_STARTUP_BLOCK;
+
+
+    if(!(myE2_Setting.Read(addr, (uint8_t*)line, STARTUP_LINE_LEN)))
     {
         // Reset line with default value
         line[0] = 0; // Empty line
@@ -244,33 +241,28 @@ uint8_t Settings_ReadStartupLine(uint8_t n, char *line)
 }
 
 
-void Settings_StoreToolTable(ToolTable_t *table)
+void Settings_StoreToolTable(ToolTable_t* pTable)
 {
-    Nvm_Write(EEPROM_ADDR_TOOLTABLE, (uint8_t*)table, sizeof(ToolTable_t));
+    DB_Central.SetAll(pTable, GRBL_TOOL_TABLE);
 }
 
 
 void Settings_StoreToolParams(uint8_t tool_nr, ToolParams_t *params)
 {
-    Nvm_Write(EEPROM_ADDR_TOOLTABLE+(tool_nr*sizeof(ToolParams_t)), (uint8_t*)params, sizeof(ToolParams_t));
+    DB_Central.Set(params, GRBL_TOOL_TABLE, tool_nr);
 }
 
 
-uint8_t Settings_ReadToolTable(ToolTable_t *table)
+uint8_t Settings_ReadToolTable(ToolTable_t* pTable)
 {
-    if(!(Nvm_Read((uint8_t*)table, EEPROM_ADDR_TOOLTABLE, sizeof(ToolTable_t))))
-    {
-        return false;
-    }
-
-    return true;
+    return (DB_Central.Get(pTable, GRBL_TOOL_TABLE) == SYS_READY) ? true : false;
 }
 
 
 // Reads startup line from EEPROM. Updated pointed line string data.
 uint8_t Settings_ReadBuildInfo(char *line)
 {
-    if(!(Nvm_Read((uint8_t*)line, EEPROM_ADDR_BUILD_INFO, STARTUP_LINE_LEN)))
+    if(!(myE2_Setting.Read(EEPROM_ADDR_BUILD_INFO, (uint8_t*)line, STARTUP_LINE_LEN)))
     {
         // Reset line with default value
         line[0] = 0; // Empty line
@@ -287,7 +279,7 @@ uint8_t Settings_ReadBuildInfo(char *line)
 uint8_t Settings_ReadCoordData(uint8_t coord_select, float *coord_data)
 {
     uint32_t addr = coord_select*(sizeof(float)*N_AXIS+1) + EEPROM_ADDR_PARAMETERS;
-    if(!(Nvm_Read((uint8_t*)coord_data, addr, sizeof(float)*N_AXIS)))
+    if(!(myE2_Setting.Read(addr, (uint8_t*)coord_data, sizeof(float)*N_AXIS)))
     {
         // Reset with default zero vector
         memset(&coord_data, 0.0, sizeof(coord_data));
@@ -304,12 +296,14 @@ uint8_t Settings_ReadCoordData(uint8_t coord_select, float *coord_data)
 uint8_t ReadGlobalSettings()
 {
     // Check version-byte of eeprom
-    uint8_t version = Nvm_ReadByte(0);
+    uint8_t Version;
 
-    if(version == SETTINGS_VERSION)
+    DB_Central.Get(&Version, GRBL_SETTINGS_VERSION);
+
+    if(Version == SETTINGS_VERSION)
     {
         // Read settings-record and check checksum
-        if(!(Nvm_Read((uint8_t*)&Settings, EEPROM_ADDR_GLOBAL, sizeof(Settings_t))))
+        if(DB_Central.Get((uint8_t*)&Settings, GRBL_GLOBAL_SETTINGS) != SYS_READY)
         {
             return false;
         }
@@ -346,22 +340,22 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 switch (set_idx)
                 {
                     case 0:
-#ifdef MAX_STEP_RATE_HZ
+                      #ifdef MAX_STEP_RATE_HZ
                         if (value*Settings.max_rate[parameter] > (MAX_STEP_RATE_HZ*60.0))
                         {
                             return(STATUS_MAX_STEP_RATE_EXCEEDED);
                         }
-#endif
+                      #endif
                         Settings.steps_per_mm[parameter] = value;
                         break;
 
                     case 1:
-#ifdef MAX_STEP_RATE_HZ
+                      #ifdef MAX_STEP_RATE_HZ
                         if (value*Settings.steps_per_mm[parameter] > (MAX_STEP_RATE_HZ*60.0))
                         {
                             return(STATUS_MAX_STEP_RATE_EXCEEDED);
                         }
-#endif
+                      #endif
                         Settings.max_rate[parameter] = value;
                         break;
 
@@ -583,8 +577,6 @@ void Settings_StoreTlsPosition(void)
 // Initialize the config subsystem
 void Settings_Initialize(void)
 {
-    Nvm_Initialize();
-
     if(!ReadGlobalSettings())
     {
         Report_StatusMessage(STATUS_SETTING_READ_FAIL);

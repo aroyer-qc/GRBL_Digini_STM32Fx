@@ -20,7 +20,6 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "lib_digini.h"
-#include <string.h>
 #include "System.h"
 #include "Planner.h"
 #include "MotionControl.h"
@@ -198,7 +197,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         {
             // Set target based on max_travel setting. Ensure homing switches engaged with search scalar.
             // NOTE: Settings.max_travel[] is stored as a negative value.
-            max_travel = LIB_max(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*Settings.max_travel[idx]);
+            max_travel = AbsMax(max_travel, (-HOMING_AXIS_SEARCH_SCALAR)*Settings.max_travel[idx]);
         }
     }
 

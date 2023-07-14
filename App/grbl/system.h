@@ -168,10 +168,6 @@ extern volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag
 extern volatile uint8_t sys_rt_exec_motion_override; // Global realtime executor bitflag variable for motion-based overrides.
 extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for spindle/coolant overrides.
 
-
-// Initialize the serial protocol
-void System_Initialize(void);
-
 void System_Clear(void);
 
 void System_ResetPosition(void);

@@ -34,19 +34,19 @@
 
 #ifdef EEPROM_DRIVER_GLOBAL
 
-const E2_Info_t GRBL_SettingE2 =
+const E2_Info_t E2_Setting =
 {
     E2_24256_ID,            // Id of the type of memory  to use
     &myI2C_External,        // I2C driver to use
     0x50,                   // Address of the I2C device on the bus
 };
 
-E2_Driver myGBRL_NVM(&GRBL_SettingE2);
+E2_Driver myE2_Setting(&E2_Setting);
 
 #else // EEPROM_DRIVER_GLOBAL
 
-extern const E2_Info_t GRBL_SettingE2;
-extern       E2_Driver myGBRL_NVM;
+extern const E2_Info_t E2_Setting;
+extern       E2_Driver myE2_Setting;
 
 #endif // EEPROM_DRIVER_GLOBAL
 

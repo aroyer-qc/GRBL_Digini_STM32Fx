@@ -29,7 +29,7 @@
 
 
 #define GRBL_VERSION            "1.1i"
-#define GRBL_VERSION_BUILD      __DATE__
+#define GRBL_VERSION_BUILD      __DATE__ //OUR_BUILD_DATE
 
 
 // Define CPU pin map and default settings.

@@ -56,7 +56,7 @@ const char OUR_FIRMWARE_VERSION[]     = { GRBL_VERSION "\r"          };
 const char OUR_FIRMWARE_GUI_NAME[]    = { "Digini GUI\r"             };
 const char OUR_FIRMWARE_GUI_VERSION[] = { "V2.01\r"                  };
 const char OUR_SERIAL_NUMBER[]        = { "00000000\r"               };
-const char OUR_BUILD_DATE[]           = { __DATE__"  "__TIME__ "\r" };
+const char OUR_BUILD_DATE[]           = { __DATE__ "  " __TIME__ "\r"};
 #endif
 
 //-------------------------------------------------------------------------------------------------

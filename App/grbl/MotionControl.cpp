@@ -560,9 +560,8 @@ void MC_Dwell(float seconds)
         return;
     }
 
-    // TODO: DWELL System.state
     Protocol_BufferSynchronize();
-   // Delay_sec(seconds, DELAY_MODE_DWELL);
+    nOS_Sleep(seconds);
 }
 
 

@@ -19,6 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "lib_digini.h"
 #include "System.h"
 #include "Report.h"
 #include "Config.h"
@@ -613,8 +614,8 @@ void Protocol_ExecRtSystem(void)
             new_f_override -= FEED_OVERRIDE_FINE_INCREMENT;
         }
 
-        new_f_override = LIB_min(new_f_override, MAX_FEED_RATE_OVERRIDE);
-        new_f_override = LIB_max(new_f_override, MIN_FEED_RATE_OVERRIDE);
+        new_f_override = AbsMin(new_f_override, MAX_FEED_RATE_OVERRIDE);
+        new_f_override = AbsMax(new_f_override, MIN_FEED_RATE_OVERRIDE);
 
         uint8_t new_r_override = System.r_override;
 
@@ -672,8 +673,8 @@ void Protocol_ExecRtSystem(void)
             last_s_override -= SPINDLE_OVERRIDE_FINE_INCREMENT;
         }
 
-        last_s_override = LIB_min(last_s_override,MAX_SPINDLE_SPEED_OVERRIDE);
-        last_s_override = LIB_max(last_s_override,MIN_SPINDLE_SPEED_OVERRIDE);
+        last_s_override = AbsMin(last_s_override,MAX_SPINDLE_SPEED_OVERRIDE);
+        last_s_override = AbsMax(last_s_override,MIN_SPINDLE_SPEED_OVERRIDE);
 
         if(last_s_override != System.spindle_speed_ovr)
         {
@@ -987,7 +988,7 @@ static void Protocol_ExecRtSuspend(void)
                                 else
                                 {
                                     Spindle_SetState((restore_condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW)), restore_spindle_speed);
-                                    //TODO AR Delay_sec(SAFETY_DOOR_SPINDLE_DELAY, DELAY_MODE_SYS_SUSPEND);
+                                    nOS_Sleep(SAFETY_DOOR_SPINDLE_DELAY);
                                 }
                             }
                         }
@@ -999,7 +1000,7 @@ static void Protocol_ExecRtSuspend(void)
                             {
                                 // NOTE: Laser mode will honor this delay. An exhaust system is often controlled by this pin.
                                 Coolant_SetState((restore_condition & (PL_COND_FLAG_COOLANT_FLOOD | PL_COND_FLAG_COOLANT_MIST)));
-                                // TODO AR Delay_sec(SAFETY_DOOR_COOLANT_DELAY, DELAY_MODE_SYS_SUSPEND);
+                                nOS_Sleep(SAFETY_DOOR_COOLANT_DELAY);
                             }
                         }
 

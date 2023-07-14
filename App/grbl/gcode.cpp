@@ -20,8 +20,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <string.h>
-#include <math.h>
+#include "lib_digini.h"
 #include "System.h"
 #include "Settings.h"
 #include "Jog.h"
@@ -2114,7 +2113,7 @@ uint8_t GC_ExecuteLine(char *line)
                 float peak = gc_block.values.ijk[X_AXIS];
                 float doc = gc_block.values.ijk[Y_AXIS];
                 float final_depth = gc_block.values.ijk[Z_AXIS];
-                float regression = LIB_min(gc_block.values.r, 6.0);
+                float regression = AbsMin(gc_block.values.r, 6.0);
                 uint8_t spring_passes = gc_block.values.h;
                 float angle = gc_block.values.q;
                 //float taper_dist = gc_block.values.e;

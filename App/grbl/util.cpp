@@ -18,8 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include <ctype.h>
-#include <string.h>
+#include "lib_digini.h"
 #include "Config.h"
 #include "Protocol.h"
 #include "Print.h"
@@ -212,39 +211,6 @@ void PrintFloat_RateValue(float n)
     }
 }
 
-
-// Non-blocking delay function used for general operation and suspend features.
-void Delay_sec(float seconds, uint8_t mode)
-{
-    uint16_t i = ceil(1000/DWELL_TIME_STEP*seconds);
-
-    while(i-- > 0)
-    {
-        if(System.abort)
-        {
-            return;
-        }
-
-        if(mode == DELAY_MODE_DWELL)
-        {
-            Protocol_ExecuteRealtime();
-        }
-        else   // DELAY_MODE_SYS_SUSPEND
-        {
-            // Execute rt_system() only to avoid nesting suspend loops.
-            Protocol_ExecRtSystem();
-
-            if(System.suspend & SUSPEND_RESTART_RETRACT)
-            {
-                // Bail, if safety door reopens.
-                return;
-            }
-        }
-
-        Delay_ms(DWELL_TIME_STEP); // Delay DWELL_TIME_STEP increment
-    }
-}
-
 // Simple hypotenuse computation function.
 float hypot_f(float x, float y)
 {
@@ -294,7 +260,7 @@ float limit_value_by_axis_maximum(float *max_value, float *unit_vec)
     {
         if(unit_vec[idx] != 0)    // Avoid divide by zero.
         {
-            limit_value = LIB_min(limit_value,fabs(max_value[idx]/unit_vec[idx]));
+            limit_value = AbsMin(limit_value,fabs(max_value[idx]/unit_vec[idx]));
         }
     }
 
