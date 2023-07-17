@@ -430,7 +430,7 @@ void Limits_GoHome(uint8_t cycle_mask)
     MC_Initialize();
 
     System.step_control = STEP_CONTROL_NORMAL_OP;   // Return step control to normal operation.
-    System.is_homed = true;                         // Machine is homed and knows its position
+    System.IsHomed = true;                         // Machine is homed and knows its position
 }
 
 
