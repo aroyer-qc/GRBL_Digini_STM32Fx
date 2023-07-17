@@ -138,14 +138,14 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     if(BIT_IS_TRUE(Settings.flags, BITFLAG_SOFT_LIMIT_ENABLE))
     {
         // NOTE: Block jog state. Jogging is a special case and soft limits are handled independently.
-        if(System.state != STATE_JOG)
+        if(System.State != STATE_JOG)
         {
             Limits_SoftCheck(target);
         }
     }
 
     // If in check gcode mode, prevent motion by blocking planner. Soft limits still work.
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }
@@ -171,7 +171,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(System.abort)
+        if(System.Abort == true)
         {
             // Bail, if system abort.
             return;
@@ -234,7 +234,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(System.abort)
+        if(System.Abort == true)
         {
             // Bail, if system abort.
             return;
@@ -276,7 +276,7 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     uint8_t old_f_override = System.f_override;
 
     // Put in hold state -  no moves will be started
-    System.state = STATE_HOLD;
+    System.State = STATE_HOLD;
 
     sync_pitch = pitch;
 
@@ -322,7 +322,7 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(System.abort)
+        if(System.Abort == true)
         {
             // Bail, if system abort.
             return;
@@ -330,7 +330,7 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     }
 
     // Set state back to idle - queued move will be started
-    System.state = STATE_IDLE;
+    System.State = STATE_IDLE;
 
     // Trigger immediate start of cycle
     Protocol_AutoCycleStart();
@@ -540,7 +540,7 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
             MC_Line(position, pl_data);
 
             // Bail mid-circle on system abort. Runtime command check already performed by mc_line.
-            if(System.abort)
+            if(System.Abort == true)
             {
                 return;
             }
@@ -555,7 +555,7 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
 // Execute dwell in seconds.
 void MC_Dwell(float seconds)
 {
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }
@@ -568,7 +568,7 @@ void MC_Dwell(float seconds)
 // Perform homing cycle to locate and set machine zero. Only '$H' executes this command.
 // NOTE: There should be no motions in the buffer and Grbl must be in an idle state before
 // executing the homing cycle. This prevents incorrect buffered plans after homing.
-void MC_HomigCycle(uint8_t cycle_mask)
+void MC_HomingCycle(uint8_t cycle_mask)
 {
     Stepper_WakeUp();
 
@@ -612,7 +612,7 @@ void MC_HomigCycle(uint8_t cycle_mask)
     }
 
     Protocol_ExecuteRealtime(); // Check for reset and set system abort.
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Did not complete. Alarm state set by mc_alarm.
         return;
@@ -635,14 +635,14 @@ void MC_HomigCycle(uint8_t cycle_mask)
 uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser_flags)
 {
     // TODO: Need to update this cycle so it obeys a non-auto cycle start.
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return GC_PROBE_CHECK_MODE;
     }
 
     // Finish all queued commands and empty planner buffer before starting probe cycle.
     Protocol_BufferSynchronize();
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Return if system reset has been issued.
         return GC_PROBE_ABORT;
@@ -678,12 +678,12 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     {
         Protocol_ExecuteRealtime();
 
-        if(System.abort)
+        if(System.Abort == true)
         {
             // Check for system abort
             return(GC_PROBE_ABORT);
         }
-    } while(System.state != STATE_IDLE);
+    } while(System.State != STATE_IDLE);
 
     // Probing cycle complete!
 
@@ -737,7 +737,7 @@ void MC_OverrideCtrlUpdate(uint8_t override_state)
     // Finish all queued commands before altering override control state
     Protocol_BufferSynchronize();
 
-    if(System.abort)
+    if(System.Abort == true)
     {
         return;
     }
@@ -752,7 +752,7 @@ void MC_OverrideCtrlUpdate(uint8_t override_state)
 #ifdef PARKING_ENABLE
 void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
 {
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Block during abort.
         return;
@@ -772,7 +772,7 @@ void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
         {
             Protocol_ExecRtSystem();
 
-            if(System.abort)
+            if(System.Abort == true)
             {
                 return;
             }
@@ -811,9 +811,9 @@ void MC_Reset(void)
         // NOTE: If steppers are kept enabled via the step idle delay setting, this also keeps
         // the steppers enabled by avoiding the go_idle call altogether, unless the motion state is
         // violated, by which, all bets are off.
-        if((System.state & (STATE_CYCLE | STATE_HOMING | STATE_JOG)) || (System.step_control & (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION)))
+        if((System.State & (STATE_CYCLE | STATE_HOMING | STATE_JOG)) || (System.step_control & (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION)))
         {
-            if(System.state == STATE_HOMING)
+            if(System.State == STATE_HOMING)
             {
                 if(!sys_rt_exec_alarm)
                 {

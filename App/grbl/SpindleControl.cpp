@@ -193,7 +193,7 @@ uint8_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
 // sleep, and spindle stop override.
 void Spindle_SetState(uint8_t state, float rpm)
 {
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Block during abort.
         return;
@@ -244,7 +244,7 @@ void Spindle_SetState(uint8_t state, float rpm)
 // if an abort or check-mode is active.
 void Spindle_Sync(uint8_t state, float rpm)
 {
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }
@@ -270,7 +270,7 @@ void Spindle_SetSurfaceSpeed(float x_pos)
     }
     System.spindle_speed = rpm;
 
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }

@@ -89,7 +89,7 @@ uint8_t Coolant_GetState(void)
 // parser program end, and g-code parser coolant_sync().
 void Coolant_SetState(uint8_t mode)
 {
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Block during abort.
         return;
@@ -139,7 +139,7 @@ void Coolant_SetState(uint8_t mode)
 // if an abort or check-mode is active.
 void Coolant_Sync(uint8_t mode)
 {
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }

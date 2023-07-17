@@ -677,7 +677,7 @@ void Report_RealtimeStatus(void)
     // Report current machine state and sub-states
     Putc('<');
 
-    switch(System.state)
+    switch(System.State)
     {
         case STATE_IDLE:
             Printf("Idle");
@@ -688,11 +688,11 @@ void Report_RealtimeStatus(void)
             break;
 
         case STATE_HOLD:
-            if(!(System.suspend & SUSPEND_JOG_CANCEL))
+            if(!(System.Suspend & SUSPEND_JOG_CANCEL))
             {
                 Printf("Hold:");
 
-                if(System.suspend & SUSPEND_HOLD_COMPLETE)
+                if(System.Suspend & SUSPEND_HOLD_COMPLETE)
                 {
                     Putc('0');
                 } // Ready to resume
@@ -717,15 +717,15 @@ void Report_RealtimeStatus(void)
             break;
         case STATE_SAFETY_DOOR:
             Printf("Door:");
-            if (System.suspend & SUSPEND_INITIATE_RESTORE)
+            if (System.Suspend & SUSPEND_INITIATE_RESTORE)
             {
                 Putc('3'); // Restoring
             }
             else
             {
-                if(System.suspend & SUSPEND_RETRACT_COMPLETE)
+                if(System.Suspend & SUSPEND_RETRACT_COMPLETE)
                 {
-                    if(System.suspend & SUSPEND_SAFETY_DOOR_AJAR)
+                    if(System.Suspend & SUSPEND_SAFETY_DOOR_AJAR)
                     {
                         Putc('1'); // Door ajar
                     }
@@ -878,7 +878,7 @@ void Report_RealtimeStatus(void)
     }
     else
     {
-        if(System.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+        if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
         {
             System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
         }
@@ -904,7 +904,7 @@ void Report_RealtimeStatus(void)
     }
     else
     {
-        if(System.state & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+        if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
         {
             System.report_ovr_counter = (REPORT_OVR_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
         }

@@ -162,20 +162,20 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 
     if(BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE))
     {
-        System.state = STATE_ALARM;
+        System.State = STATE_ALARM;
     }
     else
     {
-        System.state = STATE_IDLE;
+        System.State = STATE_IDLE;
     }
 
     // Reset system variables.
-    uint16_t prior_state = System.state;
-    uint8_t home_state = System.is_homed;
+    uint16_t PriorState = System.State;
+    bool     HomeState = System.IsHomed;
 
     System_Clear();
-    System.state = prior_state;
-    System.is_homed = home_state;
+    System.State = PriorState;
+    System.IsHomed = HomeState;
 
     Probe_Reset();
 
@@ -283,7 +283,7 @@ bool GRBL_RealTimeCommand(char RealTimeCommand)
         case CMD_SAFETY_DOOR:   System_SetExecStateFlag(EXEC_SAFETY_DOOR);   break; // Set as true
         case CMD_JOG_CANCEL:
         {
-            if(System.state & STATE_JOG)    // Block all other states from invoking motion cancel.
+            if(System.State & STATE_JOG)    // Block all other states from invoking motion cancel.
             {
                 System_SetExecStateFlag(EXEC_MOTION_CANCEL);
             }

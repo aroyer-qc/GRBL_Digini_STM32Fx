@@ -128,7 +128,7 @@ void Limit_PinChangeISR(void) // DEFAULT: Limit pin change interrupt process.
     // moves in the planner and serial buffers are all cleared and newly sent blocks will be
     // locked out until a homing cycle or a kill lock command. Allows the user to disable the hard
     // limit setting if their limits are constantly triggering after a reset and move their axes.
-    if(System.state != STATE_ALARM)
+    if(System.State != STATE_ALARM)
     {
         if(!(sys_rt_exec_alarm))
         {
@@ -162,7 +162,7 @@ void Limit_PinChangeISR(void) // DEFAULT: Limit pin change interrupt process.
 // TODO: Move limit pin-specific calls to a general function for portability.
 void Limits_GoHome(uint8_t cycle_mask)
 {
-    if(System.abort)
+    if(System.Abort == true)
     {
         // Block if system reset has been issued.
         return;
@@ -429,8 +429,8 @@ void Limits_GoHome(uint8_t cycle_mask)
     // Necessary for backlash compensation
     MC_Initialize();
 
-    System.step_control = STEP_CONTROL_NORMAL_OP; // Return step control to normal operation.
-    System.is_homed = 1;   // Machine is homed and knows its position
+    System.step_control = STEP_CONTROL_NORMAL_OP;   // Return step control to normal operation.
+    System.is_homed = true;                         // Machine is homed and knows its position
 }
 
 
@@ -446,19 +446,19 @@ void Limits_SoftCheck(float *target)
         // Force feed hold if cycle is active. All buffered blocks are guaranteed to be within
         // workspace volume so just come to a controlled stop so position is not lost. When complete
         // enter alarm mode.
-        if(System.state == STATE_CYCLE)
+        if(System.State == STATE_CYCLE)
         {
             System_SetExecStateFlag(EXEC_FEED_HOLD);
             do
             {
                 Protocol_ExecuteRealtime();
 
-                if(System.abort)
+                if(System.Abort == true)
                 {
                     return;
                 }
             }
-            while(System.state != STATE_IDLE);
+            while(System.State != STATE_IDLE);
         }
 
         MC_Reset(); // Issue system reset and ensure spindle and coolant are shutdown.

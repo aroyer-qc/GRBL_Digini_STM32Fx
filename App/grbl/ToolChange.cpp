@@ -63,7 +63,7 @@ void TC_ChangeCurrentTool(void)
     float position[N_AXIS] = {0.0};
 
 
-    if(System.state == STATE_CHECK_MODE)
+    if(System.State == STATE_CHECK_MODE)
     {
         return;
     }
@@ -93,11 +93,11 @@ void TC_ChangeCurrentTool(void)
     Protocol_BufferSynchronize();
 
     // Wait until move is finished
-    while(System.state != STATE_IDLE)
+    while(System.State != STATE_IDLE)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
 
-        if(System.abort)
+        if(System.Abort == true)
         {
             // Bail, if system abort.
             return;
@@ -105,7 +105,7 @@ void TC_ChangeCurrentTool(void)
     }
 
 
-    System.state = STATE_TOOL_CHANGE;
+    System.State = STATE_TOOL_CHANGE;
 
     GC_SyncPosition();
 }
@@ -118,7 +118,7 @@ void TC_ProbeTLS(void)
     uint8_t flags = 0;
 
 
-    if(System.state == STATE_CHECK_MODE || Settings.tls_valid == 0)
+    if(System.State == STATE_CHECK_MODE || Settings.tls_valid == 0)
     {
         return;
     }

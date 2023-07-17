@@ -1764,7 +1764,7 @@ uint8_t GC_ExecuteLine(char *line)
     // [6. Change tool ]: M6
     if(change_tool && (Settings.tool_change > 0))
     {
-        if(System.is_homed)
+        if(System.IsHomed == true)
         {
             TC_ChangeCurrentTool();
         }
@@ -1775,7 +1775,7 @@ uint8_t GC_ExecuteLine(char *line)
     }
     if(apply_tool && (Settings.tool_change == 3))
     {
-        if(System.is_homed)
+        if(System.IsHomed == true)
         {
             TC_ApplyToolOffset();
         }
@@ -2283,7 +2283,7 @@ uint8_t GC_ExecuteLine(char *line)
 
         if(gc_state.modal.program_flow == PROGRAM_FLOW_PAUSED)
         {
-            if(System.state != STATE_CHECK_MODE)
+            if(System.State != STATE_CHECK_MODE)
             {
                 System_SetExecStateFlag(EXEC_FEED_HOLD); // Use feed hold for program pause.
                 Protocol_ExecuteRealtime(); // Execute suspend.
@@ -2318,7 +2318,7 @@ uint8_t GC_ExecuteLine(char *line)
 #endif
 
             // Execute coordinate change and spindle/coolant stop.
-            if(System.state != STATE_CHECK_MODE)
+            if(System.State != STATE_CHECK_MODE)
             {
                 if(!(Settings_ReadCoordData(gc_state.modal.coord_select, gc_state.coord_system)))
                 {

@@ -134,9 +134,9 @@
 // Define global system variables
 typedef struct
 {
-    uint16_t state;               // Tracks the current system state of Grbl.
-    uint8_t abort;               // System abort flag. Forces exit back to main loop for reset.
-    uint8_t suspend;             // System suspend bitflag variable that manages holds, cancels, and safety door.
+    uint16_t State;              // Tracks the current system state of Grbl.
+    bool    Abort;               // System abort flag. Forces exit back to main loop for reset.
+    uint8_t Suspend;             // System suspend bitflag variable that manages holds, cancels, and safety door.
     uint8_t soft_limit;          // Tracks soft limit errors for the state machine. (boolean)
     uint8_t step_control;        // Governs the step segment generator depending on system state.
     uint8_t probe_succeeded;     // Tracks if last probing cycle was successful.
@@ -151,7 +151,7 @@ typedef struct
     uint8_t override_ctrl;      // Tracks override control states.
 #endif
     float spindle_speed;
-    uint8_t is_homed;
+    bool  IsHomed;
     uint8_t sync_move;
     float x_pos;                // Current x-position of tool (for G96)
 } System_t;

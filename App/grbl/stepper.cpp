@@ -267,7 +267,7 @@ void Stepper_Disable(uint8_t ovr_disable)
     // Set stepper driver idle state, disabled or enabled, depending on settings and circumstances.
     bool pin_state = false; // Keep enabled.
 
-    if(((Settings.stepper_idle_lock_time != 0xFF) || sys_rt_exec_alarm || System.state == STATE_SLEEP) && System.state != STATE_HOMING)
+    if(((Settings.stepper_idle_lock_time != 0xFF) || sys_rt_exec_alarm || System.State == STATE_SLEEP) && System.State != STATE_HOMING)
     {
         // Force stepper dwell to lock axes for a defined amount of time to ensure the axes come to a complete
         // stop and not drift from residual inertial forces at the end of the last movement.
@@ -666,7 +666,7 @@ void Stepper_MainISR(void)
     }
 
     // During a homing cycle, lock out and prevent desired axes from moving.
-    if(System.state == STATE_HOMING)
+    if(System.State == STATE_HOMING)
     {
         st.step_outbits &= System.homing_axis_lock;
     }
@@ -1431,7 +1431,7 @@ void Stepper_PrepareBuffer(void)
 // divided by the ACCELERATION TICKS PER SECOND in seconds.
 float Stepper_GetRealtimeRate(void)
 {
-    if(System.state & (STATE_CYCLE | STATE_HOMING | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+    if(System.State & (STATE_CYCLE | STATE_HOMING | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
     {
         return prep.current_speed;
     }

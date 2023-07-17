@@ -126,7 +126,7 @@ uint8_t System_CheckSafetyDoorAjar(void)
 // Executes user startup script, if stored.
 void System_ExecuteStartup(char *line)
 {
-#if (N_STARTUP_LINE > 0)
+  #if (N_STARTUP_LINE > 0)
     uint8_t n;
 
     for(n = 0; n < N_STARTUP_LINE; n++)
@@ -146,9 +146,9 @@ void System_ExecuteStartup(char *line)
             }
         }
     }
-#else
+  #else
     (void)line;
-#endif
+  #endif
 }
 
 
@@ -174,7 +174,7 @@ uint8_t System_ExecuteLine(char *line)
 
         case 'J': // Jogging
             // Execute only if in IDLE or JOG states.
-            if(System.state != STATE_IDLE && System.state != STATE_JOG)
+            if(System.State != STATE_IDLE && System.State != STATE_JOG)
             {
                 return STATUS_IDLE_ERROR;
             }
@@ -197,7 +197,7 @@ uint8_t System_ExecuteLine(char *line)
             switch(line[1])
             {
                 case '$': // Prints Grbl settings
-                    if(System.state & (STATE_CYCLE | STATE_HOLD))
+                    if(System.State & (STATE_CYCLE | STATE_HOLD))
                     {
                         return(STATUS_IDLE_ERROR);
                     } // Block during cycle. Takes too long to print.
@@ -216,26 +216,26 @@ uint8_t System_ExecuteLine(char *line)
                     // Perform reset when toggling off. Check g-code mode should only work if Grbl
                     // is idle and ready, regardless of alarm locks. This is mainly to keep things
                     // simple and consistent.
-                    if(System.state == STATE_CHECK_MODE )
+                    if(System.State == STATE_CHECK_MODE )
                     {
                         MC_Reset();
                         Report_FeedbackMessage(MESSAGE_DISABLED);
                     }
                     else
                     {
-                        if(System.state)
+                        if(System.State)
                         {
                             // Requires no alarm mode.
                             return STATUS_IDLE_ERROR;
                         }
 
-                        System.state = STATE_CHECK_MODE;
+                        System.State = STATE_CHECK_MODE;
                         Report_FeedbackMessage(MESSAGE_ENABLED);
                     }
                     break;
 
                 case 'X': // Disable alarm lock [ALARM]
-                    if(System.state == STATE_ALARM)
+                    if(System.State == STATE_ALARM)
                     {
                         // Block if safety door is ajar.
                         if(System_CheckSafetyDoorAjar())
@@ -244,7 +244,7 @@ uint8_t System_ExecuteLine(char *line)
                         }
 
                         Report_FeedbackMessage(MESSAGE_ALARM_UNLOCK);
-                        System.state = STATE_IDLE;
+                        System.State = STATE_IDLE;
                         Stepper_WakeUp();
                         // Don't run startup script. Prevents stored moves in startup from causing accidents.
                     } // Otherwise, no effect.
@@ -257,10 +257,10 @@ uint8_t System_ExecuteLine(char *line)
             {
                 // Tool change finished. Continue execution
                 System_ClearExecStateFlag(EXEC_TOOL_CHANGE);
-                System.state = STATE_IDLE;
+                System.State = STATE_IDLE;
 
                 // Check if machine is homed
-                if(System.is_homed)
+                if(System.IsHomed == true)
                 {
                     // Change tool with probing
                     if(Settings.tool_change == 2)
@@ -349,7 +349,7 @@ uint8_t System_ExecuteLine(char *line)
             break;
 
         case 'P':
-            if(System.is_homed)
+            if(System.IsHomed == true)
             {
                 Settings_StoreTlsPosition();
             }
@@ -362,7 +362,7 @@ uint8_t System_ExecuteLine(char *line)
 
         default:
             // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
-            if(!(System.state == STATE_IDLE || System.state == STATE_ALARM) )
+            if(!(System.State == STATE_IDLE || System.State == STATE_ALARM) )
             {
                 return(STATUS_IDLE_ERROR);
             }
@@ -391,11 +391,11 @@ uint8_t System_ExecuteLine(char *line)
                         return STATUS_CHECK_DOOR;
                     }
 
-                    System.state = STATE_HOMING; // Set system state variable
+                    System.State = STATE_HOMING; // Set system state variable
 
                     if(line[2] == 0)
                     {
-                        MC_HomigCycle(HOMING_CYCLE_ALL);
+                        MC_HomingCycle(HOMING_CYCLE_ALL);
 #ifdef HOMING_SINGLE_AXIS_COMMANDS
                     }
                     else if(line[3] == 0)
@@ -403,23 +403,23 @@ uint8_t System_ExecuteLine(char *line)
                         switch(line[2])
                         {
                             case 'X':
-                                MC_HomigCycle(HOMING_CYCLE_X);
+                                MC_HomingCycle(HOMING_CYCLE_X);
                                 break;
 
                             case 'Y':
-                                MC_HomigCycle(HOMING_CYCLE_Y);
+                                MC_HomingCycle(HOMING_CYCLE_Y);
                                 break;
 
                             case 'Z':
-                                MC_HomigCycle(HOMING_CYCLE_Z);
+                                MC_HomingCycle(HOMING_CYCLE_Z);
                                 break;
 
                             case 'A':
-                                MC_HomigCycle(HOMING_CYCLE_A);
+                                MC_HomingCycle(HOMING_CYCLE_A);
                                 break;
 
                             case 'B':
-                                MC_HomigCycle(HOMING_CYCLE_B);
+                                MC_HomingCycle(HOMING_CYCLE_B);
                                 break;
 
                             default:
@@ -432,9 +432,9 @@ uint8_t System_ExecuteLine(char *line)
                         return STATUS_INVALID_STATEMENT;
                     }
 
-                    if(!System.abort)    // Execute startup scripts after successful homing.
+                    if(!System.Abort)    // Execute startup scripts after successful homing.
                     {
-                        System.state = STATE_IDLE; // Set to IDLE when complete.
+                        System.State = STATE_IDLE; // Set to IDLE when complete.
                         Stepper_Disable(0); // Set steppers to the settings idle state before returning.
 
                         if(line[2] == 0)
@@ -532,7 +532,7 @@ uint8_t System_ExecuteLine(char *line)
                     }
                     else   // Store startup line [IDLE Only] Prevents motion during ALARM.
                     {
-                        if(System.state != STATE_IDLE)
+                        if(System.State != STATE_IDLE)
                         {
                             // Store only when idle.
                             return STATUS_IDLE_ERROR;

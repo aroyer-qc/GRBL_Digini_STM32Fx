@@ -97,7 +97,7 @@ void ProcessReceive(char c)
 			{
 			case CMD_SAFETY_DOOR: System_SetExecStateFlag(EXEC_SAFETY_DOOR); break; // Set as true
 			case CMD_JOG_CANCEL:
-				if(System.state & STATE_JOG) { // Block all other states from invoking motion cancel.
+				if(System.State & STATE_JOG) { // Block all other states from invoking motion cancel.
 					System_SetExecStateFlag(EXEC_MOTION_CANCEL);
 				}
 				break;
@@ -273,7 +273,7 @@ void TIM4_IRQHandler(void)
 		Encoder_OvfISR();
 
         // Spindle at zero position
-        if(System.sync_move && System.state == STATE_HOLD)
+        if(System.sync_move && System.State == STATE_HOLD)
         {
             MC_LineSyncStart();
         }
