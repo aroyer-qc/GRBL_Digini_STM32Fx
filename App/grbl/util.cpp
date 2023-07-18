@@ -39,7 +39,7 @@
 // Scientific notation is officially not supported by g-code, and the 'E' character may
 // be a g-code word on some CNC systems. So, 'E' notation will not be recognized.
 // NOTE: Thanks to Radu-Eosif Mihailescu for identifying the issues with using strtod().
-uint8_t Read_Float(char *line, uint8_t *char_counter, float *float_ptr)
+bool Read_Float(char *line, uint8_t *char_counter, float *float_ptr)
 {
     char *ptr = line + *char_counter;
     unsigned char c;
@@ -102,7 +102,7 @@ uint8_t Read_Float(char *line, uint8_t *char_counter, float *float_ptr)
     // Return if no digits have been read.
     if(!ndigit)
     {
-        return(false);
+        return false;
     };
 
     // Convert integer into floating point.
@@ -144,7 +144,7 @@ uint8_t Read_Float(char *line, uint8_t *char_counter, float *float_ptr)
 
     *char_counter = ptr - line - 1; // Set char_counter to next statement
 
-    return(true);
+    return true;
 }
 
 

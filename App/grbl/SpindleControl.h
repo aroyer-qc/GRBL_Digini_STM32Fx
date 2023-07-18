@@ -1,5 +1,5 @@
 /*
-  SpindleControl.h - spindle control methods
+  SpindleControl.h - Spindle control methods
   Part of Grbl-Advanced
 
   Copyright (c) 2012-2016 Sungeun K. Jeon for Gnea Research LLC
@@ -40,25 +40,25 @@
 #define SPINDLE_PWM_RANGE           (SPINDLE_PWM_MAX_VALUE-SPINDLE_PWM_MIN_VALUE)
 
 
-// Initializes spindle pins and hardware PWM, if enabled.
+// Initializes Spindle pins and hardware PWM, if enabled.
 void Spindle_Initialize(void);
 
-// Stop and start spindle routines. Called by all spindle routines and stepper ISR.
+// Stop and start Spindle routines. Called by all Spindle routines and stepper ISR.
 void Spindle_Stop(void);
 
-// Returns current spindle output state. Overrides may alter it from programmed states.
+// Returns current Spindle output state. Overrides may alter it from programmed states.
 uint8_t Spindle_GetState(void);
 
-// Called by g-code parser when setting spindle state and requires a buffer sync.
-// Immediately sets spindle running state with direction and spindle rpm via PWM, if enabled.
-// Called by spindle_sync() after sync and parking motion/spindle stop override during restore.
-// Called by g-code parser when setting spindle state and requires a buffer sync.
+// Called by g-code parser when setting Spindle state and requires a buffer sync.
+// Immediately sets Spindle running state with direction and Spindle rpm via PWM, if enabled.
+// Called by spindle_sync() after sync and parking motion/Spindle stop override during restore.
+// Called by g-code parser when setting Spindle state and requires a buffer sync.
 void Spindle_Sync(uint8_t state, float rpm);
 
-// Sets spindle running state with direction, enable, and spindle PWM.
+// Sets Spindle running state with direction, enable, and Spindle PWM.
 void Spindle_SetState(uint8_t state, float rpm);
 
-// Sets spindle PWM quickly for stepper ISR. Also called by spindle_set_state().
+// Sets Spindle PWM quickly for stepper ISR. Also called by spindle_set_state().
 // NOTE: 328p PWM register is 8-bit.
 void Spindle_SetSpeed(uint8_t pwm_value);
 

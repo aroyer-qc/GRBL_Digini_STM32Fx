@@ -126,12 +126,9 @@ uint8_t System_CheckSafetyDoorAjar(void)
 // Executes user startup script, if stored.
 void System_ExecuteStartup(char *line)
 {
-  #if (N_STARTUP_LINE > 0)
-    uint8_t n;
-
-    for(n = 0; n < N_STARTUP_LINE; n++)
+    for(int n = 0; n < N_STARTUP_LINE; n++)
     {
-        if(!(Settings_ReadStartupLine(n, line)))
+        if(Settings_ReadStartupLine(n, line) == false)
         {
             line[0] = 0;
             Report_ExecuteStartupMessage(line, STATUS_SETTING_READ_FAIL);
@@ -146,9 +143,6 @@ void System_ExecuteStartup(char *line)
             }
         }
     }
-  #else
-    (void)line;
-  #endif
 }
 
 
@@ -191,7 +185,7 @@ uint8_t System_ExecuteLine(char *line)
         case 'X':
             if(line[2] != 0)
             {
-                return(STATUS_INVALID_STATEMENT);
+                return STATUS_INVALID_STATEMENT;
             }
 
             switch(line[1])
@@ -199,7 +193,7 @@ uint8_t System_ExecuteLine(char *line)
                 case '$': // Prints Grbl settings
                     if(System.State & (STATE_CYCLE | STATE_HOLD))
                     {
-                        return(STATUS_IDLE_ERROR);
+                        return STATUS_IDLE_ERROR;
                     } // Block during cycle. Takes too long to print.
                     else
                     {
@@ -216,7 +210,7 @@ uint8_t System_ExecuteLine(char *line)
                     // Perform reset when toggling off. Check g-code mode should only work if Grbl
                     // is idle and ready, regardless of alarm locks. This is mainly to keep things
                     // simple and consistent.
-                    if(System.State == STATE_CHECK_MODE )
+                    if(System.State == STATE_CHECK_MODE)
                     {
                         MC_Reset();
                         Report_FeedbackMessage(MESSAGE_DISABLED);
@@ -240,7 +234,7 @@ uint8_t System_ExecuteLine(char *line)
                         // Block if safety door is ajar.
                         if(System_CheckSafetyDoorAjar())
                         {
-                            return(STATUS_CHECK_DOOR);
+                            return STATUS_CHECK_DOOR;
                         }
 
                         Report_FeedbackMessage(MESSAGE_ALARM_UNLOCK);
@@ -263,10 +257,10 @@ uint8_t System_ExecuteLine(char *line)
                 if(System.IsHomed == true)
                 {
                     // Change tool with probing
-                    if(Settings.tool_change == 2)
+                    if(Settings.ToolChange == 2)
                     {
                         // Check if TLS is valid
-                        if(Settings.tls_valid)
+                        if(Settings.TLS_Valid == true)
                         {
                             // Probe new tool
                             TC_ProbeTLS();
@@ -276,7 +270,7 @@ uint8_t System_ExecuteLine(char *line)
                             return STATUS_TLS_NOT_SET;
                         }
                     }
-                    else if(Settings.tool_change == 3)
+                    else if(Settings.ToolChange == 3)
                     {
                         // Change tool with tool table
                         TC_ApplyToolOffset();
@@ -364,7 +358,7 @@ uint8_t System_ExecuteLine(char *line)
             // Block any system command that requires the state as IDLE/ALARM. (i.e. EEPROM, homing)
             if(!(System.State == STATE_IDLE || System.State == STATE_ALARM) )
             {
-                return(STATUS_IDLE_ERROR);
+                return STATUS_IDLE_ERROR;
             }
 
             switch(line[1])
@@ -383,7 +377,7 @@ uint8_t System_ExecuteLine(char *line)
                 case 'H': // Perform homing cycle [IDLE/ALARM]
                     if(BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
                     {
-                        return(STATUS_SETTING_DISABLED);
+                        return STATUS_SETTING_DISABLED;
                     }
                     if(System_CheckSafetyDoorAjar())
                     {
@@ -447,7 +441,7 @@ uint8_t System_ExecuteLine(char *line)
                 case 'S': // Puts Grbl to sleep [IDLE/ALARM]
                     if((line[2] != 'L') || (line[3] != 'P') || (line[4] != 0))
                     {
-                        return(STATUS_INVALID_STATEMENT);
+                        return STATUS_INVALID_STATEMENT;
                     }
                     System_SetExecStateFlag(EXEC_SLEEP); // Set to execute sleep mode immediately
                     break;
@@ -482,7 +476,7 @@ uint8_t System_ExecuteLine(char *line)
                 case 'R': // Restore defaults [IDLE/ALARM]
                     if((line[2] != 'S') || (line[3] != 'T') || (line[4] != '=') || (line[6] != 0))
                     {
-                        return(STATUS_INVALID_STATEMENT);
+                        return STATUS_INVALID_STATEMENT;
                     }
                     switch(line[5])
                     {
@@ -514,12 +508,12 @@ uint8_t System_ExecuteLine(char *line)
                     break;
 
                 case 'N': // Startup lines. [IDLE/ALARM]
-#if (N_STARTUP_LINE > 0)
+                {
                     if(line[++char_counter] == 0 )   // Print startup lines
                     {
                         for(helper_var = 0; helper_var < N_STARTUP_LINE; helper_var++)
                         {
-                            if (!(Settings_ReadStartupLine(helper_var, line)))
+                            if (Settings_ReadStartupLine(helper_var, line) == false)
                             {
                                 Report_StatusMessage(STATUS_SETTING_READ_FAIL);
                             }
@@ -540,16 +534,17 @@ uint8_t System_ExecuteLine(char *line)
                         helper_var = true;  // Set helper_var to flag storing method.
                         // No break. Continues into default: to read remaining command characters.
                     }
-#endif
+                }
 
                 default:  // Storing setting methods [IDLE/ALARM]
-                    if(!Read_Float(line, &char_counter, &parameter))
+                {
+                    if(Read_Float(line, &char_counter, &parameter) == false)
                     {
-                        return(STATUS_BAD_NUMBER_FORMAT);
+                        return STATUS_BAD_NUMBER_FORMAT;
                     }
                     if(line[char_counter++] != '=')
                     {
-                        return(STATUS_INVALID_STATEMENT);
+                        return STATUS_INVALID_STATEMENT;
                     }
                     if(helper_var)   // Store startup line
                     {
@@ -567,7 +562,7 @@ uint8_t System_ExecuteLine(char *line)
 
                         if(helper_var)
                         {
-                            return(helper_var);
+                            return helper_var;
                         }
                         else
                         {
@@ -577,7 +572,7 @@ uint8_t System_ExecuteLine(char *line)
                     }
                     else   // Store global setting.
                     {
-                        if(!Read_Float(line, &char_counter, &value))
+                        if(Read_Float(line, &char_counter, &value) == false)
                         {
                             return STATUS_BAD_NUMBER_FORMAT;
                         }
@@ -588,6 +583,7 @@ uint8_t System_ExecuteLine(char *line)
 
                         return Settings_StoreGlobalSetting((uint8_t)parameter, value);
                     }
+                }
             }
     }
 

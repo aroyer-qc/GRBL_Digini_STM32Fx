@@ -82,7 +82,7 @@ TASK_GRBL_EXTERN volatile uint8_t     sys_probe_state;                  // Probi
 TASK_GRBL_EXTERN volatile uint16_t    sys_rt_exec_state;                // Global realtime executor bitflag variable for state management. See EXEC bitmasks.
 TASK_GRBL_EXTERN volatile uint8_t     sys_rt_exec_alarm;                // Global realtime executor bitflag variable for setting various alarms.
 TASK_GRBL_EXTERN volatile uint8_t     sys_rt_exec_motion_override;      // Global realtime executor bitflag variable for motion-based overrides.
-TASK_GRBL_EXTERN volatile uint8_t     sys_rt_exec_accessory_override;   // Global realtime executor bitflag variable for spindle/coolant overrides.
+TASK_GRBL_EXTERN volatile uint8_t     sys_rt_exec_accessory_override;   // Global realtime executor bitflag variable for Spindle/coolant overrides.
 TASK_GRBL_EXTERN class ClassTaskGRBL  TaskGRBL;
 
 #ifdef TASK_GRBL_GLOBAL

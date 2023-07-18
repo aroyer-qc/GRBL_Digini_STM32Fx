@@ -64,23 +64,6 @@
 #define SETTINGS_RESTORE_BUILD_INFO         BIT(3)
 #define SETTINGS_RESTORE_TOOLS              BIT(4)
 
-// Define EEPROM memory address location values for Grbl settings and parameters
-// NOTE: The Atmega328p has 1KB EEPROM. The upper half is reserved for parameters and
-// the startup script. The lower half contains the global settings and space for future
-// developments.
-#if 1
-#define EEPROM_ADDR_GLOBAL                  1U
-#define EEPROM_ADDR_TOOLTABLE               180U
-#define EEPROM_ADDR_PARAMETERS              512U
-#define EEPROM_ADDR_STARTUP_BLOCK           768U
-#define EEPROM_ADDR_BUILD_INFO              942U
-#endif
-
-
-
-
-
-
 // Define EEPROM address indexing for coordinate parameters
 #define N_COORDINATE_SYSTEM                 6  // Number of supported work coordinate systems (from index 1)
 #define SETTING_INDEX_NCOORD                N_COORDINATE_SYSTEM+1 // Total number of system stored (from index 0)
@@ -126,11 +109,11 @@ typedef struct
     float backlash[N_AXIS];
 
     // Tool change mode
-    uint8_t tool_change;
+    uint8_t ToolChange;
 
     // Position of tool length sensor (only XYZ axis)
     int32_t tls_position[N_AXIS];
-    uint8_t tls_valid;
+    bool TLS_Valid;
 
     // Remaining Grbl settings
     // TODO: document system_flags
@@ -182,31 +165,23 @@ void Settings_StoreToolTable(ToolTable_t *table);
 void Settings_StoreToolParams(uint8_t tool_nr, ToolParams_t *params);
 
 // Read tool table
-uint8_t Settings_ReadToolTable(ToolTable_t *table);
+bool Settings_ReadToolTable(ToolTable_t *table);
 
 // Reads an EEPROM startup line to the protocol line variable
-uint8_t Settings_ReadStartupLine(uint8_t n, char *line);
+bool Settings_ReadStartupLine(uint8_t n, char *line);
 
 // Stores build info user-defined string
 void Settings_StoreBuildInfo(char *line);
 
 // Reads build info user-defined string
-uint8_t Settings_ReadBuildInfo(char *line);
+bool Settings_ReadBuildInfo(char *line);
 
 // Writes selected coordinate data to EEPROM
-void Settings_WriteCoordData(uint8_t coord_select, float *coord_data);
+void Settings_WriteCoordData(uint8_t CoordSelect, float *coord_data);
 
 // Reads selected coordinate data from EEPROM
-uint8_t Settings_ReadCoordData(uint8_t coord_select, float *coord_data);
+uint8_t Settings_ReadCoordData(uint8_t CoordSelect, float *coord_data);
 
 // Returns the step pin mask according to Grbl's internal axis numbering
-uint8_t Settings_GetStepPinMask(uint8_t i);
-
-// Returns the direction pin mask according to Grbl's internal axis numbering
-uint8_t Settings_GetDirectionPinMask(uint8_t i);
-
-// Returns the limit pin mask according to Grbl's internal axis numbering
-uint8_t Settings_GetLimitPinMask(uint8_t i);
-
 
 #endif // SETTINGS_H

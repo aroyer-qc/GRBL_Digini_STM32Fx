@@ -74,37 +74,33 @@
 // TODO there is a mixup with the RTC cossin
 
 
-//                  Enum ID                 Driver,              Items QTY,        Items SubQTY     Item Size
+//                  Enum ID                     Driver,              Items QTY,        Items SubQTY     Item Size
 
 // Do not change position of SYSTEM_LANGUAGE and GRBL_SETTINGS_VERSION.
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
-    X_EEPROM_DBASE( SYSTEM_LANGUAGE,        myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
-    X_EEPROM_DBASE( GRBL_SETTINGS_VERSION,  myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
-    X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,   myE2_Setting,        1,                1,               sizeof(Settings_t)         ) \
-    X_EEPROM_DBASE( GRBL_TOOL_TABLE,        myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)       ) \
-    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,     myE2_Setting,        1,                1,               1       ) \
+    X_EEPROM_DBASE( SYSTEM_LANGUAGE,            myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
+    X_EEPROM_DBASE( GRBL_SETTINGS_VERSION,      myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( GRBL_BUILD_INFO,            myE2_Setting,        1,                1,               STARTUP_LINE_LEN           ) \
+    X_EEPROM_DBASE( GRBL_BUILD_INFO_CHKSUM,     myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( GRBL_OEM_MODEL_NAME,        myE2_Setting,        1,                1,               sizeof(OEM_MODEL_NAME)     ) \
+    X_EEPROM_DBASE( GRBL_OEM_SERIAL_NUMBER,     myE2_Setting,        1,                1,               sizeof(OEM_SERIAL_NUMBER)  ) \
+    X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,       myE2_Setting,        1,                1,               sizeof(Settings_t)         ) \
+    X_EEPROM_DBASE( GRBL_TOOL_TABLE,            myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)       ) \
+    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,         myE2_Setting,        N_STARTUP_LINE,   1,               STARTUP_LINE_LEN           ) \
+    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK_CHKSUM,  myE2_Setting,        N_STARTUP_LINE,   1,               sizeof(uint8_t)            ) \
+
+
+
+
+
+
+// Configurable value
+extern char OEM_CONFIG_VERSION[24];
+
+
+
 
     // don't seem to be used     X_EEPROM_DBASE( GRBL_PARAMETERS,        myE2_Setting,        1,                1,               sizeof(ToolTable_t)        )
-
-
-#define EEPROM_ADDR_GLOBAL                  1U
-#define EEPROM_ADDR_TOOLTABLE               180U
-#define EEPROM_ADDR_PARAMETERS              512U
-#define EEPROM_ADDR_STARTUP_BLOCK           768U
-#define EEPROM_ADDR_BUILD_INFO              942U
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //                Enum ID                 Items QTY,       Items SubQTY       Item Size               Get/Set Callback
 #define HARD_DBASE_DEF(X_HARD_DBASE) \
@@ -144,12 +140,11 @@ extern const uint32_t __user_ram_data_base__;
 
 //               Enum ID                Item Address                   Items QTY,        Items SubQTY       Item Size
 #define ROM_DBASE_DEF(X_ROM_DBASE) \
-    X_ROM_DBASE( FIRMWARE_NAME_TEXT,    &OUR_FIRMWARE_NAME[0],         1,                1,                 sizeof(OUR_FIRMWARE_NAME)        )   \
-    X_ROM_DBASE( FIRMWARE_VERSION_TEXT, &OUR_FIRMWARE_VERSION[0],      1,                1,                 sizeof(OUR_FIRMWARE_VERSION)     )   \
-    X_ROM_DBASE( FW_GUI_NAME_TEXT,      &OUR_FIRMWARE_GUI_NAME[0],     1,                1,                 sizeof(OUR_FIRMWARE_GUI_NAME)    )   \
-    X_ROM_DBASE( FW_GUI_VERSION_TEXT,   &OUR_FIRMWARE_GUI_VERSION[0],  1,                1,                 sizeof(OUR_FIRMWARE_GUI_VERSION) )   \
-    X_ROM_DBASE( MODEL_NAME_TEXT,       &OUR_MODEL_NAME[0],            1,                1,                 sizeof(OUR_SERIAL_NUMBER)        )   \
-    X_ROM_DBASE( SERIAL_NUMBER_TEXT,    &OUR_SERIAL_NUMBER[0],         1,                1,                 sizeof(OUR_SERIAL_NUMBER)        )   \
+    X_ROM_DBASE( FIRMWARE_NAME_TEXT,    &OUR_FIRMWARE_NAME[0],         1,                1,                 32/*sizeof(OUR_FIRMWARE_NAME)       */ )   \
+    X_ROM_DBASE( FIRMWARE_VERSION_TEXT, &OUR_FIRMWARE_VERSION[0],      1,                1,                 32/*sizeof(OUR_FIRMWARE_VERSION)    */ )   \
+    X_ROM_DBASE( FW_GUI_NAME_TEXT,      &OUR_FIRMWARE_GUI_NAME[0],     1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_NAME)   */ )   \
+    X_ROM_DBASE( FW_GUI_VERSION_TEXT,   &OUR_FIRMWARE_GUI_VERSION[0],  1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_VERSION)*/ )   \
+    X_ROM_DBASE( FW_BUILD_DATE_TEXT,    &OUR_BUILD_DATE[0],            1,                1,                 32/*sizeof(OUR_BUILD_DATE)         */  )   \
 
 // System Database are record that are both in RAM ( cpu ram, board ram, nvram, backup register) and in rom (E2, etc..)
 // Also there is an interval and a start time to save them in E2 ( save can also be forced )

@@ -48,7 +48,7 @@ InputFloat_t Input5_5_F_Cfg
 {
     EXCHANGE_INPUT_TYPE_FLOAT,
     LBL_TEST_1,
-    (void*)&gc_state.coord_system[0],       // Variables to take data from, and deposit after edit
+    (void*)&gc_state.CoordSystem[0],       // Variables to take data from, and deposit after edit
     INVALID_LABEL,
     -99.9999,                               // Minimum value for edit
     99.9999,                                // Maximum value for edit

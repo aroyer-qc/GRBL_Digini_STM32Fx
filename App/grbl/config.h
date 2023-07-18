@@ -46,9 +46,6 @@
 // Uncomment to use external I2C EEPROM
 #define USE_EXT_EEPROM
 
-// Uncomment to use 4th/5th axis
-//#define USE_MULTI_AXIS
-
 // Uncomment for lathe mode
 //#define LATHE_MODE
 
@@ -160,8 +157,8 @@
 // on separate pin, but homed in one cycle. Also, it should be noted that the function of hard limits
 // will not be affected by pin sharing.
 // NOTE: Defaults are set for a traditional 3-axis CNC machine. Z-axis first to clear, followed by X & Y.
-#define HOMING_CYCLE_0          (1<<Z_AXIS)                // REQUIRED: First move Z to clear workspace.
-#define HOMING_CYCLE_1          ((1<<X_AXIS)|(1<<Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
+#define HOMING_CYCLE_0          (1 << Z_AXIS)                   // REQUIRED: First move Z to clear workspace.
+#define HOMING_CYCLE_1          ((1 << X_AXIS)|(1 << Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
 // #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
@@ -188,11 +185,14 @@
 // define to force Grbl to always set the machine origin at the homed location despite switch orientation.
 #define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.
 
-// Number of blocks Grbl executes upon startup. These blocks are stored in EEPROM, where the size
-// and addresses are defined in settings.h. With the current settings, up to 2 startup blocks may
-// be stored and executed in order. These startup blocks would typically be used to set the g-code
-// parser state depending on user preferences.
-#define N_STARTUP_LINE          0 // Integer (1-2)
+// Number of blocks Grbl executes upon startup. These blocks are stored in EEPROM,
+// Note(s) With digini the size is define in the file database_cfg.h
+//         Addresses are managed by the database class
+// With the current settings, up to 2 startup blocks may be stored and executed in order.
+// These startup blocks would typically be used to set the g-code parser state depending on user
+// preferences.
+
+#define N_STARTUP_LINE          2       // do not put zero. it just won't be used if not set
 #define STARTUP_LINE_LEN        80
 
 

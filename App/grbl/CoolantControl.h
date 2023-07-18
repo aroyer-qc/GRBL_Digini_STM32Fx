@@ -1,5 +1,5 @@
 /*
-  CoolantControl.h - spindle control methods
+  CoolantControl.h - Spindle control methods
   Part of Grbl-Advanced
 
   Copyright (c) 2012-2016 Sungeun K. Jeon for Gnea Research LLC

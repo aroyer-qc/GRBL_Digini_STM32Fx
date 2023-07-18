@@ -56,7 +56,7 @@
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
 #define MAX_AMASS_LEVEL         3
 // AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
-#define AMASS_LEVEL1            (uint32_t)(F_TIMER_STEPPER/8000) // Over-drives ISR (x2). Defined as F_CPU/(Cutoff frequency in Hz)
+#define AMASS_LEVEL1            (uint32_t)(F_TIMER_STEPPER/8000) // Over-drives ISR (x2). Defined as SYSTEM_CORE_CLOCK/(Cutoff frequency in Hz)
 #define AMASS_LEVEL2            (uint32_t)(F_TIMER_STEPPER/4000) // Over-drives ISR (x4)
 #define AMASS_LEVEL3            (uint32_t)(F_TIMER_STEPPER/2000) // Over-drives ISR (x8)
 
@@ -95,7 +95,7 @@ typedef struct
 typedef struct
 {
     uint16_t n_step;           // Number of step events to be executed for this segment
-    uint16_t cycles_per_tick;  // Step distance traveled per ISR tick, aka step rate.
+    uint16_t cycles_per_tick;  // Step Distance traveled per ISR tick, aka step rate.
     uint8_t  st_block_index;   // Stepper block data index. Uses this information to execute this segment.
     uint8_t amass_level;    // Indicates AMASS level for the ISR to execute this segment
     uint8_t spindle_pwm;
@@ -350,9 +350,9 @@ void Stepper_Ovr(float ovr)
 */
 void Stepper_MainISR(void)
 {
-    if(st.step_outbits & (1<<X_STEP_BIT))
+    if(st.step_outbits & AXIS_MASK(X_AXIS))
     {
-        if(step_port_invert_mask & (1<<X_STEP_BIT))
+        if(step_port_invert_mask & AXIS_MASK(X_AXIS))
         {
             // Low pulse
             IO_SetPinLow(IO_STEP_X);
@@ -364,9 +364,9 @@ void Stepper_MainISR(void)
         }
     }
 #if !defined(LATHE_MODE)
-    if(st.step_outbits & (1<<Y_STEP_BIT))
+    if(st.step_outbits & AXIS_MASK(Y_AXIS))
     {
-        if(step_port_invert_mask & (1<<Y_STEP_BIT))
+        if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
         {
             // Low pulse
             IO_SetPinLow(IO_STEP_Y);
@@ -379,9 +379,9 @@ void Stepper_MainISR(void)
 
     }
 #endif
-    if(st.step_outbits & (1<<Z_STEP_BIT))
+    if(st.step_outbits & AXIS_MASK(Z_AXIS))
     {
-        if(step_port_invert_mask & (1<<Z_STEP_BIT))
+        if(step_port_invert_mask & AXIS_MASK(Z_AXIS))
         {
             // Low pulse
             IO_SetPinLow(IO_STEP_Z);
@@ -392,9 +392,9 @@ void Stepper_MainISR(void)
             IO_SetPinHigh(IO_STEP_Z);
         }
     }
-    if(st.step_outbits & (1<<A_STEP_BIT))
+    if(st.step_outbits & AXIS_MASK(A_AXIS))
     {
-        if(step_port_invert_mask & (1<<A_STEP_BIT))
+        if(step_port_invert_mask & AXIS_MASK(A_AXIS))
         {
             // Low pulse
             IO_SetPinLow(IO_STEP_A);
@@ -405,9 +405,9 @@ void Stepper_MainISR(void)
             IO_SetPinHigh(IO_STEP_A);
         }
     }
-    if(st.step_outbits & (1<<B_STEP_BIT))
+    if(st.step_outbits & AXIS_MASK(B_AXIS))
     {
-        if(step_port_invert_mask & (1<<B_STEP_BIT))
+        if(step_port_invert_mask & AXIS_MASK(B_AXIS))
         {
             // Low pulse
             //IO_SetPinLow(IO_STEP_B);
@@ -464,7 +464,7 @@ void Stepper_MainISR(void)
                 st.exec_block_index = st.exec_segment->st_block_index;
                 st.exec_block = &st_block_buffer[st.exec_block_index];
 
-                // Initialize Bresenham line and distance counters
+                // Initialize Bresenham line and Distance counters
                 st.counter_x = st.counter_y = st.counter_z = st.counter_a = st.counter_b = (st.exec_block->step_event_count >> 1);
             }
 
@@ -472,7 +472,7 @@ void Stepper_MainISR(void)
 
             // Set the direction pins directly here to make sure that the signal is valid when stepping the steppers
             // Some driver e.g. require a setup time of a few us.
-            if(st.dir_outbits & (1<<X_DIRECTION_BIT))
+            if(st.dir_outbits & AXIS_MASK(X_AXIS))
             {
                 IO_SetPinHigh(IO_DIR_X);
             }
@@ -481,7 +481,7 @@ void Stepper_MainISR(void)
                 IO_SetPinLow(IO_DIR_X);
             }
 #if !defined(LATHE_MODE)
-            if(st.dir_outbits & (1<<Y_DIRECTION_BIT))
+            if(st.dir_outbits & AXIS_MASK(Y_AXIS))
             {
                 IO_SetPinHigh(IO_DIR_Y);
             }
@@ -490,7 +490,7 @@ void Stepper_MainISR(void)
                 IO_SetPinLow(IO_DIR_Y);
             }
 #endif
-            if(st.dir_outbits & (1<<Z_DIRECTION_BIT))
+            if(st.dir_outbits & AXIS_MASK(Z_AXIS))
             {
                 IO_SetPinHigh(IO_DIR_Z);
             }
@@ -498,7 +498,7 @@ void Stepper_MainISR(void)
             {
                 IO_SetPinLow(IO_DIR_Z);
             }
-            if(st.dir_outbits & (1<<A_DIRECTION_BIT))
+            if(st.dir_outbits & AXIS_MASK(A_AXIS))
             {
                 IO_SetPinHigh(IO_DIR_A);
             }
@@ -506,7 +506,7 @@ void Stepper_MainISR(void)
             {
                 IO_SetPinLow(IO_DIR_A);
             }
-            if(st.dir_outbits & (1<<B_DIRECTION_BIT))
+            if(st.dir_outbits & AXIS_MASK(B_AXIS))
             {
                 //IO_SetPinhigh(IO_DIR_B);
             }
@@ -522,16 +522,16 @@ void Stepper_MainISR(void)
             st.steps[A_AXIS] = st.exec_block->steps[A_AXIS] >> st.exec_segment->amass_level;
             st.steps[B_AXIS] = st.exec_block->steps[B_AXIS] >> st.exec_segment->amass_level;
 
-            if(gc_state.modal.spindle_mode == SPINDLE_RPM_MODE)
+            if(gc_state.Modal.spindle_mode == SPINDLE_RPM_MODE)
             {
-                // Set real-time spindle output as segment is loaded, just prior to the first step.
+                // Set real-time Spindle output as segment is loaded, just prior to the first step.
                 Spindle_SetSpeed(st.exec_segment->spindle_pwm);
             }
             else if(st.exec_segment->spindle_pwm != SPINDLE_PWM_OFF_VALUE)
             {
                 if(--update_g96 == 0)
                 {
-                    System.x_pos = (sys_position[X_AXIS] / Settings.steps_per_mm[X_AXIS]) - (gc_state.coord_system[X_AXIS]+gc_state.coord_offset[X_AXIS]+gc_state.tool_length_offset[X_AXIS]);
+                    System.x_pos = (sys_position[X_AXIS] / Settings.steps_per_mm[X_AXIS]) - (gc_state.CoordSystem[X_AXIS]+gc_state.coord_offset[X_AXIS]+gc_state.ToolLengthOffset[X_AXIS]);
                     Spindle_SetSurfaceSpeed(System.x_pos);
                     update_g96 = G96_UPDATE_CNT;
                 }
@@ -569,12 +569,12 @@ void Stepper_MainISR(void)
 
     if(st.counter_x > st.exec_block->step_event_count)
     {
-        st.step_outbits |= (1<<X_STEP_BIT);
+        st.step_outbits |= AXIS_MASK(X_AXIS);
         st.counter_x -= st.exec_block->step_event_count;
 
         if(st.exec_segment->backlash_motion == 0)
         {
-            if(st.exec_block->direction_bits & (1<<X_DIRECTION_BIT))
+            if(st.exec_block->direction_bits & AXIS_MASK(X_AXIS))
             {
                 sys_position[X_AXIS]--;
             }
@@ -589,12 +589,12 @@ void Stepper_MainISR(void)
 
     if(st.counter_y > st.exec_block->step_event_count)
     {
-        st.step_outbits |= (1<<Y_STEP_BIT);
+        st.step_outbits |= AXIS_MASK(Y_AXIS);
         st.counter_y -= st.exec_block->step_event_count;
 
         if(st.exec_segment->backlash_motion == 0)
         {
-            if(st.exec_block->direction_bits & (1<<Y_DIRECTION_BIT))
+            if(st.exec_block->direction_bits & AXIS_MASK(Y_AXIS))
             {
                 sys_position[Y_AXIS]--;
             }
@@ -609,12 +609,12 @@ void Stepper_MainISR(void)
 
     if(st.counter_z > st.exec_block->step_event_count)
     {
-        st.step_outbits |= (1<<Z_STEP_BIT);
+        st.step_outbits |= AXIS_MASK(Z_AXIS);
         st.counter_z -= st.exec_block->step_event_count;
 
         if(st.exec_segment->backlash_motion == 0)
         {
-            if(st.exec_block->direction_bits & (1<<Z_DIRECTION_BIT))
+            if(st.exec_block->direction_bits & AXIS_MASK(Z_AXIS))
             {
                 sys_position[Z_AXIS]--;
             }
@@ -629,12 +629,12 @@ void Stepper_MainISR(void)
 
     if(st.counter_a > st.exec_block->step_event_count)
     {
-        st.step_outbits |= (1<<A_STEP_BIT);
+        st.step_outbits |= AXIS_MASK(A_AXIS);
         st.counter_a -= st.exec_block->step_event_count;
 
         //if(st.exec_segment->backlash_motion == 0)
         {
-            if(st.exec_block->direction_bits & (1<<A_DIRECTION_BIT))
+            if(st.exec_block->direction_bits & AXIS_MASK(A_AXIS))
             {
                 sys_position[A_AXIS]--;
             }
@@ -649,12 +649,12 @@ void Stepper_MainISR(void)
 
     if(st.counter_b > st.exec_block->step_event_count)
     {
-        st.step_outbits |= (1<<B_STEP_BIT);
+        st.step_outbits |= AXIS_MASK(B_AXIS);
         st.counter_b -= st.exec_block->step_event_count;
 
         //if(st.exec_segment->backlash_motion == 0)
         {
-            if(st.exec_block->direction_bits & (1<<B_DIRECTION_BIT))
+            if(st.exec_block->direction_bits & AXIS_MASK(B_AXIS))
             {
                 sys_position[B_AXIS]--;
             }
@@ -697,7 +697,7 @@ void Stepper_PortResetISR(void)
     // Reset stepping pins (leave the direction pins)
 
     // X
-    if(step_port_invert_mask & (1<<X_STEP_BIT))
+    if(step_port_invert_mask & AXIS_MASK(X_AXIS))
     {
         IO_SetPinHigh(IO_STEP_X);
     }
@@ -708,7 +708,7 @@ void Stepper_PortResetISR(void)
 
     // Y
 #if !defined(LATHE_MODE)
-    if(step_port_invert_mask & (1<<Y_STEP_BIT))
+    if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
     {
         IO_SetPinHigh(IO_STEP_Y);
     }
@@ -719,7 +719,7 @@ void Stepper_PortResetISR(void)
 #endif
 
     // Z
-    if(step_port_invert_mask & (1<<Z_STEP_BIT))
+    if(step_port_invert_mask & AXIS_MASK(Z_AXIS))
     {
         IO_SetPinHigh(IO_STEP_Z);
     }
@@ -729,7 +729,7 @@ void Stepper_PortResetISR(void)
     }
 
     // A
-    if(step_port_invert_mask & (1<<A_STEP_BIT))
+    if(step_port_invert_mask & AXIS_MASK(A_AXIS))
     {
         IO_SetPinHigh(IO_STEP_A);
     }
@@ -739,7 +739,7 @@ void Stepper_PortResetISR(void)
     }
 
     // B
-    if(step_port_invert_mask & (1<<B_STEP_BIT))
+    if(step_port_invert_mask & AXIS_MASK(B_AXIS))
     {
         //IO_SetPinHigh(IO_STEP_B);
     }
@@ -762,12 +762,12 @@ void Stepper_GenerateStepDirInvertMasks(void)
     {
         if(BIT_IS_TRUE(Settings.step_invert_mask, BIT(idx)))
         {
-            step_port_invert_mask |= Settings_GetStepPinMask(idx);
+            step_port_invert_mask |= AXIS_MASK(idx);
         }
 
         if(BIT_IS_TRUE(Settings.dir_invert_mask, BIT(idx)))
         {
-            dir_port_invert_mask |= Settings_GetDirectionPinMask(idx);
+            dir_port_invert_mask |= AXIS_MASK(idx);
         }
     }
 }
@@ -825,9 +825,9 @@ static uint8_t Stepper_NextBlockIndex(uint8_t block_index)
 {
     block_index++;
 
-    if(block_index == (SEGMENT_BUFFER_SIZE-1))
+    if(block_index == (SEGMENT_BUFFER_SIZE - 1))
     {
-        return(0);
+        return 0;
     }
 
     return block_index;
@@ -976,7 +976,7 @@ void Stepper_PrepareBuffer(void)
                 }
 
                 // Setup laser mode variables. PWM rate adjusted motions will always complete a motion with the
-                // spindle off.
+                // Spindle off.
                 st_prep_block->is_pwm_rate_adjusted = false;
 
                 if(Settings.flags & BITFLAG_LASER_MODE)
@@ -1004,7 +1004,7 @@ void Stepper_PrepareBuffer(void)
                 // Compute velocity profile parameters for a feed hold in-progress. This profile overrides
                 // the planner block profile, enforcing a deceleration to zero speed.
                 prep.ramp_type = RAMP_DECEL;
-                // Compute decelerate distance relative to end of block.
+                // Compute decelerate Distance relative to end of block.
                 float decel_dist = pl_block->millimeters - inv_2_accel*pl_block->entry_speed_sqr;
 
                 if(decel_dist < 0.0)
@@ -1122,7 +1122,7 @@ void Stepper_PrepareBuffer(void)
         prep_segment->backlash_motion = pl_block->backlash_motion;
 
         /*------------------------------------------------------------------------------------
-        Compute the average velocity of this new segment by determining the total distance
+        Compute the average velocity of this new segment by determining the total Distance
         traveled over the segment time DT_SEGMENT. The following code first attempts to create
         a full segment based on the current ramp conditions. If the segment time is incomplete
         when terminating at a ramp state change, the code will continue to loop through the
@@ -1130,7 +1130,7 @@ void Stepper_PrepareBuffer(void)
         an incomplete segment terminates at the end of the velocity profile, the segment is
         considered completed despite having a truncated execution time less than DT_SEGMENT.
         The velocity profile is always assumed to progress through the ramp sequence:
-        acceleration ramp, cruising state, and deceleration ramp. Each ramp's travel distance
+        acceleration ramp, cruising state, and deceleration ramp. Each ramp's travel Distance
         may range from zero to the length of the block. Velocity profiles can end either at
         the end of planner block (typical) or mid-block at the end of a forced deceleration,
         such as from a feed hold.
@@ -1140,7 +1140,7 @@ void Stepper_PrepareBuffer(void)
         float time_var = dt_max; // Time worker variable
         float mm_var; // mm-Distance worker variable
         float speed_var; // Speed worker variable
-        float mm_remaining = pl_block->millimeters; // New segment distance from end of block.
+        float mm_remaining = pl_block->millimeters; // New segment Distance from end of block.
         float minimum_mm = mm_remaining-prep.req_mm_increment; // Guarantee at least one step.
 
         if(minimum_mm < 0.0)
@@ -1223,7 +1223,7 @@ void Stepper_PrepareBuffer(void)
 
                 if(prep.current_speed > speed_var)   // Check if at or below zero speed.
                 {
-                    // Compute distance from end of segment to end of block.
+                    // Compute Distance from end of segment to end of block.
                     mm_var = mm_remaining - time_var*(prep.current_speed - 0.5*speed_var); // (mm)
 
                     if(mm_var > prep.mm_complete)   // Typical case. In deceleration ramp.
@@ -1250,7 +1250,7 @@ void Stepper_PrepareBuffer(void)
                 if(mm_remaining > minimum_mm)   // Check for very slow segments with zero steps.
                 {
                     // Increase segment time to ensure at least one step in segment. Override and loop
-                    // through distance calculations until minimum_mm or mm_complete.
+                    // through Distance calculations until minimum_mm or mm_complete.
                     dt_max += DT_SEGMENT;
                     time_var = dt_max - dt;
                 }
@@ -1262,7 +1262,7 @@ void Stepper_PrepareBuffer(void)
         } while(mm_remaining > prep.mm_complete);   // **Complete** Exit loop. Profile complete.
 
         /* -----------------------------------------------------------------------------------
-        Compute spindle speed PWM output for step segment
+        Compute Spindle speed PWM output for step segment
         */
 
         if(st_prep_block->is_pwm_rate_adjusted || (System.step_control & STEP_CONTROL_UPDATE_SPINDLE_PWM))
@@ -1295,7 +1295,7 @@ void Stepper_PrepareBuffer(void)
 
         /* -----------------------------------------------------------------------------------
         Compute segment step rate, steps to execute, and apply necessary rate corrections.
-        NOTE: Steps are computed by direct scalar conversion of the millimeter distance
+        NOTE: Steps are computed by direct scalar conversion of the millimeter Distance
         remaining in the block, rather than incrementally tallying the steps executed per
         segment. This helps in removing floating point round-off issues of several additions.
         However, since floats have only 7.2 significant digits, long moves with extremely
@@ -1330,7 +1330,7 @@ void Stepper_PrepareBuffer(void)
         // the end of every segment can have a partial step of varying magnitudes that are not
         // executed, because the stepper ISR requires whole steps due to the AMASS algorithm. To
         // compensate, we track the time to execute the previous segment's partial step and simply
-        // apply it with the partial step distance to the current segment, so that it minutely
+        // apply it with the partial step Distance to the current segment, so that it minutely
         // adjusts the whole segment rate to keep step output exact. These rate adjustments are
         // typically very small and do not adversely effect performance, but ensures that Grbl
         // outputs the exact acceleration and velocity profiles as computed by the planner.
@@ -1392,7 +1392,7 @@ void Stepper_PrepareBuffer(void)
         // Check for exit conditions and flag to load next planner block.
         if(mm_remaining == prep.mm_complete)
         {
-            // End of planner block or forced-termination. No more distance to be executed.
+            // End of planner block or forced-termination. No more Distance to be executed.
             if(mm_remaining > 0.0)   // At end of forced-termination.
             {
                 // Reset prep parameters for resuming and then bail. Allow the stepper ISR to complete

@@ -1,5 +1,5 @@
 /*
-  SpindleControl.c - spindle control methods
+  SpindleControl.c - Spindle control methods
   Part of Grbl-Advanced
 
   Copyright (c) 2012-2016 Sungeun K. Jeon for Gnea Research LLC
@@ -42,7 +42,7 @@ void Spindle_Initialize(void)
     IO_PinInit(IO_SPINDLE_DIRECTION);
     IO_PinInit(IO_SPINDLE_PWM);
 
-    // Configure variable spindle PWM and enable pin, if required, PWM and enable are
+    // Configure variable Spindle PWM and enable pin, if required, PWM and enable are
     // combined unless configured otherwise.
 
 	/* GPIO Configuration:  */
@@ -72,7 +72,7 @@ void Spindle_Initialize(void)
 }
 
 
-// Disables the spindle and sets PWM output to zero when PWM variable spindle speed is enabled.
+// Disables the Spindle and sets PWM output to zero when PWM variable Spindle speed is enabled.
 // Called by various main program and ISR routines. Keep routine small, fast, and efficient.
 // Called by spindle_init(), spindle_set_speed(), spindle_set_state(), and mc_reset().
 void Spindle_Stop(void)
@@ -107,7 +107,7 @@ uint8_t Spindle_GetState(void)
 }
 
 
-// Sets spindle speed PWM output and enable pin, if configured. Called by spindle_set_state()
+// Sets Spindle speed PWM output and enable pin, if configured. Called by spindle_set_state()
 // and stepper ISR. Keep routine small and efficient.
 void Spindle_SetSpeed(uint8_t pwm_value)
 {
@@ -154,18 +154,18 @@ uint8_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
 {
     uint8_t pwm_value;
 
-    rpm *= (0.010*System.spindle_speed_ovr); // Scale by spindle speed override value.
+    rpm *= (0.010*System.spindle_speed_ovr); // Scale by Spindle speed override value.
 
     // Calculate PWM register value based on rpm max/min settings and programmed rpm.
     if((Settings.rpm_min >= Settings.rpm_max) || (rpm >= Settings.rpm_max))
     {
-        // No PWM range possible. Set simple on/off spindle control pin state.
+        // No PWM range possible. Set simple on/off Spindle control pin state.
         System.spindle_speed = Settings.rpm_max;
         pwm_value = SPINDLE_PWM_MAX_VALUE;
     }
     else if(rpm <= Settings.rpm_min)
     {
-        if(rpm == 0.0)   // S0 disables spindle
+        if(rpm == 0.0)   // S0 disables Spindle
         {
             System.spindle_speed = 0.0;
             pwm_value = SPINDLE_PWM_OFF_VALUE;
@@ -178,7 +178,7 @@ uint8_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
     }
     else
     {
-        // Compute intermediate PWM value with linear spindle speed model.
+        // Compute intermediate PWM value with linear Spindle speed model.
         // NOTE: A nonlinear model could be installed here, if required, but keep it VERY light-weight.
         System.spindle_speed = rpm;
         pwm_value = floor((rpm-Settings.rpm_min)*pwm_gradient) + SPINDLE_PWM_MIN_VALUE;
@@ -188,9 +188,9 @@ uint8_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
 }
 
 
-// Immediately sets spindle running state with direction and spindle rpm via PWM, if enabled.
+// Immediately sets Spindle running state with direction and Spindle rpm via PWM, if enabled.
 // Called by g-code parser spindle_sync(), parking retract and restore, g-code program end,
-// sleep, and spindle stop override.
+// sleep, and Spindle stop override.
 void Spindle_SetState(uint8_t state, float rpm)
 {
     if(System.Abort == true)
@@ -199,7 +199,7 @@ void Spindle_SetState(uint8_t state, float rpm)
         return;
     }
 
-    if(state == SPINDLE_DISABLE)   // Halt or set spindle direction and rpm.
+    if(state == SPINDLE_DISABLE)   // Halt or set Spindle direction and rpm.
     {
         System.spindle_speed = 0.0;
         Spindle_Stop();
@@ -240,7 +240,7 @@ void Spindle_SetState(uint8_t state, float rpm)
 }
 
 
-// G-code parser entry-point for setting spindle state. Forces a planner buffer sync and bails
+// G-code parser entry-point for setting Spindle state. Forces a planner buffer sync and bails
 // if an abort or check-mode is active.
 void Spindle_Sync(uint8_t state, float rpm)
 {
@@ -249,7 +249,7 @@ void Spindle_Sync(uint8_t state, float rpm)
         return;
     }
 
-    Protocol_BufferSynchronize(); // Empty planner buffer to ensure spindle is set when programmed.
+    Protocol_BufferSynchronize(); // Empty planner buffer to ensure Spindle is set when programmed.
     Spindle_SetState(state, rpm);
 }
 

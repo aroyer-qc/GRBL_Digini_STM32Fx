@@ -26,23 +26,6 @@
 #include <stdbool.h>
 
 
-#ifndef M_PI
-    #define M_PI        3.14159265358979323846
-#endif // M_PI
-
-
-// Bit field and masking macros
-#define BIT(n)                      (1 << n)
-#define BIT_TRUE_ATOMIC(x,mask)     BIT_TRUE(x,mask)
-#define BIT_FALSE_ATOMIC(x,mask)    BIT_FALSE(x,mask)
-#define BIT_TOGGLE_ATOMIC(x,mask)   (x) ^= (mask)
-#define BIT_TRUE(x,mask)            (x) |= (mask)
-#define BIT_FALSE(x,mask)           (x) &= ~(mask)
-#define BIT_IS_TRUE(x,mask)         ((x & mask) != 0)
-#define BIT_IS_FALSE(x,mask)        ((x & mask) == 0)
-
-
-#define F_CPU                       96000000UL
 #define F_TIMER_STEPPER             24000000UL
 
 #define N_AXIS                      5
@@ -54,6 +37,9 @@
 #define A_AXIS                      3
 #define B_AXIS                      4
 
+#define AXIS_MASK(A)                (1<<A)
+
+/*
 #define X_STEP_BIT                  0
 #define Y_STEP_BIT                  1
 #define Z_STEP_BIT                  2
@@ -65,6 +51,7 @@
 #define Z_DIRECTION_BIT             2
 #define A_DIRECTION_BIT             3
 #define B_DIRECTION_BIT             4
+*/
 
 #define X1_LIMIT_BIT                0
 #define Y1_LIMIT_BIT                1
@@ -81,10 +68,10 @@
 #define CONTROL_FEED_HOLD_BIT       1
 #define CONTROL_CYCLE_START_BIT     2
 #define CONTROL_SAFETY_DOOR_BIT     3
-#define CONTROL_MASK                ((1<<CONTROL_RESET_BIT)       | \
-                                     (1<<CONTROL_FEED_HOLD_BIT)   | \
-                                     (1<<CONTROL_CYCLE_START_BIT) | \
-                                     (1<<CONTROL_SAFETY_DOOR_BIT))
+#define CONTROL_MASK                ((1 << CONTROL_RESET_BIT)       | \
+                                     (1 << CONTROL_FEED_HOLD_BIT)   | \
+                                     (1 << CONTROL_CYCLE_START_BIT) | \
+                                     (1 << CONTROL_SAFETY_DOOR_BIT))
 
 
 #define DELAY_MODE_DWELL            0
@@ -98,9 +85,7 @@
 
 
 // Conversions
-#define MM_PER_INCH                 (25.40)
-#define INCH_PER_MM                 (0.0393701)
-#define TICKS_PER_MICROSECOND       (24UL)   // todo AR (F_CPU/1000000)??  to do change this
+#define TICKS_PER_MICROSECOND       (24UL)   // todo AR (SYSTEM_CORE_CLOCK/1000000)??  to do change this
 
 
 #define SOME_LARGE_VALUE            1.0E+38
@@ -127,7 +112,7 @@
 // Read a floating point value from a string. Line points to the input buffer, char_counter
 // is the indexer pointing to the current character of the line, while float_ptr is
 // a pointer to the result variable. Returns true when it succeeds
-uint8_t Read_Float(char *line, uint8_t *char_counter, float *float_ptr);
+bool Read_Float(char *line, uint8_t *char_counter, float *float_ptr);
 
 uint8_t ExtractFloat(char *line, int start_idx, char *float_char);
 

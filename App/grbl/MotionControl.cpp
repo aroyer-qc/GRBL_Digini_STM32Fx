@@ -116,8 +116,8 @@ void MC_SyncBacklashPosition(void)
 
 
 // Execute linear motion in absolute millimeter coordinates. Feed rate given in millimeters/second
-// unless invert_feed_rate is true. Then the feed_rate means that the motion should be completed in
-// (1 minute)/feed_rate time.
+// unless invert_feed_rate is true. Then the FeedRate means that the motion should be completed in
+// (1 minute)/FeedRate time.
 // NOTE: This is the primary gateway to the grbl planner. All line motions, including arc line
 // segments, must pass through this routine before being passed to the planner. The seperation of
 // mc_line and plan_buffer_line is done primarily to place non-planner-type functions from being
@@ -130,7 +130,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
 
     pl_backlash.spindle_speed = pl_data->spindle_speed;
     pl_backlash.line_number = pl_data->line_number;
-    pl_backlash.feed_rate = pl_data->feed_rate;
+    pl_backlash.FeedRate = pl_data->FeedRate;
 
 
     // If enabled, check for soft limit violations. Placed here all line motions are picked up
@@ -260,7 +260,7 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
     {
         if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
         {
-            // Correctly set spindle state, if there is a coincident position passed. Forces a buffer
+            // Correctly set Spindle state, if there is a coincident position passed. Forces a buffer
             // sync while in M3 laser mode only.
             if(pl_data->condition & PL_COND_FLAG_SPINDLE_CW)
             {
@@ -304,9 +304,9 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     pos_z = sys_position[Z_AXIS];
 
     // Calculate mm/s
-    float feed = pl_data->feed_rate / 60.0;
+    float feed = pl_data->FeedRate / 60.0;
 
-    // Calculate distance [mm] which is needed for acceleration; ToDo: Include x-axis
+    // Calculate Distance [mm] which is needed for acceleration; ToDo: Include x-axis
     float s_d = ((feed * feed) / ((Settings.acceleration[Z_AXIS] / 3600) * 2));
     // Increase it by a small amount
     s_d += 0.05;
@@ -317,7 +317,7 @@ void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch)
     MC_Line(target, pl_data);
     System.sync_move = 1;
 
-    // Wait for spindle sync
+    // Wait for Spindle sync
     while(wait_spindle == 0)
     {
         Protocol_ExecuteRealtime(); // Check for any run-time commands
@@ -402,7 +402,7 @@ void MC_UpdateSyncMove(void)
             // Distance since start
             float dist_expected = rev_actual * sync_pitch;
 
-            // Expected distance since start
+            // Expected Distance since start
             float dist_act = ((sys_position[Z_AXIS] - pos_z) / Settings.steps_per_mm[Z_AXIS]) * -1.0;
 
             // Error
@@ -427,7 +427,7 @@ void MC_UpdateSyncMove(void)
 // for vector transformation direction.
 // The arc is approximated by generating a huge number of tiny, linear segments. The chordal tolerance
 // of each segment is configured in Settings.arc_tolerance, which is defined to be the maximum normal
-// distance from segment to the circle when the end points both lie on the circle.
+// Distance from segment to the circle when the end points both lie on the circle.
 void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *offset, float radius,
             uint8_t axis_0, uint8_t axis_1, uint8_t axis_linear, uint8_t is_clockwise_arc)
 {
@@ -463,12 +463,12 @@ void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *
 
     if(segments)
     {
-        // Multiply inverse feed_rate to compensate for the fact that this movement is approximated
-        // by a number of discrete segments. The inverse feed_rate should be correct for the sum of
+        // Multiply inverse FeedRate to compensate for the fact that this movement is approximated
+        // by a number of discrete segments. The inverse FeedRate should be correct for the sum of
         // all segments.
         if (pl_data->condition & PL_COND_FLAG_INVERSE_TIME)
         {
-            pl_data->feed_rate *= segments;
+            pl_data->FeedRate *= segments;
             BIT_FALSE(pl_data->condition, PL_COND_FLAG_INVERSE_TIME); // Force as feed absolute mode over arc segments.
         }
 
@@ -578,7 +578,7 @@ void MC_HomingCycle(uint8_t cycle_mask)
 #ifdef LIMITS_TWO_SWITCHES_ON_AXES
     if(Limits_GetState())
     {
-        MC_Reset(); // Issue system reset and ensure spindle and coolant are shutdown.
+        MC_Reset(); // Issue system reset and ensure Spindle and coolant are shutdown.
         System_SetExecAlarm(EXEC_ALARM_HARD_LIMIT);
 
         return;
@@ -681,7 +681,7 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
         if(System.Abort == true)
         {
             // Check for system abort
-            return(GC_PROBE_ABORT);
+            return GC_PROBE_ABORT;
         }
     } while(System.State != STATE_IDLE);
 
@@ -732,7 +732,7 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
 
 
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-void MC_OverrideCtrlUpdate(uint8_t override_state)
+void MC_OverrideCtrlUpdate(bool OverrideState)
 {
     // Finish all queued commands before altering override control state
     Protocol_BufferSynchronize();
@@ -742,7 +742,7 @@ void MC_OverrideCtrlUpdate(uint8_t override_state)
         return;
     }
 
-    System.override_ctrl = override_state;
+    System.OverrideCtrl = OverrideState;
 }
 #endif
 
@@ -803,7 +803,7 @@ void MC_Reset(void)
     {
         System_SetExecStateFlag(EXEC_RESET);
 
-        // Kill spindle and coolant.
+        // Kill Spindle and coolant.
         Spindle_Stop();
         Coolant_Stop();
 

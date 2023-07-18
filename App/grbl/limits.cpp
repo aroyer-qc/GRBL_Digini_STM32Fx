@@ -31,7 +31,7 @@
 #include "System32.h"
 
 
-// Homing axis search distance multiplier. Computed by this value times the cycle travel.
+// Homing axis search Distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
     #define HOMING_AXIS_SEARCH_SCALAR   1.5 // Must be > 1 to ensure limit switch will be engaged.
 #endif
@@ -184,12 +184,12 @@ void Limits_GoHome(uint8_t cycle_mask)
     for(idx = 0; idx < N_AXIS; idx++)
     {
         // Initialize step pin masks
-        step_pin[idx] = Settings_GetStepPinMask(idx);
+        step_pin[idx] = AXIS_MASK(idx);
 
 #ifdef COREXY
         if((idx == A_MOTOR) || (idx == B_MOTOR))
         {
-            step_pin[idx] = (Settings_GetStepPinMask(X_AXIS) | Settings_GetStepPinMask(Y_AXIS));
+            step_pin[idx] = (AXIS_MASK(X_AXIS) | AXIS_MASK((Y_AXIS));
         }
 #endif
 
@@ -272,7 +272,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         System.homing_axis_lock = axislock;
 
         // Perform homing cycle. Planner buffer should be empty, as required to initiate the homing cycle.
-        pl_data->feed_rate = homing_rate; // Set current homing rate.
+        pl_data->FeedRate = homing_rate; // Set current homing rate.
         Planner_BufferLine(target, pl_data); // Bypass mc_line(). Directly plan homing motion.
 
         System.step_control = STEP_CONTROL_EXECUTE_SYS_MOTION; // Set to execute homing motion and clear existing flags.
@@ -361,7 +361,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         // Reverse direction and reset homing rate for locate cycle(s).
         approach = !approach;
 
-        // After first cycle, homing enters locating phase. Shorten search to pull-off distance.
+        // After first cycle, homing enters locating phase. Shorten search to pull-off Distance.
         if(approach)
         {
             max_travel = Settings.homing_pulloff*HOMING_AXIS_LOCATE_SCALAR;
@@ -441,7 +441,7 @@ void Limits_SoftCheck(float *target)
 {
     if(System_CheckTravelLimits(target))
     {
-        System.soft_limit = true;
+        System.SoftLimit = true;
 
         // Force feed hold if cycle is active. All buffered blocks are guaranteed to be within
         // workspace volume so just come to a controlled stop so position is not lost. When complete
@@ -461,7 +461,7 @@ void Limits_SoftCheck(float *target)
             while(System.State != STATE_IDLE);
         }
 
-        MC_Reset(); // Issue system reset and ensure spindle and coolant are shutdown.
+        MC_Reset(); // Issue system reset and ensure Spindle and coolant are shutdown.
         System_SetExecAlarm(EXEC_ALARM_SOFT_LIMIT); // Indicate soft limit critical event
         Protocol_ExecuteRealtime(); // Execute to enter critical event loop and system abort
 

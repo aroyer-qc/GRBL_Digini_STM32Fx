@@ -39,24 +39,36 @@
 
 //-------------------------------------------------------------------------------------------------
 
-extern const char OUR_VENDOR_NAME[8];
-extern const char OUR_MODEL_NAME[18];
-extern const char OUR_FIRMWARE_NAME[17];
-extern const char OUR_FIRMWARE_VERSION[9];
-extern const char OUR_FIRMWARE_GUI_NAME[17];
-extern const char OUR_FIRMWARE_GUI_VERSION[17];
-extern const char OUR_SERIAL_NUMBER[10];
-extern const char OUR_BUILD_DATE[25];
+// Static value that is not configurable
+extern const char OUR_FIRMWARE_NAME[];
+extern const char OUR_FIRMWARE_VERSION[];
+extern const char OUR_FIRMWARE_GUI_NAME[];
+extern const char OUR_FIRMWARE_GUI_VERSION[];
+extern const char OUR_BUILD_DATE[];
+
+// Configurable value
+extern char OEM_VENDOR_NAME[8];
+extern char OEM_MODEL_NAME[24];
+extern char OEM_CONFIG_VERSION[24];
+extern char OEM_SERIAL_NUMBER[16];
+
+
 
 #ifdef BSP_GLOBAL
-const char OUR_VENDOR_NAME[]          = { "Digini\r"                 };
-const char OUR_MODEL_NAME[]           = { "STM32F746G-DISCO\r"       };
-const char OUR_FIRMWARE_NAME[]        = { "GRBL"                     };
-const char OUR_FIRMWARE_VERSION[]     = { GRBL_VERSION "\r"          };
-const char OUR_FIRMWARE_GUI_NAME[]    = { "Digini GUI\r"             };
-const char OUR_FIRMWARE_GUI_VERSION[] = { "V2.01\r"                  };
-const char OUR_SERIAL_NUMBER[]        = { "00000000\r"               };
-const char OUR_BUILD_DATE[]           = { __DATE__ "  " __TIME__ "\r"};
-#endif
+const char OUR_FIRMWARE_NAME[]        = { "GRBL"                 };
+const char OUR_FIRMWARE_VERSION[]     = { GRBL_VERSION           };
+const char OUR_FIRMWARE_GUI_NAME[]    = { "Digini GUI"           };
+const char OUR_FIRMWARE_GUI_VERSION[] = { "V2.01"                };
+const char OUR_BUILD_DATE[]           = { __DATE__ "  " __TIME__ };
 
+ #ifdef DEBUG
+char OEM_VENDOR_NAME[]                = { "Digini"               };
+char OEM_MODEL_NAME[]                 = { "STM32F746G-DISCO"     };
+char OEM_SERIAL_NUMBER[]              = { "00000000"             };
+ #else
+char OUR_VENDOR_NAME[]                = { "" };
+char OUR_MODEL_NAME[]                 = { "" };
+char OEM_SERIAL_NUMBER[]              = { "" };
+ #endif
+#endif
 //-------------------------------------------------------------------------------------------------

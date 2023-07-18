@@ -45,9 +45,8 @@ void Settings_StoreStartupLine(uint8_t n, char *line)
 #ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
     Protocol_BufferSynchronize(); // A startup line may contain a motion and be executing.
 #endif
-
-    uint32_t addr = n * (STARTUP_LINE_LEN + 1) + EEPROM_ADDR_STARTUP_BLOCK;
-    myE2_Setting.Write(addr, (uint8_t*)line, STARTUP_LINE_LEN);
+    DB_Central.Set((uint8_t*)line, GRBL_STARTUP_BLOCK, n);
+    // why there is no checksum here?
 }
 
 
@@ -56,19 +55,19 @@ void Settings_StoreStartupLine(uint8_t n, char *line)
 void Settings_StoreBuildInfo(char *line)
 {
     // Build info can only be stored when state is IDLE.
-    myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO, (uint8_t*)line, STARTUP_LINE_LEN);
+    DB_Central.Set((uint8_t*)line, GRBL_BUILD_INFO);
+    // why there is no checksum here?
 }
 
 
 // Method to store coord data parameters into EEPROM
-void Settings_WriteCoordData(uint8_t coord_select, float *coord_data)
+void Settings_WriteCoordData(uint8_t CoordSelect, float *coord_data)
 {
   #ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
     Protocol_BufferSynchronize();
   #endif
 
-    uint32_t addr = coord_select*(sizeof(float)*N_AXIS+1) + EEPROM_ADDR_PARAMETERS;
-    myE2_Setting.Write(addr, (uint8_t*)coord_data, sizeof(float) * N_AXIS);
+    DB_Central.Set((uint8_t*)coord_data, GRBL_GLOBAL_SETTINGS, CoordSelect);
 }
 
 
@@ -174,8 +173,8 @@ void Settings_Restore(uint8_t restore_flag)
         Settings.backlash[Y_AXIS] = DEFAULT_Y_BACKLASH;
         Settings.backlash[Z_AXIS] = DEFAULT_Z_BACKLASH;
 
-        Settings.tool_change = DEFAULT_TOOL_CHANGE_MODE;
-        Settings.tls_valid = 0;
+        Settings.ToolChange = DEFAULT_TOOL_CHANGE_MODE;
+        Settings.TLS_Valid = false;
         Settings.tls_position[X_AXIS] = 0;
         Settings.tls_position[Y_AXIS] = 0;
         Settings.tls_position[Z_AXIS] = 0;
@@ -185,12 +184,11 @@ void Settings_Restore(uint8_t restore_flag)
 
     if(restore_flag & SETTINGS_RESTORE_PARAMETERS)
     {
-        uint8_t idx;
         float coord_data[N_AXIS];
 
         memset(&coord_data, 0, sizeof(coord_data));
 
-        for(idx = 0; idx <= SETTING_INDEX_NCOORD; idx++)
+        for(int idx = 0; idx <= SETTING_INDEX_NCOORD; idx++)
         {
             Settings_WriteCoordData(idx, coord_data);
         }
@@ -198,21 +196,17 @@ void Settings_Restore(uint8_t restore_flag)
 
     if(restore_flag & SETTINGS_RESTORE_STARTUP_LINES)
     {
-#if N_STARTUP_LINE > 0
-        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK, 0);
-        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+1, 0); // Checksum
-#endif
-#if N_STARTUP_LINE > 1
-        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+1), 0);
-        myE2_Setting.Write(EEPROM_ADDR_STARTUP_BLOCK+(STARTUP_LINE_LEN+2), 0); // Checksum
-#endif
+        for(int idx = 0; idx <= N_STARTUP_LINE; idx++)
+        {
+            DB_Central.Fill(0, GRBL_STARTUP_BLOCK, idx);
+            DB_Central.Fill(0, GRBL_STARTUP_BLOCK_CHKSUM, idx);
+        }
     }
 
     if(restore_flag & SETTINGS_RESTORE_BUILD_INFO)
     {
-
-        myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO, 0);
-        myE2_Setting.Write(EEPROM_ADDR_BUILD_INFO+1, 0);  // Checksum
+        DB_Central.Fill(0, GRBL_BUILD_INFO);
+        DB_Central.Fill(0, GRBL_BUILD_INFO_CHKSUM);
     }
 
     if(restore_flag & SETTINGS_RESTORE_TOOLS)
@@ -223,12 +217,11 @@ void Settings_Restore(uint8_t restore_flag)
 
 
 // Reads startup line from EEPROM. Updated pointed line string data.
-uint8_t Settings_ReadStartupLine(uint8_t n, char *line)
+bool Settings_ReadStartupLine(uint8_t n, char *line)
 {
-    uint32_t addr = n * (STARTUP_LINE_LEN + 1) + EEPROM_ADDR_STARTUP_BLOCK;
 
 
-    if(!(myE2_Setting.Read(addr, (uint8_t*)line, STARTUP_LINE_LEN)))
+    if(DB_Central.Get((uint8_t*)line, GRBL_STARTUP_BLOCK, n) != SYS_READY)              // TODO check this because Actually i don't know how this happen!! AR
     {
         // Reset line with default value
         line[0] = 0; // Empty line
@@ -253,16 +246,16 @@ void Settings_StoreToolParams(uint8_t tool_nr, ToolParams_t *params)
 }
 
 
-uint8_t Settings_ReadToolTable(ToolTable_t* pTable)
+bool Settings_ReadToolTable(ToolTable_t* pTable)
 {
     return (DB_Central.Get(pTable, GRBL_TOOL_TABLE) == SYS_READY) ? true : false;
 }
 
 
 // Reads startup line from EEPROM. Updated pointed line string data.
-uint8_t Settings_ReadBuildInfo(char *line)
+bool Settings_ReadBuildInfo(char *line)
 {
-    if(!(myE2_Setting.Read(EEPROM_ADDR_BUILD_INFO, (uint8_t*)line, STARTUP_LINE_LEN)))
+    if(DB_Central.Get((uint8_t*)line, GRBL_BUILD_INFO) != SYS_READY)
     {
         // Reset line with default value
         line[0] = 0; // Empty line
@@ -276,15 +269,13 @@ uint8_t Settings_ReadBuildInfo(char *line)
 
 
 // Read selected coordinate data from EEPROM. Updates pointed coord_data value.
-uint8_t Settings_ReadCoordData(uint8_t coord_select, float *coord_data)
+uint8_t Settings_ReadCoordData(uint8_t CoordSelect, float *coord_data)
 {
-    uint32_t addr = coord_select*(sizeof(float)*N_AXIS+1) + EEPROM_ADDR_PARAMETERS;
-    if(!(myE2_Setting.Read(addr, (uint8_t*)coord_data, sizeof(float)*N_AXIS)))
+    if(DB_Central.Get((uint8_t*)coord_data, GRBL_GLOBAL_SETTINGS, CoordSelect) != SYS_READY)
     {
         // Reset with default zero vector
         memset(&coord_data, 0.0, sizeof(coord_data));
-        Settings_WriteCoordData(coord_select, coord_data);
-
+        DB_Central.Set((uint8_t*)coord_data, GRBL_GLOBAL_SETTINGS, CoordSelect);
         return false;
     }
 
@@ -343,7 +334,7 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                       #ifdef MAX_STEP_RATE_HZ
                         if (value*Settings.max_rate[parameter] > (MAX_STEP_RATE_HZ*60.0))
                         {
-                            return(STATUS_MAX_STEP_RATE_EXCEEDED);
+                            return STATUS_MAX_STEP_RATE_EXCEEDED;
                         }
                       #endif
                         Settings.steps_per_mm[parameter] = value;
@@ -353,7 +344,7 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                       #ifdef MAX_STEP_RATE_HZ
                         if (value*Settings.steps_per_mm[parameter] > (MAX_STEP_RATE_HZ*60.0))
                         {
-                            return(STATUS_MAX_STEP_RATE_EXCEEDED);
+                            return STATUS_MAX_STEP_RATE_EXCEEDED;
                         }
                       #endif
                         Settings.max_rate[parameter] = value;
@@ -377,7 +368,7 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 // If axis index greater than N_AXIS or setting index greater than number of axis settings, error out.
                 if ((parameter < AXIS_SETTINGS_INCREMENT) || (set_idx == AXIS_N_SETTINGS))
                 {
-                    return(STATUS_INVALID_STATEMENT);
+                    return STATUS_INVALID_STATEMENT;
                 }
                 parameter -= AXIS_SETTINGS_INCREMENT;
             }
@@ -467,7 +458,7 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 break;
 
             case 14:
-                Settings.tool_change = int_value;
+                Settings.ToolChange = int_value;
                 break;   // Check for range?
 
             case 20:
@@ -475,7 +466,7 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 {
                     if (BIT_IS_FALSE(Settings.flags, BITFLAG_HOMING_ENABLE))
                     {
-                        return(STATUS_SOFT_LIMIT_ERROR);
+                        return STATUS_SOFT_LIMIT_ERROR;
                     }
                     Settings.flags |= BITFLAG_SOFT_LIMIT_ENABLE;
                 }
@@ -512,26 +503,33 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
             case 23:
                 Settings.homing_dir_mask = int_value;
                 break;
+
             case 24:
                 Settings.homing_feed_rate = value;
                 break;
+
             case 25:
                 Settings.homing_seek_rate = value;
                 break;
+
             case 26:
                 Settings.homing_debounce_delay = int_value;
                 break;
+
             case 27:
                 Settings.homing_pulloff = value;
                 break;
+
             case 30:
                 Settings.rpm_max = value;
                 Spindle_Initialize();
-                break; // Re-initialize spindle rpm calibration
+                break; // Re-initialize Spindle rpm calibration
+
             case 31:
                 Settings.rpm_min = value;
                 Spindle_Initialize();
-                break; // Re-initialize spindle rpm calibration
+                break; // Re-initialize Spindle rpm calibration
+
             case 32:
                 if (int_value)
                 {
@@ -555,20 +553,20 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 break;
 
             default:
-                return(STATUS_INVALID_STATEMENT);
+                return STATUS_INVALID_STATEMENT;
         }
     }
 
     WriteGlobalSettings();
 
-    return 0;
+    return STATUS_OK;
 }
 
 
 void Settings_StoreTlsPosition(void)
 {
-    memcpy(Settings.tls_position, sys_position, sizeof(float)*N_AXIS);
-    Settings.tls_valid = 1;
+    memcpy(Settings.tls_position, sys_position, sizeof(float) * N_AXIS);
+    Settings.TLS_Valid = true;
 
     WriteGlobalSettings();
 }
@@ -588,74 +586,3 @@ void Settings_Initialize(void)
     TT_Initialize();
 }
 
-
-// Returns step pin mask according to Grbl internal axis indexing.
-uint8_t Settings_GetStepPinMask(uint8_t axis_idx)
-{
-    if(axis_idx == X_AXIS)
-    {
-        return (1<<X_STEP_BIT);
-    }
-    if(axis_idx == Y_AXIS)
-    {
-        return (1<<Y_STEP_BIT);
-    }
-    if(axis_idx == Z_AXIS)
-    {
-        return (1<<Z_STEP_BIT);
-    }
-    if(axis_idx == A_AXIS)
-    {
-        return (1<<A_STEP_BIT);
-    }
-
-    return (1<<B_STEP_BIT);
-}
-
-
-// Returns direction pin mask according to Grbl internal axis indexing.
-uint8_t Settings_GetDirectionPinMask(uint8_t axis_idx)
-{
-    if(axis_idx == X_AXIS)
-    {
-        return (1<<X_DIRECTION_BIT);
-    }
-    if(axis_idx == Y_AXIS)
-    {
-        return (1<<Y_DIRECTION_BIT);
-    }
-    if(axis_idx == Z_AXIS)
-    {
-        return (1<<Z_DIRECTION_BIT);
-    }
-    if(axis_idx == A_AXIS)
-    {
-        return (1<<A_DIRECTION_BIT);
-    }
-
-    return (1<<B_DIRECTION_BIT);
-}
-
-
-// Returns limit pin mask according to Grbl internal axis indexing.
-uint8_t Settings_GetLimitPinMask(uint8_t axis_idx)
-{
-    if(axis_idx == X_AXIS)
-    {
-        return (1<<X_STEP_BIT);
-    }
-    if(axis_idx == Y_AXIS)
-    {
-        return (1<<Y_STEP_BIT);
-    }
-    if(axis_idx == Z_AXIS)
-    {
-        return (1<<Z_STEP_BIT);
-    }
-    if(axis_idx == A_AXIS)
-    {
-        return (1<<A_STEP_BIT);
-    }
-
-    return (1<<B_STEP_BIT);
-}

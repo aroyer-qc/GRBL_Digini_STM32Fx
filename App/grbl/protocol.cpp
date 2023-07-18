@@ -423,9 +423,9 @@ void Protocol_ExecRtSystem(void)
                     }
                 }
 
-                // Execute a safety door stop with a feed hold and disable spindle/coolant.
+                // Execute a safety door stop with a feed hold and disable Spindle/coolant.
                 // NOTE: Safety door differs from feed holds by stopping everything no matter state, disables powered
-                // devices (spindle/coolant), and blocks resuming until switch is re-engaged.
+                // devices (Spindle/coolant), and blocks resuming until switch is re-engaged.
                 if(rt_exec & EXEC_SAFETY_DOOR)
                 {
                     Report_FeedbackMessage(MESSAGE_SAFETY_DOOR_AJAR);
@@ -540,7 +540,7 @@ void Protocol_ExecRtSystem(void)
             // NOTE: Bresenham algorithm variables are still maintained through both the planner and stepper
             // cycle reinitializations. The stepper path should continue exactly as if nothing has happened.
             // NOTE: EXEC_CYCLE_STOP is set by the stepper subsystem when a cycle or feed hold completes.
-            if((System.State & (STATE_HOLD|STATE_SAFETY_DOOR|STATE_SLEEP)) && !(System.soft_limit) && !(System.Suspend & SUSPEND_JOG_CANCEL))
+            if((System.State & (STATE_HOLD|STATE_SAFETY_DOOR|STATE_SLEEP)) && (System.SoftLimit == false) && !(System.Suspend & SUSPEND_JOG_CANCEL))
             {
                 // Hold complete. Set to indicate ready to resume.  Remain in HOLD or DOOR states until user
                 // has issued a resume command or reset.
@@ -649,7 +649,7 @@ void Protocol_ExecRtSystem(void)
     {
         System_ClearExecAccessoryOverrides(); // Clear all accessory override flags.
 
-        // NOTE: Unlike motion overrides, spindle overrides do not require a planner reinitialization.
+        // NOTE: Unlike motion overrides, Spindle overrides do not require a planner reinitialization.
         uint8_t last_s_override =  System.spindle_speed_ovr;
 
         if(rt_exec & EXEC_SPINDLE_OVR_RESET)
@@ -682,7 +682,7 @@ void Protocol_ExecRtSystem(void)
             // NOTE: Spindle speed overrides during HOLD state are taken care of by suspend function.
             if (System.State == STATE_IDLE)
             {
-                Spindle_SetState(gc_state.modal.spindle, gc_state.spindle_speed);
+                Spindle_SetState(gc_state.Modal.Spindle, gc_state.spindle_speed);
             }
             else
             {
@@ -695,7 +695,7 @@ void Protocol_ExecRtSystem(void)
         if(rt_exec & EXEC_SPINDLE_OVR_STOP)
         {
             // Spindle stop override allowed only while in HOLD state.
-            // NOTE: Report counters are set in spindle_set_state() when spindle stop is executed.
+            // NOTE: Report counters are set in spindle_set_state() when Spindle stop is executed.
             if(System.State == STATE_HOLD)
             {
                 if(!(System.spindle_stop_ovr))
@@ -716,7 +716,7 @@ void Protocol_ExecRtSystem(void)
         {
             if((System.State == STATE_IDLE) || (System.State & (STATE_CYCLE | STATE_HOLD | STATE_JOG)))
             {
-                uint8_t coolant_state = gc_state.modal.coolant;
+                uint8_t coolant_state = gc_state.Modal.coolant;
               #ifdef ENABLE_M7
                 if(rt_exec & EXEC_COOLANT_MIST_OVR_TOGGLE)
                 {
@@ -752,7 +752,7 @@ void Protocol_ExecRtSystem(void)
                 }
               #endif
                 Coolant_SetState(coolant_state); // Report counter set in coolant_set_state().
-                gc_state.modal.coolant = coolant_state;
+                gc_state.Modal.coolant = coolant_state;
             }
         }
     }
@@ -800,7 +800,7 @@ static void Protocol_ExecRtSuspend(void)
     float restore_spindle_speed;
     if(block == 0)
     {
-        restore_condition = (gc_state.modal.spindle | gc_state.modal.coolant);
+        restore_condition = (gc_state.Modal.Spindle | gc_state.Modal.coolant);
         restore_spindle_speed = gc_state.spindle_speed;
     }
     else
@@ -847,7 +847,7 @@ static void Protocol_ExecRtSuspend(void)
                 if(BIT_IS_FALSE(System.Suspend,SUSPEND_RETRACT_COMPLETE))
                 {
 
-                    // Ensure any prior spindle stop override is disabled at start of safety door routine.
+                    // Ensure any prior Spindle stop override is disabled at start of safety door routine.
                     System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED;
 
                   #ifndef PARKING_ENABLE
@@ -855,7 +855,7 @@ static void Protocol_ExecRtSuspend(void)
                     Coolant_SetState(COOLANT_DISABLE);     // De-energize
                   #else
 
-                    // Get current position and store restore location and spindle retract waypoint.
+                    // Get current position and store restore location and Spindle retract waypoint.
                     System_ConvertArraySteps2Mpos(parking_target,sys_position);
                     if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
                     {
@@ -872,7 +872,7 @@ static void Protocol_ExecRtSuspend(void)
                     if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
                             (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
                             BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE) &&
-                            (System.override_ctrl == OVERRIDE_PARKING_MOTION))
+                            (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
                     {
                    #else
                     if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
@@ -880,12 +880,12 @@ static void Protocol_ExecRtSuspend(void)
                             BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE))
                     {
                    #endif
-                        // Retract spindle by pullout distance. Ensure retraction motion moves away from
+                        // Retract Spindle by pullout Distance. Ensure retraction motion moves away from
                         // the workpiece and waypoint motion doesn't exceed the parking target location.
                         if(parking_target[PARKING_AXIS] < retract_waypoint)
                         {
                             parking_target[PARKING_AXIS] = retract_waypoint;
-                            pl_data->feed_rate = PARKING_PULLOUT_RATE;
+                            pl_data->FeedRate = PARKING_PULLOUT_RATE;
                             pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Retain accessory state
                             pl_data->spindle_speed = restore_spindle_speed;
 
@@ -902,13 +902,13 @@ static void Protocol_ExecRtSuspend(void)
                         if(parking_target[PARKING_AXIS] < PARKING_TARGET)
                         {
                             parking_target[PARKING_AXIS] = PARKING_TARGET;
-                            pl_data->feed_rate = PARKING_RATE;
+                            pl_data->FeedRate = PARKING_RATE;
                             MC_ParkingMotion(parking_target, pl_data);
                         }
                     }
                     else
                     {
-                        // Parking motion not possible. Just disable the spindle and coolant.
+                        // Parking motion not possible. Just disable the Spindle and coolant.
                         // NOTE: Laser mode does not start a parking motion to ensure the laser stops immediately.
                         Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
                         Coolant_SetState(COOLANT_DISABLE);     // De-energize
@@ -957,7 +957,7 @@ static void Protocol_ExecRtSuspend(void)
                         // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
                       #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                         if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (System.override_ctrl == OVERRIDE_PARKING_MOTION))
+                                (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
                         {
                       #else
                         if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
@@ -967,22 +967,22 @@ static void Protocol_ExecRtSuspend(void)
                             if(parking_target[PARKING_AXIS] <= PARKING_TARGET)
                             {
                                 parking_target[PARKING_AXIS] = retract_waypoint;
-                                pl_data->feed_rate = PARKING_RATE;
+                                pl_data->FeedRate = PARKING_RATE;
 
                                 MC_ParkingMotion(parking_target, pl_data);
                             }
                         }
                      #endif
 
-                        // Delayed Tasks: Restart spindle and coolant, delay to power-up, then resume cycle.
-                        if(gc_state.modal.spindle != SPINDLE_DISABLE)
+                        // Delayed Tasks: Restart Spindle and coolant, delay to power-up, then resume cycle.
+                        if(gc_state.Modal.Spindle != SPINDLE_DISABLE)
                         {
                             // Block if safety door re-opened during prior restore actions.
                             if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
                             {
                                 if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
                                 {
-                                    // When in laser mode, ignore spindle spin-up delay. Set to turn on laser when cycle starts.
+                                    // When in laser mode, ignore Spindle spin-up delay. Set to turn on laser when cycle starts.
                                     BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
                                 }
                                 else
@@ -993,7 +993,7 @@ static void Protocol_ExecRtSuspend(void)
                             }
                         }
 
-                        if(gc_state.modal.coolant != COOLANT_DISABLE)
+                        if(gc_state.Modal.coolant != COOLANT_DISABLE)
                         {
                             // Block if safety door re-opened during prior restore actions.
                             if(BIT_IS_FALSE(System.Suspend, SUSPEND_RESTART_RETRACT))
@@ -1008,7 +1008,7 @@ static void Protocol_ExecRtSuspend(void)
                         // Execute slow plunge motion from pull-out position to resume position.
                        #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                         if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (System.override_ctrl == OVERRIDE_PARKING_MOTION))
+                                (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
                         {
                        #else
                         if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
@@ -1020,7 +1020,7 @@ static void Protocol_ExecRtSuspend(void)
                                 // Regardless if the retract parking motion was a valid/safe motion or not, the
                                 // restore parking motion should logically be valid, either by returning to the
                                 // original position through valid machine space or by not moving at all.
-                                pl_data->feed_rate = PARKING_PULLOUT_RATE;
+                                pl_data->FeedRate = PARKING_PULLOUT_RATE;
                                 pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Restore accessory state
                                 pl_data->spindle_speed = restore_spindle_speed;
 
@@ -1040,14 +1040,14 @@ static void Protocol_ExecRtSuspend(void)
             }
             else
             {
-                // Feed hold manager. Controls spindle stop override states.
+                // Feed hold manager. Controls Spindle stop override states.
                 // NOTE: Hold ensured as completed by condition check at the beginning of suspend routine.
                 if(System.spindle_stop_ovr)
                 {
-                    // Handles beginning of spindle stop
+                    // Handles beginning of Spindle stop
                     if(System.spindle_stop_ovr & SPINDLE_STOP_OVR_INITIATE)
                     {
-                        if(gc_state.modal.spindle != SPINDLE_DISABLE)
+                        if(gc_state.Modal.Spindle != SPINDLE_DISABLE)
                         {
                             Spindle_SetState(SPINDLE_DISABLE,0.0); // De-energize
                             System.spindle_stop_ovr = SPINDLE_STOP_OVR_ENABLED; // Set stop override state to enabled, if de-energized.
@@ -1056,16 +1056,16 @@ static void Protocol_ExecRtSuspend(void)
                         {
                             System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED; // Clear stop override state
                         }
-                        // Handles restoring of spindle state
+                        // Handles restoring of Spindle state
                     }
                     else if(System.spindle_stop_ovr & (SPINDLE_STOP_OVR_RESTORE | SPINDLE_STOP_OVR_RESTORE_CYCLE))
                     {
-                        if (gc_state.modal.spindle != SPINDLE_DISABLE)
+                        if (gc_state.Modal.Spindle != SPINDLE_DISABLE)
                         {
                             Report_FeedbackMessage(MESSAGE_SPINDLE_RESTORE);
                             if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
                             {
-                                // When in laser mode, ignore spindle spin-up delay. Set to turn on laser when cycle starts.
+                                // When in laser mode, ignore Spindle spin-up delay. Set to turn on laser when cycle starts.
                                 BIT_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
                             }
                             else
@@ -1083,7 +1083,7 @@ static void Protocol_ExecRtSuspend(void)
                 }
                 else
                 {
-                    // Handles spindle state during hold. NOTE: Spindle speed overrides may be altered during hold state.
+                    // Handles Spindle state during hold. NOTE: Spindle speed overrides may be altered during hold state.
                     // NOTE: STEP_CONTROL_UPDATE_SPINDLE_PWM is automatically reset upon resume in step generator.
                     if(BIT_IS_TRUE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM))
                     {

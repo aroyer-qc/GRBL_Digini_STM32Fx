@@ -137,6 +137,7 @@
 			<Add option="-Wl,--gc-sections" />
 			<Add option="-lm" />
 		</Linker>
+		<Unit filename="..\App\grbl\config.h" />
 		<Unit filename="..\App\grbl\CoolantControl.cpp">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -42,8 +42,8 @@ void MC_Initialize(void);
 void MC_SyncBacklashPosition(void);
 
 // Execute linear motion in absolute millimeter coordinates. Feed rate given in millimeters/second
-// unless invert_feed_rate is true. Then the feed_rate means that the motion should be completed in
-// (1 minute)/feed_rate time.
+// unless invert_feed_rate is true. Then the FeedRate means that the motion should be completed in
+// (1 minute)/FeedRate time.
 void MC_Line(float *target, Planner_LineData_t *pl_data);
 
 void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch);
@@ -69,7 +69,7 @@ void MC_HomingCycle(uint8_t cycle_mask);
 uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser_flags);
 
 // Handles updating the override control state.
-void MC_OverrideCtrlUpdate(uint8_t override_state);
+void MC_OverrideCtrlUpdate(bool OverrideState);
 
 // Plans and executes the single special motion case for parking. Independent of main planner buffer.
 void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data);

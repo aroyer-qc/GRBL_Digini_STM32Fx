@@ -39,7 +39,7 @@
 
 #define TIM_USE_PWM_FEATURE_CFG                         DEF_ENABLED
 
-#define TIM_DRIVER_SUPPORT_TIM1_CFG                     DEF_ENABLED                 // Timer for spindle
+#define TIM_DRIVER_SUPPORT_TIM1_CFG                     DEF_ENABLED                 // Timer for Spindle
 #define TIM_DRIVER_SUPPORT_TIM2_CFG                     DEF_ENABLED                 // De bounced limit switch
 #define TIM_DRIVER_SUPPORT_TIM3_CFG                     DEF_DISABLED
 #define TIM_DRIVER_SUPPORT_TIM4_CFG                     DEF_DISABLED

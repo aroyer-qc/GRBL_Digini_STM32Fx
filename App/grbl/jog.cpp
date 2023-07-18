@@ -18,6 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "lib_digini.h"
 #include "Planner.h"
 #include "Jog.h"
 #include "Settings.h"
@@ -32,7 +33,7 @@ uint8_t Jog_Execute(Planner_LineData_t *pl_data, Parser_Block_t *gc_block)
 {
     // Initialize planner data struct for jogging motions.
     // NOTE: Spindle and coolant are allowed to fully function with overrides during a jog.
-    pl_data->feed_rate = gc_block->values.f;
+    pl_data->FeedRate = gc_block->values.f;
     pl_data->condition |= PL_COND_FLAG_NO_FEED_OVERRIDE;
     pl_data->line_number = gc_block->values.n;
 

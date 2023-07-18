@@ -60,7 +60,7 @@
 #define EXEC_ALARM_HARD_LIMIT_Z1            25
 #define EXEC_ALARM_HARD_LIMIT_Z2            26
 
-// Override bit maps. Realtime bitflags to control feed, rapid, spindle, and coolant overrides.
+// Override bit maps. Realtime bitflags to control feed, rapid, Spindle, and coolant overrides.
 // Spindle/coolant and feed/rapids are separated into two controlling flag variables.
 #define EXEC_FEED_OVR_RESET                 BIT(0)
 #define EXEC_FEED_OVR_COARSE_PLUS           BIT(1)
@@ -122,7 +122,7 @@
 #define CONTROL_PIN_INDEX_FEED_HOLD         BIT(2)
 #define CONTROL_PIN_INDEX_CYCLE_START       BIT(3)
 
-// Define spindle stop override control states.
+// Define Spindle stop override control states.
 #define SPINDLE_STOP_OVR_DISABLED           0  // Must be zero.
 #define SPINDLE_STOP_OVR_ENABLED            BIT(0)
 #define SPINDLE_STOP_OVR_INITIATE           BIT(1)
@@ -137,18 +137,18 @@ typedef struct
     uint16_t State;              // Tracks the current system state of Grbl.
     bool    Abort;               // System abort flag. Forces exit back to main loop for reset.
     uint8_t Suspend;             // System suspend bitflag variable that manages holds, cancels, and safety door.
-    uint8_t soft_limit;          // Tracks soft limit errors for the state machine. (boolean)
+    bool    SoftLimit;          // Tracks soft limit errors for the state machine. (boolean)                                // it is never use!! and block entire code
     uint8_t step_control;        // Governs the step segment generator depending on system state.
     uint8_t probe_succeeded;     // Tracks if last probing cycle was successful.
     uint8_t homing_axis_lock;    // Locks axes when limits engage. Used as an axis motion mask in the stepper ISR.
     uint8_t f_override;          // Feed rate override value in percent
     uint8_t r_override;          // Rapids override value in percent
     uint8_t spindle_speed_ovr;   // Spindle speed value in percent
-    uint8_t spindle_stop_ovr;    // Tracks spindle stop override states
+    uint8_t spindle_stop_ovr;    // Tracks Spindle stop override states
     uint8_t report_ovr_counter;  // Tracks when to add override data to status reports.
     uint8_t report_wco_counter;  // Tracks when to add work coordinate offset data to status reports.
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    uint8_t override_ctrl;      // Tracks override control states.
+    bool    OverrideCtrl;      // Tracks override control states.
 #endif
     float spindle_speed;
     bool  IsHomed;
@@ -166,7 +166,7 @@ extern volatile uint8_t sys_probe_state;   // Probing state value.  Used to coor
 extern volatile uint16_t sys_rt_exec_state;   // Global realtime executor bitflag variable for state management. See EXEC bitmasks.
 extern volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag variable for setting various alarms.
 extern volatile uint8_t sys_rt_exec_motion_override; // Global realtime executor bitflag variable for motion-based overrides.
-extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for spindle/coolant overrides.
+extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for Spindle/coolant overrides.
 
 void System_Clear(void);
 

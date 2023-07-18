@@ -119,17 +119,17 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
         {
             if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_MAC)
             {
-                Coordinate = gc_state.coord_system[SubOffset];
+                Coordinate = gc_state.CoordSystem[SubOffset];
                 Color = GFX_ColorTable[LIGHT_GREEN];
             }
             else if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_ABS)
             {
-                Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
+                Coordinate = gc_state.CoordSystem[SubOffset] + gc_state.coord_offset[SubOffset];
                 Color = GFX_ColorTable[LIGHT_RED];
             }
             else // if(CoordinateSystem[SubOffset] == AXIS_COORD_SYSTEM_REL)
             {
-                Coordinate = gc_state.coord_system[SubOffset] + gc_state.coord_offset[SubOffset];
+                Coordinate = gc_state.CoordSystem[SubOffset] + gc_state.coord_offset[SubOffset];
                 Color = GFX_ColorTable[LIGHT_YELLOW];
             }
 
@@ -139,7 +139,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
         {
             if(CoordinateSystem[SubOffset] != AXIS_COORD_SYSTEM_MAC) // Only display little axis info if not set as machine on big axis information
             {
-                Coordinate = gc_state.coord_system[SubOffset];
+                Coordinate = gc_state.CoordSystem[SubOffset];
                 Color = GFX_ColorTable[LIGHT_GREEN];
                 IsItBlank = false;
             }
@@ -147,7 +147,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
 
     //     if(SubService == TOOL_LENGTH_OFFSET_AXIS)
     //    {
-    //         Coordinate += gc_state.tool_length_offset;
+    //         Coordinate += gc_state.ToolLengthOffset;
     //     }
 
         if(IsItBlank == false)
@@ -192,7 +192,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
 //                  uint16_t         SubService
 //  Return:         ServiceReturn_t
 //
-//  Description:    This function return spindle speed
+//  Description:    This function return Spindle speed
 //
 //  Note(s)         SubService 10 and up will display label for machine position if not set for it
 //
@@ -287,7 +287,7 @@ static ServiceReturn_t* SERV_ENBL(ServiceEvent_e* pServiceState, uint16_t SubSer
         if(pService != nullptr)
         {
             *pServiceState = SERVICE_REFRESH;
-            if(SubService == 9) // Check for spindle
+            if(SubService == 9) // Check for Spindle
             {
 //                pService->IndexState = (spindle_get_state() == SPINDLE_STATE_DISABLE) ? 0 : 1;
 
@@ -483,9 +483,10 @@ static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubSer
                 case 1: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_VERSION);     break;
                 case 2: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_NAME);    break;
                 case 3: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_VERSION); break;
-                case 4: snprintf(pBuffer, 24, "%s", OUR_MODEL_NAME);           break;
-                case 5: snprintf(pBuffer, 24, "%s", OUR_SERIAL_NUMBER);        break;
+                case 4: snprintf(pBuffer, 24, "%s", OEM_MODEL_NAME);           break;
+                case 5: snprintf(pBuffer, 24, "%s", OEM_SERIAL_NUMBER);        break;
                 case 6: snprintf(pBuffer, 24, "%s", OUR_BUILD_DATE);           break;
+                // Add Config version
             }
 
             ((ServiceType4_t*)pService)->pString[0] = pBuffer;

@@ -22,7 +22,8 @@
 #ifndef PLANNER_H
 #define PLANNER_H
 
-#include <stdint.h>
+#include "lib_macro.h"
+//#include <stdint.h>
 #include "util.h"
 
 
@@ -64,7 +65,7 @@ typedef struct
     float max_entry_speed_sqr; // Maximum allowable entry speed based on the minimum of junction limit and
     //   neighboring nominal speeds with overrides in (mm/min)^2
     float acceleration;        // Axis-limit adjusted line acceleration in (mm/min^2). Does not change.
-    float millimeters;         // The remaining distance for this block to be executed in (mm).
+    float millimeters;         // The remaining Distance for this block to be executed in (mm).
     // NOTE: This value may be altered by stepper algorithm during execution.
 
     // Stored rate limiting data used by planner when changes occur.
@@ -72,8 +73,8 @@ typedef struct
     float rapid_rate;             // Axis-limit adjusted maximum rate for this block direction in (mm/min)
     float programmed_rate;        // Programmed rate of this block (mm/min).
 
-    // Stored spindle speed data used by spindle overrides and resuming methods.
-    float spindle_speed;    // Block spindle speed. Copied from pl_line_data.
+    // Stored Spindle speed data used by Spindle overrides and resuming methods.
+    float spindle_speed;    // Block Spindle speed. Copied from pl_line_data.
 
     uint8_t backlash_motion;
 } Planner_Block_t;
@@ -82,8 +83,8 @@ typedef struct
 // Planner data prototype. Must be used when passing new motions to the planner.
 typedef struct
 {
-    float feed_rate;          // Desired feed rate for line motion. Value is ignored, if rapid motion.
-    float spindle_speed;      // Desired spindle speed through line motion.
+    float FeedRate;          // Desired feed rate for line motion. Value is ignored, if rapid motion.
+    float spindle_speed;      // Desired Spindle speed through line motion.
     uint8_t condition;        // Bitflag variable to indicate planner conditions. See defines above.
     int32_t line_number;      // Desired line number to report when executing.
 
@@ -98,7 +99,7 @@ void Planner_ResetBuffer(void); // Reset buffer only.
 
 // Add a new linear movement to the buffer. target[N_AXIS] is the signed, absolute target position
 // in millimeters. Feed rate specifies the speed of the motion. If feed rate is inverted, the feed
-// rate is taken to mean "frequency" and would complete the operation in 1/feed_rate minutes.
+// rate is taken to mean "frequency" and would complete the operation in 1/FeedRate minutes.
 uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data);
 
 // Called when the current block is no longer needed. Discards the block and makes the memory

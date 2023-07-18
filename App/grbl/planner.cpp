@@ -77,13 +77,13 @@ void Planner_ResetBuffer(void)
 
 /* Add a new linear movement to the buffer. target[N_AXIS] is the signed, absolute target position
    in millimeters. Feed rate specifies the speed of the motion. If feed rate is inverted, the feed
-   rate is taken to mean "frequency" and would complete the operation in 1/feed_rate minutes.
+   rate is taken to mean "frequency" and would complete the operation in 1/FeedRate minutes.
    All position data passed to the planner must be in terms of machine position to keep the planner
    independent of any coordinate system changes and offsets, which are handled by the g-code parser.
    NOTE: Assumes buffer is available. Buffer checks are handled at a higher level by motion_control.
    In other words, the buffer head is never equal to the buffer tail.  Also the feed rate input value
    is used in three ways: as a normal feed rate if invert_feed_rate is false, as inverse time if
-   invert_feed_rate is true, or as seek/rapids rate if the feed_rate value is negative (and
+   invert_feed_rate is true, or as seek/rapids rate if the FeedRate value is negative (and
    invert_feed_rate always false).
    The system motion condition tells the planner to plan a motion in the always unused block buffer
    head. It avoids changing the planner state and preserves the buffer to ensure subsequent gcode
@@ -99,7 +99,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     block->line_number = pl_data->line_number;
     block->backlash_motion = pl_data->backlash_motion;
 
-    // Compute and store initial move distance data.
+    // Compute and store initial move Distance data.
     int32_t target_steps[N_AXIS], position_steps[N_AXIS];
     float unit_vec[N_AXIS], delta_mm;
     uint8_t idx;
@@ -132,8 +132,8 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     for(idx = 0; idx < N_AXIS; idx++)
     {
         // Calculate target position in absolute steps, number of steps for each axis, and determine max step events.
-        // Also, compute individual axes distance for move and prep unit vector calculations.
-        // NOTE: Computes true distance from converted step values.
+        // Also, compute individual axes Distance for move and prep unit vector calculations.
+        // NOTE: Computes true Distance from converted step values.
 #ifdef COREXY
         if(!(idx == A_MOTOR) && !(idx == B_MOTOR))
         {
@@ -166,7 +166,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
         // Set direction bits. Bit enabled always means direction is negative.
         if(delta_mm < 0.0)
         {
-            block->direction_bits |= Settings_GetDirectionPinMask(idx);
+            block->direction_bits |= AXIS_MASK(idx);
         }
     }
 
@@ -191,7 +191,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     }
     else
     {
-        block->programmed_rate = pl_data->feed_rate;
+        block->programmed_rate = pl_data->FeedRate;
         if(block->condition & PL_COND_FLAG_INVERSE_TIME)
         {
             block->programmed_rate *= block->millimeters;
@@ -210,7 +210,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     {
         // Compute maximum allowable entry speed at junction by centripetal acceleration approximation.
         // Let a circle be tangent to both previous and current path line segments, where the junction
-        // deviation is defined as the distance from the junction to the closest edge of the circle,
+        // deviation is defined as the Distance from the junction to the closest edge of the circle,
         // colinear with the circle center. The circular segment joining the two paths represents the
         // path of centripetal acceleration. Solve for max velocity based on max acceleration about the
         // radius of the circle, defined indirectly by junction deviation. This may be also viewed as
@@ -344,7 +344,7 @@ float Planner_GetExecBlockExitSpeedSqr(void)
 
     if(block_index == block_buffer_head)
     {
-        return (0.0);
+        return 0.0;
     }
 
     return block_buffer[block_index].entry_speed_sqr;
@@ -506,11 +506,11 @@ static uint8_t Planner_PrevBlockIndex(uint8_t block_index)
       a. No junction speed exceeds the pre-computed maximum junction speed limit or nominal speeds of
          neighboring blocks.
       b. A block entry speed cannot exceed one reverse-computed from its exit speed (next->entry_speed)
-         with a maximum allowable deceleration over the block travel distance.
+         with a maximum allowable deceleration over the block travel Distance.
       c. The last (or newest appended) block is planned from a complete stop (an exit speed of zero).
     2. Go over every block in chronological (forward) order and dial down junction speed values if
       a. The exit speed exceeds the one forward-computed from its entry speed with the maximum allowable
-         acceleration over the block travel distance.
+         acceleration over the block travel Distance.
 
   When these stages are complete, the planner will have maximized the velocity profiles throughout the all
   of the planner blocks, where every block is operating at its maximum allowable acceleration limits. In
@@ -545,12 +545,12 @@ static uint8_t Planner_PrevBlockIndex(uint8_t block_index)
 
   NOTE: Since the planner only computes on what's in the planner buffer, some motions with lots of short
   line segments, like G2/3 arcs or complex curves, may seem to move slow. This is because there simply isn't
-  enough combined distance traveled in the entire buffer to accelerate up to the nominal speed and then
+  enough combined Distance traveled in the entire buffer to accelerate up to the nominal speed and then
   decelerate to a complete stop at the end of the buffer, as stated by the guidelines. If this happens and
   becomes an annoyance, there are a few simple solutions: (1) Maximize the machine acceleration. The planner
-  will be able to compute higher velocity profiles within the same combined distance. (2) Maximize line
-  motion(s) distance per block to a desired tolerance. The more combined distance the planner has to use,
-  the faster it can go. (3) Maximize the planner buffer size. This also will increase the combined distance
+  will be able to compute higher velocity profiles within the same combined Distance. (2) Maximize line
+  motion(s) Distance per block to a desired tolerance. The more combined Distance the planner has to use,
+  the faster it can go. (3) Maximize the planner buffer size. This also will increase the combined Distance
   for the planner to compute over. It also increases the number of computations the planner has to perform
   to compute an optimal plan, so select carefully. The Arduino 328p memory is already maxed out, but future
   ARM versions should have enough memory and speed for look-ahead blocks numbering up to a hundred or more.

@@ -174,7 +174,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     bool     HomeState = System.IsHomed;
 
     System_Clear();
-    System.State = PriorState;
+    System.State   = PriorState;
     System.IsHomed = HomeState;
 
     Probe_Reset();

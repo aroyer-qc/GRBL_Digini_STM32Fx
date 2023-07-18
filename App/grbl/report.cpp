@@ -84,9 +84,7 @@ static void Report_AxisValue(float *axis_value)
     uint8_t idx;
     uint8_t axis_num = N_LINEAR_AXIS;
 
-#ifdef USE_MULTI_AXIS
     axis_num = N_AXIS;
-#endif
 
     for(idx = 0; idx < axis_num; idx++)
     {
@@ -198,7 +196,7 @@ void Report_FeedbackMessage(uint8_t message_code)
             break;
 
         case MESSAGE_SPINDLE_RESTORE:
-            Printf("Restoring spindle");
+            Printf("Restoring Spindle");
             break;
 
         case MESSAGE_SLEEP_MODE:
@@ -248,7 +246,7 @@ void Report_GrblSettings(void)
     report_util_float_setting(11, Settings.junction_deviation, N_DECIMAL_SETTINGVALUE);
     report_util_float_setting(12, Settings.arc_tolerance, N_DECIMAL_SETTINGVALUE);
     report_util_uint8_setting(13, BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES));
-    report_util_uint8_setting(14, Settings.tool_change);
+    report_util_uint8_setting(14, Settings.ToolChange);
     report_util_uint8_setting(20, BIT_IS_TRUE(Settings.flags, BITFLAG_SOFT_LIMIT_ENABLE));
     report_util_uint8_setting(21, BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE));
     report_util_uint8_setting(22, BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE));
@@ -343,7 +341,7 @@ void Report_TLSParams(void)
     }
 
     Putc(':');
-    Printf("%d", Settings.tls_valid);
+    Printf("%d", Settings.TLS_Valid);
     report_util_feedback_line_feed();
 }
 
@@ -369,12 +367,12 @@ void Report_ToolParams(uint8_t tool_nr)
 void Report_NgcParams(void)
 {
     float coord_data[N_AXIS];
-    uint8_t coord_select;
+    uint8_t CoordSelect;
 
 
-    for(coord_select = 0; coord_select <= SETTING_INDEX_NCOORD; coord_select++)
+    for(CoordSelect = 0; CoordSelect <= SETTING_INDEX_NCOORD; CoordSelect++)
     {
-        if(!(Settings_ReadCoordData(coord_select,coord_data)))
+        if(!(Settings_ReadCoordData(CoordSelect, coord_data)))
         {
             Report_StatusMessage(STATUS_SETTING_READ_FAIL);
 
@@ -382,7 +380,7 @@ void Report_NgcParams(void)
         }
 
         Printf("[G");
-        switch(coord_select)
+        switch(CoordSelect)
         {
             case 6:
                 Printf("28");
@@ -393,7 +391,7 @@ void Report_NgcParams(void)
                 break;
 
             default:
-                Printf("%d", coord_select+54);
+                Printf("%d", CoordSelect + 54);
                 break; // G54-G59
 
         }
@@ -409,7 +407,7 @@ void Report_NgcParams(void)
     Printf("[TLO:");        // Print tool length offset value
     for(uint8_t idx = 0; idx < N_AXIS; idx++)
     {
-        PrintFloat_CoordValue(gc_state.tool_length_offset[idx]);
+        PrintFloat_CoordValue(gc_state.ToolLengthOffset[idx]);
         if(idx < (N_AXIS-1))
         {
             Printf(",");
@@ -428,39 +426,39 @@ void Report_GCodeModes(void)
 {
     Printf("[GC:G");
 
-    if(gc_state.modal.motion >= MOTION_MODE_PROBE_TOWARD)
+    if(gc_state.Modal.motion >= MOTION_MODE_PROBE_TOWARD)
     {
         Printf("38.");
-        Printf("%d", gc_state.modal.motion - (MOTION_MODE_PROBE_TOWARD-2));
+        Printf("%d", gc_state.Modal.motion - (MOTION_MODE_PROBE_TOWARD-2));
     }
     else
     {
-        Printf("%d", gc_state.modal.motion);
+        Printf("%d", gc_state.Modal.motion);
     }
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.modal.coord_select+54);
+    Printf("%d", gc_state.Modal.CoordSelect+54);
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.modal.plane_select+17);
+    Printf("%d", gc_state.Modal.PlaneSelect+17);
 
     report_util_gcode_modes_G();
-    Printf("%d", 21-gc_state.modal.units);
+    Printf("%d", 21-gc_state.Modal.units);
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.modal.distance+90);
+    Printf("%d", gc_state.Modal.Distance+90);
 
     report_util_gcode_modes_G();
-    Printf("%d", 94-gc_state.modal.feed_rate);
+    Printf("%d", 94-gc_state.Modal.FeedRate);
 
     report_util_gcode_modes_G();
-    Printf("%d", 98+gc_state.modal.retract);
+    Printf("%d", 98+gc_state.Modal.retract);
 
-    if(gc_state.modal.program_flow)
+    if(gc_state.Modal.ProgramFlow)
     {
         report_util_gcode_modes_M();
 
-        switch(gc_state.modal.program_flow)
+        switch(gc_state.Modal.ProgramFlow)
         {
             case PROGRAM_FLOW_PAUSED:
                 Putc('0');
@@ -469,7 +467,7 @@ void Report_GCodeModes(void)
             // case PROGRAM_FLOW_OPTIONAL_STOP : Putc('1'); break; // M1 is ignored and not supported.
             case PROGRAM_FLOW_COMPLETED_M2:
             case PROGRAM_FLOW_COMPLETED_M30:
-                Printf("%d", gc_state.modal.program_flow);
+                Printf("%d", gc_state.Modal.ProgramFlow);
                 break;
 
             default:
@@ -479,7 +477,7 @@ void Report_GCodeModes(void)
 
     report_util_gcode_modes_M();
 
-    switch(gc_state.modal.spindle)
+    switch(gc_state.Modal.Spindle)
     {
         case SPINDLE_ENABLE_CW:
             Putc('3');
@@ -495,14 +493,14 @@ void Report_GCodeModes(void)
     }
 
 #ifdef ENABLE_M7
-    if(gc_state.modal.coolant)   // Note: Multiple coolant states may be active at the same time.
+    if(gc_state.Modal.coolant)   // Note: Multiple coolant states may be active at the same time.
     {
-        if (gc_state.modal.coolant & PL_COND_FLAG_COOLANT_MIST)
+        if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_MIST)
         {
             report_util_gcode_modes_M();
             Putc('7');
         }
-        if (gc_state.modal.coolant & PL_COND_FLAG_COOLANT_FLOOD)
+        if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_FLOOD)
         {
             report_util_gcode_modes_M();
             Putc('8');
@@ -516,7 +514,7 @@ void Report_GCodeModes(void)
 #else
     report_util_gcode_modes_M();
 
-    if(gc_state.modal.coolant)
+    if(gc_state.Modal.coolant)
     {
         Putc('8');
     }
@@ -527,7 +525,7 @@ void Report_GCodeModes(void)
 #endif
 
 #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    if(System.override_ctrl == OVERRIDE_PARKING_MOTION)
+    if(System.OverrideCtrl == OVERRIDE_PARKING_MOTION)
     {
         report_util_gcode_modes_M();
         Printf("%d", 56);
@@ -538,7 +536,7 @@ void Report_GCodeModes(void)
     Printf("%d", gc_state.tool);
 
     Printf(" F");
-    PrintFloat_RateValue(gc_state.feed_rate);
+    PrintFloat_RateValue(gc_state.FeedRate);
 
     Printf(" S");
     Printf_Float(gc_state.spindle_speed, N_DECIMAL_RPMVALUE);
@@ -633,9 +631,7 @@ void Report_BuildInfo(char *line)
 #ifdef ENABLE_SAFETY_DOOR_INPUT_PIN
     Putc('+');
 #endif
-#ifdef USE_MULTI_AXIS
     Putc('A');
-#endif
 #ifdef LATHE_MODE
     Putc('D');
 #endif
@@ -763,9 +759,9 @@ void Report_RealtimeStatus(void)
         for (idx = 0; idx < N_AXIS; idx++)
         {
             // Apply work coordinate offsets and tool length offset to current position.
-            wco[idx] = gc_state.coord_system[idx]+gc_state.coord_offset[idx];
+            wco[idx] = gc_state.CoordSystem[idx]+gc_state.coord_offset[idx];
 
-            wco[idx] += gc_state.tool_length_offset[idx];
+            wco[idx] += gc_state.ToolLengthOffset[idx];
 
             if(BIT_IS_FALSE(Settings.status_report_mask, BITFLAG_RT_STATUS_POSITION_TYPE))
             {
