@@ -30,15 +30,54 @@
 #include "ToolChange.h"
 #include "System32.h"
 
+
+// this replace all the configuration that was previously set by config.h
+void System_LoadConfig(void)
+{
+    uint16_t CalculatedCRC;
+    DB_Central.Get(&Config, GRBL_CONFIGURATION);
+
+    // TODO check validity of the configuration using CRC;
+
+    if(Config.CRC_Check != CalculatedCRC)
+    {
+        System_DefaultConfig();
+    }
+}
+
+// Will reload the configuration default using
+void System_DefaultConfig(void)
+{
+    // TODO load default into structure
+    System_SetDeactivateParkingUponInit(Config.DeactivateParkingUponInitEnable);     //  Use itself at load configuration
+}
+
 void System_Clear(void)
 {
     memset(&System, 0, sizeof(System_t)); // Clear system struct variable.
-
+    memset(&Config, 0, sizeof(Config_t)); // Clear config struct variable.
     System.f_override = DEFAULT_FEED_OVERRIDE;  // Set to 100%
     System.r_override = DEFAULT_RAPID_OVERRIDE; // Set to 100%
     System.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE; // Set to 100%
 }
 
+
+// Modal Group M9: Override control
+void System_SetDeactivateParkingUponInit(bool State)
+{
+    Config.DeactivateParkingUponInitEnable = State;
+
+    if(State == true)
+    {
+        System.OverrideDisabled      = false;            // (Default: Must be zero)
+        System.OverrideParkingMotion = true;             // M56
+    }
+    else
+    {
+        System.OverrideDisabled      = true;             // Parking disabled.
+        System.OverrideParkingMotion = false;            // M56 (Default: Must be zero)
+    }
+}
 
 void System_ResetPosition(void)
 {
@@ -53,10 +92,10 @@ void System_ResetPosition(void)
 uint8_t System_GetControlState(void)
 {
     uint8_t control_state = 0;
-    uint8_t pin = ((IO_GetInputPin(IO_CONTROL_RESET) << CONTROL_RESET_BIT)       |
-                   (IO_GetInputPin(IO_CONTROL_FEED)  << CONTROL_FEED_HOLD_BIT)   |
-                   (IO_GetInputPin(IO_CONTROL_START) << CONTROL_CYCLE_START_BIT) |
-                   (IO_GetInputPin(IO_SAFETY_DOOR)   << CONTROL_SAFETY_DOOR_BIT));
+    uint8_t pin = ((uint8_t(IO_GetInputPin(IO_CONTROL_RESET)) << CONTROL_RESET_BIT)       |
+                   (uint8_t(IO_GetInputPin(IO_CONTROL_FEED))  << CONTROL_FEED_HOLD_BIT)   |
+                   (uint8_t(IO_GetInputPin(IO_CONTROL_START)) << CONTROL_CYCLE_START_BIT) |
+                   (uint8_t(IO_GetInputPin(IO_SAFETY_DOOR))   << CONTROL_SAFETY_DOOR_BIT));
 
     // Invert control pins if necessary
     pin ^= CONTROL_MASK & Settings.system_flags;
@@ -390,9 +429,8 @@ uint8_t System_ExecuteLine(char *line)
                     if(line[2] == 0)
                     {
                         MC_HomingCycle(HOMING_CYCLE_ALL);
-#ifdef HOMING_SINGLE_AXIS_COMMANDS
                     }
-                    else if(line[3] == 0)
+                    else if((Config.HomingSingleAxisCommandEnable == true) && (line[3] == 0))
                     {
                         switch(line[2])
                         {
@@ -419,7 +457,6 @@ uint8_t System_ExecuteLine(char *line)
                             default:
                                 return STATUS_INVALID_STATEMENT;
                         }
-#endif
                     }
                     else
                     {
@@ -451,9 +488,8 @@ uint8_t System_ExecuteLine(char *line)
                     {
                         Settings_ReadBuildInfo(line);
                         Report_BuildInfo(line);
-#ifdef ENABLE_BUILD_INFO_WRITE_COMMAND
                     }
-                    else   // Store startup line [IDLE/ALARM]
+                    else if(Config.BuildInfoWriteCommandEnable == true)   // Store startup line [IDLE/ALARM]
                     {
                         if(line[char_counter++] != '=')
                         {
@@ -469,7 +505,6 @@ uint8_t System_ExecuteLine(char *line)
                         while(line[char_counter++] != 0);
 
                         Settings_StoreBuildInfo(line);
-#endif
                     }
                     break;
 
@@ -480,21 +515,39 @@ uint8_t System_ExecuteLine(char *line)
                     }
                     switch(line[5])
                     {
-#ifdef ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS
                         case '$':
-                            Settings_Restore(SETTINGS_RESTORE_DEFAULTS);
+                            if(Config.RestoreEEpromDefaultSettingsEnable == true)
+                            {
+                                Settings_Restore(SETTINGS_RESTORE_DEFAULTS);
+                            }
+                            else
+                            {
+                                return STATUS_INVALID_STATEMENT;
+                            }
                             break;
-#endif
-#ifdef ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS
+
                         case '#':
-                            Settings_Restore(SETTINGS_RESTORE_PARAMETERS);
+                            if(Config.RestoreEEpromClearParametersEnable == true)
+                            {
+                                Settings_Restore(SETTINGS_RESTORE_PARAMETERS);
+                            }
+                            else
+                            {
+                                return STATUS_INVALID_STATEMENT;
+                            }
                             break;
-#endif
-#ifdef ENABLE_RESTORE_EEPROM_WIPE_ALL
+
                         case '*':
-                            Settings_Restore(SETTINGS_RESTORE_ALL);
+                            if(Config.RestoreEEpromWipeAllEnable == true)
+                            {
+                                Settings_Restore(SETTINGS_RESTORE_ALL);
+                            }
+                            else
+                            {
+                                return STATUS_INVALID_STATEMENT;
+                            }
                             break;
-#endif
+
                         case 'T':
                             TT_Reset();
                             break;
@@ -604,30 +657,32 @@ void System_FlagWcoChange(void)
 // Returns machine position of axis 'idx'. Must be sent a 'step' array.
 // NOTE: If motor steps and machine position are not in the same coordinate frame, this function
 //   serves as a central place to compute the transformation.
-float System_ConvertAxisSteps2Mpos(const int32_t *steps, const uint8_t idx)
+float System_ConvertAxisSteps2Mpos(const int32_t* steps, const uint8_t idx)
 {
     float pos = 0.0;
 
-#ifdef COREXY
-    if(idx == X_AXIS)
+    if(Config.CoreXY_MachineEnable == true)
     {
-        pos = (float)system_convert_corexy_to_x_axis_steps(steps) / Settings.steps_per_mm[idx];
-    }
-    else if (idx == Y_AXIS)
-    {
-        pos = (float)system_convert_corexy_to_y_axis_steps(steps) / Settings.steps_per_mm[idx];
+        if(idx == X_AXIS)
+        {
+            pos = (float)system_convert_corexy_to_x_axis_steps((int32_t*)steps) / Settings.steps_per_mm[idx];
+        }
+        else if (idx == Y_AXIS)
+        {
+            pos = (float)system_convert_corexy_to_y_axis_steps((int32_t*)steps) / Settings.steps_per_mm[idx];
+        }
+        else
+        {
+            pos = steps[idx]/Settings.steps_per_mm[idx];
+        }
     }
     else
     {
-        pos = steps[idx]/Settings.steps_per_mm[idx];
+        if(Settings.steps_per_mm[idx] != 0)
+        {
+            pos = steps[idx] / Settings.steps_per_mm[idx];
+        }
     }
-#else
-    if(Settings.steps_per_mm[idx] != 0)
-    {
-        pos = steps[idx] / Settings.steps_per_mm[idx];
-    }
-
-#endif
 
     return pos;
 }
@@ -647,17 +702,15 @@ void System_ConvertArraySteps2Mpos(float *position, const int32_t *steps)
 
 
 // CoreXY calculation only. Returns x or y-axis "steps" based on CoreXY motor steps.
-#ifdef COREXY
 int32_t system_convert_corexy_to_x_axis_steps(int32_t *steps)
 {
-    return ((steps[A_MOTOR] + steps[B_MOTOR])/2);
+    return ((steps[A_MOTOR] + steps[B_MOTOR]) / 2);
 }
 
 int32_t system_convert_corexy_to_y_axis_steps(int32_t *steps)
 {
-    return ((steps[A_MOTOR] - steps[B_MOTOR])/2);
+    return ((steps[A_MOTOR] - steps[B_MOTOR]) / 2);
 }
-#endif
 
 
 // Checks and reports if target array exceeds machine travel limits.
@@ -667,30 +720,33 @@ uint8_t System_CheckTravelLimits(float *target)
 
     for(idx = 0; idx < N_AXIS; idx++)
     {
-#ifdef HOMING_FORCE_SET_ORIGIN
-        // When homing forced set origin is enabled, soft limits checks need to account for directionality.
-        // NOTE: max_travel is stored as negative
-        if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
+        if(Config.HomingForceSetOriginEnable == true)
         {
-            if(target[idx] < 0 || target[idx] > -Settings.max_travel[idx])
+            // When homing forced set origin is enabled, soft limits checks need to account for directionality.
+            // NOTE: max_travel is stored as negative
+            if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
             {
-                return true;
+                if(target[idx] < 0 || target[idx] > -Settings.max_travel[idx])
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(target[idx] > 0 || target[idx] < Settings.max_travel[idx])
+                {
+                    return true;
+                }
             }
         }
         else
         {
+            // NOTE: max_travel is stored as negative
             if(target[idx] > 0 || target[idx] < Settings.max_travel[idx])
             {
                 return true;
             }
         }
-#else
-        // NOTE: max_travel is stored as negative
-        if(target[idx] > 0 || target[idx] < Settings.max_travel[idx])
-        {
-            return true;
-        }
-#endif
     }
 
     return false;

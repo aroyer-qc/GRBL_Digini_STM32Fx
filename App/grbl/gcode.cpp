@@ -35,14 +35,6 @@
 #include "ToolChange.h"
 #include "GCode.h"
 
-// Modal Group M9: Override control
-#ifdef DEACTIVATE_PARKING_UPON_INIT
-#define OVERRIDE_DISABLED                 false  // (Default: Must be zero)
-#define OVERRIDE_PARKING_MOTION           true   // M56
-#else
-#define OVERRIDE_PARKING_MOTION           false  // M56 (Default: Must be zero)
-#define OVERRIDE_DISABLED                 true   // Parking disabled.
-#endif
 
 // NOTE: Max line number is defined by the g-code standard to be 99999. It seems to be an
 // arbitrary value, and some GUIs may require more. So we increased it based on a max safe
@@ -521,23 +513,19 @@ uint8_t GC_ExecuteLine(char *line)
                         apply_tool = 1;
                         break;
 
-#ifdef ENABLE_M7
-                    case 7:
-                    case 8:
-                    case 9:
-#else
-                    case 8:
-                    case 9:
-#endif
-                        word_bit = MODAL_GROUP_M8;
-
                         switch(int_value)
                         {
-#ifdef ENABLE_M7
                             case 7:
-                                gc_block.Modal.coolant |= COOLANT_MIST_ENABLE;
+                                if(Config.M7_Enable == true)
+                                {
+                                    gc_block.Modal.coolant |= COOLANT_MIST_ENABLE;
+                                }
+                                else
+                                {
+                                    return STATUS_GCODE_UNSUPPORTED_COMMAND;
+                                }
                                 break;
-#endif
+
                             case 8:
                                 gc_block.Modal.coolant |= COOLANT_FLOOD_ENABLE;
                                 break;
@@ -547,14 +535,25 @@ uint8_t GC_ExecuteLine(char *line)
                                 gc_block.Modal.coolant = COOLANT_DISABLE;
                                 break;
                         }
+
+                        word_bit = MODAL_GROUP_M8;
+
                         break;
 
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
                     case 56:
-                        word_bit = MODAL_GROUP_M9;
-                        gc_block.Modal.override = OVERRIDE_PARKING_MOTION;
-                        break;
-#endif
+
+                        if(Config.OverrideParkingControlEnable == true)
+                        {
+                            word_bit = MODAL_GROUP_M9;
+                            gc_block.Modal.override = System.OverrideParkingMotion;
+                            break;
+                        }
+                        else
+                        {
+                            return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
+                        }
+
+
                     default:
                         return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
                 }
@@ -876,20 +875,20 @@ uint8_t GC_ExecuteLine(char *line)
 
     // [8. Coolant control ]: N/A
     // [9. Override control ]: Not supported except for a Grbl-only parking motion override control.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    if(BIT_IS_TRUE(command_words, BIT(MODAL_GROUP_M9)))   // Already set as enabled in parser.
+    if(Config.OverrideParkingControlEnable == true)
     {
-        if(BIT_IS_TRUE(value_words, BIT(WORD_P)))
+        if(BIT_IS_TRUE(command_words, BIT(MODAL_GROUP_M9)))   // Already set as enabled in parser.
         {
-            if(gc_block.values.p == 0.0)
+            if(BIT_IS_TRUE(value_words, BIT(WORD_P)))
             {
-                gc_block.Modal.override = OVERRIDE_DISABLED;
+                if(gc_block.values.p == 0.0)
+                {
+                    gc_block.Modal.override = System.OverrideDisabled;
+                }
+                BIT_FALSE(value_words, BIT(WORD_P));
             }
-            BIT_FALSE(value_words, BIT(WORD_P));
         }
     }
-#endif
-
     // [10. Dwell ]: P value missing. P is negative (done.) NOTE: See below.
     if(gc_block.non_modal_command == NON_MODAL_DWELL)
     {
@@ -1808,13 +1807,14 @@ uint8_t GC_ExecuteLine(char *line)
     pl_data->condition |= gc_state.Modal.coolant; // Set condition flag for planner use.
 
     // [9. Override control ]: NOT SUPPORTED. Always enabled. Except for a Grbl-only parking control.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    if(gc_state.Modal.override != gc_block.Modal.override)
+    if(Config.OverrideParkingControlEnable == true)
     {
-        gc_state.Modal.override = gc_block.Modal.override;
-        MC_OverrideCtrlUpdate(gc_state.Modal.override);
+        if(gc_state.Modal.override != gc_block.Modal.override)
+        {
+            gc_state.Modal.override = gc_block.Modal.override;
+            MC_OverrideCtrlUpdate(gc_state.Modal.override);
+        }
     }
-#endif
 
     // [10. Dwell ]:
     if(gc_block.non_modal_command == NON_MODAL_DWELL)
@@ -2253,9 +2253,11 @@ uint8_t GC_ExecuteLine(char *line)
             {
                 // NOTE: gc_block.values.xyz is returned from mc_probe_cycle with the updated position value. So
                 // upon a successful probing cycle, the machine position and the returned value should be the same.
-#ifndef ALLOW_FEED_OVERRIDE_DURING_PROBE_CYCLES
-                pl_data->condition |= PL_COND_FLAG_NO_FEED_OVERRIDE;
-#endif
+                if(Config.FeedOverrideDuringProbeCycleEnable == false)
+                {
+                    pl_data->condition |= PL_COND_FLAG_NO_FEED_OVERRIDE;
+                }
+
                 gc_update_pos = MC_ProbeCycle(gc_block.values.xyz, pl_data, gc_parser_flags);
             }
 
@@ -2303,19 +2305,25 @@ uint8_t GC_ExecuteLine(char *line)
             gc_state.Modal.CoordSelect = 0; // G54
             gc_state.Modal.Spindle     = SPINDLE_DISABLE;
             gc_state.Modal.coolant     = COOLANT_DISABLE;
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-#ifdef DEACTIVATE_PARKING_UPON_INIT
-            gc_state.Modal.override = OVERRIDE_DISABLED;
-#else
-            gc_state.Modal.override = OVERRIDE_PARKING_MOTION;
-#endif
-#endif
 
-#ifdef RESTORE_OVERRIDES_AFTER_PROGRAM_END
-            System.f_override = DEFAULT_FEED_OVERRIDE;
-            System.r_override = DEFAULT_RAPID_OVERRIDE;
-            System.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE;
-#endif
+            if(Config.OverrideParkingControlEnable == true)
+            {
+                if(Config.DeactivateParkingUponInitEnable == true)
+                {
+                    gc_state.Modal.override = System.OverrideDisabled;
+                }
+                else
+                {
+                    gc_state.Modal.override = System.OverrideParkingMotion;
+                }
+            }
+
+            if(Config.RestoreOverrideAfterProgramEndEnable == true)
+            {
+                System.f_override = DEFAULT_FEED_OVERRIDE;
+                System.r_override = DEFAULT_RAPID_OVERRIDE;
+                System.spindle_speed_ovr = DEFAULT_SPINDLE_SPEED_OVERRIDE;
+            }
 
             // Execute coordinate change and Spindle/coolant stop.
             if(System.State != STATE_CHECK_MODE)

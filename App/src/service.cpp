@@ -515,12 +515,12 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
 
     switch(SubService)
     {
-        case 0:  State = IO_GetInputPin(IO_LIMIT_X);                 break;
+        case 0:  State = uint16_t(IO_GetInputPin(IO_LIMIT_X));                 break;
 
         case 1:
         {
           #ifdef GRBL_USE_AXIS_Y
-            State = IO_GetInputPin(IO_LIMIT_Y);
+            State = uint16_t(IO_GetInputPin(IO_LIMIT_Y));
           #else
             State = 2;  // Grayout
           #endif
@@ -530,7 +530,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
         case 2:
         {
           #ifdef GRBL_USE_AXIS_Z
-            State = IO_GetInputPin(IO_LIMIT_Z);
+            State = uint16_t(IO_GetInputPin(IO_LIMIT_Z));
           #else
             State = 2;  // Grayout
           #endif
@@ -540,7 +540,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
         case 3:
         {
           #ifdef GRBL_USE_LIMIT_A
-            State = IO_GetInputPin(IO_LIMIT_A);
+            State = uint16_t(IO_GetInputPin(IO_LIMIT_A));
           #else
             State = 2;  // Grayout
           #endif
@@ -550,7 +550,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
         case 4:
         {
           #ifdef GRBL_USE_LIMIT_B
-            State = IO_GetInputPin(IO_LIMIT_B);
+            State = uint16_t(IO_GetInputPin(IO_LIMIT_B));
           #else
             State = 2;  // Grayout
           #endif
@@ -560,7 +560,7 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
         case 5:
         {
           #ifdef GRBL_USE_LIMIT_C
-            State = IO_GetInputPin(IO_LIMIT_C);
+            State = uint16_t(IO_GetInputPin(IO_LIMIT_C));
           #else
             State = 2;  // Grayout
           #endif
@@ -569,26 +569,26 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
 
         case 6:
         {
-            State = IO_GetInputPin(IO_CONTROL_RESET);       // ABORT
+            State = uint16_t(IO_GetInputPin(IO_CONTROL_RESET));       // ABORT
         }
         break;
 
         case 7:
         {
-            State = IO_GetInputPin(IO_CONTROL_START);       // RESUME
+            State = uint16_t(IO_GetInputPin(IO_CONTROL_START));       // RESUME
         }
         break;
 
         case 8:
         {
-            State = IO_GetInputPin(IO_CONTROL_FEED);        // HOLD
+            State = uint16_t(IO_GetInputPin(IO_CONTROL_FEED));        // HOLD
         }
         break;
 
         case 9:
         {
           #ifdef GRBL_USE_CONTROL_PROBE
-            State = IO_GetInputPin(IO_PROBE);
+            State = uint16_t(IO_GetInputPin(IO_PROBE));
           #else
             State = 2;  // Grayout
           #endif

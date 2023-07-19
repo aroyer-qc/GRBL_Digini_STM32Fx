@@ -32,6 +32,8 @@
 #define GRBL_VERSION_BUILD      __DATE__ //OUR_BUILD_DATE
 
 
+#define     PULSES_PER_REV          360
+
 // Define CPU pin map and default settings.
 // NOTE: OEMs can avoid the need to maintain/update the defaults.h and cpu_map.h files and use only
 // one configuration file by placing their specific defaults and pin map at the bottom of this file.
@@ -158,8 +160,8 @@
 // will not be affected by pin sharing.
 // NOTE: Defaults are set for a traditional 3-axis CNC machine. Z-axis first to clear, followed by X & Y.
 #define HOMING_CYCLE_0          (1 << Z_AXIS)                   // REQUIRED: First move Z to clear workspace.
-#define HOMING_CYCLE_1          ((1 << X_AXIS)|(1 << Y_AXIS))  // OPTIONAL: Then move X,Y at the same time.
-// #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
+#define HOMING_CYCLE_1          ((1 << X_AXIS)|(1 << Y_AXIS))   // OPTIONAL: Then move X,Y at the same time.
+#define HOMING_CYCLE_2          (1 << A_AXIS)                   // OPTIONAL: Uncomment and add axes mask to enable
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
 //#define HOMING_CYCLE_0    ((1<<X_AXIS)|(1<<Y_AXIS))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle.
@@ -183,7 +185,7 @@
 // After homing, Grbl will set by default the entire machine space into negative space, as is typical
 // for professional CNC machines, regardless of where the limit switches are located. Uncomment this
 // define to force Grbl to always set the machine origin at the homed location despite switch orientation.
-#define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.
+//#define HOMING_FORCE_SET_ORIGIN // Uncomment to enable.
 
 // Number of blocks Grbl executes upon startup. These blocks are stored in EEPROM,
 // Note(s) With digini the size is define in the file database_cfg.h
@@ -192,7 +194,7 @@
 // These startup blocks would typically be used to set the g-code parser state depending on user
 // preferences.
 
-#define N_STARTUP_LINE          2       // do not put zero. it just won't be used if not set
+#define N_STARTUP_LINE          2 // Integer (1-2)
 #define STARTUP_LINE_LEN        80
 
 
@@ -221,7 +223,7 @@
 // Upon a successful probe cycle, this option provides immediately feedback of the probe coordinates
 // through an automatically generated message. If disabled, users can still access the last probe
 // coordinates through Grbl '$#' print parameters.
-#define MESSAGE_PROBE_COORDINATES // Enabled by default. Comment to disable.
+//#define MESSAGE_PROBE_COORDINATES // Enabled by default. Comment to disable.
 
 
 // Enables a second coolant control pin via the mist coolant g-code command M7 on the Arduino Uno
@@ -282,7 +284,7 @@
 // before initialization. If it detects a problem and the hard limits setting is enabled, Grbl will
 // simply message the user to check the limits and enter an alarm state, rather than idle. Grbl will
 // not throw an alarm message.
-#define CHECK_LIMITS_AT_INIT
+//#define CHECK_LIMITS_AT_INIT
 
 
 // ---------------------------------------------------------------------------------------
@@ -312,7 +314,7 @@
 // When a M2 or M30 program end command is executed, most g-code states are restored to their defaults.
 // This compile-time option includes the restoring of the feed, rapid, and spindle speed override values
 // to their default values at program end.
-#define RESTORE_OVERRIDES_AFTER_PROGRAM_END // Default enabled. Comment to disable.
+//#define RESTORE_OVERRIDES_AFTER_PROGRAM_END // Default enabled. Comment to disable.
 
 
 // The status report change for Grbl v1.1 and after also removed the ability to disable/enable most data
@@ -537,9 +539,9 @@
 // Enable the '$RST=*', '$RST=$', and '$RST=#' eeprom restore commands. There are cases where
 // these commands may be undesirable. Simply comment the desired macro to disable it.
 // NOTE: See SETTINGS_RESTORE_ALL macro for customizing the `$RST=*` command.
-#define ENABLE_RESTORE_EEPROM_WIPE_ALL         // '$RST=*' Default enabled. Comment to disable.
-#define ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS // '$RST=$' Default enabled. Comment to disable.
-#define ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS // '$RST=#' Default enabled. Comment to disable.
+//#define ENABLE_RESTORE_EEPROM_WIPE_ALL         // '$RST=*' Default enabled. Comment to disable.
+//#define ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS // '$RST=$' Default enabled. Comment to disable.
+//#define ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS // '$RST=#' Default enabled. Comment to disable.
 
 
 // Defines the EEPROM data restored upon a settings version change and `$RST=*` command. Whenever the
@@ -558,7 +560,7 @@
 // NOTE: If disabled and to ensure Grbl can never alter the build info line, you'll also need to enable
 // the SETTING_RESTORE_ALL macro above and remove SETTINGS_RESTORE_BUILD_INFO from the mask.
 // NOTE: See the included grblWrite_BuildInfo.ino example file to write this string seperately.
-#define ENABLE_BUILD_INFO_WRITE_COMMAND // '$I=' Default enabled. Comment to disable.
+//#define ENABLE_BUILD_INFO_WRITE_COMMAND // '$I=' Default enabled. Comment to disable.
 
 
 // AVR processors require all interrupts to be disabled during an EEPROM write. This includes both
@@ -573,7 +575,7 @@
 // NOTE: Most EEPROM write commands are implicitly blocked during a job (all '$' commands). However,
 // coordinate set g-code commands (G10,G28/30.1) are not, since they are part of an active streaming
 // job. At this time, this option only forces a planner buffer sync with these g-code commands.
-#define FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE // Default enabled. Comment to disable.
+//#define FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE // Default enabled. Comment to disable.
 
 
 // In Grbl v0.9 and prior, there is an old outstanding bug where the `WPos:` work position reported
@@ -582,7 +584,7 @@
 // motion whenever there is a command that alters the work coordinate offsets `G10,G43.1,G92,G54-59`.
 // This is the simplest way to ensure `WPos:` is always correct. Fortunately, it's exceedingly rare
 // that any of these commands are used need continuous motions through them.
-#define FORCE_BUFFER_SYNC_DURING_WCO_CHANGE // Default enabled. Comment to disable.
+//#define FORCE_BUFFER_SYNC_DURING_WCO_CHANGE // Default enabled. Comment to disable.
 
 
 // By default, Grbl disables feed rate overrides for all G38.x probe cycle commands. Although this
@@ -632,11 +634,11 @@
 // override immediately after coming to a stop. However, this also means that the laser still may
 // be reenabled by disabling the spindle stop override, if needed. This is purely a safety feature
 // to ensure the laser doesn't inadvertently remain powered while at a stop and cause a fire.
-#define DISABLE_LASER_DURING_HOLD // Default enabled. Comment to disable.
+//#define DISABLE_LASER_DURING_HOLD // Default enabled. Comment to disable.
 
 
 // Backlash Compensation
-#define ENABLE_BACKLASH_COMPENSATION
+//#define ENABLE_BACKLASH_COMPENSATION
 
 
 /* ---------------------------------------------------------------------------------------

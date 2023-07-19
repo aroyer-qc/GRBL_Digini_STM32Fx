@@ -37,14 +37,16 @@
 
 
 Settings_t Settings;
-
+Config_t Config;
 
 // Method to store startup lines into EEPROM
 void Settings_StoreStartupLine(uint8_t n, char *line)
 {
-#ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
-    Protocol_BufferSynchronize(); // A startup line may contain a motion and be executing.
-#endif
+    if(Config.ForceBufferSyncDuringEEpromWriteEnable == true)
+    {
+        Protocol_BufferSynchronize(); // A startup line may contain a motion and be executing.
+    }
+
     DB_Central.Set((uint8_t*)line, GRBL_STARTUP_BLOCK, n);
     // why there is no checksum here?
 }
@@ -63,9 +65,10 @@ void Settings_StoreBuildInfo(char *line)
 // Method to store coord data parameters into EEPROM
 void Settings_WriteCoordData(uint8_t CoordSelect, float *coord_data)
 {
-  #ifdef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
-    Protocol_BufferSynchronize();
-  #endif
+    if(Config.ForceBufferSyncDuringEEpromWriteEnable == true)
+    {
+        Protocol_BufferSynchronize();
+    }
 
     DB_Central.Set((uint8_t*)coord_data, GRBL_GLOBAL_SETTINGS, CoordSelect);
 }

@@ -28,7 +28,6 @@
 #ifndef DEFAULTS_H
 #define DEFAULTS_H
 
-
 #ifdef DEFAULTS_GENERIC
     // Grbl generic default settings. Should work across different machines.
     #define DEFAULT_X_STEPS_PER_MM            400.0

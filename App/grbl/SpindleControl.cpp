@@ -26,14 +26,13 @@
 #include "GCode.h"
 #include "SpindleControl.h"
 #include "Config.h"
-#include "Encoder.h"
 
 
 static float pwm_gradient; // Precalulated value to speed up rpm to PWM conversions.
-static uint8_t spindle_enabled = 0;
-static uint8_t spindle_dir_cw = 1;
+static bool SpindleEnabled = false;
+static bool SpindleDirectionClockwise = true;
 
-extern uint32_t spindle_rpm;
+//extern uint32_t spindle_rpm;
 
 
 void Spindle_Initialize(void)
@@ -46,28 +45,25 @@ void Spindle_Initialize(void)
     // combined unless configured otherwise.
 
 	/* GPIO Configuration:  */
-/* TODO identified what it was
-#if !defined(LATHE_MODE)
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-#endif
+/* TODO identified what it was<- this is IO for speed encoder ...
+    if(Config.LatheModeEnable == false)
+    {
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+        GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+        GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+        GPIO_Init(GPIOB, &GPIO_InitStructure);
+    }
 */
 
-	// Connect timer to pin
-
-    // TIM1 here use pin on     	GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM1);
-   //TODO AR remove temp TIM1_Init();
-#if defined(LATHE_MODE)
-    Encoder_Initialize();
-#endif
+    // if(Setting.UseSpindleCounter == true)        // TODO not only for LATHE, we also want it for CNC machine
+    {
+        mySpindleCounter.Initialize();
+    }
 
     pwm_gradient = SPINDLE_PWM_RANGE/(Settings.rpm_max-Settings.rpm_min);
-    spindle_dir_cw = 1;
-
+    SpindleDirectionClockwise = true;
     Spindle_Stop();
 }
 
@@ -78,22 +74,24 @@ void Spindle_Initialize(void)
 void Spindle_Stop(void)
 {
     // TODO AR Remove temp TIM1->CCR1 = TIM1_INIT; // Disable PWM. Output voltage is zero.
-    spindle_enabled = 0;
+    IO_SetPin(IO_SPINDLE_ENABLE, SET_IO_SPINDLE_DISABLE);
+    SpindleEnabled = false;
+}
 
-#ifdef INVERT_SPINDLE_ENABLE_PIN
-  IO_SetPinHigh(IO_SPINDLE_ENABLE);
-#else
- IO_SetPinLow(IO_SPINDLE_ENABLE);
-#endif
+// Enables the Spindle
+void Spindle_Start(void)
+{
+    IO_SetPin(IO_SPINDLE_ENABLE, SET_IO_SPINDLE_ENABLE);
+    SpindleEnabled = true;
 }
 
 
 uint8_t Spindle_GetState(void)
 {
     // Check if PWM is enabled.
-    if(spindle_enabled)
+    if(SpindleEnabled == true)
     {
-        if(spindle_dir_cw == 0)
+        if(SpindleDirectionClockwise == false)
         {
             return SPINDLE_STATE_CCW;
         }
@@ -120,24 +118,19 @@ void Spindle_SetSpeed(uint8_t pwm_value)
     else
     {
         TIM1->CR1 |= TIM_CR1_CEN;//  TODO AR validate this TIM_Cmd(TIM1, ENABLE); // Ensure PWM output is enabled.
-#ifdef INVERT_SPINDLE_ENABLE_PIN
-        IO_SetPinLow(IO_SPINDLE_ENABLE);
-#else
-        IO_SetPinHigh(IO_SPINDLE_ENABLE);
-#endif
-        spindle_enabled = 1;
+        Spindle_Start();
     }
 #else
     if(pwm_value == SPINDLE_PWM_OFF_VALUE)
     {
         // TODO AR Remove temp  TIM1->CCR1 = TIM1_INIT;    // Disable PWM. Output voltage is zero.
         TIM1->CR1 &= (uint16_t)~TIM_CR1_CEN; // Disable PWM. Output voltage is zero.
-        spindle_enabled = 0;
+        SpindleEnabled = false;
     }
     else
     {
         TIM1->CR1 |= TIM_CR1_CEN; // Ensure PWM output is enabled.
-        spindle_enabled = 1;
+        SpindleEnabled = true;
     }
 #endif
 }
@@ -145,7 +138,15 @@ void Spindle_SetSpeed(uint8_t pwm_value)
 
 uint32_t Spindle_GetRPM(void)
 {
-    return spindle_rpm;
+    uint32_t Count;
+
+    Count = mySpindleCounter.GetPulseCount();
+
+
+    // Calculate RPM
+
+
+    return Count;
 }
 
 
@@ -209,19 +210,15 @@ void Spindle_SetState(uint8_t state, float rpm)
         if(state == SPINDLE_ENABLE_CW)
         {
             IO_SetPinLow(IO_SPINDLE_DIRECTION);
-            spindle_dir_cw = 1;
+            SpindleDirectionClockwise = true;
         }
         else
         {
             IO_SetPinHigh(IO_SPINDLE_DIRECTION);
-            spindle_dir_cw = 0;
+            SpindleDirectionClockwise = false;
         }
 
-#ifdef INVERT_SPINDLE_ENABLE_PIN
-        IO_SetPinLow(IO_SPINDLE_ENABLE);
-#else
-        IO_SetPinHigh(IO_SPINDLE_ENABLE);
-#endif
+        Spindle_Start();
 
         // NOTE: Assumes all calls to this function is when Grbl is not moving or must remain off.
         if(Settings.flags & BITFLAG_LASER_MODE)

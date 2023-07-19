@@ -43,17 +43,22 @@
 void Limits_Initialize(void)
 {
     IO_PinInit(IO_LIMIT_X);
-  #if !defined(LATHE_MODE)
-    IO_PinInit(IO_LIMIT_Y);
-  #endif
+
+    if(Config.LatheModeEnable == false)
+    {
+        IO_PinInit(IO_LIMIT_Y);
+    }
+
     IO_PinInit(IO_LIMIT_Z);
-//    IO_PinInit(IO_LIMIT_A);  TODO add later AR
 
 #if 0
     IO_PinInit(IO_LIMIT_X2);
-  #if !defined(LATHE_MODE)
-    IO_PinInit(IO_LIMIT_Y2);
-  #endif
+
+    if(Config.LatheModeEnable == false)
+    {
+        IO_PinInit(IO_LIMIT_Y2);
+    }
+
     IO_PinInit(IO_LIMIT_Z2);
 #endif
 
@@ -84,9 +89,12 @@ uint8_t Limits_GetState(void)
     uint8_t limit_state = 0;
 
     limit_state  = (IO_GetOutputPin(IO_LIMIT_X) << X1_LIMIT_BIT);
-  #if !defined(LATHE_MODE)
-    limit_state |= (IO_GetOutputPin(IO_LIMIT_Y) << Y1_LIMIT_BIT);
-  #endif
+
+    if(Config.LatheModeEnable == false)
+    {
+        limit_state |= (IO_GetOutputPin(IO_LIMIT_Y) << Y1_LIMIT_BIT);
+    }
+
     limit_state |= (IO_GetOutputPin(IO_LIMIT_Z) << Z1_LIMIT_BIT);
 
     // Second limit
@@ -101,10 +109,11 @@ uint8_t Limits_GetState(void)
         limit_state ^= LIMIT_MASK;
     }
 
-  #if defined(LATHE_MODE)
-    // Clear Y-Limits in lathe mode
-    limit_state &= ~(1 << Y1_LIMIT_BIT | 1 << Y2_LIMIT_BIT);
-  #endif
+    if(Config.LatheModeEnable == true)
+    {
+        // Clear Y-Limits in lathe mode
+        limit_state &= ~(1 << Y1_LIMIT_BIT | 1 << Y2_LIMIT_BIT);
+    }
 
     return limit_state;
 }
@@ -186,12 +195,13 @@ void Limits_GoHome(uint8_t cycle_mask)
         // Initialize step pin masks
         step_pin[idx] = AXIS_MASK(idx);
 
-#ifdef COREXY
-        if((idx == A_MOTOR) || (idx == B_MOTOR))
+        if(Config.CoreXY_MachineEnable == true)
         {
-            step_pin[idx] = (AXIS_MASK(X_AXIS) | AXIS_MASK((Y_AXIS));
+            if((idx == A_MOTOR) || (idx == B_MOTOR))
+            {
+                step_pin[idx] = (AXIS_MASK(X_AXIS) | AXIS_MASK(Y_AXIS));
+            }
         }
-#endif
 
         if(BIT_IS_TRUE(cycle_mask, BIT(idx)))
         {
@@ -216,28 +226,32 @@ void Limits_GoHome(uint8_t cycle_mask)
         for(idx = 0; idx < N_AXIS; idx++)
         {
             // Set target location for active axes and setup computation for homing rate.
-            if(BIT_IS_TRUE(cycle_mask,BIT(idx)))
+            if(BIT_IS_TRUE(cycle_mask, BIT(idx)))
             {
                 n_active_axis++;
-#ifdef COREXY
-                if(idx == X_AXIS)
+
+                if(Config.CoreXY_MachineEnable == true)
                 {
-                    int32_t axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-                    sys_position[A_MOTOR] = axis_position;
-                    sys_position[B_MOTOR] = -axis_position;
-                }
-                else if (idx == Y_AXIS)
-                {
-                    int32_t axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-                    sys_position[A_MOTOR] = sys_position[B_MOTOR] = axis_position;
+                    if(idx == X_AXIS)
+                    {
+                        int32_t axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
+                        sys_position[A_MOTOR] = axis_position;
+                        sys_position[B_MOTOR] = -axis_position;
+                    }
+                    else if (idx == Y_AXIS)
+                    {
+                        int32_t axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
+                        sys_position[A_MOTOR] = sys_position[B_MOTOR] = axis_position;
+                    }
+                    else
+                    {
+                        sys_position[Z_AXIS] = 0;
+                    }
                 }
                 else
                 {
-                    sys_position[Z_AXIS] = 0;
+                    sys_position[idx] = 0;
                 }
-#else
-                sys_position[idx] = 0;
-#endif
                 // Set target direction based on cycle mask and homing cycle approach state.
                 // NOTE: This happens to compile smaller than any other implementation tried.
                 if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
@@ -291,18 +305,21 @@ void Limits_GoHome(uint8_t cycle_mask)
                     {
                         if(limit_state & (1 << idx))
                         {
-#ifdef COREXY
-                            if(idx == Z_AXIS)
+                            if(Config.CoreXY_MachineEnable == true)
                             {
-                                axislock &= ~(step_pin[Z_AXIS]);
+                                if(idx == Z_AXIS)
+                                {
+                                    axislock &= ~(step_pin[Z_AXIS]);
+                                }
+                                else
+                                {
+                                    axislock &= ~(step_pin[A_MOTOR]|step_pin[B_MOTOR]);
+                                }
                             }
                             else
                             {
-                                axislock &= ~(step_pin[A_MOTOR]|step_pin[B_MOTOR]);
+                                axislock &= ~(step_pin[idx]);
                             }
-#else
-                            axislock &= ~(step_pin[idx]);
-#endif
                         }
                     }
                 }
@@ -389,40 +406,45 @@ void Limits_GoHome(uint8_t cycle_mask)
         // NOTE: Settings.max_travel[] is stored as a negative value.
         if(cycle_mask & BIT(idx))
         {
-#ifdef HOMING_FORCE_SET_ORIGIN
-            set_axis_position = 0;
-#else
-            if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
+            if(Config.HomingForceSetOriginEnable == true)
             {
-                set_axis_position = lround((Settings.max_travel[idx]+Settings.homing_pulloff)*Settings.steps_per_mm[idx]);
+                set_axis_position = 0;
             }
             else
             {
-                set_axis_position = lround(-Settings.homing_pulloff*Settings.steps_per_mm[idx]);
+                if(BIT_IS_TRUE(Settings.homing_dir_mask, BIT(idx)))
+                {
+                    set_axis_position = lround((Settings.max_travel[idx]+Settings.homing_pulloff)*Settings.steps_per_mm[idx]);
+                }
+                else
+                {
+                    set_axis_position = lround(-Settings.homing_pulloff*Settings.steps_per_mm[idx]);
+                }
             }
-#endif
 
-#ifdef COREXY
-            if(idx == X_AXIS)
+            if(Config.CoreXY_MachineEnable == true)
             {
-                int32_t off_axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
-                sys_position[A_MOTOR] = set_axis_position + off_axis_position;
-                sys_position[B_MOTOR] = set_axis_position - off_axis_position;
-            }
-            else if(idx == Y_AXIS)
-            {
-                int32_t off_axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
-                sys_position[A_MOTOR] = off_axis_position + set_axis_position;
-                sys_position[B_MOTOR] = off_axis_position - set_axis_position;
+                if(idx == X_AXIS)
+                {
+                    int32_t off_axis_position = system_convert_corexy_to_y_axis_steps(sys_position);
+                    sys_position[A_MOTOR] = set_axis_position + off_axis_position;
+                    sys_position[B_MOTOR] = set_axis_position - off_axis_position;
+                }
+                else if(idx == Y_AXIS)
+                {
+                    int32_t off_axis_position = system_convert_corexy_to_x_axis_steps(sys_position);
+                    sys_position[A_MOTOR] = off_axis_position + set_axis_position;
+                    sys_position[B_MOTOR] = off_axis_position - set_axis_position;
+                }
+                else
+                {
+                    sys_position[idx] = set_axis_position;
+                }
             }
             else
             {
                 sys_position[idx] = set_axis_position;
             }
-#else
-            sys_position[idx] = set_axis_position;
-#endif
-
         }
     }
 

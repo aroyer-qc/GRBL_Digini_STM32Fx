@@ -24,6 +24,8 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+// info http://tomsrobotics.com/product/grbl32-6-axis-cnc-controller-g6f1/#:~:text=F16%20enhanced%20GRBL32%20features%3A,30KHz%20for%20Arduino%20based%20GRBL).
+
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
@@ -134,7 +136,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     IO_PinInit(IO_STEP_Z);
     IO_PinInit(IO_STEP_A);
     IO_PinInit(IO_STEP_B);
-    IO_PinInit(IO_STEP_C);
+    //IO_PinInit(IO_STEP_C);
     IO_PinInit(IO_DIR_X);
     IO_PinInit(IO_DIR_Y);
     IO_PinInit(IO_DIR_Z);
@@ -150,7 +152,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     IO_PinInit(IO_LIMIT_Z);
     IO_PinInit(IO_LIMIT_A);
     IO_PinInit(IO_LIMIT_B);
-    IO_PinInit(IO_LIMIT_C);
+    //IO_PinInit(IO_LIMIT_C);
 
     // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
     Stepper_Initialize();       // timer!!
@@ -173,6 +175,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     uint16_t PriorState = System.State;
     bool     HomeState = System.IsHomed;
 
+    System_LoadConfig();
     System_Clear();
     System.State   = PriorState;
     System.IsHomed = HomeState;
@@ -305,9 +308,15 @@ bool GRBL_RealTimeCommand(char RealTimeCommand)
         case CMD_SPINDLE_OVR_FINE_MINUS:    System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
         case CMD_SPINDLE_OVR_STOP:          System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);         break;
         case CMD_COOLANT_FLOOD_OVR_TOGGLE:  System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
-      #ifdef ENABLE_M7
-        case CMD_COOLANT_MIST_OVR_TOGGLE:   System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
-      #endif
+        case CMD_COOLANT_MIST_OVR_TOGGLE:
+        {
+           if(Config.M7_Enable == true)
+           {
+               System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
+           }
+
+           // No break; we continue onto the default since M7 is not enabled
+        }
 
         default:
         {

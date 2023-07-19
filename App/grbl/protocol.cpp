@@ -66,16 +66,17 @@ extern void ProcessReceive(char c);
 void Protocol_MainLoop(void)
 {
     // Perform some machine checks to make sure everything is good to go.
-#ifdef CHECK_LIMITS_AT_INIT
-    if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
+    if(Config.CheckLimitsAtInitializationEnable == true)
     {
-        if(Limits_GetState())
+        if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
         {
-            System.State = STATE_ALARM; // Ensure alarm state is active.
-            Report_FeedbackMessage(MESSAGE_CHECK_LIMITS);
+            if(Limits_GetState())
+            {
+                System.State = STATE_ALARM; // Ensure alarm state is active.
+                Report_FeedbackMessage(MESSAGE_CHECK_LIMITS);
+            }
         }
     }
-#endif
 
     // Check for and report alarm state after a reset, error, or an initial power up.
     // NOTE: Sleep mode disables the stepper drivers and position can't be guaranteed.
@@ -106,7 +107,6 @@ void Protocol_MainLoop(void)
     uint8_t line_flags = 0;
     uint8_t char_counter = 0;
     char c;
-
 
     for(;;)
     {
@@ -439,15 +439,17 @@ void Protocol_ExecRtSystem(void)
                         {
                             if(System.Suspend & SUSPEND_INITIATE_RESTORE)   // Actively restoring
                             {
-                              #ifdef PARKING_ENABLE
-                                // Set hold and reset appropriate control flags to restart parking sequence.
-                                if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+                                if(Config.ParkingEnable == true)
                                 {
-                                    Stepper_UpdatePlannerBlockParams(); // Notify stepper module to recompute for hold deceleration.
-                                    System.step_control = (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION);
-                                    System.Suspend &= ~(SUSPEND_HOLD_COMPLETE);
-                                } // else NO_MOTION is active.
-                              #endif
+                                    // Set hold and reset appropriate control flags to restart parking sequence.
+                                    if(System.step_control & STEP_CONTROL_EXECUTE_SYS_MOTION)
+                                    {
+                                        Stepper_UpdatePlannerBlockParams(); // Notify stepper module to recompute for hold deceleration.
+                                        System.step_control = (STEP_CONTROL_EXECUTE_HOLD | STEP_CONTROL_EXECUTE_SYS_MOTION);
+                                        System.Suspend &= ~(SUSPEND_HOLD_COMPLETE);
+                                    } // else NO_MOTION is active.
+                                }
+
                                 System.Suspend &= ~(SUSPEND_RETRACT_COMPLETE | SUSPEND_INITIATE_RESTORE | SUSPEND_RESTORE_COMPLETE);
                                 System.Suspend |= SUSPEND_RESTART_RETRACT;
                             }
@@ -717,20 +719,34 @@ void Protocol_ExecRtSystem(void)
             if((System.State == STATE_IDLE) || (System.State & (STATE_CYCLE | STATE_HOLD | STATE_JOG)))
             {
                 uint8_t coolant_state = gc_state.Modal.coolant;
-              #ifdef ENABLE_M7
-                if(rt_exec & EXEC_COOLANT_MIST_OVR_TOGGLE)
+
+                if(Config.M7_Enable == true)
                 {
-                    if(coolant_state & COOLANT_MIST_ENABLE)
+                    if(rt_exec & EXEC_COOLANT_MIST_OVR_TOGGLE)
                     {
-                        BIT_FALSE(coolant_state,COOLANT_MIST_ENABLE);
+                        if(coolant_state & COOLANT_MIST_ENABLE)
+                        {
+                            BIT_FALSE(coolant_state,COOLANT_MIST_ENABLE);
+                        }
+                        else
+                        {
+                            coolant_state |= COOLANT_MIST_ENABLE;
+                        }
                     }
-                    else
+
+                    if(rt_exec & EXEC_COOLANT_FLOOD_OVR_TOGGLE)
                     {
-                        coolant_state |= COOLANT_MIST_ENABLE;
+                        if(coolant_state & COOLANT_FLOOD_ENABLE)
+                        {
+                            BIT_FALSE(coolant_state,COOLANT_FLOOD_ENABLE);
+                        }
+                        else
+                        {
+                            coolant_state |= COOLANT_FLOOD_ENABLE;
+                        }
                     }
                 }
-
-                if(rt_exec & EXEC_COOLANT_FLOOD_OVR_TOGGLE)
+                else
                 {
                     if(coolant_state & COOLANT_FLOOD_ENABLE)
                     {
@@ -741,16 +757,7 @@ void Protocol_ExecRtSystem(void)
                         coolant_state |= COOLANT_FLOOD_ENABLE;
                     }
                 }
-              #else
-                if(coolant_state & COOLANT_FLOOD_ENABLE)
-                {
-                    BIT_FALSE(coolant_state,COOLANT_FLOOD_ENABLE);
-                }
-                else
-                {
-                    coolant_state |= COOLANT_FLOOD_ENABLE;
-                }
-              #endif
+
                 Coolant_SetState(coolant_state); // Report counter set in coolant_set_state().
                 gc_state.Modal.coolant = coolant_state;
             }
@@ -780,7 +787,6 @@ void Protocol_ExecRtSystem(void)
 // template
 static void Protocol_ExecRtSuspend(void)
 {
-  #ifdef PARKING_ENABLE
     // Declare and initialize parking local variables
     float restore_target[N_AXIS];
     float parking_target[N_AXIS];
@@ -788,10 +794,13 @@ static void Protocol_ExecRtSuspend(void)
     Planner_LineData_t plan_data;
     Planner_LineData_t *pl_data = &plan_data;
 
-    memset(pl_data,0,sizeof(Planner_LineData_t));
-    pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
-    pl_data->line_number = PARKING_MOTION_LINE_NUMBER;
-  #endif
+
+    if(Config.ParkingEnable == true)
+    {
+        memset(pl_data,0,sizeof(Planner_LineData_t));
+        pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
+        pl_data->line_number = PARKING_MOTION_LINE_NUMBER;
+    }
 
     Planner_Block_t *block = Planner_GetCurrentBlock();
     uint8_t restore_condition;
@@ -808,12 +817,14 @@ static void Protocol_ExecRtSuspend(void)
         restore_condition = (block->condition & PL_COND_SPINDLE_MASK) | Coolant_GetState();
         restore_spindle_speed = block->spindle_speed;
     }
-  #ifdef DISABLE_LASER_DURING_HOLD
-    if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
+
+    if(Config.LaserDuringHoldDisable == true)
     {
-        System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);
+        if(BIT_IS_TRUE(Settings.flags, BITFLAG_LASER_MODE))
+        {
+            System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);
+        }
     }
-  #endif
 
     while(System.Suspend)
     {
@@ -850,72 +861,73 @@ static void Protocol_ExecRtSuspend(void)
                     // Ensure any prior Spindle stop override is disabled at start of safety door routine.
                     System.spindle_stop_ovr = SPINDLE_STOP_OVR_DISABLED;
 
-                  #ifndef PARKING_ENABLE
-                    Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
-                    Coolant_SetState(COOLANT_DISABLE);     // De-energize
-                  #else
-
-                    // Get current position and store restore location and Spindle retract waypoint.
-                    System_ConvertArraySteps2Mpos(parking_target,sys_position);
-                    if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
+                    if(Config.ParkingEnable == 0)       //TODO ??? why this should be disable as well ?? does make sense for me at this point.. unless parking handle this
                     {
-                        memcpy(restore_target,parking_target,sizeof(parking_target));
-
-                        retract_waypoint += restore_target[PARKING_AXIS];
-                        retract_waypoint = min(retract_waypoint,PARKING_TARGET);
-                    }
-
-                    // Execute slow pull-out parking retract motion. Parking requires homing enabled, the
-                    // current location not exceeding the parking target location, and laser mode disabled.
-                    // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
-                   #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                    if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
-                            (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
-                            BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE) &&
-                            (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
-                    {
-                   #else
-                    if((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
-                            (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
-                            BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE))
-                    {
-                   #endif
-                        // Retract Spindle by pullout Distance. Ensure retraction motion moves away from
-                        // the workpiece and waypoint motion doesn't exceed the parking target location.
-                        if(parking_target[PARKING_AXIS] < retract_waypoint)
-                        {
-                            parking_target[PARKING_AXIS] = retract_waypoint;
-                            pl_data->FeedRate = PARKING_PULLOUT_RATE;
-                            pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Retain accessory state
-                            pl_data->spindle_speed = restore_spindle_speed;
-
-                            MC_ParkingMotion(parking_target, pl_data);
-                        }
-
-                        // NOTE: Clear accessory state after retract and after an aborted restore motion.
-                        pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
-                        pl_data->spindle_speed = 0.0;
-                        Spindle_SetState(SPINDLE_DISABLE,0.0); // De-energize
-                        Coolant_SetState(COOLANT_DISABLE); // De-energize
-
-                        // Execute fast parking retract motion to parking target location.
-                        if(parking_target[PARKING_AXIS] < PARKING_TARGET)
-                        {
-                            parking_target[PARKING_AXIS] = PARKING_TARGET;
-                            pl_data->FeedRate = PARKING_RATE;
-                            MC_ParkingMotion(parking_target, pl_data);
-                        }
+                        Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
+                        Coolant_SetState(COOLANT_DISABLE);      // De-energize
                     }
                     else
                     {
-                        // Parking motion not possible. Just disable the Spindle and coolant.
-                        // NOTE: Laser mode does not start a parking motion to ensure the laser stops immediately.
-                        Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
-                        Coolant_SetState(COOLANT_DISABLE);     // De-energize
+                        // Get current position and store restore location and Spindle retract waypoint.
+                        System_ConvertArraySteps2Mpos(parking_target,sys_position);
+                        if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
+                        {
+                            memcpy(restore_target,parking_target,sizeof(parking_target));
 
+                            retract_waypoint += restore_target[PARKING_AXIS];
+                            retract_waypoint = AbsMin(retract_waypoint, PARKING_TARGET);
+                        }
+
+                        // Execute slow pull-out parking retract motion. Parking requires homing enabled, the
+                        // current location not exceeding the parking target location, and laser mode disabled.
+                        // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
+
+                        bool Condition = ((BIT_IS_TRUE(Settings.flags, BITFLAG_HOMING_ENABLE)) &&
+                                          (parking_target[PARKING_AXIS] < PARKING_TARGET) &&
+                                          BIT_IS_FALSE(Settings.flags,BITFLAG_LASER_MODE));
+
+                        if(Config.OverrideParkingControlEnable == true)
+                        {
+                            Condition = Condition && (System.OverrideCtrl == System.OverrideParkingMotion);
+                        }
+
+                        if(Condition == true)
+                        {
+                            // Retract Spindle by pullout Distance. Ensure retraction motion moves away from
+                            // the workpiece and waypoint motion doesn't exceed the parking target location.
+                            if(parking_target[PARKING_AXIS] < retract_waypoint)
+                            {
+                                parking_target[PARKING_AXIS] = retract_waypoint;
+                                pl_data->FeedRate = PARKING_PULLOUT_RATE;
+                                pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Retain accessory state
+                                pl_data->spindle_speed = restore_spindle_speed;
+
+                                MC_ParkingMotion(parking_target, pl_data);
+                            }
+
+                            // NOTE: Clear accessory state after retract and after an aborted restore motion.
+                            pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
+                            pl_data->spindle_speed = 0.0;
+                            Spindle_SetState(SPINDLE_DISABLE,0.0); // De-energize
+                            Coolant_SetState(COOLANT_DISABLE); // De-energize
+
+                            // Execute fast parking retract motion to parking target location.
+                            if(parking_target[PARKING_AXIS] < PARKING_TARGET)
+                            {
+                                parking_target[PARKING_AXIS] = PARKING_TARGET;
+                                pl_data->FeedRate = PARKING_RATE;
+                                MC_ParkingMotion(parking_target, pl_data);
+                            }
+                        }
+                        else
+                        {
+                            // Parking motion not possible. Just disable the Spindle and coolant.
+                            // NOTE: Laser mode does not start a parking motion to ensure the laser stops immediately.
+                            Spindle_SetState(SPINDLE_DISABLE, 0.0); // De-energize
+                            Coolant_SetState(COOLANT_DISABLE);     // De-energize
+
+                        }
                     }
-
-                  #endif
 
                     System.Suspend &= ~(SUSPEND_RESTART_RETRACT);
                     System.Suspend |= SUSPEND_RETRACT_COMPLETE;
@@ -952,27 +964,29 @@ static void Protocol_ExecRtSuspend(void)
                     if(System.Suspend & SUSPEND_INITIATE_RESTORE)
                     {
 
-                     #ifdef PARKING_ENABLE
-                        // Execute fast restore motion to the pull-out position. Parking requires homing enabled.
-                        // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
-                      #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                        if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
+                        if(Config.ParkingEnable == true)
                         {
-                      #else
-                        if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
-                        {
-                      #endif
-                            // Check to ensure the motion doesn't move below pull-out position.
-                            if(parking_target[PARKING_AXIS] <= PARKING_TARGET)
-                            {
-                                parking_target[PARKING_AXIS] = retract_waypoint;
-                                pl_data->FeedRate = PARKING_RATE;
+                            // Execute fast restore motion to the pull-out position. Parking requires homing enabled.
+                            // NOTE: State is will remain DOOR, until the de-energizing and retract is complete.
+                            bool Condition = ((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE);
 
-                                MC_ParkingMotion(parking_target, pl_data);
+                            if(Config.OverrideParkingControlEnable == true)
+                            {
+                                Condition = Condition && (System.OverrideCtrl == System.OverrideParkingMotion);
+                            }
+
+                            if(Condition == true)
+                            {
+                                // Check to ensure the motion doesn't move below pull-out position.
+                                if(parking_target[PARKING_AXIS] <= PARKING_TARGET)
+                                {
+                                    parking_target[PARKING_AXIS] = retract_waypoint;
+                                    pl_data->FeedRate = PARKING_RATE;
+
+                                    MC_ParkingMotion(parking_target, pl_data);
+                                }
                             }
                         }
-                     #endif
 
                         // Delayed Tasks: Restart Spindle and coolant, delay to power-up, then resume cycle.
                         if(gc_state.Modal.Spindle != SPINDLE_DISABLE)
@@ -1004,30 +1018,32 @@ static void Protocol_ExecRtSuspend(void)
                             }
                         }
 
-                      #ifdef PARKING_ENABLE
-                        // Execute slow plunge motion from pull-out position to resume position.
-                       #ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-                        if(((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE) &&
-                                (System.OverrideCtrl == OVERRIDE_PARKING_MOTION))
+                        if(Config.ParkingEnable == true)
                         {
-                       #else
-                        if((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE)
-                        {
-                       #endif
-                            // Block if safety door re-opened during prior restore actions.
-                            if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
-                            {
-                                // Regardless if the retract parking motion was a valid/safe motion or not, the
-                                // restore parking motion should logically be valid, either by returning to the
-                                // original position through valid machine space or by not moving at all.
-                                pl_data->FeedRate = PARKING_PULLOUT_RATE;
-                                pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Restore accessory state
-                                pl_data->spindle_speed = restore_spindle_speed;
+                            // Execute slow plunge motion from pull-out position to resume position.
+                            bool Condition = ((Settings.flags & (BITFLAG_HOMING_ENABLE|BITFLAG_LASER_MODE)) == BITFLAG_HOMING_ENABLE);
 
-                                MC_ParkingMotion(restore_target, pl_data);
+                            if(Config.OverrideParkingControlEnable == true)
+                            {
+                                Condition = Condition && (System.OverrideCtrl == System.OverrideParkingMotion);
+                            }
+
+                            if(Condition == true)
+                            {
+                                // Block if safety door re-opened during prior restore actions.
+                                if(BIT_IS_FALSE(System.Suspend,SUSPEND_RESTART_RETRACT))
+                                {
+                                    // Regardless if the retract parking motion was a valid/safe motion or not, the
+                                    // restore parking motion should logically be valid, either by returning to the
+                                    // original position through valid machine space or by not moving at all.
+                                    pl_data->FeedRate = PARKING_PULLOUT_RATE;
+                                    pl_data->condition |= (restore_condition & PL_COND_ACCESSORY_MASK); // Restore accessory state
+                                    pl_data->spindle_speed = restore_spindle_speed;
+
+                                    MC_ParkingMotion(restore_target, pl_data);
+                                }
                             }
                         }
-                      #endif
 
                         if(BIT_IS_FALSE(System.Suspend, SUSPEND_RESTART_RETRACT))
                         {

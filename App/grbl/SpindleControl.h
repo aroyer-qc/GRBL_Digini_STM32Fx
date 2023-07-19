@@ -45,6 +45,7 @@ void Spindle_Initialize(void);
 
 // Stop and start Spindle routines. Called by all Spindle routines and stepper ISR.
 void Spindle_Stop(void);
+void Spindle_Start(void);
 
 // Returns current Spindle output state. Overrides may alter it from programmed states.
 uint8_t Spindle_GetState(void);

@@ -235,13 +235,13 @@ void Report_GrblHelp(void)
 void Report_GrblSettings(void)
 {
     // Print Grbl settings.
-    report_util_uint8_setting(0, Settings.system_flags);
-    report_util_uint8_setting(1, Settings.stepper_idle_lock_time);
-    report_util_uint8_setting(2, Settings.step_invert_mask);
-    report_util_uint8_setting(3, Settings.dir_invert_mask);
-    report_util_uint8_setting(4, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_ST_ENABLE));
-    report_util_uint8_setting(5, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_LIMIT_PINS));
-    report_util_uint8_setting(6, BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_PROBE_PIN));
+    report_util_uint8_setting(0,  Settings.system_flags);
+    report_util_uint8_setting(1,  Settings.stepper_idle_lock_time);
+    report_util_uint8_setting(2,  Settings.step_invert_mask);
+    report_util_uint8_setting(3,  Settings.dir_invert_mask);
+    report_util_uint8_setting(4,  BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_ST_ENABLE));
+    report_util_uint8_setting(5,  BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_LIMIT_PINS));
+    report_util_uint8_setting(6,  BIT_IS_TRUE(Settings.flags, BITFLAG_INVERT_PROBE_PIN));
     report_util_uint8_setting(10, Settings.status_report_mask);
     report_util_float_setting(11, Settings.junction_deviation, N_DECIMAL_SETTINGVALUE);
     report_util_float_setting(12, Settings.arc_tolerance, N_DECIMAL_SETTINGVALUE);
@@ -257,7 +257,6 @@ void Report_GrblSettings(void)
     report_util_float_setting(27, Settings.homing_pulloff, N_DECIMAL_SETTINGVALUE);
     report_util_float_setting(30, Settings.rpm_max, N_DECIMAL_RPMVALUE);
     report_util_float_setting(31, Settings.rpm_min, N_DECIMAL_RPMVALUE);
-
     report_util_uint8_setting(32, BIT_IS_TRUE(Settings.flags,BITFLAG_LASER_MODE));
     report_util_uint8_setting(33, BIT_IS_TRUE(Settings.flags2,BITFLAG_LATHE_MODE));
 
@@ -492,45 +491,49 @@ void Report_GCodeModes(void)
             break;
     }
 
-#ifdef ENABLE_M7
-    if(gc_state.Modal.coolant)   // Note: Multiple coolant states may be active at the same time.
+    if(Config.M7_Enable == true)
     {
-        if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_MIST)
+        if(gc_state.Modal.coolant)   // Note: Multiple coolant states may be active at the same time.
         {
-            report_util_gcode_modes_M();
-            Putc('7');
+            if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_MIST)
+            {
+                report_util_gcode_modes_M();
+                Putc('7');
+            }
+            if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_FLOOD)
+            {
+                report_util_gcode_modes_M();
+                Putc('8');
+            }
         }
-        if (gc_state.Modal.coolant & PL_COND_FLAG_COOLANT_FLOOD)
+        else
         {
             report_util_gcode_modes_M();
+            Putc('9');
+        }
+    }
+    else
+    {
+        report_util_gcode_modes_M();
+
+        if(gc_state.Modal.coolant)
+        {
             Putc('8');
         }
+        else
+        {
+            Putc('9');
+        }
     }
-    else
-    {
-        report_util_gcode_modes_M();
-        Putc('9');
-    }
-#else
-    report_util_gcode_modes_M();
 
-    if(gc_state.Modal.coolant)
+    if(Config.OverrideParkingControlEnable == true)
     {
-        Putc('8');
+        if(System.OverrideCtrl == System.OverrideParkingMotion)
+        {
+            report_util_gcode_modes_M();
+            Printf("%d", 56);
+        }
     }
-    else
-    {
-        Putc('9');
-    }
-#endif
-
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    if(System.OverrideCtrl == OVERRIDE_PARKING_MOTION)
-    {
-        report_util_gcode_modes_M();
-        Printf("%d", 56);
-    }
-#endif
 
     Printf(" T");
     Printf("%d", gc_state.tool);
@@ -571,71 +574,29 @@ void Report_BuildInfo(char *line)
     Printf("[VER: %s, %s:", GRBL_VERSION, GRBL_VERSION_BUILD);
     Printf("%s", line);
     report_util_feedback_line_feed();
-    Printf("[OPT:"); // Generate compile-time build option list
+    Printf("[OPT:"); // Generate the actual effective configuration option list
     Putc('V');
-
-//#ifdef USE_LINE_NUMBERS
     Putc('N');
-//#endif
-#ifdef ENABLE_M7
-    Putc('M');
-#endif
-#ifdef COREXY
-    Putc('C');
-#endif
-#ifdef PARKING_ENABLE
-    Putc('P');
-#endif
-#ifdef HOMING_FORCE_SET_ORIGIN
-    Putc('Z');
-#endif
-#ifdef HOMING_SINGLE_AXIS_COMMANDS
-    Putc('H');
-#endif
-#ifdef LIMITS_TWO_SWITCHES_ON_AXES
-    Putc('T');
-#endif
-#ifdef ALLOW_FEED_OVERRIDE_DURING_PROBE_CYCLES
+    if(Config.M7_Enable                               == true  ) Putc('M');
+    if(Config.CoreXY_MachineEnable                    == true  ) Putc('C');
+    if(Config.ParkingEnable                           == true  ) Putc('P');
+    if(Config.HomingForceSetOriginEnable              == true  ) Putc('Z');
+    if(Config.HomingSingleAxisCommandEnable           == true  ) Putc('H');
+    if(Config.LimitSwitchAreTwoPerAxis                == true  ) Putc('T');
+    if(Config.FeedOverrideDuringProbeCycleEnable      == true  ) Putc('A');
+    if(Config.SpindleOffWithZeroSpeedEnable           == true  ) Putc('0');
+    if(Config.LimitSwitchDebouncingEnable             == true  ) Putc('S');
+    if(Config.OverrideParkingControlEnable            == true  ) Putc('R');
+    if(Config.RestoreEEpromWipeAllEnable              == false ) Putc('*'); // NOTE: Shown when disabled.
+    if(Config.RestoreEEpromDefaultSettingsEnable      == false ) Putc('$'); // NOTE: Shown when disabled.
+    if(Config.RestoreEEpromClearParametersEnable      == false ) Putc('#'); // NOTE: Shown when disabled.
+    if(Config.BuildInfoWriteCommandEnable             == false ) Putc('I'); // NOTE: Shown when disabled.
+    if(Config.ForceBufferSyncDuringEEpromWriteEnable  == false ) Putc('E'); // NOTE: Shown when disabled.
+    if(Config.ForceBufferSyncDuringWCO_ChangeEnable   == false ) Putc('W'); // NOTE: Shown when disabled.
+    if(Config.HomingLockAtInitEnable                  == true  ) Putc('L');
+    if(Config.SafetyDoorInputEnable                   == true  ) Putc('+');
     Putc('A');
-#endif
-#ifdef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
-    Putc('0');
-#endif
-#ifdef ENABLE_SOFTWARE_DEBOUNCE
-    Putc('S');
-#endif
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    Putc('R');
-#endif
-#ifndef ENABLE_RESTORE_EEPROM_WIPE_ALL // NOTE: Shown when disabled.
-    Putc('*');
-#endif
-#ifndef ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS // NOTE: Shown when disabled.
-    Putc('$');
-#endif
-#ifndef ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS // NOTE: Shown when disabled.
-    Putc('#');
-#endif
-#ifndef ENABLE_BUILD_INFO_WRITE_COMMAND // NOTE: Shown when disabled.
-    Putc('I');
-#endif
-#ifndef FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE // NOTE: Shown when disabled.
-    Putc('E');
-#endif
-#ifndef FORCE_BUFFER_SYNC_DURING_WCO_CHANGE // NOTE: Shown when disabled.
-    Putc('W');
-#endif
-#ifndef HOMING_INIT_LOCK
-    Putc('L');
-#endif
-#ifdef ENABLE_SAFETY_DOOR_INPUT_PIN
-    Putc('+');
-#endif
-    Putc('A');
-#ifdef LATHE_MODE
-    Putc('D');
-#endif
-
+    if(Config.LatheModeEnable                         == true  ) Putc('D');
     // NOTE: Compiled values, like override increments/max/min values, may be added at some point later.
     Putc(',');
     Printf("%d", BLOCK_BUFFER_SIZE-1);
@@ -876,11 +837,11 @@ void Report_RealtimeStatus(void)
     {
         if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
         {
-            System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
+            System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT - 1); // Reset counter for slow refresh
         }
         else
         {
-            System.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT-1);
+            System.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT - 1);
         }
 
         if(System.report_ovr_counter == 0)
@@ -939,12 +900,14 @@ void Report_RealtimeStatus(void)
             {
                 Putc('F');
             }
-#ifdef ENABLE_M7
-            if(cl_state & COOLANT_STATE_MIST)
+
+            if(Config.M7_Enable == true)
             {
-                Putc('M');
+                if(cl_state & COOLANT_STATE_MIST)
+                {
+                    Putc('M');
+                }
             }
-#endif
         }
     }
 #endif

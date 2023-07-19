@@ -23,13 +23,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
+//
+//  This is the place for any device driver not related to CPU peripheral.
+//
+//  There is exception: Ethernet, EEprom, FatFs, LWIP
+//
+//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
 
-#if 0  // example
+#ifdef __CLASS_PULSE_COUNTER__
+ extern class PULSE_Counter              mySpindleCounter;
+ #ifdef LIB_PULSE_COUNTER_GLOBAL
+  class PULSE_Counter                    mySpindleCounter(&myTIM_GRBL_Spindle);
+ #endif
+#endif
+
+#if 0  // Other as example
 
 #ifdef __CLASS_CS43L22__
  extern class CS43L22                    CS43L22_AudioCodec;
@@ -41,14 +54,14 @@
 #ifdef __CLASS_DS3502__
  extern class DS3502                     DS3502_Volume;
  #ifdef LIB_DS3502_GLOBAL
-  class   DS3502                         DS3502_Volume;
+  class DS3502                           DS3502_Volume;
  #endif
 #endif
 
 #ifdef __CLASS_MAX4598__
- extern class   MAX4598                  MAX4598_AudioSwitch;
+ extern class MAX4598                    MAX4598_AudioSwitch;
  #ifdef LIB_MAX4598_GLOBAL
-  class   MAX4598                        MAX4598_AudioSwitch;
+  class MAX4598                          MAX4598_AudioSwitch;
  #endif
 #endif
 
@@ -59,12 +72,12 @@
  #endif
 #endif
 
-//#ifdef __CLASS_QSPI_DRIVER__
-//  extern QSPI_Driver                    QSPI;
-// #ifdef QSPI_DRIVER_GLOBAL
-//  QSPI_Driver                           QSPI;
-// #endif
-//#endif
+#ifdef __CLASS_QSPI_DRIVER__
+  extern extern class QSPI_Driver        QSPI;
+ #ifdef QSPI_DRIVER_GLOBAL
+  class QSPI_Driver                      QSPI;
+ #endif
+#endif
 
 #endif
 

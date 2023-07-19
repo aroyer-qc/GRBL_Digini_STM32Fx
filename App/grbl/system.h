@@ -129,34 +129,132 @@
 #define SPINDLE_STOP_OVR_RESTORE            BIT(2)
 #define SPINDLE_STOP_OVR_RESTORE_CYCLE      BIT(3)
 
+typedef enum
+{
+    GRBL_AXIS_X     = 1,
+    GRBL_AXIS_Y     = 2,
+    GRBL_AXIS_Z     = 4,
+    GRBL_AXIS_A     = 8,
+    GRBL_AXIS_B     = 16,
+
+    GRBL_AXIS_XY    = (GRBL_AXIS_X | GRBL_AXIS_Y),                                              // Some plasma cutter setup (to be verified)
+    GRBL_AXIS_XZ    = (GRBL_AXIS_X | GRBL_AXIS_Z),                                              // Lathe and some plasma cutter
+    GRBL_AXIS_XYZ   = (GRBL_AXIS_X | GRBL_AXIS_Y | GRBL_AXIS_Z),                                // Milling machine
+    GRBL_AXIS_XYZA  = (GRBL_AXIS_X | GRBL_AXIS_Y | GRBL_AXIS_Z | GRBL_AXIS_A),                  // Milling machine with rotary axis
+    GRBL_AXIS_XYZAB = (GRBL_AXIS_X | GRBL_AXIS_Y | GRBL_AXIS_Z | GRBL_AXIS_A  | GRBL_AXIS_B),   // Milling machine with rotary axis and tool axis
+} MachineType_e;
 
 
 // Define global system variables
 typedef struct
 {
-    uint16_t State;              // Tracks the current system state of Grbl.
-    bool    Abort;               // System abort flag. Forces exit back to main loop for reset.
-    uint8_t Suspend;             // System suspend bitflag variable that manages holds, cancels, and safety door.
-    bool    SoftLimit;          // Tracks soft limit errors for the state machine. (boolean)                                // it is never use!! and block entire code
-    uint8_t step_control;        // Governs the step segment generator depending on system state.
-    uint8_t probe_succeeded;     // Tracks if last probing cycle was successful.
-    uint8_t homing_axis_lock;    // Locks axes when limits engage. Used as an axis motion mask in the stepper ISR.
-    uint8_t f_override;          // Feed rate override value in percent
-    uint8_t r_override;          // Rapids override value in percent
-    uint8_t spindle_speed_ovr;   // Spindle speed value in percent
-    uint8_t spindle_stop_ovr;    // Tracks Spindle stop override states
-    uint8_t report_ovr_counter;  // Tracks when to add override data to status reports.
-    uint8_t report_wco_counter;  // Tracks when to add work coordinate offset data to status reports.
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
-    bool    OverrideCtrl;      // Tracks override control states.
-#endif
-    float spindle_speed;
-    bool  IsHomed;
-    uint8_t sync_move;
-    float x_pos;                // Current x-position of tool (for G96)
+    uint16_t    State;              // Tracks the current system state of Grbl.
+    bool        Abort;               // System abort flag. Forces exit back to main loop for reset.
+    uint8_t     Suspend;             // System suspend bitflag variable that manages holds, cancels, and safety door.
+    bool        SoftLimit;          // Tracks soft limit errors for the state machine. (boolean)                                // it is never use!! and block entire code
+    uint8_t     step_control;        // Governs the step segment generator depending on system state.
+    uint8_t     probe_succeeded;     // Tracks if last probing cycle was successful.
+    uint8_t     homing_axis_lock;    // Locks axes when limits engage. Used as an axis motion mask in the stepper ISR.
+    uint8_t     f_override;          // Feed rate override value in percent
+    uint8_t     r_override;          // Rapids override value in percent
+    uint8_t     spindle_speed_ovr;   // Spindle speed value in percent
+    uint8_t     spindle_stop_ovr;    // Tracks Spindle stop override states
+    uint8_t     report_ovr_counter;  // Tracks when to add override data to status reports.
+    uint8_t     report_wco_counter;  // Tracks when to add work coordinate offset data to status reports.
+    bool        OverrideCtrl;      // Tracks override control states.
+    float       spindle_speed;
+    bool        IsHomed;
+    uint8_t     sync_move;
+    float       x_pos;                // Current x-position of tool (for G96)
+
+    bool        OverrideDisabled;
+    bool        OverrideParkingMotion;
 } System_t;
 
+// All define for those setting where remove so product can be fully configurable without recompiling the code
+typedef struct
+{
+    MachineType_e       MachineType;
+
+
+    bool                SpindleEnableActiveLevel                :1;
+
+    //bool                DirAxisX_ActiveLevel                :1;
+    bool                EnableAxisX_ActiveLevel                 :1;
+
+    //bool                DirAxisY_ActiveLevel                :1;
+    bool                EnableAxisY_ActiveLevel                 :1;
+
+    //bool                DirAxisZ_ActiveLevel               :1;
+    bool                EnableAxisZ_ActiveLevel                 :1;
+
+    //bool                DirAxisA_ActiveLevel               :1;
+    bool                EnableAxisA_ActiveLevel                 :1;
+
+    //bool                DirAxisB_ActiveLevel               :1;
+    bool                EnableAxisB_ActiveLevel                 :1;
+
+
+    bool                SpindleOffWithZeroSpeedEnable           :1;                 // SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
+    bool                ParkingEnable                           :1;                 // 0 -> Parking is disable
+    bool                OverrideParkingControlEnable            :1;
+    bool                DeactivateParkingUponInitEnable         :1;                 // Need to call System_SetDeactivateParkingUponInit(true or false)
+
+    bool                HomingLockAtInitEnable                  :1;                 // HOMING_INIT_LOCK             Actually i did not find any code using it
+    bool                HomingForceSetOriginEnable              :1;                 // HOMING_FORCE_SET_ORIGIN
+    bool                HomingSingleAxisCommandEnable           :1;                 // HOMING_SINGLE_AXIS_COMMANDS
+    bool                HomingCycle_1_Enable                    :1;                 // Enable the homing cycle number 1 -> HOMING_CYCLE_1 must be define
+    bool                HomingCycle_2_Enable                    :1;                 // Enable the homing cycle number 2 -> HOMING_CYCLE_2 must be define
+
+    bool                M7_Enable                               :1;
+    bool                CoolantFloodActiveLevel                 :1;                 // INVERT_COOLANT_FLOOD_PIN
+    bool                CoolantMistActiveLevel                  :1;                 // INVERT_COOLANT_MIST_PIN
+
+    bool                BacklashCompensationEnable              :1;                 // ENABLE_BACKLASH_COMPENSATION
+    bool                LaserDuringHoldDisable                  :1;                 // DISABLE_LASER_DURING_HOLD
+
+    bool                SafetyDoorInputEnable                   :1;                 // ENABLE_SAFETY_DOOR_INPUT_PIN
+
+    bool                LatheModeEnable                         :1;                 // should be replace by MachineType
+    bool                CoreXY_MachineEnable                    :1;
+
+    bool                LimitSwitchDebouncingEnable             :1;
+    bool                LimitSwitchAreTwoPerAxis                :1;                 // LIMITS_TWO_SWITCHES_ON_AXES
+
+    bool                FeedOverrideDuringProbeCycleEnable      :1;                 // ALLOW_FEED_OVERRIDE_DURING_PROBE_CYCLES
+
+    bool                RestoreEEpromWipeAllEnable              :1;                 // ENABLE_RESTORE_EEPROM_WIPE_ALL
+    bool                RestoreEEpromClearParametersEnable      :1;                 // ENABLE_RESTORE_EEPROM_CLEAR_PARAMETERS
+    bool                RestoreEEpromDefaultSettingsEnable      :1;                 // ENABLE_RESTORE_EEPROM_DEFAULT_SETTINGS
+    bool                ForceBufferSyncDuringEEpromWriteEnable  :1;                 // FORCE_BUFFER_SYNC_DURING_EEPROM_WRITE
+    bool                BuildInfoWriteCommandEnable             :1;                 // ENABLE_BUILD_INFO_WRITE_COMMAND
+
+    bool                ForceBufferSyncDuringWCO_ChangeEnable   :1;                 //  FORCE_BUFFER_SYNC_DURING_WCO_CHANGE
+
+    bool                MessageProbeCoordinatesEnable           :1;                 // MESSAGE_PROBE_COORDINATES
+
+    bool                CheckLimitsAtInitializationEnable       :1;                 // CHECK_LIMITS_AT_INIT
+    bool                RestoreOverrideAfterProgramEndEnable    :1;                 // RESTORE_OVERRIDES_AFTER_PROGRAM_END
+
+    uint16_t            CRC_Check;
+} Config_t;
+
+
+
+#define SET_IO_SPINDLE_DISABLE         !Config.SpindleEnableActiveLevel
+#define SET_IO_SPINDLE_ENABLE          Config.SpindleEnableActiveLevel
+
+#define SET_IO_COOLANT_FLOOD_DISABLE   !Config.CoolantFloodActiveLevel
+#define SET_IO_COOLANT_FLOOD_ENABLE    Config.CoolantFloodActiveLevel
+
+#define SET_IO_COOLANT_MIST_DISABLE    !Config.CoolantMistActiveLevel
+#define SET_IO_COOLANT_MIST_ENABLE     Config.CoolantMistActiveLevel
+
+
+
+
 extern System_t System;
+extern Config_t Config;
 
 // NOTE: These position variables may need to be declared as volatiles, if problems arise.
 extern int32_t sys_position[N_AXIS];      // Real-time machine (aka home) position vector in steps.
@@ -168,7 +266,12 @@ extern volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag
 extern volatile uint8_t sys_rt_exec_motion_override; // Global realtime executor bitflag variable for motion-based overrides.
 extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for Spindle/coolant overrides.
 
+void System_LoadConfig(void);
+void System_DefaultConfig(void);
 void System_Clear(void);
+
+
+void System_SetDeactivateParkingUponInit(bool State);
 
 void System_ResetPosition(void);
 

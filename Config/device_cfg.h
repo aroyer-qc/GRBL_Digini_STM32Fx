@@ -54,6 +54,7 @@
 //#include "lib_class_quadrature_encoder.h"
 //#include "lib_class_I2C_si4703.h"
 #include "lib_class_I2C_EEprom.h"
+#include "lib_class_pulse_counter.h"
 //#include "lib_class_I2C_DS3502.h"
 //#include "lib_class_audio_codec_CS43L22.h"
 //#include "lib_class_gpio_MAX4598.h"

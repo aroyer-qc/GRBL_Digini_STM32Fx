@@ -31,25 +31,20 @@ void Coolant_Initialize(void)
   	IO_PinInit(IO_COOLANT);
   	IO_PinInit(IO_COOLANT_FLOOD);
   	IO_PinInit(IO_COOLANT_MIST);
+
+  	// TODO should invert the pin if set to!!
 }
 
 // Directly called by coolant_init(), coolant_set_state(), and mc_reset(), which can be at
 // an interrupt-level. No report flag set, but only called by routines that don't need it.
 void Coolant_Stop(void)
 {
-  #ifdef INVERT_COOLANT_FLOOD_PIN
-    IO_SetPinHigh(IO_COOLANT_FLOOD);
-  #else
-    IO_SetPinLow(IO_COOLANT_FLOOD);
-  #endif
+    IO_SetPin(IO_COOLANT_FLOOD, SET_IO_COOLANT_FLOOD_DISABLE);
 
-  #ifdef ENABLE_M7
-   #ifdef INVERT_COOLANT_MIST_PIN
-    IO_SetPinHigh(IO_COOLANT_MIST);
-   #else
-    IO_SetPinLow(IO_COOLANT_MIST);
-   #endif
-  #endif
+    if(Config.M7_Enable == true)
+    {
+        IO_SetPin(IO_COOLANT_MIST, SET_IO_COOLANT_MIST_DISABLE);
+    }
 }
 
 // Returns current coolant output state. Overrides may alter it from programmed state.
@@ -57,27 +52,18 @@ uint8_t Coolant_GetState(void)
 {
     uint8_t cl_state = COOLANT_STATE_DISABLE;
 
-  #ifdef INVERT_COOLANT_FLOOD_PIN
-    if(IO_GetInputPin(IO_COOLANT_FLOOD) == 0)
+    if(IO_GetInputPin(IO_COOLANT_FLOOD) == SET_IO_COOLANT_FLOOD_ENABLE)
     {
-  #else
-    if(IO_GetInputPin(IO_COOLANT_FLOOD) == 1)
-    {
-  #endif
         cl_state |= COOLANT_STATE_FLOOD;
     }
 
-  #ifdef ENABLE_M7
-   #ifdef INVERT_COOLANT_MIST_PIN
-    if(IO_GetInputPin(IO_COOLANT_MIST) == 0)
+    if(Config.M7_Enable == true)
     {
-   #else
-    if(IO_GetInputPin(IO_COOLANT_MIST) == 1)
-    {
-   #endif
-        cl_state |= COOLANT_STATE_MIST;
+        if(IO_GetInputPin(IO_COOLANT_MIST) == SET_IO_COOLANT_MIST_ENABLE)
+        {
+            cl_state |= COOLANT_STATE_MIST;
+        }
     }
-  #endif
 
     return cl_state;
 }
@@ -95,41 +81,12 @@ void Coolant_SetState(uint8_t mode)
         return;
     }
 
-    if(mode & COOLANT_FLOOD_ENABLE)
-    {
-      #ifdef INVERT_COOLANT_FLOOD_PIN
-        IO_SetPinLow(IO_COOLANT_FLOOD);
-      #else
-        IO_SetPinHigh(IO_COOLANT_FLOOD);
-      #endif
-    }
-    else
-    {
-      #ifdef INVERT_COOLANT_FLOOD_PIN
-        IO_SetPinHigh(IO_COOLANT_FLOOD);
-      #else
-        IO_SetPinLow(IO_COOLANT_FLOOD);
-      #endif
-    }
+    IO_SetPin(IO_COOLANT_FLOOD, (mode & COOLANT_FLOOD_ENABLE) ? SET_IO_COOLANT_FLOOD_ENABLE : SET_IO_COOLANT_FLOOD_DISABLE);
 
-  #ifdef ENABLE_M7
-    if(mode & COOLANT_MIST_ENABLE)
+    if(Config.M7_Enable == true)
     {
-      #ifdef INVERT_COOLANT_MIST_PIN
-        IO_SetPinLow(IO_COOLANT_MIST);
-      #else
-        IO_SetPinHigh(IO_COOLANT_MIST);
-      #endif
+        IO_SetPin(IO_COOLANT_MIST, (mode & COOLANT_MIST_ENABLE) ? SET_IO_COOLANT_MIST_ENABLE : SET_IO_COOLANT_MIST_DISABLE);
     }
-    else
-    {
-      #ifdef INVERT_COOLANT_MIST_PIN
-        IO_SetPinHigh(IO_COOLANT_MIST);
-      #else
-        IO_SetPinLow(IO_COOLANT_MIST);
-      #endif
-    }
-  #endif
 
     System.report_ovr_counter = 0; // Set to report change immediately
 }

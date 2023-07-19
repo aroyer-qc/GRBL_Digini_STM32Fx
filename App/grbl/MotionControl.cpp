@@ -20,7 +20,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "lib_digini.h"     // For PID
+#include "lib_digini.h"
 #include <string.h>
 #include "Settings.h"
 #include "System.h"
@@ -36,8 +36,6 @@
 #include "CoolantControl.h"
 #include "MotionControl.h"
 #include "defaults.h"
-//#include "PID.h"
-#include "Encoder.h"
 
 
 #define DIR_POSITIV     0
@@ -188,72 +186,70 @@ void MC_Line(float *target, Planner_LineData_t *pl_data)
         }
     } while(1);
 
-#ifdef ENABLE_BACKLASH_COMPENSATION
-    pl_backlash.backlash_motion = 1;
-    pl_backlash.condition = pl_data->condition | PL_COND_FLAG_RAPID_MOTION; // Set rapid motion condition flag.
-
-    // Backlash compensation (not for A & B)
-    for(uint8_t i = 0; i < N_LINEAR_AXIS; i++)
+    if(Config.BacklashCompensationEnable == true)
     {
-        // Move positive?
-        if(target[i] > target_prev[i])
-        {
-            // Last move negative?
-            if(dir_negative[i] == DIR_NEGATIV)
-            {
-                dir_negative[i] = DIR_POSITIV;
-                target_prev[i] += Settings.backlash[i];
+        pl_backlash.backlash_motion = 1;
+        pl_backlash.condition = pl_data->condition | PL_COND_FLAG_RAPID_MOTION; // Set rapid motion condition flag.
 
-                backlash_update = 1;
+        // Backlash compensation (not for A & B)
+        for(uint8_t i = 0; i < N_LINEAR_AXIS; i++)
+        {
+            // Move positive?
+            if(target[i] > target_prev[i])
+            {
+                // Last move negative?
+                if(dir_negative[i] == DIR_NEGATIV)
+                {
+                    dir_negative[i] = DIR_POSITIV;
+                    target_prev[i] += Settings.backlash[i];
+
+                    backlash_update = 1;
+                }
+            }
+            // Move negative?
+            else if(target[i] < target_prev[i])
+            {
+                // Last move positive?
+                if(dir_negative[i] == DIR_POSITIV)
+                {
+                    dir_negative[i] = DIR_NEGATIV;
+                    target_prev[i] -= Settings.backlash[i];
+
+                    backlash_update = 1;
+                }
             }
         }
-        // Move negative?
-        else if(target[i] < target_prev[i])
+
+        if(backlash_enable && backlash_update)
         {
-            // Last move positive?
-            if(dir_negative[i] == DIR_POSITIV)
+            // Perform backlash move if necessary
+            Planner_BufferLine(target_prev, &pl_backlash);
+        }
+
+        memcpy(target_prev, target, N_AXIS*sizeof(float));
+
+        // Backlash move needs a slot in planner buffer, so we have to check again, if planner is free
+        do
+        {
+            Protocol_ExecuteRealtime(); // Check for any run-time commands
+
+            if(System.Abort == true)
             {
-                dir_negative[i] = DIR_NEGATIV;
-                target_prev[i] -= Settings.backlash[i];
-
-                backlash_update = 1;
+                // Bail, if system abort.
+                return;
             }
-        }
+
+            if(Planner_CheckBufferFull())
+            {
+                // Auto-cycle start when buffer is full.
+                Protocol_AutoCycleStart();
+            }
+            else
+            {
+                break;
+            }
+        } while(1);
     }
-
-    if(backlash_enable && backlash_update)
-    {
-        // Perform backlash move if necessary
-        Planner_BufferLine(target_prev, &pl_backlash);
-    }
-
-    memcpy(target_prev, target, N_AXIS*sizeof(float));
-
-    // Backlash move needs a slot in planner buffer, so we have to check again, if planner is free
-    do
-    {
-        Protocol_ExecuteRealtime(); // Check for any run-time commands
-
-        if(System.Abort == true)
-        {
-            // Bail, if system abort.
-            return;
-        }
-
-        if(Planner_CheckBufferFull())
-        {
-            // Auto-cycle start when buffer is full.
-            Protocol_AutoCycleStart();
-        }
-        else
-        {
-            break;
-        }
-    } while(1);
-#else
-    (void)backlash_update;
-    (void)pl_backlash;
-#endif
 
     // Plan and queue motion into planner buffer
     if(Planner_BufferLine(target, pl_data) == PLAN_EMPTY_BLOCK)
@@ -376,12 +372,12 @@ void MC_UpdateSyncMove(void)
                 pos_z = sys_position[Z_AXIS];
                 // Reset encoder value
                 EncValue = 0;
-                enc_cnt_prev = (uint16_t)Encoder_GetValue();
+                enc_cnt_prev = (uint16_t)mySpindleCounter.GetPulseCount();
             }
         }
         else
         {
-            uint16_t cnt = (uint16_t)Encoder_GetValue();
+            uint16_t cnt = (uint16_t)mySpindleCounter.GetPulseCount();
             uint32_t cnt_diff = 0;
 
             // Calculate ticks since last event
@@ -575,43 +571,45 @@ void MC_HomingCycle(uint8_t cycle_mask)
     // Check and abort homing cycle, if hard limits are already enabled. Helps prevent problems
     // with machines with limits wired on both ends of travel to one limit pin.
     // TODO: Move the pin-specific LIMIT_PIN call to limits.c as a function.
-#ifdef LIMITS_TWO_SWITCHES_ON_AXES
-    if(Limits_GetState())
+    if(Config.LimitSwitchAreTwoPerAxis == true)
     {
-        MC_Reset(); // Issue system reset and ensure Spindle and coolant are shutdown.
-        System_SetExecAlarm(EXEC_ALARM_HARD_LIMIT);
+        if(Limits_GetState())
+        {
+            MC_Reset(); // Issue system reset and ensure Spindle and coolant are shutdown.
+            System_SetExecAlarm(EXEC_ALARM_HARD_LIMIT);
 
-        return;
+            return;
+        }
     }
-#endif
 
     Limits_Disable(); // Disable hard limits pin change register for cycle duration
 
     // -------------------------------------------------------------------------------------
     // Perform homing routine. NOTE: Special motion case. Only system reset works.
 
-#ifdef HOMING_SINGLE_AXIS_COMMANDS
-    if(cycle_mask)
+    if((cycle_mask != HOMING_CYCLE_ALL) && (Config.HomingSingleAxisCommandEnable == true))
     {
         // Perform homing cycle based on mask.
         Limits_GoHome(cycle_mask);
     }
     else
-#endif
     {
-        (void)cycle_mask;
         // Search to engage all axes limit switches at faster homing seek rate.
-        Limits_GoHome(HOMING_CYCLE_0);  // Homing cycle 0
-#ifdef HOMING_CYCLE_1
-        Limits_GoHome(HOMING_CYCLE_1);  // Homing cycle 1
-#endif
+        Limits_GoHome(HOMING_CYCLE_0);      // Homing cycle 0
 
-#ifdef HOMING_CYCLE_2
-        Limits_GoHome(HOMING_CYCLE_2);  // Homing cycle 2
-#endif
+        if(Config.HomingCycle_1_Enable == true)
+        {
+            Limits_GoHome(HOMING_CYCLE_1);  // Homing cycle 1
+        }
+
+        if(Config.HomingCycle_2_Enable == true)
+        {
+            Limits_GoHome(HOMING_CYCLE_2);  // Homing cycle 2
+        }
     }
 
     Protocol_ExecuteRealtime(); // Check for reset and set system abort.
+
     if(System.Abort == true)
     {
         // Did not complete. Alarm state set by mc_alarm.
@@ -714,10 +712,11 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
     Planner_SyncPosition(); // Sync planner position to current machine position.
     MC_SyncBacklashPosition();
 
-#ifdef MESSAGE_PROBE_COORDINATES
-    // All done! Output the probe position as message.
-    Report_ProbeParams();
-#endif
+    if(Config.MessageProbeCoordinatesEnable == true)
+    {
+        // All done! Output the probe position as message.
+        Report_ProbeParams();
+    }
 
     if(System.probe_succeeded)
     {
@@ -731,7 +730,6 @@ uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser
 }
 
 
-#ifdef ENABLE_PARKING_OVERRIDE_CONTROL
 void MC_OverrideCtrlUpdate(bool OverrideState)
 {
     // Finish all queued commands before altering override control state
@@ -744,12 +742,9 @@ void MC_OverrideCtrlUpdate(bool OverrideState)
 
     System.OverrideCtrl = OverrideState;
 }
-#endif
-
 
 // Plans and executes the single special motion case for parking. Independent of main planner buffer.
 // NOTE: Uses the always free planner ring buffer head to store motion parameters for execution.
-#ifdef PARKING_ENABLE
 void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
 {
     if(System.Abort == true)
@@ -788,7 +783,6 @@ void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data)
     }
 
 }
-#endif
 
 
 // Method to ready the system to reset by setting the realtime reset command and killing any

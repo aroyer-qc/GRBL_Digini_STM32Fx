@@ -107,60 +107,68 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     // Copy position data based on type of motion being planned.
     if(block->condition & PL_COND_FLAG_SYSTEM_MOTION)
     {
-#ifdef COREXY
-        position_steps[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
-        position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
-        position_steps[Z_AXIS] = sys_position[Z_AXIS];
-        position_steps[A_AXIS] = sys_position[A_AXIS];
-        position_steps[B_AXIS] = sys_position[B_AXIS];
-#else
-        memcpy(position_steps, sys_position, sizeof(sys_position));
-#endif
+        if(Config.CoreXY_MachineEnable == true)
+        {
+            position_steps[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
+            position_steps[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
+            position_steps[Z_AXIS] = sys_position[Z_AXIS];
+            position_steps[A_AXIS] = sys_position[A_AXIS];
+            position_steps[B_AXIS] = sys_position[B_AXIS];
+        }
+        else
+        {
+            memcpy(position_steps, sys_position, sizeof(sys_position));
+        }
     }
     else
     {
         memcpy(position_steps, planner.position, sizeof(planner.position));
     }
 
-#ifdef COREXY
-    target_steps[A_MOTOR] = lround(target[A_MOTOR]*Settings.steps_per_mm[A_MOTOR]);
-    target_steps[B_MOTOR] = lround(target[B_MOTOR]*Settings.steps_per_mm[B_MOTOR]);
-    block->steps[A_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) + (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
-    block->steps[B_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) - (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
-#endif
+    if(Config.CoreXY_MachineEnable == true)
+    {
+        target_steps[A_MOTOR] = lround(target[A_MOTOR]*Settings.steps_per_mm[A_MOTOR]);
+        target_steps[B_MOTOR] = lround(target[B_MOTOR]*Settings.steps_per_mm[B_MOTOR]);
+        block->steps[A_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) + (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
+        block->steps[B_MOTOR] = labs((target_steps[X_AXIS]-position_steps[X_AXIS]) - (target_steps[Y_AXIS]-position_steps[Y_AXIS]));
+    }
 
     for(idx = 0; idx < N_AXIS; idx++)
     {
         // Calculate target position in absolute steps, number of steps for each axis, and determine max step events.
         // Also, compute individual axes Distance for move and prep unit vector calculations.
         // NOTE: Computes true Distance from converted step values.
-#ifdef COREXY
-        if(!(idx == A_MOTOR) && !(idx == B_MOTOR))
+        if(Config.CoreXY_MachineEnable == true)
         {
-            target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
-            block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
-        }
+            if(!(idx == A_MOTOR) && !(idx == B_MOTOR))
+            {
+                target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
+                block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
+            }
 
-        block->step_event_count = max(block->step_event_count, block->steps[idx]);
+            block->step_event_count = AbsMax(block->step_event_count, block->steps[idx]);
 
-        if(idx == A_MOTOR)
-        {
-            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] + target_steps[Y_AXIS]-position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
-        }
-        else if(idx == B_MOTOR)
-        {
-            delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] - target_steps[Y_AXIS]+position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
+            if(idx == A_MOTOR)
+            {
+                delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] + target_steps[Y_AXIS]-position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
+            }
+            else if(idx == B_MOTOR)
+            {
+                delta_mm = (target_steps[X_AXIS]-position_steps[X_AXIS] - target_steps[Y_AXIS]+position_steps[Y_AXIS])/Settings.steps_per_mm[idx];
+            }
+            else
+            {
+                delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
+            }
         }
         else
         {
+            target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
+            block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
+            block->step_event_count = AbsMax(block->step_event_count, block->steps[idx]);
             delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
         }
-#else
-        target_steps[idx] = lround(target[idx]*Settings.steps_per_mm[idx]);
-        block->steps[idx] = labs(target_steps[idx]-position_steps[idx]);
-        block->step_event_count = AbsMax(block->step_event_count, block->steps[idx]);
-        delta_mm = (target_steps[idx] - position_steps[idx])/Settings.steps_per_mm[idx];
-#endif
+
         unit_vec[idx] = delta_mm; // Store unit vector numerator
 
         // Set direction bits. Bit enabled always means direction is negative.
@@ -410,22 +418,25 @@ void Planner_SyncPosition(void)
     uint8_t idx;
     for(idx = 0; idx < N_AXIS; idx++)
     {
-#ifdef COREXY
-        if(idx==X_AXIS)
+        if(Config.CoreXY_MachineEnable == true)
         {
-            planner.position[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
-        }
-        else if(idx==Y_AXIS)
-        {
-            planner.position[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
+            if(idx == X_AXIS)
+            {
+                planner.position[X_AXIS] = system_convert_corexy_to_x_axis_steps(sys_position);
+            }
+            else if(idx == Y_AXIS)
+            {
+                planner.position[Y_AXIS] = system_convert_corexy_to_y_axis_steps(sys_position);
+            }
+            else
+            {
+                planner.position[idx] = sys_position[idx];
+            }
         }
         else
         {
             planner.position[idx] = sys_position[idx];
         }
-#else
-        planner.position[idx] = sys_position[idx];
-#endif
     }
 }
 
@@ -667,6 +678,8 @@ static void Planner_ComputeProfileParams(Planner_Block_t *block, float nominal_s
         block->max_entry_speed_sqr = nominal_speed*nominal_speed;
     }
 
+
+    // TODO use macro?
     if(block->max_entry_speed_sqr > block->max_junction_speed_sqr)
     {
         block->max_entry_speed_sqr = block->max_junction_speed_sqr;

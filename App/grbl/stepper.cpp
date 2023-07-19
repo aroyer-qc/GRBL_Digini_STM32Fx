@@ -136,12 +136,11 @@ typedef struct
     float step_per_mm;
     float req_mm_increment;
 
-#ifdef PARKING_ENABLE
+    // Parking
     uint8_t last_st_block_index;
     float last_steps_remaining;
     float last_step_per_mm;
     float last_dt_remainder;
-#endif
 
     uint8_t ramp_type;      // Current segment ramp state
     float mm_complete;      // End of velocity profile from end of current planner block in (mm).
@@ -363,22 +362,24 @@ void Stepper_MainISR(void)
             IO_SetPinHigh(IO_STEP_X);
         }
     }
-#if !defined(LATHE_MODE)
-    if(st.step_outbits & AXIS_MASK(Y_AXIS))
-    {
-        if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
-        {
-            // Low pulse
-            IO_SetPinLow(IO_STEP_Y);
-        }
-        else
-        {
-            // High pulse
-            IO_SetPinHigh(IO_STEP_Y);
-        }
 
+    if(Config.LatheModeEnable == false)
+    {
+        if(st.step_outbits & AXIS_MASK(Y_AXIS))
+        {
+            if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
+            {
+                // Low pulse
+                IO_SetPinLow(IO_STEP_Y);
+            }
+            else
+            {
+                // High pulse
+                IO_SetPinHigh(IO_STEP_Y);
+            }
+        }
     }
-#endif
+
     if(st.step_outbits & AXIS_MASK(Z_AXIS))
     {
         if(step_port_invert_mask & AXIS_MASK(Z_AXIS))
@@ -480,16 +481,19 @@ void Stepper_MainISR(void)
             {
                 IO_SetPinLow(IO_DIR_X);
             }
-#if !defined(LATHE_MODE)
-            if(st.dir_outbits & AXIS_MASK(Y_AXIS))
+
+            if(Config.LatheModeEnable == false)
             {
-                IO_SetPinHigh(IO_DIR_Y);
+                if(st.dir_outbits & AXIS_MASK(Y_AXIS))
+                {
+                    IO_SetPinHigh(IO_DIR_Y);
+                }
+                else
+                {
+                    IO_SetPinLow(IO_DIR_Y);
+                }
             }
-            else
-            {
-                IO_SetPinLow(IO_DIR_Y);
-            }
-#endif
+
             if(st.dir_outbits & AXIS_MASK(Z_AXIS))
             {
                 IO_SetPinHigh(IO_DIR_Z);
@@ -506,13 +510,14 @@ void Stepper_MainISR(void)
             {
                 IO_SetPinLow(IO_DIR_A);
             }
+
             if(st.dir_outbits & AXIS_MASK(B_AXIS))
             {
-                //IO_SetPinhigh(IO_DIR_B);
+                IO_SetPinHigh(IO_DIR_B);
             }
             else
             {
-                //IO_SetPinLow(IO_DIR_B);
+                IO_SetPinLow(IO_DIR_B);
             }
 
             // With AMASS enabled, adjust Bresenham axis increment counters according to AMASS level.
@@ -707,16 +712,17 @@ void Stepper_PortResetISR(void)
     }
 
     // Y
-#if !defined(LATHE_MODE)
-    if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
+    if(Config.LatheModeEnable == false)
     {
-        IO_SetPinHigh(IO_STEP_Y);
+        if(step_port_invert_mask & AXIS_MASK(Y_AXIS))
+        {
+            IO_SetPinHigh(IO_STEP_Y);
+        }
+        else
+        {
+            IO_SetPinLow(IO_STEP_Y);
+        }
     }
-    else
-    {
-        IO_SetPinLow(IO_STEP_Y);
-    }
-#endif
 
     // Z
     if(step_port_invert_mask & AXIS_MASK(Z_AXIS))
@@ -741,11 +747,11 @@ void Stepper_PortResetISR(void)
     // B
     if(step_port_invert_mask & AXIS_MASK(B_AXIS))
     {
-        //IO_SetPinHigh(IO_STEP_B);
+        IO_SetPinHigh(IO_STEP_B);
     }
     else
     {
-        //IO_SetPinLow(IO_STEP_B);
+        IO_SetPinLow(IO_STEP_B);
     }
 }
 
@@ -799,12 +805,15 @@ void Stepper_Reset(void)
     // Reset Direction Pins
     // ToDo: Use invert mask?
     IO_SetPinLow(IO_DIR_X);
-#if !defined(LATHE_MODE)
-    IO_SetPinLow(IO_DIR_Y);
-#endif
+
+    if(Config.LatheModeEnable == false)   //       Is it necessary to do that?? since nothing is connected
+    {
+        IO_SetPinLow(IO_DIR_Y);
+    }
+
     IO_SetPinLow(IO_DIR_Z);
     IO_SetPinLow(IO_DIR_A);
-    //IO_SetPinLow(IO_DIR_B);
+    IO_SetPinLow(IO_DIR_B);
 }
 
 
@@ -834,7 +843,6 @@ static uint8_t Stepper_NextBlockIndex(uint8_t block_index)
 }
 
 
-#ifdef PARKING_ENABLE
 // Changes the run state of the step segment buffer to execute the special parking motion.
 void Stepper_ParkingSetupBuffer()
 {
@@ -874,8 +882,6 @@ void Stepper_ParkingRestoreBuffer()
 
     pl_block = NULL; // Set to reload next block.
 }
-#endif
-
 
 /* Prepares step segment buffer. Continuously called from main program.
 
@@ -922,18 +928,21 @@ void Stepper_PrepareBuffer(void)
             // Check if we need to only recompute the velocity profile or load a new block.
             if(prep.recalculate_flag & PREP_FLAG_RECALCULATE)
             {
-#ifdef PARKING_ENABLE
-                if(prep.recalculate_flag & PREP_FLAG_PARKING)
+                if(Config.ParkingEnable == true)
                 {
-                    prep.recalculate_flag &= ~(PREP_FLAG_RECALCULATE);
+                    if(prep.recalculate_flag & PREP_FLAG_PARKING)
+                    {
+                        prep.recalculate_flag &= ~(PREP_FLAG_RECALCULATE);
+                    }
+                    else
+                    {
+                        prep.recalculate_flag = false;
+                    }
                 }
                 else
                 {
                     prep.recalculate_flag = false;
                 }
-#else
-                prep.recalculate_flag = false;
-#endif
             }
             else
             {
@@ -1316,12 +1325,15 @@ void Stepper_PrepareBuffer(void)
                 // Less than one step to decelerate to zero speed, but already very close. AMASS
                 // requires full steps to execute. So, just bail.
                 BIT_TRUE(System.step_control, STEP_CONTROL_END_MOTION);
-#ifdef PARKING_ENABLE
-                if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
+
+                if(Config.ParkingEnable == true)
                 {
-                    prep.recalculate_flag |= PREP_FLAG_HOLD_PARTIAL_BLOCK;
+                    if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
+                    {
+                        prep.recalculate_flag |= PREP_FLAG_HOLD_PARTIAL_BLOCK;
+                    }
                 }
-#endif
+
                 return; // Segment not generated, but current step data still retained.
             }
         }
@@ -1399,12 +1411,15 @@ void Stepper_PrepareBuffer(void)
                 // the segment queue, where realtime protocol will set new state upon receiving the
                 // cycle stop flag from the ISR. Prep_segment is blocked until then.
                 BIT_TRUE(System.step_control, STEP_CONTROL_END_MOTION);
-#ifdef PARKING_ENABLE
-                if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
+
+                if(Config.ParkingEnable == true)
                 {
-                    prep.recalculate_flag |= PREP_FLAG_HOLD_PARTIAL_BLOCK;
+                    if(!(prep.recalculate_flag & PREP_FLAG_PARKING))
+                    {
+                        prep.recalculate_flag |= PREP_FLAG_HOLD_PARTIAL_BLOCK;
+                    }
                 }
-#endif
+
                 return; // Bail!
             }
             else   // End of planner block

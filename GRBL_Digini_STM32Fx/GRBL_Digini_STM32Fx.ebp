@@ -162,10 +162,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\grbl\jog.h" />
-		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\grbl\Libraries\Encoder\Encoder.h" />
 		<Unit filename="..\App\grbl\Libraries\Ethernet\Ethernet.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />

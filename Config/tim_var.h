@@ -249,20 +249,13 @@ const TIM_Info_t TIM_Info[NB_OF_TIM_DRIVER] =
 
 class TIM_Driver myTIM_GRBL_Spindle         (GRBL_SPINDLE);
 class TIM_Driver myTIM_GRBL_Stepper         (GRBL_STEPPER);
-
-#ifdef ENABLE_SOFTWARE_DEBOUNCE
 class TIM_Driver myTIM_GRBL_LimitsDebounce  (GRBL_LIMITS_DEBOUNCE);
-#endif
 
 #else // TIM_DRIVER_GLOBAL
 
-extern const TIM_Info_t TIM_Info[NB_OF_TIM_DRIVER];
-
 extern class TIM_Driver myTIM_GRBL_Spindle;
 extern class TIM_Driver myTIM_GRBL_Stepper;
-#ifdef ENABLE_SOFTWARE_DEBOUNCE
 extern class TIM_Driver myTIM_GRBL_LimitsDebounce;
-#endif
 
 #endif // TIM_DRIVER_GLOBAL
 
