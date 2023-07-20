@@ -256,6 +256,15 @@
     X_IO( IO_LIMIT_A,           GPIOG,      9,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_B,           GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_LIMIT_C,           GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_1,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_2,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_3,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_4,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_5,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_6,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_7,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_OUT_8,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_1,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_SPINDLE_ENABLE,    GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_SPINDLE_PWM,       GPIOxx,     0,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          IO_AF1_TIM1)      \
     X_IO( IO_SPINDLE_DIRECTION, GPIOxx,     14,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \

@@ -53,7 +53,7 @@
 #define MODAL_GROUP_M7      12  // [M3,M4,M5] Spindle turning
 #define MODAL_GROUP_M8      13  // [M7,M8,M9] Coolant control
 #define MODAL_GROUP_M9      14  // [M56] Override control
-
+#define MODAL_GROUP_MO      15  // [M62,M63] Digital Outputs, [M66] Wait for digital inputs, [M67] Analog Outputs
 
 // Define command actions for within execution-type Modal groups (motion, stopping, non-Modal). Used
 // internally by the parser to know which command to execute.
@@ -206,6 +206,13 @@
 #define GC_PARSER_LASER_ISMOTION        BIT(7)
 
 
+#define DIGITAL_CONTROL_ON 1
+#define DIGITAL_CONTROL_OFF 0
+#define WAITONINPUT_CONTROL 1
+#define ANALOG_CONTROL 1
+#define ACCEL_SCALING 1
+
+
 // NOTE: When this struct is zeroed, the above defines set the defaults for the system.
 typedef struct
 {
@@ -226,6 +233,10 @@ typedef struct
     uint8_t override;        // {M56}
     uint8_t lathe_mode;      // {G7,G8}
     uint8_t spindle_mode;    // {G96,G97}
+    uint8_t Digital;         // {M62,M63}
+    uint8_t WaitOnInput;     // {M66}
+    uint8_t Analog;          // {M67}
+    uint8_t AccelScaling;    // {M100}
 } GC_Modal_t;
 
 

@@ -87,6 +87,8 @@ uint8_t GC_ExecuteLine(char *line)
     uint8_t axis_command = AXIS_COMMAND_NONE;
     uint8_t axis_0, axis_1, axis_linear;
     uint8_t CoordSelect = 0; // Tracks G10 P coordinate selection for execution
+    uint8_t output_select = 0;
+	uint8_t input_select = 0;
 
     // Initialize bitflag tracking variables for axis indices compatible operations.
     uint8_t axis_words = 0; // XYZ tracking
@@ -557,9 +559,43 @@ uint8_t GC_ExecuteLine(char *line)
                             return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
                         }
 
+ #if 1 //def ENABLE_DIGITAL_OUTPUT
+			case 62:
+			case 64:
+				word_bit = MODAL_GROUP_MO;
+				gc_block.Modal.Digital = DIGITAL_CONTROL_ON;
+				break;
+			case 63:
+			case 65:
+				word_bit = MODAL_GROUP_MO;
+				gc_block.Modal.Digital = DIGITAL_CONTROL_OFF;
+				break;
+#endif
+#if 1 //def ENABLE_WAIT_ON_INPUT
+			case 66:
+				word_bit = MODAL_GROUP_MO;
+				gc_block.Modal.WaitOnInput = WAITONINPUT_CONTROL;
+				break;
+#endif
+#if 1 //def ENABLE_ANALOG_OUTPUT
+			case 67:
+				word_bit = MODAL_GROUP_MO;
+				gc_block.Modal.Analog = ANALOG_CONTROL;
+				break;
+#endif
+#if 1 //def ENABLE_ACCEL_SCALING
+			case 100:
+				word_bit = MODAL_GROUP_MO;
+				gc_block.Modal.AccelScaling = ACCEL_SCALING;
+				break;
+#endif
+                    // break;
 
                     default:
+                    {
                         return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
+                    }
+                    break;
                 }
 
                 // Check for more than one command per Modal group violations in the current block
@@ -2380,6 +2416,41 @@ uint8_t GC_ExecuteLine(char *line)
 
         gc_state.Modal.ProgramFlow = PROGRAM_FLOW_RUNNING; // Reset program flow.
     }
+
+
+#if 1 //ENABLE_DIGITAL_OUTPUT
+	// [Digital output control ]: M62,M63,M64,M65
+	if (gc_block.Modal.Digital)
+	{
+		output_select = trunc(gc_block.values.p); // Convert p value to int.
+//		outputs_digital_action(output_select, gc_block.Modal.Digital);
+	}
+#endif
+#if 1 // ENABLE_WAIT_ON_INPUT
+	// [Digital input control ]: M66 P- L- Q-  where P is channel number L is mode and Q is timeout(s)
+	if (gc_block.Modal.WaitOnInput)
+	{
+		input_select = trunc(gc_block.values.p); // Convert p value to int.
+//		wait_on_input_action(input_select, gc_block.values.l, &gc_block.values.q);
+	}
+#endif
+
+#if 1// ENABLE_ANALOG_OUTPUT
+	// [Analog control ]: M67 E- Q-  where E is channel number and Q is value to set
+	if (gc_block.Modal.Analog)
+	{
+//		outputs_analog_action(gc_block.values.e, &gc_block.values.q);
+	}
+#endif
+#if 1 // ENABLE_ACCEL_SCALING
+	// [Acceleration Scaling ]: M100 P- Q- wehre P is the axis, and Q is the fractional value to scale the accel > 0.0 and <=1.0
+	if (gc_block.Modal.AccelScaling)
+	{
+		output_select = trunc(gc_block.values.p); // Convert p value to int.
+//		acceleration_scaling(output_select, &gc_block.values.q); // in settings.c
+		Planner_Reset(); // Clear block buffer and planner variables
+	}
+#endif
 
     // TODO: % to denote start of program.
 
