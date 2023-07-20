@@ -51,6 +51,10 @@
 // Uncomment for lathe mode
 //#define LATHE_MODE
 
+// NOTE: If VARIABLE_SPINDLE is enabled(default), this option has no effect as the PWM output and
+//#define VARIABLE_SPINDLE // Default enabled. Comment to disable.
+
+
 // this way of defining axis is easier for digini to handle axis display information (only choose one)
 //#define GRBL_MACHINE_USE_AXIS_XY      // Some plasma cutter setup (to be verified)
 //#define GRBL_MACHINE_USE_AXIS_XZ      // Lathe and some plasma cutter
@@ -323,12 +327,12 @@
 // be sent without potential performance issues.
 // NOTE: The options below are here only provide a way to disable certain data fields if a unique
 // situation demands it, but be aware GUIs may depend on this data. If disabled, it may not be compatible.
-#define REPORT_FIELD_BUFFER_STATE // Default enabled. Comment to disable.
-#define REPORT_FIELD_PIN_STATE // Default enabled. Comment to disable.
-#define REPORT_FIELD_CURRENT_FEED_SPEED // Default enabled. Comment to disable.
-#define REPORT_FIELD_WORK_COORD_OFFSET // Default enabled. Comment to disable.
-#define REPORT_FIELD_OVERRIDES // Default enabled. Comment to disable.
-#define REPORT_FIELD_LINE_NUMBERS // Default enabled. Comment to disable.
+//#define REPORT_FIELD_BUFFER_STATE // Default enabled. Comment to disable.
+//#define REPORT_FIELD_PIN_STATE // Default enabled. Comment to disable.
+//#define REPORT_FIELD_CURRENT_FEED_SPEED // Default enabled. Comment to disable.
+//#define REPORT_FIELD_WORK_COORD_OFFSET // Default enabled. Comment to disable.
+//#define REPORT_FIELD_OVERRIDES // Default enabled. Comment to disable.
+//#define REPORT_FIELD_LINE_NUMBERS // Default enabled. Comment to disable.
 
 
 // Some status report data isn't necessary for realtime, only intermittently, because the values don't
@@ -391,7 +395,7 @@
 // enable pin will output 5V for maximum RPM with 256 intermediate levels and 0V when disabled.
 // NOTE: IMPORTANT for Arduino Unos! When enabled, the Z-limit pin D11 and spindle enable pin D12 switch!
 // The hardware PWM output on pin D11 is required for variable spindle output voltages.
-#define VARIABLE_SPINDLE // Default enabled. Comment to disable.
+//#define VARIABLE_SPINDLE // Default enabled. Comment to disable.
 
 
 // Used by variable spindle output only. This forces the PWM output to a minimum duty cycle when enabled.

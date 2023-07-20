@@ -153,24 +153,28 @@ void Settings_Restore(uint8_t restore_flag)
         Settings.steps_per_mm[Z_AXIS] = DEFAULT_Z_STEPS_PER_MM;
         Settings.steps_per_mm[A_AXIS] = DEFAULT_A_STEPS_PER_DEG;
         Settings.steps_per_mm[B_AXIS] = DEFAULT_B_STEPS_PER_DEG;
+        Settings.steps_per_mm[C_AXIS] = DEFAULT_C_STEPS_PER_DEG;
 
         Settings.max_rate[X_AXIS] = DEFAULT_X_MAX_RATE;
         Settings.max_rate[Y_AXIS] = DEFAULT_Y_MAX_RATE;
         Settings.max_rate[Z_AXIS] = DEFAULT_Z_MAX_RATE;
         Settings.max_rate[A_AXIS] = DEFAULT_A_MAX_RATE;
         Settings.max_rate[B_AXIS] = DEFAULT_B_MAX_RATE;
+        Settings.max_rate[C_AXIS] = DEFAULT_C_MAX_RATE;
 
         Settings.acceleration[X_AXIS] = DEFAULT_X_ACCELERATION;
         Settings.acceleration[Y_AXIS] = DEFAULT_Y_ACCELERATION;
         Settings.acceleration[Z_AXIS] = DEFAULT_Z_ACCELERATION;
         Settings.acceleration[A_AXIS] = DEFAULT_A_ACCELERATION;
         Settings.acceleration[B_AXIS] = DEFAULT_B_ACCELERATION;
+        Settings.acceleration[C_AXIS] = DEFAULT_C_ACCELERATION;
 
         Settings.max_travel[X_AXIS] = (-DEFAULT_X_MAX_TRAVEL);
         Settings.max_travel[Y_AXIS] = (-DEFAULT_Y_MAX_TRAVEL);
         Settings.max_travel[Z_AXIS] = (-DEFAULT_Z_MAX_TRAVEL);
         Settings.max_travel[A_AXIS] = (-DEFAULT_A_MAX_TRAVEL);
         Settings.max_travel[B_AXIS] = (-DEFAULT_B_MAX_TRAVEL);
+        Settings.max_travel[C_AXIS] = (-DEFAULT_C_MAX_TRAVEL);
 
         Settings.backlash[X_AXIS] = DEFAULT_X_BACKLASH;
         Settings.backlash[Y_AXIS] = DEFAULT_Y_BACKLASH;
@@ -534,13 +538,14 @@ uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value)
                 break; // Re-initialize Spindle rpm calibration
 
             case 32:
-                if (int_value)
+                if(Config.VariableSpindleEnable == true)
                 {
-                    Settings.flags |= BITFLAG_LASER_MODE;
+                    if(int_value)   Settings.flags |=  BITFLAG_LASER_MODE;
+                    else            Settings.flags &= ~BITFLAG_LASER_MODE;
                 }
                 else
                 {
-                    Settings.flags &= ~BITFLAG_LASER_MODE;
+                    return STATUS_SETTING_DISABLED_LASER;
                 }
                 break;
 

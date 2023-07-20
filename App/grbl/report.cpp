@@ -257,10 +257,19 @@ void Report_GrblSettings(void)
     report_util_float_setting(27, Settings.homing_pulloff, N_DECIMAL_SETTINGVALUE);
     report_util_float_setting(30, Settings.rpm_max, N_DECIMAL_RPMVALUE);
     report_util_float_setting(31, Settings.rpm_min, N_DECIMAL_RPMVALUE);
-    report_util_uint8_setting(32, BIT_IS_TRUE(Settings.flags,BITFLAG_LASER_MODE));
+
+    if(Config.VariableSpindleEnable == true)
+    {
+        report_util_uint8_setting(32, BIT_IS_TRUE(Settings.flags,BITFLAG_LASER_MODE));
+    }
+    else
+    {
+        report_util_uint8_setting(32, 0);
+    }
+
     report_util_uint8_setting(33, BIT_IS_TRUE(Settings.flags2,BITFLAG_LATHE_MODE));
 
-    Delay_ms(5);
+    //Delay_ms(5); ??AR
 
     // Print axis settings
     uint8_t idx, set_idx;
@@ -436,22 +445,22 @@ void Report_GCodeModes(void)
     }
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.Modal.CoordSelect+54);
+    Printf("%d", gc_state.Modal.CoordSelect + 54);
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.Modal.PlaneSelect+17);
+    Printf("%d", gc_state.Modal.PlaneSelect + 17);
 
     report_util_gcode_modes_G();
-    Printf("%d", 21-gc_state.Modal.units);
+    Printf("%d", 21 - gc_state.Modal.units);
 
     report_util_gcode_modes_G();
-    Printf("%d", gc_state.Modal.Distance+90);
+    Printf("%d", gc_state.Modal.Distance + 90);
 
     report_util_gcode_modes_G();
-    Printf("%d", 94-gc_state.Modal.FeedRate);
+    Printf("%d", 94 - gc_state.Modal.FeedRate);
 
     report_util_gcode_modes_G();
-    Printf("%d", 98+gc_state.Modal.retract);
+    Printf("%d", 98 + gc_state.Modal.retract);
 
     if(gc_state.Modal.ProgramFlow)
     {
@@ -541,8 +550,11 @@ void Report_GCodeModes(void)
     Printf(" F");
     PrintFloat_RateValue(gc_state.FeedRate);
 
-    Printf(" S");
-    Printf_Float(gc_state.spindle_speed, N_DECIMAL_RPMVALUE);
+    if(Config.VariableSpindleEnable == true)
+    {
+        Printf(" S");
+        Printf_Float(gc_state.spindle_speed, N_DECIMAL_RPMVALUE);
+    }
 
     report_util_feedback_line_feed();
 }
@@ -575,8 +587,9 @@ void Report_BuildInfo(char *line)
     Printf("%s", line);
     report_util_feedback_line_feed();
     Printf("[OPT:"); // Generate the actual effective configuration option list
-    Putc('V');
-    Putc('N');
+
+    if(Config.VariableSpindleEnable                   == true  ) Putc('V');
+    if(Config.LineNumberEnable                        == true  ) Putc('N');
     if(Config.M7_Enable                               == true  ) Putc('M');
     if(Config.CoreXY_MachineEnable                    == true  ) Putc('C');
     if(Config.ParkingEnable                           == true  ) Putc('P');
@@ -595,7 +608,7 @@ void Report_BuildInfo(char *line)
     if(Config.ForceBufferSyncDuringWCO_ChangeEnable   == false ) Putc('W'); // NOTE: Shown when disabled.
     if(Config.HomingLockAtInitEnable                  == true  ) Putc('L');
     if(Config.SafetyDoorInputEnable                   == true  ) Putc('+');
-    Putc('A');
+    if(Config.FeedOverrideDuringProbeCycleEnable      == true  ) Putc('A');
     if(Config.LatheModeEnable                         == true  ) Putc('D');
     // NOTE: Compiled values, like override increments/max/min values, may be added at some point later.
     Putc(',');
@@ -744,173 +757,189 @@ void Report_RealtimeStatus(void)
     Report_AxisValue(print_position);
 
     // Returns planner and serial read buffer states.
-#ifdef REPORT_FIELD_BUFFER_STATE
-    if(BIT_IS_TRUE(Settings.status_report_mask, BITFLAG_RT_STATUS_BUFFER_STATE))
+    if(Config.ReportFieldBufferStateEnable == true)
     {
-        Printf("|Bf:");
-        Printf("%d", Planner_GetBlockBufferAvailable());
-        Putc(',');
-        //TO AR temp remove    Printf("%d", FifoUsart_Available(STDOUT_NUM));
-    }
-#endif
-
-#ifdef REPORT_FIELD_LINE_NUMBERS
-    // Report current line number
-    Planner_Block_t * cur_block = Planner_GetCurrentBlock();
-    if(cur_block != NULL)
-    {
-        uint32_t ln = cur_block->line_number;
-
-        if(ln > 0)
+        if(BIT_IS_TRUE(Settings.status_report_mask, BITFLAG_RT_STATUS_BUFFER_STATE))
         {
-            Printf("|Ln:");
-            Printf("%d", ln);
+            Printf("|Bf:");
+            Printf("%d", Planner_GetBlockBufferAvailable());
+            Putc(',');
+            //TO AR temp remove    Printf("%d", FifoUsart_Available(STDOUT_NUM));
         }
     }
-#endif
+
+    if((Config.LineNumberEnable == true) && (Config.ReportFieldLineNumbersEnable == true))
+    {
+        // Report current line number
+        Planner_Block_t * cur_block = Planner_GetCurrentBlock();
+        if(cur_block != NULL)
+        {
+            uint32_t ln = cur_block->line_number;
+
+            if(ln > 0)
+            {
+                Printf("|Ln:");
+                Printf("%d", ln);
+            }
+        }
+    }
 
     // Report realtime feed speed
-#ifdef REPORT_FIELD_CURRENT_FEED_SPEED
-    Printf("|FS:");
-    PrintFloat_RateValue(Stepper_GetRealtimeRate());
-    Putc(',');
-    Printf_Float(System.spindle_speed, N_DECIMAL_RPMVALUE);
-#endif
-
-#ifdef REPORT_FIELD_PIN_STATE
-    uint8_t lim_pin_state = Limits_GetState();
-    uint8_t ctrl_pin_state = System_GetControlState();
-    uint8_t prb_pin_state = Probe_GetState();
-
-    if(lim_pin_state | ctrl_pin_state | prb_pin_state)
+    if(Config.ReportFieldCurrentFeedSpeedEnable == true)
     {
-        Printf("|Pn:");
-        if(prb_pin_state)
+        if(Config.VariableSpindleEnable == true)
         {
-            Putc('P');
-        }
-
-        if(lim_pin_state)
-        {
-            if (BIT_IS_TRUE(lim_pin_state, BIT(X_AXIS)))
-            {
-                Putc('X');
-            }
-            if (BIT_IS_TRUE(lim_pin_state, BIT(Y_AXIS)))
-            {
-                Putc('Y');
-            }
-            if (BIT_IS_TRUE(lim_pin_state, BIT(Z_AXIS)))
-            {
-                Putc('Z');
-            }
-        }
-
-        if(ctrl_pin_state)
-        {
-            if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_SAFETY_DOOR))
-            {
-                Putc('D');
-            }
-            if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_RESET))
-            {
-                Putc('R');
-            }
-            if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_FEED_HOLD))
-            {
-                Putc('H');
-            }
-            if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_CYCLE_START))
-            {
-                Putc('S');
-            }
-        }
-    }
-#endif
-
-#ifdef REPORT_FIELD_WORK_COORD_OFFSET
-    if(System.report_wco_counter > 0)
-    {
-        System.report_wco_counter--;
-    }
-    else
-    {
-        if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
-        {
-            System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT - 1); // Reset counter for slow refresh
+            Printf("|FS:");
+            PrintFloat_RateValue(Stepper_GetRealtimeRate());
+            Putc(',');
+            Printf_Float(System.spindle_speed, N_DECIMAL_RPMVALUE);
         }
         else
         {
-            System.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT - 1);
+            Printf("|F:");
+            PrintFloat_RateValue(Stepper_GetRealtimeRate());
         }
-
-        if(System.report_ovr_counter == 0)
-        {
-            System.report_ovr_counter = 1;
-        } // Set override on next report.
-
-        Printf("|WCO:");
-        Report_AxisValue(wco);
     }
-#endif
 
-#ifdef REPORT_FIELD_OVERRIDES
-    if(System.report_ovr_counter > 0)
+    if(Config.ReportFieldPinStateEnable == true)
     {
-        System.report_ovr_counter--;
-    }
-    else
-    {
-        if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+        uint8_t lim_pin_state = Limits_GetState();
+        uint8_t ctrl_pin_state = System_GetControlState();
+        uint8_t prb_pin_state = Probe_GetState();
+
+        if(lim_pin_state | ctrl_pin_state | prb_pin_state)
         {
-            System.report_ovr_counter = (REPORT_OVR_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
-        }
-        else
-        {
-            System.report_ovr_counter = (REPORT_OVR_REFRESH_IDLE_COUNT-1);
-        }
-
-        Printf("|Ov:");
-        Printf("%d", System.f_override);
-        Putc(',');
-        Printf("%d", System.r_override);
-        Putc(',');
-        Printf("%d", System.spindle_speed_ovr);
-
-        uint8_t sp_state = Spindle_GetState();
-        uint8_t cl_state = Coolant_GetState();
-
-        if(sp_state || cl_state)
-        {
-            Printf("|A:");
-
-            if(sp_state)   // != SPINDLE_STATE_DISABLE
+            Printf("|Pn:");
+            if(prb_pin_state)
             {
-                if(sp_state == SPINDLE_STATE_CW)
+                Putc('P');
+            }
+
+            if(lim_pin_state)
+            {
+                if (BIT_IS_TRUE(lim_pin_state, BIT(X_AXIS)))
+                {
+                    Putc('X');
+                }
+                if (BIT_IS_TRUE(lim_pin_state, BIT(Y_AXIS)))
+                {
+                    Putc('Y');
+                }
+                if (BIT_IS_TRUE(lim_pin_state, BIT(Z_AXIS)))
+                {
+                    Putc('Z');
+                }
+            }
+
+            if(ctrl_pin_state)
+            {
+                if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_SAFETY_DOOR))
+                {
+                    Putc('D');
+                }
+                if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_RESET))
+                {
+                    Putc('R');
+                }
+                if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_FEED_HOLD))
+                {
+                    Putc('H');
+                }
+                if (BIT_IS_TRUE(ctrl_pin_state, CONTROL_PIN_INDEX_CYCLE_START))
                 {
                     Putc('S');
-                } // CW
-                else
-                {
-                    Putc('C');
-                } // CCW
-            }
-
-            if(cl_state & COOLANT_STATE_FLOOD)
-            {
-                Putc('F');
-            }
-
-            if(Config.M7_Enable == true)
-            {
-                if(cl_state & COOLANT_STATE_MIST)
-                {
-                    Putc('M');
                 }
             }
         }
     }
-#endif
+
+    if(Config.ReportFieldWorkCoordinateOffsetEnable == true)
+    {
+        if(System.report_wco_counter > 0)
+        {
+            System.report_wco_counter--;
+        }
+        else
+        {
+            if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+            {
+                System.report_wco_counter = (REPORT_WCO_REFRESH_BUSY_COUNT - 1); // Reset counter for slow refresh
+            }
+            else
+            {
+                System.report_wco_counter = (REPORT_WCO_REFRESH_IDLE_COUNT - 1);
+            }
+
+            if(System.report_ovr_counter == 0)
+            {
+                System.report_ovr_counter = 1;
+            } // Set override on next report.
+
+            Printf("|WCO:");
+            Report_AxisValue(wco);
+        }
+    }
+
+    if(Config.ReportFieldOverridesEnable == true)
+    {
+        if(System.report_ovr_counter > 0)
+        {
+            System.report_ovr_counter--;
+        }
+        else
+        {
+            if(System.State & (STATE_HOMING | STATE_CYCLE | STATE_HOLD | STATE_JOG | STATE_SAFETY_DOOR))
+            {
+                System.report_ovr_counter = (REPORT_OVR_REFRESH_BUSY_COUNT-1); // Reset counter for slow refresh
+            }
+            else
+            {
+                System.report_ovr_counter = (REPORT_OVR_REFRESH_IDLE_COUNT-1);
+            }
+
+            Printf("|Ov:");
+            Printf("%d", System.f_override);
+            Putc(',');
+            Printf("%d", System.r_override);
+            Putc(',');
+            Printf("%d", System.spindle_speed_ovr);
+
+            uint8_t sp_state = Spindle_GetState();
+            uint8_t cl_state = Coolant_GetState();
+
+            if(sp_state || cl_state)
+            {
+                Printf("|A:");
+
+                if(sp_state)   // != SPINDLE_STATE_DISABLE
+                {
+                    if(Config.VariableSpindleEnable == true)
+                    {
+                        if(sp_state == SPINDLE_STATE_CW)    Putc('S'); // CW
+                        else                                Putc('C'); // CCW
+                    }
+                    else
+                    {
+                        if(sp_state & SPINDLE_STATE_CW)     Putc('S'); // CW
+                        else                                Putc('C'); // CCW
+                    }
+                }
+
+                if(cl_state & COOLANT_STATE_FLOOD)
+                {
+                    Putc('F');
+                }
+
+                if(Config.M7_Enable == true)
+                {
+                    if(cl_state & COOLANT_STATE_MIST)
+                    {
+                        Putc('M');
+                    }
+                }
+            }
+        }
+    }
 
     Putc('>');
     Report_LineFeed();

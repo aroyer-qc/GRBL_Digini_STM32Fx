@@ -62,7 +62,15 @@ void Spindle_Initialize(void)
         mySpindleCounter.Initialize();
     }
 
-    pwm_gradient = SPINDLE_PWM_RANGE/(Settings.rpm_max-Settings.rpm_min);
+    if(Config.VariableSpindleEnable == true)
+    {
+        pwm_gradient = SPINDLE_PWM_RANGE/(Settings.rpm_max-Settings.rpm_min);
+
+        // add the timer pwm init for the spindle speed
+        // TODO add option for servo type spindle with brushless motor
+
+    }
+
     SpindleDirectionClockwise = true;
     Spindle_Stop();
 }
@@ -151,7 +159,7 @@ uint32_t Spindle_GetRPM(void)
 
 
 // Called by spindle_set_state() and step segment generator. Keep routine small and efficient.
-uint8_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
+uint16_t Spindle_ComputePwmValue(float rpm) // 328p PWM register is 8-bit.
 {
     uint8_t pwm_value;
 

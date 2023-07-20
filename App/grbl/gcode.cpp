@@ -108,7 +108,11 @@ uint8_t GC_ExecuteLine(char *line)
         gc_parser_flags |= GC_PARSER_JOG_MOTION;
         gc_block.Modal.motion = MOTION_MODE_LINEAR;
         gc_block.Modal.FeedRate = FEED_RATE_MODE_UNITS_PER_MIN;
-        gc_block.values.n = JOG_LINE_NUMBER; // Initialize default line number reported during jog.
+
+        if(Config.LineNumberEnable == true)
+        {
+            gc_block.values.n = JOG_LINE_NUMBER; // Initialize default line number reported during jog.
+        }
     }
 
     /* -------------------------------------------------------------------------------------
@@ -577,7 +581,7 @@ uint8_t GC_ExecuteLine(char *line)
                     case 'A':
                         word_bit = WORD_A;
                         gc_block.values.xyz[A_AXIS] = value;
-                        axis_words |= (1<<A_AXIS);
+                        axis_words |= (1 << A_AXIS);
                         break;
 
                     case 'B':
@@ -586,7 +590,12 @@ uint8_t GC_ExecuteLine(char *line)
                         axis_words |= (1<<B_AXIS);
                         break;
 
-                    // case 'C': // Not supported
+                    case 'C':
+                        word_bit = WORD_C;
+                        gc_block.values.xyz[C_AXIS] = value;
+                        axis_words |= (1<<C_AXIS);
+                        break;
+
                     case 'D':
                         word_bit = WORD_D;
                         gc_block.values.d = int_value;
@@ -1600,8 +1609,23 @@ uint8_t GC_ExecuteLine(char *line)
 
     if(axis_command)
     {
+        #if 0  //from GRBL32 they have this...
+                // --- YSV 22-06-2018
+          #ifdef AA_AXIS
+          if (axis_command) { bit_false(value_words,(bit(WORD_X)|bit(WORD_Y)|bit(WORD_Z)|bit(WORD_A))); } // Remove axis words.
+          #elif defined AB_AXIS
+          if (axis_command) { bit_false(value_words,(bit(WORD_X)|bit(WORD_Y)|bit(WORD_Z)|bit(WORD_A)|bit(WORD_B))); } // Remove axis words.
+          #elif defined ABC_AXIS
+          if (axis_command) { bit_false(value_words,(bit(WORD_X)|bit(WORD_Y)|bit(WORD_Z)|bit(WORD_A)|bit(WORD_B)|bit(WORD_C))); } // Remove axis words.
+          #else
+          if (axis_command) { bit_false(value_words,(bit(WORD_X)|bit(WORD_Y)|bit(WORD_Z))); } // Remove axis words.
+          #endif
+          // ---
+        #endif
+
+
         // Remove axis words.
-        BIT_FALSE(value_words, (BIT(WORD_X)|BIT(WORD_Y)|BIT(WORD_Z)|BIT(WORD_A)|BIT(WORD_B)));
+        BIT_FALSE(value_words, (BIT(WORD_X)| BIT(WORD_Y)| BIT(WORD_Z)| BIT(WORD_A)| BIT(WORD_B)| BIT(WORD_C)));
     }
 
     if(value_words)
@@ -1700,7 +1724,11 @@ uint8_t GC_ExecuteLine(char *line)
     // [0. Non-specific/common error-checks and miscellaneous setup]:
     // NOTE: If no line number is present, the value is zero.
     gc_state.line_number = gc_block.values.n;
-    pl_data->line_number = gc_state.line_number; // Record data for planner use.
+
+    if(Config.LineNumberEnable == true)
+    {
+        pl_data->line_number = gc_state.line_number; // Record data for planner use.
+    }
 
     // [1. Comments feedback ]:  NOT SUPPORTED
 
@@ -1721,16 +1749,23 @@ uint8_t GC_ExecuteLine(char *line)
     {
         if(gc_state.Modal.Spindle != SPINDLE_DISABLE)
         {
-            if(BIT_IS_FALSE(gc_parser_flags, GC_PARSER_LASER_ISMOTION))
+            if(Config.VariableSpindleEnable == true)
             {
-                if(BIT_IS_TRUE(gc_parser_flags, GC_PARSER_LASER_DISABLE))
+                if(BIT_IS_FALSE(gc_parser_flags, GC_PARSER_LASER_ISMOTION))
                 {
-                    Spindle_Sync(gc_state.Modal.Spindle, 0.0);
+                    if(BIT_IS_TRUE(gc_parser_flags, GC_PARSER_LASER_DISABLE))
+                    {
+                        Spindle_Sync(gc_state.Modal.Spindle, 0.0);
+                    }
+                    else
+                    {
+                        Spindle_Sync(gc_state.Modal.Spindle, gc_block.values.s);
+                    }
                 }
-                else
-                {
-                    Spindle_Sync(gc_state.Modal.Spindle, gc_block.values.s);
-                }
+            }
+            else
+            {
+                Spindle_Sync(gc_state.Modal.Spindle, 0.0);
             }
         }
 

@@ -799,7 +799,11 @@ static void Protocol_ExecRtSuspend(void)
     {
         memset(pl_data,0,sizeof(Planner_LineData_t));
         pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
-        pl_data->line_number = PARKING_MOTION_LINE_NUMBER;
+
+        if(Config.LineNumberEnable == true)
+        {
+            pl_data->line_number = PARKING_MOTION_LINE_NUMBER;
+        }
     }
 
     Planner_Block_t *block = Planner_GetCurrentBlock();

@@ -182,7 +182,11 @@ void Limits_GoHome(uint8_t cycle_mask)
     Planner_LineData_t *pl_data = &plan_data;
     memset(pl_data,0,sizeof(Planner_LineData_t));
     pl_data->condition = (PL_COND_FLAG_SYSTEM_MOTION|PL_COND_FLAG_NO_FEED_OVERRIDE);
-    pl_data->line_number = HOMING_CYCLE_LINE_NUMBER;
+
+    if(Config.LineNumberEnable == true)
+    {
+        pl_data->line_number = HOMING_CYCLE_LINE_NUMBER;
+    }
 
     // Initialize variables used for homing computations.
     uint8_t n_cycle = (2*N_HOMING_LOCATE_CYCLE+1);

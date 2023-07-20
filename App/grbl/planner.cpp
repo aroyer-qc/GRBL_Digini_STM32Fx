@@ -96,7 +96,12 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
     memset(block, 0, sizeof(Planner_Block_t)); // Zero all block values.
     block->condition = pl_data->condition;
     block->spindle_speed = pl_data->spindle_speed;
-    block->line_number = pl_data->line_number;
+
+    if(Config.LineNumberEnable == true)
+    {
+        block->line_number = pl_data->line_number;
+    }
+
     block->backlash_motion = pl_data->backlash_motion;
 
     // Compute and store initial move Distance data.
@@ -114,6 +119,7 @@ uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data)
             position_steps[Z_AXIS] = sys_position[Z_AXIS];
             position_steps[A_AXIS] = sys_position[A_AXIS];
             position_steps[B_AXIS] = sys_position[B_AXIS];
+            position_steps[C_AXIS] = sys_position[C_AXIS];
         }
         else
         {

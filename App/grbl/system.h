@@ -217,6 +217,7 @@ typedef struct
 
     bool                LatheModeEnable                         :1;                 // should be replace by MachineType
     bool                CoreXY_MachineEnable                    :1;
+    bool                VariableSpindleEnable                   :1;
 
     bool                LimitSwitchDebouncingEnable             :1;
     bool                LimitSwitchAreTwoPerAxis                :1;                 // LIMITS_TWO_SWITCHES_ON_AXES
@@ -235,6 +236,15 @@ typedef struct
 
     bool                CheckLimitsAtInitializationEnable       :1;                 // CHECK_LIMITS_AT_INIT
     bool                RestoreOverrideAfterProgramEndEnable    :1;                 // RESTORE_OVERRIDES_AFTER_PROGRAM_END
+
+    bool                LineNumberEnable                        :1;                 // USE_LINE_NUMBERS
+
+    bool                ReportFieldLineNumbersEnable            :1;                 // REPORT_FIELD_LINE_NUMBERS
+    bool                ReportFieldBufferStateEnable            :1;                 // REPORT_FIELD_BUFFER_STATE
+    bool                ReportFieldOverridesEnable              :1;                 // REPORT_FIELD_OVERRIDES
+    bool                ReportFieldWorkCoordinateOffsetEnable   :1;                 // REPORT_FIELD_WORK_COORD_OFFSET
+    bool                ReportFieldPinStateEnable               :1;                 // REPORT_FIELD_PIN_STATE
+    bool                ReportFieldCurrentFeedSpeedEnable       :1;                 // REPORT_FIELD_CURRENT_FEED_SPEED
 
     uint16_t            CRC_Check;
 } Config_t;

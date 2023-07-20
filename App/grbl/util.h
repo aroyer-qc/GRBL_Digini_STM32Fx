@@ -28,7 +28,7 @@
 
 #define F_TIMER_STEPPER             24000000UL
 
-#define N_AXIS                      5
+#define N_AXIS                      6
 #define N_LINEAR_AXIS               3
 
 #define X_AXIS                      0 // Axis indexing value.
@@ -36,8 +36,9 @@
 #define Z_AXIS                      2
 #define A_AXIS                      3
 #define B_AXIS                      4
+#define C_AXIS                      5
 
-#define AXIS_MASK(A)                (1<<A)
+#define AXIS_MASK(A)                (1 << A)
 
 /*
 #define X_STEP_BIT                  0

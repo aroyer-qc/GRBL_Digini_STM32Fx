@@ -171,9 +171,10 @@
 #define WORD_Q      13
 #define WORD_A      14
 #define WORD_B      15
-#define WORD_D      16
-#define WORD_H      17
-#define WORD_E      18
+#define WORD_C      16
+#define WORD_D      17
+#define WORD_H      18
+#define WORD_E      19
 
 // Define g-code parser position updating flags
 #define GC_UPDATE_POS_TARGET    0 // Must be zero

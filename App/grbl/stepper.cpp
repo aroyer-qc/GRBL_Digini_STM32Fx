@@ -109,7 +109,12 @@ typedef struct
 {
     // Used by the bresenham line algorithm
     // Counter variables for the bresenham line tracer
-    uint32_t counter_x, counter_y, counter_z, counter_a, counter_b;
+    uint32_t counter_x;
+    uint32_t counter_y;
+    uint32_t counter_z;
+    uint32_t counter_a;
+    uint32_t counter_b;
+    uint32_t counter_c;
 
     uint8_t execute_step;     // Flags step execution for each interrupt.
     uint8_t step_pulse_time;  // Step pulse reset time after step rise
@@ -393,6 +398,7 @@ void Stepper_MainISR(void)
             IO_SetPinHigh(IO_STEP_Z);
         }
     }
+
     if(st.step_outbits & AXIS_MASK(A_AXIS))
     {
         if(step_port_invert_mask & AXIS_MASK(A_AXIS))
@@ -406,17 +412,32 @@ void Stepper_MainISR(void)
             IO_SetPinHigh(IO_STEP_A);
         }
     }
+
     if(st.step_outbits & AXIS_MASK(B_AXIS))
     {
         if(step_port_invert_mask & AXIS_MASK(B_AXIS))
         {
             // Low pulse
-            //IO_SetPinLow(IO_STEP_B);
+            IO_SetPinLow(IO_STEP_B);
         }
         else
         {
             // High pulse
-            //IO_SetPinHigh(IO_STEP_B);
+            IO_SetPinHigh(IO_STEP_B);
+        }
+    }
+
+    if(st.step_outbits & AXIS_MASK(C_AXIS))
+    {
+        if(step_port_invert_mask & AXIS_MASK(C_AXIS))
+        {
+            // Low pulse
+            IO_SetPinLow(IO_STEP_C);
+        }
+        else
+        {
+            // High pulse
+            IO_SetPinHigh(IO_STEP_C);
         }
     }
 
@@ -520,17 +541,30 @@ void Stepper_MainISR(void)
                 IO_SetPinLow(IO_DIR_B);
             }
 
+            if(st.dir_outbits & AXIS_MASK(C_AXIS))
+            {
+                IO_SetPinHigh(IO_DIR_C);
+            }
+            else
+            {
+                IO_SetPinLow(IO_DIR_C);
+            }
+
             // With AMASS enabled, adjust Bresenham axis increment counters according to AMASS level.
             st.steps[X_AXIS] = st.exec_block->steps[X_AXIS] >> st.exec_segment->amass_level;
             st.steps[Y_AXIS] = st.exec_block->steps[Y_AXIS] >> st.exec_segment->amass_level;
             st.steps[Z_AXIS] = st.exec_block->steps[Z_AXIS] >> st.exec_segment->amass_level;
             st.steps[A_AXIS] = st.exec_block->steps[A_AXIS] >> st.exec_segment->amass_level;
             st.steps[B_AXIS] = st.exec_block->steps[B_AXIS] >> st.exec_segment->amass_level;
+            st.steps[C_AXIS] = st.exec_block->steps[C_AXIS] >> st.exec_segment->amass_level;
 
             if(gc_state.Modal.spindle_mode == SPINDLE_RPM_MODE)
             {
-                // Set real-time Spindle output as segment is loaded, just prior to the first step.
-                Spindle_SetSpeed(st.exec_segment->spindle_pwm);
+                if(Config.VariableSpindleEnable == true)
+                {
+                    // Set real-time Spindle output as segment is loaded, just prior to the first step.
+                    Spindle_SetSpeed(st.exec_segment->spindle_pwm);
+                }
             }
             else if(st.exec_segment->spindle_pwm != SPINDLE_PWM_OFF_VALUE)
             {
@@ -549,10 +583,14 @@ void Stepper_MainISR(void)
             Stepper_Disable(0);
 
             // Ensure pwm is set properly upon completion of rate-controlled motion.
-            if(st.exec_block->is_pwm_rate_adjusted)
+            if(Config.VariableSpindleEnable == true)
             {
-                Spindle_SetSpeed(SPINDLE_PWM_OFF_VALUE);
+                if(st.exec_block->is_pwm_rate_adjusted)
+                {
+                    Spindle_SetSpeed(SPINDLE_PWM_OFF_VALUE);
+                }
             }
+
             System_SetExecStateFlag(EXEC_CYCLE_STOP); // Flag main program for cycle end
 
             return; // Nothing to do but exit.
@@ -670,6 +708,26 @@ void Stepper_MainISR(void)
         }
     }
 
+    st.counter_c += st.steps[C_AXIS];
+
+    if(st.counter_c > st.exec_block->step_event_count)
+    {
+        st.step_outbits |= AXIS_MASK(C_AXIS);
+        st.counter_c -= st.exec_block->step_event_count;
+
+        //if(st.exec_segment->backlash_motion == 0)
+        {
+            if(st.exec_block->direction_bits & AXIS_MASK(C_AXIS))
+            {
+                sys_position[C_AXIS]--;
+            }
+            else
+            {
+                sys_position[C_AXIS]++;
+            }
+        }
+    }
+
     // During a homing cycle, lock out and prevent desired axes from moving.
     if(System.State == STATE_HOMING)
     {
@@ -752,6 +810,16 @@ void Stepper_PortResetISR(void)
     else
     {
         IO_SetPinLow(IO_STEP_B);
+    }
+
+    // C
+    if(step_port_invert_mask & AXIS_MASK(C_AXIS))
+    {
+        IO_SetPinHigh(IO_STEP_C);
+    }
+    else
+    {
+        IO_SetPinLow(IO_STEP_C);
     }
 }
 
@@ -984,17 +1052,21 @@ void Stepper_PrepareBuffer(void)
                     prep.current_speed = sqrt(pl_block->entry_speed_sqr);
                 }
 
-                // Setup laser mode variables. PWM rate adjusted motions will always complete a motion with the
-                // Spindle off.
-                st_prep_block->is_pwm_rate_adjusted = false;
 
-                if(Settings.flags & BITFLAG_LASER_MODE)
+                if(Config.VariableSpindleEnable == true)
                 {
-                    if(pl_block->condition & PL_COND_FLAG_SPINDLE_CCW)
+                    // Setup laser mode variables. PWM rate adjusted motions will always complete a motion with the
+                    // Spindle off.
+                    st_prep_block->is_pwm_rate_adjusted = false;
+
+                    if(Settings.flags & BITFLAG_LASER_MODE)
                     {
-                        // Pre-compute inverse programmed rate to speed up PWM updating per step segment.
-                        prep.inv_rate = 1.0/pl_block->programmed_rate;
-                        st_prep_block->is_pwm_rate_adjusted = true;
+                        if(pl_block->condition & PL_COND_FLAG_SPINDLE_CCW)
+                        {
+                            // Pre-compute inverse programmed rate to speed up PWM updating per step segment.
+                            prep.inv_rate = 1.0/pl_block->programmed_rate;
+                            st_prep_block->is_pwm_rate_adjusted = true;
+                        }
                     }
                 }
             }
@@ -1274,32 +1346,35 @@ void Stepper_PrepareBuffer(void)
         Compute Spindle speed PWM output for step segment
         */
 
-        if(st_prep_block->is_pwm_rate_adjusted || (System.step_control & STEP_CONTROL_UPDATE_SPINDLE_PWM))
+        if(Config.VariableSpindleEnable == true)
         {
-            if(pl_block->condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW))
+            if(st_prep_block->is_pwm_rate_adjusted || (System.step_control & STEP_CONTROL_UPDATE_SPINDLE_PWM))
             {
-                float rpm = pl_block->spindle_speed;
-
-                // NOTE: Feed and rapid overrides are independent of PWM value and do not alter laser power/rate.
-                if(st_prep_block->is_pwm_rate_adjusted)
+                if(pl_block->condition & (PL_COND_FLAG_SPINDLE_CW | PL_COND_FLAG_SPINDLE_CCW))
                 {
-                    rpm *= (prep.current_speed * prep.inv_rate);
+                    float rpm = pl_block->spindle_speed;
+
+                    // NOTE: Feed and rapid overrides are independent of PWM value and do not alter laser power/rate.
+                    if(st_prep_block->is_pwm_rate_adjusted)
+                    {
+                        rpm *= (prep.current_speed * prep.inv_rate);
+                    }
+
+                    // If current_speed is zero, then may need to be rpm_min*(100/MAX_SPINDLE_SPEED_OVERRIDE)
+                    // but this would be instantaneous only and during a motion. May not matter at all.
+                    prep.current_spindle_pwm = Spindle_ComputePwmValue(rpm);
+                }
+                else
+                {
+                    System.spindle_speed = 0.0;
+                    prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
                 }
 
-                // If current_speed is zero, then may need to be rpm_min*(100/MAX_SPINDLE_SPEED_OVERRIDE)
-                // but this would be instantaneous only and during a motion. May not matter at all.
-                prep.current_spindle_pwm = Spindle_ComputePwmValue(rpm);
-            }
-            else
-            {
-                System.spindle_speed = 0.0;
-                prep.current_spindle_pwm = SPINDLE_PWM_OFF_VALUE;
+                BIT_FALSE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
             }
 
-            BIT_FALSE(System.step_control, STEP_CONTROL_UPDATE_SPINDLE_PWM);
+            prep_segment->spindle_pwm = prep.current_spindle_pwm; // Reload segment PWM value
         }
-
-        prep_segment->spindle_pwm = prep.current_spindle_pwm; // Reload segment PWM value
 
 
         /* -----------------------------------------------------------------------------------

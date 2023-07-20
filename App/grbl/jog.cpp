@@ -35,7 +35,11 @@ uint8_t Jog_Execute(Planner_LineData_t *pl_data, Parser_Block_t *gc_block)
     // NOTE: Spindle and coolant are allowed to fully function with overrides during a jog.
     pl_data->FeedRate = gc_block->values.f;
     pl_data->condition |= PL_COND_FLAG_NO_FEED_OVERRIDE;
-    pl_data->line_number = gc_block->values.n;
+
+    if(Config.LineNumberEnable == true)
+    {
+        pl_data->line_number = gc_block->values.n;
+    }
 
     if((Settings.flags & BITFLAG_SOFT_LIMIT_ENABLE) != 0)
     {

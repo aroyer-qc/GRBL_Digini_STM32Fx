@@ -32,12 +32,12 @@
 #define SPINDLE_STATE_CW            BIT(0)
 #define SPINDLE_STATE_CCW           BIT(1)
 
-#define SPINDLE_PWM_MAX_VALUE       200 // Don't change.
+#define SPINDLE_PWM_MAX_VALUE       255 // Don't change.
 #ifndef SPINDLE_PWM_MIN_VALUE
 #define SPINDLE_PWM_MIN_VALUE       1   // Must be greater than zero.
 #endif
 #define SPINDLE_PWM_OFF_VALUE       1
-#define SPINDLE_PWM_RANGE           (SPINDLE_PWM_MAX_VALUE-SPINDLE_PWM_MIN_VALUE)
+#define SPINDLE_PWM_RANGE           (SPINDLE_PWM_MAX_VALUE - SPINDLE_PWM_MIN_VALUE)
 
 
 // Initializes Spindle pins and hardware PWM, if enabled.
@@ -66,7 +66,7 @@ void Spindle_SetSpeed(uint8_t pwm_value);
 uint32_t Spindle_GetRPM(void);
 
 // Computes 328p-specific PWM register value for the given RPM for quick updating.
-uint8_t Spindle_ComputePwmValue(float rpm);
+uint16_t Spindle_ComputePwmValue(float rpm);
 
 void Spindle_SetSurfaceSpeed(float x_pos);
 
