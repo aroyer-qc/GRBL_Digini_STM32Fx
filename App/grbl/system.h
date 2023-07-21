@@ -246,6 +246,13 @@ typedef struct
     bool                ReportFieldPinStateEnable               :1;                 // REPORT_FIELD_PIN_STATE
     bool                ReportFieldCurrentFeedSpeedEnable       :1;                 // REPORT_FIELD_CURRENT_FEED_SPEED
 
+    bool                DigitalOutputEnable                     :1;
+    bool                WaitOnInputEnable                       :1;
+    bool                AnalogOutputControlEnable               :1;
+    bool                AccelerationScalingEnable               :1;                 // ENABLE_ACCEL_SCALING
+
+    bool                SpindleServoControlModeEnable           :1;                 // You can use motor controller for RC to control BDLC Motor (TODO)
+
     uint16_t            CRC_Check;
 } Config_t;
 

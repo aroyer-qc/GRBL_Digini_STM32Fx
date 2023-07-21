@@ -265,6 +265,23 @@
     X_IO( IO_DIGITAL_OUT_7,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_OUT_8,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_IN_1,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_2,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_3,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_4,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_5,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_6,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_7,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_DIGITAL_IN_8,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_1,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_2,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_3,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_4,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_5,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_6,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_7,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_8,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_9,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_10,     GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_SPINDLE_ENABLE,    GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_SPINDLE_PWM,       GPIOxx,     0,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          IO_AF1_TIM1)      \
     X_IO( IO_SPINDLE_DIRECTION, GPIOxx,     14,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
@@ -280,9 +297,6 @@
     X_IO( IO_E2_WP,             GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_W5500_RESET,       GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-
-
-// IO_LIMIT_A is a fake limit switch
 
 // Note(s) the pin IO_CALIB_OUT_DEBUG is only use in some debug case and must not be initialized on permanent base
 

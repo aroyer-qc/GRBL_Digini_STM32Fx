@@ -206,12 +206,12 @@
 #define GC_PARSER_LASER_ISMOTION        BIT(7)
 
 
-#define DIGITAL_CONTROL_ON 1
-#define DIGITAL_CONTROL_OFF 0
+#define DIGITAL_CONTROL_OFF             false
+#define DIGITAL_CONTROL_ON              true
+
 #define WAITONINPUT_CONTROL 1
 #define ANALOG_CONTROL 1
 #define ACCEL_SCALING 1
-
 
 // NOTE: When this struct is zeroed, the above defines set the defaults for the system.
 typedef struct
