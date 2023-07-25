@@ -119,7 +119,6 @@ uint8_t GC_ExecuteLine(char *line)
     uint16_t value_words = 0; // Tracks value words.
     uint8_t gc_parser_flags = GC_PARSER_NONE;
 
-
     memset(&gc_block, 0, sizeof(Parser_Block_t)); // Initialize the parser block struct.
     memcpy(&gc_block.Modal,&gc_state.Modal,sizeof(GC_Modal_t)); // Copy current modes
 
@@ -2472,19 +2471,21 @@ uint8_t GC_ExecuteLine(char *line)
     if((Config.DigitalOutputEnable == true) && (gc_block.Modal.Digital))
     {
         OutputSelect = trunc(gc_block.values.p); // Convert p value to int.
-//		outputs_digital_action(OutputSelect, gc_block.Modal.Digital);
+        IO_SetPin(DigitalOutputList[OutputSelect], gc_block.Modal.Digital);
     }
 
 	// [Digital input control ]: M66 P- L- Q-  where P is channel number L is mode and Q is timeout(s)
 	if((Config.WaitOnInputEnable == true) && (gc_block.Modal.WaitOnInput))
 	{
 		InputSelect = trunc(gc_block.values.p); // Convert p value to int.
+        IO_GetInputPin(DigitalInputList[InputSelect]);
 //		wait_on_input_action(InputSelect, gc_block.values.l, &gc_block.values.q);
 	}
 
 	// [Analog control ]: M67 E- Q-  where E is channel number and Q is value to set
 	if((Config.AnalogOutputControlEnable == true) && (gc_block.Modal.Analog))
 	{
+	    //AnalogOutputList[OutputSelect]
 //		outputs_analog_action(gc_block.values.e, &gc_block.values.q);
 	}
 

@@ -31,13 +31,14 @@
 #include "System32.h"
 
 
-// this replace all the configuration that was previously set by config.h
+// This replace all the configuration that was previously set by config.h
 void System_LoadConfig(void)
 {
     uint16_t CalculatedCRC;
-    DB_Central.Get(&Config, GRBL_CONFIGURATION);
+    CRC_Calc Config_CRC(CRC_16_CCITT_FALSE);
 
-    // TODO check validity of the configuration using CRC;
+    DB_Central.Get(&Config, GRBL_CONFIGURATION);
+    CalculatedCRC = uint16_t(Config_CRC.CalculateFullBuffer((uint8_t*)&Config, sizeof(Config_t)));
 
     if(Config.CRC_Check != CalculatedCRC)
     {

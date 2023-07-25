@@ -616,6 +616,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_isr.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dac.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_eth.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_i2c.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_qspi.h" />
@@ -662,8 +663,6 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dac.cpp">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_eth.cpp">
 			<Option compilerVar="CC" />
