@@ -34,7 +34,10 @@
 // Global Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define DAC_DRIVER_SUPPORT_DMA_CFG              DEF_DISABLED
+#define DAC_DRIVER_SUPPORT_DMA_CFG              DEF_ENABLED
+
+#define DAC_DRIVER_CHANNEL_1_CFG                DEF_DISABLED
+#define DAC_DRIVER_CHANNEL_2_CFG                DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 

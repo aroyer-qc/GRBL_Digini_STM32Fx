@@ -272,7 +272,7 @@
     X_IO( IO_DIGITAL_IN_6,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_IN_7,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_IN_8,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_ANALOG_OUT_1,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_ANALOG_OUT_1,      GPIOA,      5,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_ANALOG_OUT_2,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_ANALOG_OUT_3,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_ANALOG_OUT_4,      GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_LOW,          0)                \
@@ -297,6 +297,7 @@
     X_IO( IO_E2_WP,             GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_W5500_RESET,       GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
+    
 
 // Note(s) the pin IO_CALIB_OUT_DEBUG is only use in some debug case and must not be initialized on permanent base
 

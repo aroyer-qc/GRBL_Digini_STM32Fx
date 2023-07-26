@@ -38,22 +38,21 @@ const DAC_Info_t DAC_Driver::m_Info =
     DAC_TRIGGER_SOFTWARE,
     DAC_OUTPUT_BUFFER_DISABLE,
 
+  #if (DAC_DRIVER_CHANNEL_1_CFG == DEF_ENABLED)
+    //IO_xxxx,
+  #endif
+  #if (DAC_DRIVER_CHANNEL_2_CFG == DEF_ENABLED)
+    IO_ANALOG_OUT_2,
+  #endif
+
   #if (DAC_DRIVER_SUPPORT_DMA_CFG == DEF_ENABLED)
-    DMA2,                       // DMA Module
-	RCC_APB1ENR_DMA2EN,         // RCC_APBxENR for DMA
-    RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+   #if (DAC_DRIVER_CHANNEL_1_CFG == DEF_ENABLED)
+    DMA_LIFCR_CTCIF5,           // DMA Flag
+   #endif
 
-    // DAC Channel 1
-    DMA_CHANNEL_3               // DMA_Channel RX
-    DMA_LIFCR_CTCIF0,           // RX_IT_Flag
-    DMA2_Stream0,               // RX_DMA_TypeDef
-    DMA2_Stream0_IRQn,          // RX_IRQn
-
-    // DAC_Channel 2
-    DMA_CHANNEL_3,              // DMA_Channel TX
-    DMA_LIFCR_CTCIF3,           // TX_IT_Flag
-    DMA2_Stream3,               // TX_DMA_TypeDef
-    DMA2_Stream3_IRQn,          // TX_IRQn
+   #if (DAC_DRIVER_CHANNEL_2_CFG == DEF_ENABLED)
+    DMA_HIFCR_CTCIF6,           // DMA Flag
+   #endif
   #endif
 };
 
