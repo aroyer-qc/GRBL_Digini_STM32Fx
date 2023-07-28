@@ -63,6 +63,17 @@ int main()
     BSP_PostOS_Initialize();
     pTaskCOMM->Initialize();
 
+  #ifdef DEBUG
+    DateAndTime_t DateTime;
+    DateTime.Date.Day    = 28;
+    DateTime.Date.Month  = 7;
+    DateTime.Date.Year   = 2023;
+    DateTime.Time.Hour   = 15;
+    DateTime.Time.Minute = 30;
+    DateTime.Time.Second = 1;
+    LIB_SetDateAndTime(&DateTime);
+  #endif
+
     for(;;)                                 // It is the idle task..
     {
         pTaskCOMM->Process();
