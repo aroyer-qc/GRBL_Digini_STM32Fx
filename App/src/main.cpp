@@ -76,7 +76,7 @@ int main()
 
     for(;;)                                 // It is the idle task..
     {
-      //  pTaskCOMM->Process();
+        pTaskCOMM->Process();
         nOS_Yield();
     }
 
