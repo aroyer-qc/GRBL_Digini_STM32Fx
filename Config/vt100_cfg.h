@@ -81,7 +81,6 @@
     X_VT100_USER_LBL_CFG( LBL_VT100_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Numéro de Série"                  ) \
 
-
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro
 #define COMPARE_MenuRedirection(x)  x
 #define COMPARE_MenuMain(x) 		x

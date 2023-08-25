@@ -117,40 +117,13 @@
 // Typedef(s)
 //-------------------------------------------------------------------------------------------------
 
-// Auto adjusting menu item according to configuration
-typedef enum
-{
-    MISC_SETTING_MENU_TITLE         = 0,
-    MISC_SETTING_TEMP_LOW_SET_POINT,
-    MISC_SETTING_TEMP_HIGH_SET_POINT,
-    MISC_SETTING_BATTERY_BACKUP_RTC_LOW_VOLTAGE,
-    MISC_SETTING_BATTERY_POWER_LOW_VOLTAGE,
-    MISC_SETTING_SERIAL_NUMBER,
-    MISC_SETTING_LOCATION,
-    MISC_SETTING_SITE_ID,
-    MISC_SETTING_SAVE_CONFIGURATION,
-} VT100_MiscSetting_e;
-
 //-------------------------------------------------------------------------------------------------
 // Prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-//static void    VT100_PrintVoltage    (uint8_t xPos, uint8_t yPos, uint32_t Voltage);
-
 //-------------------------------------------------------------------------------------------------
 // Variable(s)
 //-------------------------------------------------------------------------------------------------
-
-//static bool                     VT100_DrawOnlyOnce;
-
-/*
-static void VT100_PrintVoltage(uint8_t xPos, uint8_t yPos, uint32_t Voltage)
-{
-    myVT100.SetCursorPosition(xPos, yPos);
-    myVT100.InMenuPrintf(VT100_SZ_NONE, "%u.%03u", Voltage / 1000, Voltage % 1000);
-}
-*/
-
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -186,9 +159,9 @@ void VT100_Terminal::CallbackInitialize(void)
 //
 //  Name:           CALLBACK_MenuRedirection
 //
-//  Description:
+//  Description:    This redirect to proper according to configuration
 //
-//  Note(s):
+//  Note(s):        In the present case, it redirect if we are at specific time at boot-up
 //
 //-------------------------------------------------------------------------------------------------
 VT100_InputType_e VT100_Terminal::CALLBACK_MenuRedirection(uint8_t Input, VT100_CallBackType_e Type)
