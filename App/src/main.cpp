@@ -59,13 +59,17 @@ int main()
     pTaskNetwork->Initialize();
   #endif
     pTaskGRBL->Initialize();
+
+myLabel.SetLanguage(LANG_FRENCH);
+
     nOS_Start();
     BSP_PostOS_Initialize();
     pTaskCOMM->Initialize();
 
   #ifdef DEBUG
     DateAndTime_t DateTime;
-    DateTime.Date.Day    = 28;
+
+    DateTime.Date.Day    = 31;
     DateTime.Date.Month  = 7;
     DateTime.Date.Year   = 2023;
     DateTime.Time.Hour   = 15;
