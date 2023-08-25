@@ -42,15 +42,15 @@
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MENU_TITLE,                       "GRBL Configuration Menu",                "Menu de Configuration GRBL"                  ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MAIN_MENU,                        "Main Menu",                              "Menu Principal"                              ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_INFO,                      "Display System Information",             "Information SystÃ¨me"                         ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG,                            "Debug",                                  "DÃ©bogage"                                    ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_SETTING,                   "System Settings",                        "Configuration SystÃ¨me"                       ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_INFO,                      "Display System Information",             "Information Système"                         ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG,                            "Debug",                                  "Débogage"                                    ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_SETTING,                   "System Settings",                        "Configuration Système"                       ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_TEST,                             "Test",                                   "Test"                                        ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_STACKTISTIC,                      "Stack Usage",                            "Usage des Stacks"                            ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_MENU,                       "Debug Menu",                             "Menu de DÃ©bogage"                            ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_1,                    "Dbg level 1  - System Status   ( )",     "Dbg level 1  - Status SystÃ¨me  ( )"          ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_2,                    "Dbg level 2  - System Action   ( )",     "Dbg level 2  - Action SystÃ¨me  ( )"          ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_3,                    "Dbg level 3  - System Health   ( )",     "Dbg level 3  - SantÃ© SystÃ¨me   ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_MENU,                       "Debug Menu",                             "Menu de Débogage"                            ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_1,                    "Dbg level 1  - System Status   ( )",     "Dbg level 1  - Status Système  ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_2,                    "Dbg level 2  - System Action   ( )",     "Dbg level 2  - Action Système  ( )"          ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_3,                    "Dbg level 3  - System Health   ( )",     "Dbg level 3  - Santé Système   ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_4,                    "Dbg level 4  - Monitor/Logs    ( )",     "Dbg level 4  - Moniteur/Logs   ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_5,                    "Dbg level 5  - Stack Warning   ( )",     "Dbg level 5  - Alerte Stack    ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_6,                    "Dbg level 6  - Free            ( )",     "Dbg level 6  - Libre           ( )"          ) \
@@ -64,7 +64,7 @@
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_14,                   "Dbg level 14 - Free            ( )",     "Dbg level 14 - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_15,                   "Dbg level 15 - Free            ( )",     "Dbg level 15 - Libre           ( )"          ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DEBUG_LEVEL_16,                   "Dbg level 16 - Free            ( )",     "Dbg level 16 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_SETTING_MENU,              "System Settings Menu",                   "Menu Configuration SystÃ¨me"                  ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_SYSTEM_SETTING_MENU,              "System Settings Menu",                   "Menu Configuration Système"                  ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MISCELLEANEOUS,                   "Miscelleaneous",                         "Divers"                                      ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_TIME_AND_DATE,                    "Time and Date",                          "Heure et Date"                               ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_TEST_1,                           "Test 1",                                 "Test 1"                                      ) \
@@ -76,10 +76,10 @@
     X_VT100_USER_LBL_CFG( LBL_VT100_SECOND,                           "Second\r",                               "Seconde\r"                                   ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_DAY,                              "Day\r",                                  "Jour\r"                                      ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MONTH,                            "Month\r",                                "Mois\r"                                      ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_YEAR,                             "Year\r",                                 "AnnÃ©e\r"                                     ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_YEAR,                             "Year\r",                                 "Année\r"                                     ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_BLANK,                            " ",                                      " "                                           ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
-    X_VT100_USER_LBL_CFG( LBL_VT100_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer NumÃ©ro de SÃ©rie"                  ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Numéro de Série"                  ) \
 
 
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro
@@ -87,6 +87,7 @@
 #define COMPARE_MenuMain(x) 		x
 #define COMPARE_MenuBoot(x)    		x
 #define COMPARE_MenuInfo(x)    		x
+#define COMPARE_MenuStackUsage(x)   x
 #define COMPARE_MenuDebug(x)    	x
 #define COMPARE_MenuTest(x)     	x
 #define COMPARE_MenuSetting(x)		x
@@ -99,6 +100,7 @@
     ENTRY(MenuMain           ) \
     ENTRY(MenuBoot           ) \
     ENTRY(MenuInfo           ) \
+    ENTRY(MenuStackUsage     ) \
     ENTRY(MenuDebug          ) \
     ENTRY(MenuTest           ) \
     ENTRY(MenuSetting        ) \
@@ -124,20 +126,22 @@
         ENTRY  (MENU,  MenuRedirection,   ID_REDIRECTION,          CALLBACK_MenuRedirection,                VT100_MENU_NONE,                  INVALID_LABEL                                   ) \
 \
         ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  LBL_VT100_MAIN_MENU                             ) \
-        ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuInfo,                         LBL_VT100_SYSTEM_INFO                           ) \
+        ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_None,                           MenuInfo,                         LBL_VT100_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
-        ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
+        ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   LBL_VT100_STACKTISTIC                           ) \
 \
 		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  LBL_VT100_MAIN_MENU                             ) \
-        ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
+        ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_None,                           MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
-        ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
+        ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   LBL_VT100_STACKTISTIC                           ) \
 \
         ENTRY  (MENU,  MenuInfo,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuRedirection,                  LBL_VT100_SYSTEM_INFO                           ) \
+\
+        ENTRY  (MENU,  MenuStackUsage,    ID_INFO_DISPLAY,         CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
         ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_None,                           MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_1                         ) \

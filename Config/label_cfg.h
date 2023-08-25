@@ -42,7 +42,7 @@
     X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise à Niveau Logiciel"                        ) \
     X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
     X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Système"                                  ) \
-    X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Charger thèmes      %%"                        ) \
+    X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Thématique          %%"                        ) \
     X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                               nullptr                                         ) \
     X_LABEL( LBL_DATE,                   "%2d %02d %04d",                               nullptr                                         ) \
     X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
@@ -69,11 +69,11 @@
     X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
     X_LABEL( LBL_RANGE,                  "Ranges",                                      "Plages"                                        ) \
     X_LABEL( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
-    X_LABEL( LBL_WARNINGS,               "Warnings",                                    "Avertissements"                                ) \
+    X_LABEL( LBL_WARNINGS,               "Warnings",                                    "Alertes"                                       ) \
     X_LABEL( LBL_MEASURE,                "Measure",                                     "Mesure"                                        ) \
     X_LABEL( LBL_REFERENCE,              "Reference",                                   "Réference"                                     ) \
     X_LABEL( LBL_FUNCTIONS,              "Functions",                                   "Fonctions"                                     ) \
-    X_LABEL( LBL_MODULES,                "Modules",                                     "Modules"                                       ) \
+    X_LABEL( LBL_MODULES,                "Modules",                                     nullptr                                         ) \
     X_LABEL( LBL_AXIS_MM_BACK,           "-888.888",                                    nullptr                                         ) \
     X_LABEL( LBL_AXIS_INCH_BACK,         "-88.8888",                                    nullptr                                         ) \
     X_LABEL( LBL_DEGREE_BACK,            "-888.88",                                     nullptr                                         ) \
