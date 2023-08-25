@@ -66,23 +66,23 @@
     <File>down.png</File>
   </Image>
   <Font>
-    <Family fontdescription="DS-Digital,16,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Family fontdescription="DS-Digital,16,-1,5,700,1,0,0,0,0,0,0,0,0,0,1,Bold Italic"/>
     <Option>38</Option>
-    <Family fontdescription="DS-Digital,24,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Family fontdescription="DS-Digital,24,-1,5,700,1,0,0,0,0,0,0,0,0,0,1,Bold Italic"/>
     <Option>39</Option>
-    <Family fontdescription="DS-Digital,36,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Family fontdescription="DS-Digital,36,-1,5,700,1,0,0,0,0,0,0,0,0,0,1,Bold Italic"/>
     <Option>38</Option>
-    <Family fontdescription="DS-Digital,48,-1,5,75,1,0,0,0,0,Bold Italic"/>
+    <Family fontdescription="DS-Digital,48,-1,5,700,1,0,0,0,0,0,0,0,0,0,1,Bold Italic"/>
     <Option>38</Option>
-    <Family fontdescription="DS-Digital,64,-1,5,75,1,0,0,0,0,Bold"/>
+    <Family fontdescription="DS-Digital,64,-1,5,700,1,0,0,0,0,0,0,0,0,0,1,Bold"/>
     <Option>38</Option>
-    <Family fontdescription="Arial Black,10,-1,5,87,0,0,0,0,0,Regular"/>
+    <Family fontdescription="Arial Black,10,-1,5,900,0,0,0,0,0,0,0,0,0,0,1,Regular"/>
     <Option>31</Option>
-    <Family fontdescription="Arial Black,16,-1,5,87,0,0,0,0,0,Regular"/>
+    <Family fontdescription="Arial Black,16,-1,5,900,0,0,0,0,0,0,0,0,0,0,1,Regular"/>
     <Option>31</Option>
-    <Family fontdescription="Arial Black,24,-1,5,87,0,0,0,0,0,Regular"/>
-    <Option>7</Option>
-    <Family fontdescription="Terminal,6,-1,5,50,0,0,0,0,0"/>
+    <Family fontdescription="Arial Black,24,-1,5,900,0,0,0,0,0,0,0,0,0,0,1,Regular"/>
+    <Option>23</Option>
+    <Family fontdescription="Terminal,6,-1,5,400,0,0,0,0,0,0,0,0,0,0,1"/>
     <Option>7</Option>
   </Font>
 </Skin>

@@ -123,14 +123,14 @@
 \
         ENTRY  (MENU,  MenuRedirection,   ID_REDIRECTION,          CALLBACK_MenuRedirection,                VT100_MENU_NONE,                  INVALID_LABEL                                   ) \
 \
-        ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
+        ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  LBL_VT100_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuInfo,                         LBL_VT100_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
         ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
-		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           MenuRedirection,                  LBL_VT100_MAIN_MENU                             ) \
+		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  LBL_VT100_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
