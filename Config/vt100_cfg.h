@@ -142,7 +142,7 @@
 \
         ENTRY  (MENU,  MenuStackUsage,    ID_INFO_DISPLAY,         CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
-        ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_None,                           MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
+        ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_DebugLevelSetting,              MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_1                         ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_1,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_2                         ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_2,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_3                         ) \

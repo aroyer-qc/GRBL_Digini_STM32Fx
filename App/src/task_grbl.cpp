@@ -207,8 +207,8 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     // Print welcome message. Indicates an initialization has occured at power-up or with a reset.
    // not sure if it is needed
     Report_InitializeMessage();
-/*
-    if(IsItInitialize == false)
+
+    /*if(IsItInitialize == false)
     {
         Error = nOS_ThreadCreate(&m_Handle,
                                  TaskGRBL_Wrapper,
@@ -219,9 +219,8 @@ nOS_Error ClassTaskGRBL::Initialize(void)
     }
 */
 
-
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE, "Task GRBL");
+    //myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE, "Task GRBL");
   #endif
 
     return Error;
