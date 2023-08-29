@@ -85,6 +85,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #include "lib_digini.h"
+#include "grbl_advance.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -159,9 +160,9 @@ void VT100_Terminal::CallbackInitialize(void)
 //
 //  Name:           CALLBACK_MenuRedirection
 //
-//  Description:    This redirect to proper according to configuration
+//  Description:    This redirect to proper menu according to configuration
 //
-//  Note(s):        In the present case, it redirect if we are at specific time at boot-up
+//  Note(s):        In the present case, it redirect if we are at specific time in boot-up
 //
 //-------------------------------------------------------------------------------------------------
 VT100_InputType_e VT100_Terminal::CALLBACK_MenuRedirection(uint8_t Input, VT100_CallBackType_e Type)
@@ -196,7 +197,6 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MenuRedirection(uint8_t Input, VT100_
 /*
 VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallBackType_e Type)
 {
-
     uint8_t Led;
 
     Led = Input - 1;
@@ -213,9 +213,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
         }
     }
 
-  #if (VT100_USE_COLOR == DEF_ENABLED)
-    SetForeColor(VT100_COLOR_GREEN);
-  #endif
+    myVT100.SetForeColor(VT100_COLOR_GREEN);
 
     if((((uint64_t)1 << Input) & VT100_Generic_uint64) != 0)
     {
@@ -244,20 +242,18 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
 
     if(Type == VT100_CALLBACK_REFRESH)
     {
-      #if (VT100_USE_COLOR == DEF_ENABLED)
-        SetForeColor(VT100_COLOR_GREEN);
-      #endif
+        myVT100.SetForeColor(VT100_COLOR_GREEN);
 
         for(uint8_t i = 0; i <= 3; i++)
         {
-            SetCursorPosition(37, 10 + i);
+            myVT100.SetCursorPosition(37, 10 + i);
             if((VT100_Generic_uint64 & ((uint64_t)1 << (i + 1))) == 0)
             {
-                InMenuPrintf(VT100_SZ_NONE, " ");
+                myVT100.InMenuPrintf(" ");
             }
             else
             {
-                InMenuPrintf(VT100_SZ_NONE, "*");
+                myVT100.InMenuPrintf("*");
             }
         }
     }
@@ -274,9 +270,9 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-/*
 VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_CallBackType_e Type)
 {
+    bool    State;
     int32_t Temperature;
     uint8_t VerticalOffset;
 
@@ -284,72 +280,117 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
 
     switch(Type)
     {
+        case VT100_CALLBACK_INIT:
+        {
+            myVT100.SetForeColor(VT100_COLOR_WHITE);
+            myVT100.InMenuPrintf(2,  10, LBL_LIMIT_X);
+            myVT100.InMenuPrintf(2,  11, LBL_LIMIT_Y);
+            myVT100.InMenuPrintf(2,  12, LBL_LIMIT_Z);
+            myVT100.InMenuPrintf(20, 10, LBL_LIMIT_A);
+            myVT100.InMenuPrintf(20, 11, LBL_LIMIT_B);
+            myVT100.InMenuPrintf(20, 12, LBL_LIMIT_C);
+            myVT100.InMenuPrintf(2,  13, LBL_INPUT_ABORT);
+            myVT100.InMenuPrintf(2,  14, LBL_INPUT_RESUME);
+            myVT100.InMenuPrintf(20, 13, LBL_INPUT_HOLD);
+            myVT100.InMenuPrintf(20, 14, LBL_INPUT_PROBE);
+
+            myVT100.SetForeColor(VT100_COLOR_YELLOW);
+            myVT100.InMenuPrintf(17,  10, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(17,  11, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(17,  12, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(35,  10, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(35,  11, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(35,  12, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(17,  13, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(35,  14, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(17,  13, VT100_LBL_STATUS);
+            myVT100.InMenuPrintf(35,  14, VT100_LBL_STATUS);
+        }
+        break;
+
         case VT100_CALLBACK_ON_INPUT:
         {
-            VT100_Generic_uint64 = 10;    // Use for refresh ADC
+           // VT100_Generic_uint64 = 10;    // Use for refresh ADC
 
-            VT100_DisplayMfg();
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_CYAN);
-          #endif
-            InMenuPrintf(VT100_SZ_NONE, LBL_TEMP_SENSOR);
-            InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_YELLOW);
-          #endif
-            InMenuPrintf(VT100_SZ_NONE, LBL_CPU_TEMP_SENSOR);
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_CYAN);
-          #endif
-            InMenuPrintf(VT100_SZ_NONE, LBL_INPUT_ANALOG);
-            InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_YELLOW);
-          #endif
-            InMenuPrintf(VT100_SZ_NONE, LBL_12_VOLT);
-            InMenuPrintf(VT100_SZ_NONE, LBL_CPU_VDD);
-            InMenuPrintf(VT100_SZ_NONE, LBL_BATTERY_LEVEL);
-            InMenuPrintf(VT100_SZ_NONE, LBL_BACKUP_BATTERY_LEVEL);
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_CYAN);
-          #endif
-            InMenuPrintf(VT100_SZ_NONE, LABEL_pStr[LBL_INPUT_DIGITAL]);
-            InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_YELLOW);
-          #endif
-            //InMenuPrintf(VT100_SZ_NONE, LBL_EXTERNAL_SWITCH);
+            myVT100.SetForeColor(VT100_COLOR_CYAN);
+//            myVT100.InMenuPrintf(LBL_TEMP_SENSOR);
+//            myVT100.InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
 
-            InMenuPrintf(VT100_SZ_NONE, VT100_LBL_ESCAPE);
+            myVT100.SetForeColor(VT100_COLOR_YELLOW);
+//            myVT100.InMenuPrintf(LBL_CPU_TEMP_SENSOR);
+
+            myVT100.SetForeColor(VT100_COLOR_CYAN);
+//            myVT100.InMenuPrintf(LBL_INPUT_ANALOG);
+//            myVT100.InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
+
+            myVT100.SetForeColor(VT100_COLOR_YELLOW);
+            //myVT100.InMenuPrintf(LBL_12_VOLT);
+            //myVT100.InMenuPrintf(LBL_CPU_VDD);
+            //myVT100.InMenuPrintf(LBL_BATTERY_LEVEL);
+            //myVT100.InMenuPrintf(LBL_BACKUP_BATTERY_LEVEL);
+
+            myVT100.SetForeColor(VT100_COLOR_CYAN);
+//            myVT100.InMenuPrintf(LABEL_pStr[LBL_INPUT_DIGITAL]);
+//            myVT100.InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
+
+            myVT100.SetForeColor(VT100_COLOR_YELLOW);
+            //myVT100.InMenuPrintf(LBL_EXTERNAL_SWITCH);
+            myVT100.InMenuPrintf(VT100_LBL_ESCAPE);
             break;
         }
 
         case VT100_CALLBACK_REFRESH:
         {
-            VT100_Generic_uint64--;
-            if(VT100_Generic_uint64 == 0)
+            // Temporary
+            myVT100.SetForeColor(IO_IsItValid(IO_LIMIT_X) ? VT100_COLOR_GREEN : VT100_COLOR_GREEN);
+            State = IO_GetInputPin(IO_LIMIT_X);
+            myVT100.InMenuPrintf(18, 11, LBL_CHAR, State ? '\254' : ' ');   // \254 is a full square font character
+            State = IO_GetInputPin(IO_LIMIT_Y);
+            myVT100.InMenuPrintf(18, 12, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_Z);
+            myVT100.InMenuPrintf(18, 13, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_A);
+            myVT100.InMenuPrintf(36, 11, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_B);
+            myVT100.InMenuPrintf(36, 12, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_C);
+            myVT100.InMenuPrintf(36, 13, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_CONTROL_RESET);       // ABORT
+            myVT100.InMenuPrintf(18, 14, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_CONTROL_START);       // RESUME
+            myVT100.InMenuPrintf(36, 14, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_CONTROL_FEED);        // HOLD
+            myVT100.InMenuPrintf(18, 15, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_PROBE);
+            myVT100.InMenuPrintf(36, 15, LBL_CHAR, State ? '\254' : ' ');
+
+            //VT100_Generic_uint64--;
+            //if(VT100_Generic_uint64 == 0)
             {
-                VT100_Generic_uint64 = 10;
+           //     VT100_Generic_uint64 = 10;
                 //for(ADC_Channel_e i = ADC_FIRST_ITEM; i < NUMBER_OF_ADC_CHANNEL; i++)
                 {
 //                    ADC_StartConversion(i);
                 }
             }
 
+/*
             // Temperature Sensor
           #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetForeColor(VT100_COLOR_WHITE);
+            myVT100.SetForeColor(VT100_COLOR_WHITE);
           #endif
+*/
 
+/*
             // Print in Celsius For CPU Sensor
            // Temperature = ADC_GetTemperature();
-            SetCursorPosition(28, 6);
-            InMenuPrintf(VT100_SZ_NONE, "%3d.%02d ", Temperature / 1000, (abs(Temperature % 1000) / 10));
+            myVT100.SetCursorPosition(28, 6);
+            myVT100.InMenuPrintf("%3d.%02d ", Temperature / 1000, (abs(Temperature % 1000) / 10));
 
             // Print in Fahrenheit CPU
             Temperature = 0;//TEMP_SENSOR_ConvertTemperatureToFahrenheit(Temperature);
-            SetCursorPosition(41, 6);
-            InMenuPrintf(VT100_SZ_NONE, "%3d.%02d ", Temperature / 1000, (abs(Temperature % 1000) / 10));
+            myVT100.SetCursorPosition(41, 6);
+            myVT100.InMenuPrintf("%3d.%02d ", Temperature / 1000, (abs(Temperature % 1000) / 10));
 
             VerticalOffset = 10;
 
@@ -357,22 +398,18 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             VT100_PrintVoltage(28, VerticalOffset++, 501);
             VT100_PrintVoltage(28, VerticalOffset++, 4200);
             VT100_PrintVoltage(28, VerticalOffset++, 301);
-
+*/
             VerticalOffset += 3;
-            SetCursorPosition(28, VerticalOffset++);
+            myVT100.SetCursorPosition(28, VerticalOffset++);
             if(1)//IO_Ctrl(IO_EXT_SWITCH, STATE_READ) == STATE_SET)
             {
-              #if (VT100_USE_COLOR == DEF_ENABLED)
-                SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
-              #endif
-                InMenuPrintf(VT100_SZ_NONE, " High ");
+                myVT100.SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
+              //  myVT100.InMenuPrintf(" High ");
             }
             else
             {
-              #if (VT100_USE_COLOR == DEF_ENABLED)
-                SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
-              #endif
-                InMenuPrintf(VT100_SZ_NONE, " Low  ");
+                myVT100.SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
+            //    myVT100.InMenuPrintf(" Low  ");
             }
         }
 
@@ -381,7 +418,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
     }
     return VT100_INPUT_ESCAPE;
 }
-*/
+
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -407,23 +444,23 @@ VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBa
         //BLE112_setDisconnectCallback(BLUETOOTH_userDisconnected);
 
         SetCursorPosition(30, 18);
-        InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_STATUS);
+        InMenuPrintf(LBL_BLUETOOTH_STATUS);
         SetCursorPosition(24, 23);
-        InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_RSSI);
+        InMenuPrintf(LBL_BLUETOOTH_RSSI);
         SetCursorPosition(22, 20);
-        InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_BOX1);
+        InMenuPrintf(LBL_BLUETOOTH_BOX1);
         SetCursorPosition(22, 21);
-        InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_BOX2);
+        InMenuPrintf(LBL_BLUETOOTH_BOX2);
         SetCursorPosition(22, 22);
-        InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_BOX3);
+        InMenuPrintf(LBL_BLUETOOTH_BOX3);
         SetCursorPosition(1, 25);
-        InMenuPrintf(VT100_SZ_NONE, LBL_STATUS);
+        InMenuPrintf(LBL_STATUS);
       #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_CYAN);
       #endif
-        InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
+        InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
         SetCursorPosition(1, 34);
-        InMenuPrintf(VT100_SZ_NONE, VT100_LBL_LINE_SEPARATOR);
+        InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
         SetScrollZone(27, 33);
     }
 
@@ -443,14 +480,14 @@ VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBa
           #if (VT100_USE_COLOR == DEF_ENABLED)
             SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
           #endif
-            InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_CONNECT);
+            InMenuPrintf(LBL_BLUETOOTH_CONNECT);
         }
         //else
         //{
             //#if (VT100_USE_COLOR == DEF_ENABLED)
         //    SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
             // #endif
-        //    InMenuPrintf(VT100_SZ_NONE, LBL_BLUETOOTH_DISCONNECT);
+        //    InMenuPrintf(LBL_BLUETOOTH_DISCONNECT);
         //}
     }
 
@@ -488,7 +525,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_GetRSSI(uint8_t Input, VT100_CallBack
       #if (VT100_USE_COLOR == DEF_ENABLED)
         SetForeColor(VT100_COLOR_CYAN);
       #endif
-        InMenuPrintf(VT100_SZ_NONE, "%4d", (int16_t)RSSI);
+        InMenuPrintf("%4d", (int16_t)RSSI);
     }
 
     return VT100_INPUT_MENU_CHOICE;
@@ -531,19 +568,19 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         SetForeColor(VT100_COLOR_YELLOW);
       #endif
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_TEMPERATURE_LOW);
+        InMenuPrintf(LBL_MISC_TEMPERATURE_LOW);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_TEMPERATURE_HIGH);
+        InMenuPrintf(LBL_MISC_TEMPERATURE_HIGH);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_BACKUP_LOW_BATT);
+        InMenuPrintf(LBL_MISC_BACKUP_LOW_BATT);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_POWER_LOW_BATT);
+        InMenuPrintf(LBL_MISC_POWER_LOW_BATT);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_SERIAL_NUMBER);
+        InMenuPrintf(LBL_MISC_SERIAL_NUMBER);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_LOCATION);
+        InMenuPrintf(LBL_MISC_LOCATION);
         SetCursorPosition(13, PosY++);
-        InMenuPrintf(VT100_SZ_NONE, LBL_MISC_SITE_ID);
+        InMenuPrintf(LBL_MISC_SITE_ID);
         Refresh = VT100_CFG_REFRESH_ALL;
     }
 
@@ -764,25 +801,25 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         if((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_LOW) != 0)
         {
             SetCursorPosition(46, 24);
-            InMenuPrintf(VT100_SZ_NONE, "%ld.%d", TemperatureAlarmLow / 10,  abs(TemperatureAlarmLow % 10));
+            InMenuPrintf("%ld.%d", TemperatureAlarmLow / 10,  abs(TemperatureAlarmLow % 10));
         }
 
         if((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_HIGH) != 0)
         {
             SetCursorPosition(46, 25);
-            InMenuPrintf(VT100_SZ_NONE, "%ld.%d", TemperatureAlarmHigh / 10, abs(TemperatureAlarmHigh % 10));
+            InMenuPrintf("%ld.%d", TemperatureAlarmHigh / 10, abs(TemperatureAlarmHigh % 10));
         }
 
         if((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_BACKUP_LOW_VOLTAGE) != 0)
         {
             SetCursorPosition(46, 26);
-            InMenuPrintf(VT100_SZ_NONE, "%ld.%03d", BackupBatteryLowVoltage / 1000,  abs(BackupBatteryLowVoltage % 1000));
+            InMenuPrintf("%ld.%03d", BackupBatteryLowVoltage / 1000,  abs(BackupBatteryLowVoltage % 1000));
         }
 
         if((Refresh & VT100_MISC_CFG_REFRESH_SET_POINT_POWER_LOW_VOLTAGE) != 0)
         {
             SetCursorPosition(46, 27);
-            InMenuPrintf(VT100_SZ_NONE, "%ld.%03d", PowerBatteryLowVoltage / 1000, abs(PowerBatteryLowVoltage % 1000));
+            InMenuPrintf("%ld.%03d", PowerBatteryLowVoltage / 1000, abs(PowerBatteryLowVoltage % 1000));
         }
 
         PosY = 28;

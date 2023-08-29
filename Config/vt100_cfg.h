@@ -114,6 +114,7 @@
     ENTRY(CALLBACK_DebugLevelSetting  ) \
     ENTRY(CALLBACK_TimeDateCfg        ) \
     ENTRY(CALLBACK_MiscCfg            ) \
+    ENTRY(CALLBACK_InputReading       ) \
 
 // Here you define how you will navigate in the menu tree and action associated with them                   1st item of a menu
 //              Menu   Member Of          Item ID                  CALLBACK for refresh                     Navigate to this menu on <ESC>    Label ID
