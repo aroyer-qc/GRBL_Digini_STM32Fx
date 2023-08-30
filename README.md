@@ -74,7 +74,7 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
   ## Known issues
   
 >    * Stepper not yet working, I need to test the STM32 timer and integrate them into the GRBL code.
->    * Spindle not yet working, PWM need to be tested ans integrated.
+>    * Spindle not yet working, PWM need to be tested and integrated.
 >    * Cross exchange GRBL <-> GUI to be done..
 >    * A lot of graphic page to fix/complete.
 >    * Add sound capability to get some aptic feedback.
