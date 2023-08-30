@@ -59,10 +59,6 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 
   ## Required Module:
   
-![alt text](https://github.com/aroyer-qc/GRBL_Digini_STM32Fx/blob/master/Preview/IMG_20201118_112744192.jpg)
-
-  ## Required Module:
-  
 >    *   Digini                        (Branch Develop)
 >    *   module_FatFs                  (Branch main)
 >    *   module_jpg                    (Branch main)
