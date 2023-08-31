@@ -1131,7 +1131,7 @@ void DMA2_Stream4_IRQHandler        (void)
         __asm("nop");
     };
 }
-
+/*
 void ETH_IRQHandler                 (void)
 {
     while(1)
@@ -1139,7 +1139,7 @@ void ETH_IRQHandler                 (void)
         __asm("nop");
     };
 }
-
+*/
 void ETH_WKUP_IRQHandler            (void)
 {
     while(1)

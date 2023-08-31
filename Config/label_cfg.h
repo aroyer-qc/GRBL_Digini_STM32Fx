@@ -124,6 +124,17 @@
     X_LABEL( LBL_INPUT_START,            "Input Start",                                 "Entrée Démarrer"                               ) \
     X_LABEL( LBL_INPUT_RESET,            "Input Reset",                                 "Entrée Remise à zéro"                          ) \
     X_LABEL( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entrée E-Stop"                                 ) \
+    /* Network label ( shared with VT100 also)*/ \
+    X_LABEL( LBL_NETWORK_INFO,           "Network Information",                         "Information Réseau"                            ) \
+    X_LABEL( LBL_IP_ADDR,                "IPV4 Address . . . :",                        "Addresse IPV4  . . :"                          ) \
+    X_LABEL( LBL_IP_MASK,                "Subnet Masks . . . :",                        "Masque Sous-Réseau :"                          ) \
+    X_LABEL( LBL_IP_GATEWAY,             "Default Gateway  . :",                        "Passerelle Défaut  :"                          ) \
+    X_LABEL( LBL_IP_DNS,                 "DNS Servers  . . . :",                        "Serveurs DNS . . . :"                          ) \
+    X_LABEL( LBL_IP_DHCP_STATE,          "DHCP State . . . . :",                        "Status DHCP  . . . :"                          ) \
+    X_LABEL( LBL_IP_LINK_STATE,          "Link State . . . . :",                        "Status Lien  . . . :"                          ) \
+    X_LABEL( LBL_MAC_ADDRESS,            "MAC Address  . . . :",                        "Addresse MAC . . . :"                          ) \
+    X_LABEL( LBL_MAC_ADDRESS_VALUE,      "%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X",     nullptr                                         ) \
+
 
 //-------------------------------------------------------------------------------------------------
 

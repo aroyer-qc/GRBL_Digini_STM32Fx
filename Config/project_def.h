@@ -39,6 +39,8 @@
 
 //-------------------------------------------------------------------------------------------------
 
+#define SERIAL_NUMBER_SIZE          16
+
 // Static value that is not configurable
 extern const char OUR_FIRMWARE_NAME[];
 extern const char OUR_FIRMWARE_VERSION[];
@@ -50,7 +52,7 @@ extern const char OUR_BUILD_DATE[];
 extern char OEM_VENDOR_NAME[8];
 extern char OEM_MODEL_NAME[24];
 extern char OEM_CONFIG_VERSION[24];
-extern char OEM_SERIAL_NUMBER[16];
+extern char OEM_SERIAL_NUMBER[SERIAL_NUMBER_SIZE];
 
 
 

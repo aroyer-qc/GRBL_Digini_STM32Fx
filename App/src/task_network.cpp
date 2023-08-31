@@ -228,7 +228,7 @@ nOS_Error ClassNetwork::Initialize(void)
     // Registers the default network interface
     netif_set_default(&m_NetIf);
 
-    if(netif_is_link_up(&m_NetIf))   netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
+    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
     else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
 
   #if LWIP_NETIF_LINK_CALLBACK
@@ -258,8 +258,8 @@ nOS_Error ClassNetwork::Initialize(void)
                              TASK_NETWORK_PRIO);
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE);
-    myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE);
+    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE, "Network");
+    myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
   #endif
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
@@ -294,7 +294,7 @@ void ClassNetwork::Network(void)
     err_t           recv_err;
 
 for(;;)
-{ nOS_Yield();}
+{ nOS_Sleep(100);}
 
 
     // Create a new connection identifier.
@@ -390,7 +390,7 @@ void ClassNetwork::WebServer(void)
     err_t  err;
     err_t  accept_err;
 for(;;)
-{ nOS_Yield();}
+{ nOS_Sleep(100);}
 
     m_WebServerConn = netconn_new(NETCONN_TCP);                                     // Create a new TCP connection handle
 

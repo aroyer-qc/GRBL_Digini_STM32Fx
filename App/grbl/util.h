@@ -101,15 +101,6 @@
 
 #define isequal_position_vector(a,b)    !(memcmp(a, b, sizeof(float)*N_AXIS))
 
-
-// Delays variable-defined milliseconds.
-#define delay_ms(a)                             nOS_Sleep(a)
-
-// Delays variable-defined microseconds. Compiler compatibility fix for _delay_us().
-#define delay_us(a)                             nOS_Yield()     // ARGO todo use timer
-//void delay_us(uint32_t us);
-
-
 // Read a floating point value from a string. Line points to the input buffer, char_counter
 // is the indexer pointing to the current character of the line, while float_ptr is
 // a pointer to the result variable. Returns true when it succeeds

@@ -86,6 +86,7 @@
 
 #include "lib_digini.h"
 #include "grbl_advance.h"
+#include "lwip/netif.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -110,9 +111,6 @@
 #define VT100_MISC_CFG_REFRESH_SERIAL                         16
 #define VT100_MISC_CFG_REFRESH_LOCATION                       32
 #define VT100_MISC_CFG_REFRESH_SITE_ID                        64
-
-//char                                m_GenericString[VT100_STRING_QTS][VT100_ITEMS_QTS][VT100_STRING_SZ];  // TODO move this to memory pool
-
 
 //-------------------------------------------------------------------------------------------------
 // Typedef(s)
@@ -336,8 +334,8 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             myVT100.SetForeColor(VT100_COLOR_YELLOW);
             //myVT100.InMenuPrintf(LBL_EXTERNAL_SWITCH);
             myVT100.InMenuPrintf(VT100_LBL_ESCAPE);
-            break;
         }
+        break;
 
         case VT100_CALLBACK_REFRESH:
         {
@@ -412,125 +410,71 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             //    myVT100.InMenuPrintf(" Low  ");
             }
         }
+        break;
+
+        default: break;
+    }
+
+    return VT100_INPUT_ESCAPE;
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           CALLBACK_MiscCfg
+//
+//  Description:    Menu setting configuration for orphan item
+//
+//  Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_CallBackType_e Type)
+{
+    VAR_UNUSED(Input);
+
+    switch(Type)
+    {
+        case VT100_CALLBACK_INIT:
+        {
+            myVT100.SetForeColor(VT100_COLOR_WHITE);
+            myVT100.InMenuPrintf(1, 5, LBL_NETWORK_INFO);
+
+            myVT100.SetForeColor(VT100_COLOR_WHITE);
+            myVT100.InMenuPrintf(2, 8,  LBL_IP_ADDR);
+            myVT100.InMenuPrintf(2, 9,  LBL_IP_MASK);
+            myVT100.InMenuPrintf(2, 10, LBL_IP_GATEWAY);
+            myVT100.InMenuPrintf(2, 11, LBL_IP_DNS);
+            myVT100.InMenuPrintf(2, 13, LBL_IP_DHCP_STATE);
+            myVT100.InMenuPrintf(2, 14, LBL_IP_LINK_STATE);
+            myVT100.InMenuPrintf(2, 15, LBL_MAC_ADDRESS);
+            // Add Lease obtain and expire???
+        }
+        break;
+
+        case VT100_CALLBACK_REFRESH:
+        {
+            struct netif* pNetif = netif_find("en0");
+
+            myVT100.SetForeColor(VT100_COLOR_WHITE);
+            myVT100.InMenuPrintf(24, 8,  LBL_STRING, ip_ntoa(&pNetif->ip_addr));
+            myVT100.InMenuPrintf(24, 9,  LBL_STRING, ip_ntoa(&pNetif->netmask));
+            myVT100.InMenuPrintf(24, 10, LBL_STRING, ip_ntoa(&pNetif->gw));
+			//auto t = dns_getserver(0);
+            //myVT100.InMenuPrintf(24, 11, LBL_STRING, inet_ntoa(t->addr););
+			//auto t = dns_getserver(1);
+            //myVT100.InMenuPrintf(24, 12, LBL_STRING, inet_ntoa(t->addr));
+            //myVT100.InMenuPrintf(24, 13, LBL_STRING, (pNetif->Flags & NETIF_FLAG_LINK_UP) != 0 ? "Enable" : "Disable");
+            myVT100.InMenuPrintf(24, 14, LBL_STRING, (pNetif->flags & NETIF_FLAG_LINK_UP) != 0 ? "Enable" : "Disable");
+            myVT100.InMenuPrintf(24, 15, LBL_MAC_ADDRESS_VALUE, pNetif->hwaddr[0], pNetif->hwaddr[1], pNetif->hwaddr[2], pNetif->hwaddr[3],
+                                                                pNetif->hwaddr[4], pNetif->hwaddr[5], pNetif->hwaddr[6], pNetif->hwaddr[7]);
+        }
+        break;
 
         default:
             break;
     }
+
     return VT100_INPUT_ESCAPE;
 }
-
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           CALLBACK_BlueTooth
-//
-//  Description:    Menu setting configuration for orphan item
-//
-//  Note(s):        Bluetooth Test
-//
-//-------------------------------------------------------------------------------------------------
-/*
-VT100_InputType_e VT100_Terminal::CALLBACK_BlueTooth(uint8_t Input, VT100_CallBackType_e Type)
-{
-    nOS_TimeDate TimeDate;
-
-    VAR_UNUSED(Input);
-
-    if(Type == VT100_CALLBACK_INIT)
-    {
-        //BLE112_Initialize();
-        //BLE112_setSecurityParams(true,24, sm_io_capability_noinputnooutput);
-        //BLE112_setBondable(false);
-        //BLE112_setDisconnectCallback(BLUETOOTH_userDisconnected);
-
-        SetCursorPosition(30, 18);
-        InMenuPrintf(LBL_BLUETOOTH_STATUS);
-        SetCursorPosition(24, 23);
-        InMenuPrintf(LBL_BLUETOOTH_RSSI);
-        SetCursorPosition(22, 20);
-        InMenuPrintf(LBL_BLUETOOTH_BOX1);
-        SetCursorPosition(22, 21);
-        InMenuPrintf(LBL_BLUETOOTH_BOX2);
-        SetCursorPosition(22, 22);
-        InMenuPrintf(LBL_BLUETOOTH_BOX3);
-        SetCursorPosition(1, 25);
-        InMenuPrintf(LBL_STATUS);
-      #if (VT100_USE_COLOR == DEF_ENABLED)
-        SetForeColor(VT100_COLOR_CYAN);
-      #endif
-        InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
-        SetCursorPosition(1, 34);
-        InMenuPrintf(VT100_LBL_LINE_SEPARATOR);
-        SetScrollZone(27, 33);
-    }
-
-    if(Type == VT100_CALLBACK_REFRESH)
-    {
-        // fake log
-      #if (VT100_USE_COLOR == DEF_ENABLED)
-        SetForeColor(VT100_COLOR_GREEN);
-      #endif
-        SetCursorPosition(1, 33);
-        RTC_DateAndTime(&TimeDate, STATE_GET);
-        VT100_DisplayTimeDateStamp(&TimeDate);
-        SetCursorPosition(43, 18);
-
-        //if(BLUETOOTH_isUserConnected() == true)
-        {
-          #if (VT100_USE_COLOR == DEF_ENABLED)
-            SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);
-          #endif
-            InMenuPrintf(LBL_BLUETOOTH_CONNECT);
-        }
-        //else
-        //{
-            //#if (VT100_USE_COLOR == DEF_ENABLED)
-        //    SetColor(VT100_COLOR_BLACK, VT100_COLOR_RED);
-            // #endif
-        //    InMenuPrintf(LBL_BLUETOOTH_DISCONNECT);
-        //}
-    }
-
-    return VT100_INPUT_MENU_CHOICE;
-}
-*/
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           CALLBACK_GetRSSI
-//
-//  Description:    Menu setting configuration for orphan item
-//
-//  Note(s):        Get RSSI   /// Example for an RSSI. can be used fr the radio signal strenght
-//
-//-------------------------------------------------------------------------------------------------
-/*
-VT100_InputType_e VT100_Terminal::CALLBACK_GetRSSI(uint8_t Input, VT100_CallBackType_e Type)
-{
-    int8_t RSSI;
-    uint8_t graphRSSI;
-    //RSSI = BLUETOOTH_getRSSI();
-    graphRSSI = (uint8_t)(RSSI + 103);
-
-    VAR_UNUSED(Input);
-
-    if((Type == VT100_CALLBACK_INIT) || (Type == VT100_CALLBACK_ON_INPUT))
-    {
-    #if (VT100_USE_COLOR == DEF_ENABLED)
-        Bargraph(23, 21, VT100_COLOR_BLUE, graphRSSI, 65, 15);
-    #else
-        Bargraph(23, 21, graphRSSI, 65, 15);
-    #endif
-        SetCursorPosition(31, 23);
-      #if (VT100_USE_COLOR == DEF_ENABLED)
-        SetForeColor(VT100_COLOR_CYAN);
-      #endif
-        InMenuPrintf("%4d", (int16_t)RSSI);
-    }
-
-    return VT100_INPUT_MENU_CHOICE;
-}
-*/
 
 //-------------------------------------------------------------------------------------------------
 //
