@@ -132,8 +132,9 @@
     X_LABEL( LBL_IP_DNS,                 "DNS Servers  . . . :",                        "Serveurs DNS . . . :"                          ) \
     X_LABEL( LBL_IP_DHCP_STATE,          "DHCP State . . . . :",                        "Status DHCP  . . . :"                          ) \
     X_LABEL( LBL_IP_LINK_STATE,          "Link State . . . . :",                        "Status Lien  . . . :"                          ) \
+    X_LABEL( LBL_IP_LINK_SPEED,          "Link Speed . . . . :",                        "Vitesse du Lien  . :"                          ) \
     X_LABEL( LBL_MAC_ADDRESS,            "MAC Address  . . . :",                        "Addresse MAC . . . :"                          ) \
-    X_LABEL( LBL_MAC_ADDRESS_VALUE,      "%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X",     nullptr                                         ) \
+    X_LABEL( LBL_MAC_ADDRESS_VALUE,      "%02X:%02X:%02X:%02X:%02X:%02X",               nullptr                                         ) \
 
 
 //-------------------------------------------------------------------------------------------------

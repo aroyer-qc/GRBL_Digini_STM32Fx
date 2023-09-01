@@ -86,6 +86,7 @@
 
 #include "lib_digini.h"
 #include "grbl_advance.h"
+#include "ethernetif.h"
 #include "lwip/netif.h"
 
 //-------------------------------------------------------------------------------------------------
@@ -445,27 +446,45 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
             myVT100.InMenuPrintf(2, 11, LBL_IP_DNS);
             myVT100.InMenuPrintf(2, 13, LBL_IP_DHCP_STATE);
             myVT100.InMenuPrintf(2, 14, LBL_IP_LINK_STATE);
-            myVT100.InMenuPrintf(2, 15, LBL_MAC_ADDRESS);
+            myVT100.InMenuPrintf(2, 15, LBL_IP_LINK_SPEED);
+            myVT100.InMenuPrintf(2, 16, LBL_MAC_ADDRESS);
             // Add Lease obtain and expire???
         }
         break;
 
         case VT100_CALLBACK_REFRESH:
         {
-            struct netif* pNetif = netif_find("en0");
+            struct netif*    pNetif = netif_find(IF_NAME);
+            ETH_LinkInfo_t   LinkInfo;
+            ETH_LinkState_e  LinkState;
+            const char*      pSpeed;
 
             myVT100.SetForeColor(VT100_COLOR_WHITE);
             myVT100.InMenuPrintf(24, 8,  LBL_STRING, ip_ntoa(&pNetif->ip_addr));
             myVT100.InMenuPrintf(24, 9,  LBL_STRING, ip_ntoa(&pNetif->netmask));
             myVT100.InMenuPrintf(24, 10, LBL_STRING, ip_ntoa(&pNetif->gw));
 			//auto t = dns_getserver(0);
-            //myVT100.InMenuPrintf(24, 11, LBL_STRING, inet_ntoa(t->addr););
+            ip_addr_t ipEmpty{};
+            myVT100.InMenuPrintf(24, 11, LBL_STRING, ip_ntoa(&ipEmpty));
 			//auto t = dns_getserver(1);
-            //myVT100.InMenuPrintf(24, 12, LBL_STRING, inet_ntoa(t->addr));
-            //myVT100.InMenuPrintf(24, 13, LBL_STRING, (pNetif->Flags & NETIF_FLAG_LINK_UP) != 0 ? "Enable" : "Disable");
-            myVT100.InMenuPrintf(24, 14, LBL_STRING, (pNetif->flags & NETIF_FLAG_LINK_UP) != 0 ? "Enable" : "Disable");
-            myVT100.InMenuPrintf(24, 15, LBL_MAC_ADDRESS_VALUE, pNetif->hwaddr[0], pNetif->hwaddr[1], pNetif->hwaddr[2], pNetif->hwaddr[3],
-                                                                pNetif->hwaddr[4], pNetif->hwaddr[5], pNetif->hwaddr[6], pNetif->hwaddr[7]);
+            myVT100.InMenuPrintf(24, 12, LBL_STRING, ip_ntoa(&ipEmpty));
+            myVT100.InMenuPrintf(24, 13, LBL_STRING, "DHCP N/A");
+            LinkState = myETH_PHY->GetLinkState();
+            myVT100.InMenuPrintf(24, 14, LBL_STRING, (LinkState == ETH_LINK_UP) != 0 ? "Up  " : "Down");
+
+            LinkInfo = myETH_PHY->GetLinkInfo();
+
+            switch(LinkInfo.Speed)
+            {
+                case ETH_PHY_SPEED_10M:     pSpeed = "10  Mb/Sec";  break;
+                case ETH_PHY_SPEED_100M:    pSpeed = "100 Mb/Sec";  break;
+                case ETH_PHY_SPEED_1G:      pSpeed = "1   Gb/Sec";  break;
+
+            }
+
+            myVT100.InMenuPrintf(24, 15, LBL_STRING, pSpeed);
+            myVT100.InMenuPrintf(24, 16, LBL_MAC_ADDRESS_VALUE, pNetif->hwaddr[0], pNetif->hwaddr[1], pNetif->hwaddr[2],
+                                                                pNetif->hwaddr[3], pNetif->hwaddr[4], pNetif->hwaddr[5]);
         }
         break;
 

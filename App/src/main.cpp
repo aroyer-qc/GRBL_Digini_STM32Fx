@@ -58,7 +58,7 @@ int main()
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
     pTaskNetwork->Initialize();
   #endif
-    pTaskGRBL->Initialize();
+   // pTaskGRBL->Initialize();
 
 myLabel.SetLanguage(LANG_FRENCH);
 

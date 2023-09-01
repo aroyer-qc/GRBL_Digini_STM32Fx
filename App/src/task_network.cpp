@@ -215,12 +215,12 @@ nOS_Error ClassNetwork::Initialize(void)
     ip_addr_t SubnetMask;
     ip_addr_t GatewayIP;
 
-  #if !LWIP_DHCP
+  //#if !LWIP_DHCP  maybe should set a default value
     // use IP from ethernet_cfg.h
     IP_ADDR4(&IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);
-    IP_ADDR4(&SubnetMask, ETH_SUB_NETMASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
+    IP_ADDR4(&SubnetMask, ETH_SUBNET_MASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
     IP_ADDR4(&GatewayIP,  ETH_GATEWAY_IP_ADDR0,  ETH_GATEWAY_IP_ADDR1,  ETH_GATEWAY_IP_ADDR2,  ETH_GATEWAY_IP_ADDR3);
-  #endif
+  //#endif
 
     // Add the network interface
     netif_add(&m_NetIf, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
@@ -264,7 +264,7 @@ nOS_Error ClassNetwork::Initialize(void)
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
-   // dhcp_start(&m_NetIf);
+    dhcp_start(&m_NetIf);
 
     return Error;
 }

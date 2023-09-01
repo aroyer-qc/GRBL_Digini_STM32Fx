@@ -34,6 +34,9 @@
 
 #define INT_MAX                         UINT32_MAX
 
+#define DEFAULT_THREAD_STACKSIZE        2048
+#define TCPIP_THREAD_STACKSIZE          2048    
+
 /* Prevent having to link sys_arch.c (we don't test the API layers in unit tests) */
 #define NO_SYS                          0
 #define LWIP_NETCONN                    1

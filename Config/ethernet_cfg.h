@@ -38,6 +38,23 @@
 #define MAC_ADDR4	                            (((char *)0x1FF0F420)[8])
 #define MAC_ADDR5	                            (((char *)0x1FF0F420)[10])
 
+#define ETH_IP_ADDR0                            192
+#define ETH_IP_ADDR1                            168
+#define ETH_IP_ADDR2                            0
+#define ETH_IP_ADDR3                            252
+
+#define ETH_SUBNET_MASK_ADDR0                   255
+#define ETH_SUBNET_MASK_ADDR1                   255
+#define ETH_SUBNET_MASK_ADDR2                   255
+#define ETH_SUBNET_MASK_ADDR3                   0
+
+#define ETH_GATEWAY_IP_ADDR0                    192
+#define ETH_GATEWAY_IP_ADDR1                    168
+#define ETH_GATEWAY_IP_ADDR2                    0
+#define ETH_GATEWAY_IP_ADDR3                    1
+
+
+
 #define ETH_USE_PHY_LINK_IRQ                    DEF_DISABLED
 #define ETH_PHY_LINK_IO                         IO_NOT_DEFINED
 
@@ -52,6 +69,7 @@
 // Define those to better describe your network interface.
 #define IFNAME0 'd'
 #define IFNAME1 'g'
+#define IF_NAME "dg0"
 
 // ETH PHY Driver
 #define PHY_DRIVER_INCLUDE                      "lib_class_phy_LAN8742A.h"
