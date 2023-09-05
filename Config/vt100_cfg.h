@@ -80,6 +80,7 @@
     X_VT100_USER_LBL_CFG( LBL_VT100_BLANK,                            " ",                                      " "                                           ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
     X_VT100_USER_LBL_CFG( LBL_VT100_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Numéro de Série"                  ) \
+    X_VT100_USER_LBL_CFG( LBL_VT100_SD_CARD_INFORMATION,              "SD-Card Information",                    "Information Carte SD"                        ) \
 
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro
 #define COMPARE_MenuRedirection(x)  x
@@ -90,6 +91,7 @@
 #define COMPARE_MenuNetwork(x)      x
 #define COMPARE_MenuDebug(x)    	x
 #define COMPARE_MenuTest(x)     	x
+#define COMPARE_MenuSD_Card(x)     	x
 #define COMPARE_MenuSetting(x)		x
 #define COMPARE_MenuSettingTime(x)  x
 #define COMPARE_MenuSetMisc(x) 		x
@@ -104,6 +106,7 @@
     ENTRY(MenuNetwork        ) \
     ENTRY(MenuDebug          ) \
     ENTRY(MenuTest           ) \
+    ENTRY(MenuSD_Card        ) \
     ENTRY(MenuSetting        ) \
     ENTRY(MenuSettingTime    ) \
     ENTRY(MenuSetMisc        ) \
@@ -118,6 +121,8 @@
     ENTRY(CALLBACK_TimeDateCfg        ) \
     ENTRY(CALLBACK_MiscCfg            ) \
     ENTRY(CALLBACK_InputReading       ) \
+    ENTRY(CALLBACK_SD_CardInformation ) \
+
 
 // Here you define how you will navigate in the menu tree and action associated with them                   1st item of a menu
 //              Menu   Member Of          Item ID                  CALLBACK for refresh                     Navigate to this menu on <ESC>    Label ID
@@ -135,6 +140,7 @@
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
+        ENTRY  (MENU,  MenuMain,          ID_SD_CARD_MENU,         CALLBACK_None,                           MenuSD_Card,                      LBL_VT100_SD_CARD_INFORMATION                   ) \
 \
 		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  LBL_VT100_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_None,                           MenuMain,                         LBL_VT100_SYSTEM_INFO                           ) \
@@ -143,12 +149,15 @@
         ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        LBL_VT100_DEBUG                                 ) \
         ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      LBL_VT100_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         LBL_VT100_TEST                                  ) \
+        ENTRY  (MENU,  MenuBoot,          ID_SD_CARD_MENU,         CALLBACK_None,                           MenuSD_Card,                      LBL_VT100_SD_CARD_INFORMATION                   ) \
 \
         ENTRY  (MENU,  MenuInfo,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuRedirection,                  LBL_VT100_SYSTEM_INFO                           ) \
 \
         ENTRY  (MENU,  MenuStackUsage,    ID_INFO_DISPLAY,         CALLBACK_StackUsage,                     MenuRedirection,                  LBL_VT100_STACKTISTIC                           ) \
 \
         ENTRY  (MENU,  MenuNetwork,       ID_NETWORK_INFO,         CALLBACK_NetworkInfo,                    MenuRedirection,                  LBL_NETWORK_INFO                                ) \
+\
+        ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,         CALLBACK_SD_CardInformation,             MenuRedirection,                  LBL_VT100_SD_CARD_INFORMATION                   ) \
 \
         ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,          CALLBACK_DebugLevelSetting,              MenuRedirection,                  LBL_VT100_DEBUG_MENU                            ) \
         ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,            CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_VT100_DEBUG_LEVEL_1                         ) \

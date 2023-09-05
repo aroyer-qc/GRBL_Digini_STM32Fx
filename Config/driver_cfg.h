@@ -70,4 +70,4 @@
 //#define DIGINI_AUDIO_DRIVER_ARG_DATA            (void*)&mySAI            // For the audio device interface data
 
 
-#define SDIO_USE_MINIMAL_INFORMATION        DEF_ENABLED
+#define SDIO_USE_MAXIMUM_INFORMATION        DEF_ENABLED

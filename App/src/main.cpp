@@ -53,7 +53,7 @@ int main()
 
     nOS_Init();
     BSP_Initialize();               // All hardware and system initialization
-    pTaskLoading->Initialize();
+    //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
     pTaskNetwork->Initialize();
