@@ -272,7 +272,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
 VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_CallBackType_e Type)
 {
     bool    State;
-    int32_t Temperature;
+    //int32_t Temperature;
     uint8_t VerticalOffset;
 
     VAR_UNUSED(Input);
