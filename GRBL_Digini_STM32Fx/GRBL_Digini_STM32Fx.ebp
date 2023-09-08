@@ -740,6 +740,9 @@
 		<Unit filename="..\Module\Digini\String\src\lib_strnchr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\String\src\lib_strnstrip.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Utility\inc\lib_compression.h" />
 		<Unit filename="..\Module\Digini\Utility\inc\lib_crc.h" />
 		<Unit filename="..\Module\Digini\Utility\inc\lib_fifo.h" />
