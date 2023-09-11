@@ -740,16 +740,15 @@
 		<Unit filename="..\module\Digini\String\src\lib_strnchr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Utility\inc\lib_compression.h" />
-		<Unit filename="..\module\Digini\Utility\inc\lib_crc.h" />
-		<Unit filename="..\module\Digini\Utility\inc\lib_fifo.h" />
-		<Unit filename="..\module\Digini\Utility\inc\lib_pid.h" />
-		<Unit filename="..\module\Digini\Utility\inc\lib_stacktistic.h" />
-		<Unit filename="..\module\Digini\Utility\inc\lib_utility.h" />
-		<Unit filename="..\module\Digini\Utility\src\lib_1aschex.cpp">
+		<Unit filename="..\Module\Digini\String\src\lib_strnstrip.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Utility\src\lib_2aschex.cpp">
+		<Unit filename="..\Module\Digini\Utility\inc\lib_compression.h" />
+		<Unit filename="..\Module\Digini\Utility\inc\lib_crc.h" />
+		<Unit filename="..\Module\Digini\Utility\inc\lib_fifo.h" />
+		<Unit filename="..\Module\Digini\Utility\inc\lib_pid.h" />
+		<Unit filename="..\Module\Digini\Utility\inc\lib_utility.h" />
+		<Unit filename="..\Module\Digini\Utility\src\lib_1aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Utility\src\lib_2bcddec.cpp">

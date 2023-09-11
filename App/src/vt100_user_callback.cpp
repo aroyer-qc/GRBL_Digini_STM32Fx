@@ -272,7 +272,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_LedControl(uint8_t Input, VT100_CallB
 VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_CallBackType_e Type)
 {
     bool    State;
-    int32_t Temperature;
+    //int32_t Temperature;
     uint8_t VerticalOffset;
 
     VAR_UNUSED(Input);
@@ -448,6 +448,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
             myVT100.InMenuPrintf(2, 14, LBL_IP_LINK_STATE);
             myVT100.InMenuPrintf(2, 15, LBL_IP_LINK_SPEED);
             myVT100.InMenuPrintf(2, 16, LBL_MAC_ADDRESS);
+            myVT100.InMenuPrintf(       VT100_LBL_ESCAPE);
             // Add Lease obtain and expire???
         }
         break;

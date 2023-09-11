@@ -47,7 +47,7 @@
 #define DIGINI_USE_CMD_LINE                             DEF_ENABLED
 #define DIGINI_USE_VT100_MENU                           DEF_ENABLED
 
-#define DIGINI_USE_ETHERNET                             DEF_ENABLED
+#define DIGINI_USE_ETHERNET                             DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
@@ -100,6 +100,11 @@
 #define DIGINI_USE_STACKTISTIC                          DEF_ENABLED                 // Allow debugging of the stack, per code or using VT100 terminal
 #define DIGINI_STACKTISTIC_NUMBER_OF_STACK              10
 #define DIGINI_STACKTISTIC_WATER_MARK_CODE              0xFFFFFFFFUL                // This is for nOS. Depend on the value put in stack by OS. FreeRTOS it's 0xA5
+
+//-------------------------------------------------------------------------------------------------
+// Debug special feature
+
+#define DIGINI_DEBUG_SDCARD_INFO_ON_VT100               DEF_ENABLED
 
 
 //-------------------------------------------------------------------------------------------------
