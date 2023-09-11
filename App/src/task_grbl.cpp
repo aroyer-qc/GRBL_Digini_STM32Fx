@@ -220,7 +220,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 */
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    //myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE, "GRBL");
+    //myStacktistic.Register(&m_Handle.stack, Ptr&m_Stack[0], TASK_GRBL_STACK_SIZE, "GRBL");
   #endif
 
     return Error;
