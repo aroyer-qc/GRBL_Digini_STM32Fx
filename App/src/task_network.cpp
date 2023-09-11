@@ -243,10 +243,6 @@ nOS_Error ClassNetwork::Initialize(void)
                              TASK_WEBSERVER_STACK_SIZE,
                              TASK_WEBSERVER_PRIO);
 
-
-    // Initialize the LwIP stack
-    //lwip_init();
-
     // tcp echo server Init
     //TCP_EchoServerInitialize();
 
@@ -258,8 +254,8 @@ nOS_Error ClassNetwork::Initialize(void)
                              TASK_NETWORK_PRIO);
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE, "Network");
-    myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
+    myStacktistic.Register(&m_NetworkHandle.stackPtr,   &m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
+    myStacktistic.Register(&m_WebServerHandle.stackPtr, &m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
   #endif
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);

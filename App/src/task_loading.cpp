@@ -94,7 +94,7 @@ nOS_Error ClassTaskLoading::Initialize(void)
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_Stack[0], TASK_LOADING_STACK_SIZE, "No defined");
+    myStacktistic.Register(&m_Handle.stackPtr, &m_Stack[0], TASK_LOADING_STACK_SIZE, "No defined");
   #endif
 
     return Error;
@@ -121,10 +121,12 @@ void ClassTaskLoading::Run(void)
 
     //char Buffer[160];
 
+  #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     while(SKIN_pTask->IsSkinLoaded() == false)
     {
         nOS_Sleep(100);
     };
+  #endif
 
     // We have wait for skin loading to complete... now we can use what is left from the free extended memory
     // DB_Central.Get(&pMemory, GFX_FREE_RAM_POINTER, 0,0);

@@ -56,7 +56,7 @@ int main()
     pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-    pTaskNetwork->Initialize();
+   // pTaskNetwork->Initialize();
   #endif
    // pTaskGRBL->Initialize();
 

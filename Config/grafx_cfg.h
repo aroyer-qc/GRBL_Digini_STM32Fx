@@ -78,9 +78,9 @@
 //-------------------------------------------------------------------------------------------------
 
 // Special section use in this project
-#define GRAFX_USE_DISPLAY_RAM
-#define GRAFX_USE_RAM_DATA                    // this setting is not very clear at this point... probably for LCD with ram access
-//#define GRAFX_USE_ROM_DATA
+#define GRAFX_USE_DISPLAY_RAM                           DEF_ENABLED
+#define GRAFX_USE_RAM_DATA                              DEF_ENABLED// this setting is not very clear at this point... probably for LCD with ram access
+#define GRAFX_USE_ROM_DATA                              DEF_DISABLED
 
 #define GRAFX_USE_MULTI_LINE
 
@@ -101,7 +101,7 @@
 
 #ifdef DIGINI_USE_QSPI
 #ifndef DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE
-    //#define DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE
+   #define DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE       DEF_DISABLED
 #endif
 #endif
 
@@ -138,7 +138,6 @@
 //#define GRAFX_COLOR_RGB444
 
 #define DIGINI_MAX_PRINT_NUMBER_OF_LINE                 8               // This is the maximum number of line in the same string
-#define DIGINI_MAX_PRINT_SIZE                           256             // This the maximum size of the string to print
 
 // Default service available in Grafx
 #define USE_SERV_DATE                                                   // Service to provide the date

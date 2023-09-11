@@ -359,699 +359,700 @@
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cc.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cpu.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\lwip_errno.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\perf.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.cpp">
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\cc.h" />
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\cpu.h" />
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\lwip_errno.h" />
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\perf.h" />
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\sys_arch.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.cpp">
+		<Unit filename="..\module\Digini\Architecture\lwip\arch\sys_arch.h" />
+		<Unit filename="..\module\Digini\Architecture\lwip\ethernetif.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.h" />
-		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli.h" />
-		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli_expanding_macro.h" />
-		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli.cpp">
+		<Unit filename="..\module\Digini\Architecture\lwip\ethernetif.h" />
+		<Unit filename="..\module\Digini\Comm\CmdLine\inc\lib_cli.h" />
+		<Unit filename="..\module\Digini\Comm\CmdLine\inc\lib_cli_expanding_macro.h" />
+		<Unit filename="..\module\Digini\Comm\CmdLine\src\lib_cli.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli_command.cpp">
+		<Unit filename="..\module\Digini\Comm\CmdLine\src\lib_cli_command.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Comm\Console\inc\lib_console.h" />
-		<Unit filename="..\Module\Digini\Comm\Console\src\lib_console.cpp">
+		<Unit filename="..\module\Digini\Comm\Console\inc\lib_console.h" />
+		<Unit filename="..\module\Digini\Comm\Console\src\lib_console.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100.h" />
-		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100_expanding_macro.h" />
-		<Unit filename="..\Module\Digini\Comm\VT100\inc\lib_vt100_label.h" />
-		<Unit filename="..\Module\Digini\Comm\VT100\src\lib_vt100.cpp">
+		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100.h" />
+		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100_expanding_macro.h" />
+		<Unit filename="..\module\Digini\Comm\VT100\inc\lib_vt100_label.h" />
+		<Unit filename="..\module\Digini\Comm\VT100\src\lib_vt100.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Comm\VT100\src\lib_vt100_callback.cpp">
+		<Unit filename="..\module\Digini\Comm\VT100\src\lib_vt100_callback.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\inc\lib_class_database.h" />
-		<Unit filename="..\Module\Digini\Database\inc\lib_class_eeprom_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\inc\lib_class_hard_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\inc\lib_class_ram_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\inc\lib_class_rom_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\inc\lib_database_wrapper.h" />
-		<Unit filename="..\Module\Digini\Database\inc\port\lib_class_bkpreg_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\inc\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.h" />
-		<Unit filename="..\Module\Digini\Database\src\lib_class_database.cpp">
+		<Unit filename="..\module\Digini\Database\inc\lib_class_database.h" />
+		<Unit filename="..\module\Digini\Database\inc\lib_class_eeprom_dbase.h" />
+		<Unit filename="..\module\Digini\Database\inc\lib_class_hard_dbase.h" />
+		<Unit filename="..\module\Digini\Database\inc\lib_class_ram_dbase.h" />
+		<Unit filename="..\module\Digini\Database\inc\lib_class_rom_dbase.h" />
+		<Unit filename="..\module\Digini\Database\inc\lib_database_wrapper.h" />
+		<Unit filename="..\module\Digini\Database\inc\port\lib_class_bkpreg_dbase.h" />
+		<Unit filename="..\module\Digini\Database\inc\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.h" />
+		<Unit filename="..\module\Digini\Database\src\lib_class_database.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\lib_class_eeprom_dbase.cpp">
+		<Unit filename="..\module\Digini\Database\src\lib_class_eeprom_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\lib_class_hard_dbase.cpp">
+		<Unit filename="..\module\Digini\Database\src\lib_class_hard_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\lib_class_ram_dbase.cpp">
+		<Unit filename="..\module\Digini\Database\src\lib_class_ram_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\lib_class_rom_dbase.cpp">
+		<Unit filename="..\module\Digini\Database\src\lib_class_rom_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\lib_database_wrapper.cpp">
+		<Unit filename="..\module\Digini\Database\src\lib_database_wrapper.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Database\src\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.cpp">
+		<Unit filename="..\module\Digini\Database\src\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Digini\inc\lib_advanced_macro.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_assert.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_class_cbi.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_define.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_digini.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_label.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_macro.h" />
-		<Unit filename="..\Module\Digini\Digini\inc\lib_typedef.h" />
-		<Unit filename="..\Module\Digini\Digini\src\digini.cpp">
+		<Unit filename="..\module\Digini\Digini\inc\lib_advanced_macro.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_assert.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_class_cbi.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_define.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_digini.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_label.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_macro.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_typedef.h" />
+		<Unit filename="..\module\Digini\Digini\src\digini.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Digini\src\lib_label.cpp">
+		<Unit filename="..\module\Digini\Digini\src\lib_label.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
+		<Unit filename="..\module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\inc\color\lib_grafx_color.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\driver\lib_grafx_driver.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\font\lib_class_font.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\layer\lib_class_layer.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_const.h">
+		<Unit filename="..\module\Digini\Grafx\inc\color\lib_grafx_color.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\driver\lib_grafx_driver.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\font\lib_class_font.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\layer\lib_class_layer.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_const.h">
 			<Option compilerVar="CPP" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_dbase.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_define.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_enum.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_enum_x_macro.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_font.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_link.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_skin.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\lib_grafx_typedef.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\service\lib_service.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\task\lib_gui_task.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\task\lib_pdi_task.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\task\lib_skin_task.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\widget\lib_class_widget.h" />
-		<Unit filename="..\Module\Digini\Grafx\inc\widget\lib_widget_variable.h" />
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_alpha.cpp">
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_dbase.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_define.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_enum.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_enum_x_macro.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_font.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_link.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_skin.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx_typedef.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\service\lib_service.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\task\lib_gui_task.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\task\lib_pdi_task.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\task\lib_skin_task.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\widget\lib_class_widget.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\widget\lib_widget_variable.h" />
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_alpha.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_box.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_box.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_copy_layer.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_pie.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_copy_layer.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_polygon.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_pie.cpp">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_polygon.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_printf.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_printf.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\color\lib_grafx_color.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\color\lib_grafx_color.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\driver\lib_grafx_driver.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\driver\lib_grafx_driver.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.cpp">
 			<Option compilerVar="CC" />
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\font\lib_class_font.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\font\lib_class_font.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\layer\lib_class_layer.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\layer\lib_class_layer.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\lib_grafx.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\lib_grafx.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\lib_tools.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\lib_tools.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\service\lib_service.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\service\lib_service.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\skin\lib_cursor_on_circle.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\skin\lib_grafx_printf.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\task\lib_gui_task.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\task\lib_pdi_task.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\task\lib_skin_task.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_background.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_basic_box.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_basic_button.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_basic_rectangle.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_button.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_gif.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_graph.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_icon.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_label.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_label_list.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_meter.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_page_slide.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_panel.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_progress.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_spectrum.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_sprite.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_terminal.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_variable.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_virtual_hub.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_virtual_window.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Memory\inc\lib_memory.h" />
-		<Unit filename="..\Module\Digini\Memory\src\lib_memory.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_EEprom.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_i2c_FT5336.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_phy_LAN8742A.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_pulse_counter.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_qspi_n25Qxxx.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_fatfs_disk.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\digini_diskio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_def.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_drv.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\lib_class_fatfs_ram_disk.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\interface\lib_class_driver_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\interface\lib_class_memory_driver_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_ethernet_phy_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_pointing_device_interface.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\lib_class_spi_sd_card.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\lib_ethernet_typedef.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_sdio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_usb.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_i2c.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_qspi.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_rtc.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_sdio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_spi.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_tim.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_uart.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_dma.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_io.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_isr.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dac.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_eth.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_i2c.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_qspi.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_rtc.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_sdio.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_spi.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_tim.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_uart.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_dma.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_io.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_isr.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\system_clock.h" />
-		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_i2c_EEprom.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_i2c_FT5336.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_phy_LAN8742A.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_pulse_counter.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_qspi_N25Qxxx.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\skin\lib_cursor_on_circle.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\FatFS\diskio.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\skin\lib_grafx_printf.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\FatFS\lib_class_fatfs_ram_disk.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\task\lib_gui_task.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\task\lib_pdi_task.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\task\lib_skin_task.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_background.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_basic_box.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_basic_button.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_basic_rectangle.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_button.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_gif.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_graph.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_icon.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_label.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_label_list.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_meter.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_page_slide.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_panel.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_progress.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_spectrum.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_sprite.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_terminal.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_variable.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_virtual_hub.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Grafx\src\widget\lib_widget_virtual_window.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Memory\inc\lib_memory.h" />
+		<Unit filename="..\module\Digini\Memory\src\lib_memory.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_class_i2c_EEprom.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_class_i2c_FT5336.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_class_phy_LAN8742A.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_class_pulse_counter.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_class_qspi_n25Qxxx.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\device\lib_fatfs_disk.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\digini_diskio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\diskio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\diskio_def.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\diskio_drv.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\diskio_interface.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\FatFs\lib_class_fatfs_ram_disk.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\interface\lib_class_driver_interface.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\interface\lib_class_memory_driver_interface.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\lib_class_ethernet_phy_interface.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\lib_class_pointing_device_interface.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\lib_class_spi_sd_card.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\lib_ethernet_typedef.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_sdio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_usb.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_i2c.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_qspi.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_rtc.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_sdio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_spi.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_tim.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_class_uart.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_dma.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_io.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\lib_isr.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dac.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_eth.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_i2c.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_qspi.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_rtc.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_sdio.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_spi.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_tim.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_uart.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_dma.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_io.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_isr.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\system_clock.h" />
+		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_i2c_EEprom.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_i2c_FT5336.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_phy_LAN8742A.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_pulse_counter.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_qspi_N25Qxxx.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dac.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\FatFS\diskio.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_eth.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\FatFS\lib_class_fatfs_ram_disk.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_i2c.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_pwm.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_qspi.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_rtc.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_sdio.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_spi.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_tim.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dac.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_uart.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_eth.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_usb.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_dma.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_i2c.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_io.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_isr.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\system_clock.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\inc\nOS\lib_class_queue.h" />
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\inc\nOS\lib_class_timer.h" />
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\inc\nOS\lib_stacktistic.h" />
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\src\nOS\lib_class_queue.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_pwm.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\src\nOS\lib_class_timer.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_qspi.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_rtc.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_sdio.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_spi.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\Digini\RTOS_Wrapper\src\nOS\lib_nOS_Tick.c">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_tim.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\String\inc\lib_string.h" />
-		<Unit filename="..\Module\Digini\String\src\lib_sprintf.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_uart.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\String\src\lib_strnchr.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\inc\lib_compression.h" />
-		<Unit filename="..\Module\Digini\Utility\inc\lib_crc.h" />
-		<Unit filename="..\Module\Digini\Utility\inc\lib_fifo.h" />
-		<Unit filename="..\Module\Digini\Utility\inc\lib_pid.h" />
-		<Unit filename="..\Module\Digini\Utility\inc\lib_utility.h" />
-		<Unit filename="..\Module\Digini\Utility\src\lib_1aschex.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_2aschex.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_2bcddec.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_2decbcd.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_4aschex.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_4bcddec.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_4decbcd.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_6aschex.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_bit_reversal.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_compression.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_crc.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_fast_memcpy.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_fifo.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_pid.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_process_float.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_raw_array.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_stacktistic.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_time_and_delay.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_trigono.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_uint16_t_swap.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\lib_uint32_t_swap.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Utility\src\port\STM32F7xx\lib_stacktistic_STM32F7.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\api_lib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\api_msg.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\err.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\if_api.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netbuf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netdb.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netifapi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\sockets.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\tcpip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\altcp_proxyconnect.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\fs.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\http_client.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\httpd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\sntp\sntp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp_alloc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp_tcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\def.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\dns.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\inet_chksum.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\init.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\autoip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\dhcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\etharp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\icmp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\igmp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4_addr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4_frag.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\dhcp6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ethip6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\icmp6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\inet6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6_addr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6_frag.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\mld6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\nd6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\mem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\memp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\netif.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\pbuf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\raw.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\stats.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\sys.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp_in.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp_out.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\timeouts.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\udp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\include\lwip\api.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\arch.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\def.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\etharp.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\mem.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\opt.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\pbuf.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\snmp.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\stats.h" />
-		<Unit filename="..\Module\lwip\src\netif\bridgeif.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\netif\bridgeif_fdb.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\netif\ethernet.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\module_FatFs\inc\ff.h" />
-		<Unit filename="..\Module\module_FatFs\inc\ffconf_template.h" />
-		<Unit filename="..\Module\module_FatFs\inc\integer.h" />
-		<Unit filename="..\Module\module_FatFs\src\ff.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\module_FatFs\src\ffunicode.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\module_jpg\jpeg.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\module_jpg\jpeg.h" />
-		<Unit filename="..\Module\module_picopng\picopng.c">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_usb.cpp">
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\Module\module_picopng\picopng.cpp">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_dma.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\module_picopng\picopng.h" />
-		<Unit filename="..\Module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h" />
-		<Unit filename="..\Module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h" />
-		<Unit filename="..\Module\module_STM32F7xx\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h" />
-		<Unit filename="..\Module\nOS\inc\nOS.h" />
-		<Unit filename="..\Module\nOS\inc\port\GCC\ARM_Cortex_M7\nOSPort.h" />
-		<Unit filename="..\Module\nOS\src\nOSAlarm.c">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_io.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSBarrier.c">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_isr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSEvent.c">
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\system_clock.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSFlag.c">
+		<Unit filename="..\module\Digini\RTOS_Wrapper\inc\nOS\lib_class_queue.h" />
+		<Unit filename="..\module\Digini\RTOS_Wrapper\inc\nOS\lib_class_timer.h" />
+		<Unit filename="..\module\Digini\RTOS_Wrapper\inc\nOS\lib_stacktistic.h" />
+		<Unit filename="..\module\Digini\RTOS_Wrapper\src\nOS\lib_class_queue.cpp">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="..\module\Digini\RTOS_Wrapper\src\nOS\lib_class_timer.cpp">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="..\module\Digini\RTOS_Wrapper\src\nOS\lib_nOS_Tick.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSList.c">
+		<Unit filename="..\module\Digini\String\inc\lib_string.h" />
+		<Unit filename="..\module\Digini\String\src\lib_sprintf.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSMem.c">
+		<Unit filename="..\module\Digini\String\src\lib_strnchr.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSMutex.c">
+		<Unit filename="..\module\Digini\Utility\inc\lib_compression.h" />
+		<Unit filename="..\module\Digini\Utility\inc\lib_crc.h" />
+		<Unit filename="..\module\Digini\Utility\inc\lib_fifo.h" />
+		<Unit filename="..\module\Digini\Utility\inc\lib_pid.h" />
+		<Unit filename="..\module\Digini\Utility\inc\lib_stacktistic.h" />
+		<Unit filename="..\module\Digini\Utility\inc\lib_utility.h" />
+		<Unit filename="..\module\Digini\Utility\src\lib_1aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSQueue.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_2aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSSched.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_2bcddec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSSem.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_2decbcd.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSSignal.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_4aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSThread.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_4bcddec.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSTime.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_4decbcd.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\nOSTimer.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_6aschex.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\nOS\src\port\GCC\ARM_Cortex_M7\nOSPort.c">
+		<Unit filename="..\module\Digini\Utility\src\lib_bit_reversal.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_compression.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_crc.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_fast_memcpy.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_fifo.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_pid.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_process_float.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_raw_array.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_stacktistic.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_time_and_delay.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_trigono.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_uint16_t_swap.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_uint32_t_swap.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\port\STM32F7xx\lib_stacktistic_STM32F7.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\api_lib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\api_msg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\err.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\if_api.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\netbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\netdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\netifapi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\sockets.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\api\tcpip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\apps\http\altcp_proxyconnect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\apps\http\fs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\apps\http\http_client.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\apps\http\httpd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\apps\sntp\sntp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\altcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\altcp_alloc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\altcp_tcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\def.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\dns.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\inet_chksum.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\autoip.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\dhcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\etharp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\icmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\igmp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\ip4.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\ip4_addr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv4\ip4_frag.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\dhcp6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\ethip6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\icmp6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\inet6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\ip6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\ip6_addr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\ip6_frag.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\mld6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\ipv6\nd6.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\memp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\netif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\pbuf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\raw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\stats.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\sys.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\tcp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\tcp_in.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\tcp_out.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\timeouts.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\core\udp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\include\lwip\api.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\arch.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\def.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\etharp.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\mem.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\opt.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\pbuf.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\snmp.h" />
+		<Unit filename="..\module\lwip\src\include\lwip\stats.h" />
+		<Unit filename="..\module\lwip\src\netif\bridgeif.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\netif\bridgeif_fdb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\lwip\src\netif\ethernet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\module_FatFs\inc\ff.h" />
+		<Unit filename="..\module\module_FatFs\inc\ffconf_template.h" />
+		<Unit filename="..\module\module_FatFs\inc\integer.h" />
+		<Unit filename="..\module\module_FatFs\src\ff.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\module_FatFs\src\ffunicode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\module_jpg\jpeg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\module_jpg\jpeg.h" />
+		<Unit filename="..\module\module_picopng\picopng.c">
+			<Option compilerVar="CC" />
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="..\module\module_picopng\picopng.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\module_picopng\picopng.h" />
+		<Unit filename="..\module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h" />
+		<Unit filename="..\module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h" />
+		<Unit filename="..\module\module_STM32F7xx\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h" />
+		<Unit filename="..\module\nOS\inc\nOS.h" />
+		<Unit filename="..\module\nOS\inc\port\GCC\ARM_Cortex_M7\nOSPort.h" />
+		<Unit filename="..\module\nOS\src\nOSAlarm.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSBarrier.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSEvent.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSFlag.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSList.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSMem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSMutex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSQueue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSSched.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSSem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSSignal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSThread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSTime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\nOSTimer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\nOS\src\port\GCC\ARM_Cortex_M7\nOSPort.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
