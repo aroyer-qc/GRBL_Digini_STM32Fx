@@ -87,6 +87,7 @@
 //-------------------------------------------------------------------------------------------------
 
 // Offset to negative so right alignment work with size modification (Erasing zone handling fix)
+#if (DIGINI_USE_GRAFX == DEF_ENABLED)
 const Font_e  DigitalFont[5]        =  { FT_DIGITAL_16, FT_DIGITAL_24, FT_DIGITAL_36, FT_DIGITAL_48, FT_DIGITAL_64};
 const uint8_t DigitalWidth[5]       =  { 10,            17,            22,            31,            40           };
 const uint8_t DigitalDotWidth[5]    =  { 4,             4,             8,             10,            12           };
@@ -96,6 +97,7 @@ const int8_t  DigitalBearing[5][13] = {{ -2,   5,  -2,  -1,  -1,  -1,  -2,   1, 
                                        { -2,   13, -2,   0,   0,   0,  -2,   2,  -2,   0,   0,  -2,   0 },   // 36
                                        {  0,   20,  0,   2,   2,   2,   0,   6,   0,   2,   0,  -1,   0 },   // 48
                                        {  0,   26,  0,   2,   3,   2,   0,   5,   0,   2,   0,   0,   0 }};  // 64
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // Forward Declaration(s)
@@ -156,6 +158,7 @@ void BSP_Initialize(void)
 //                      Width is reset to fix value for all character
 //
 //-------------------------------------------------------------------------------------------------
+#if (DIGINI_USE_GRAFX == DEF_ENABLED)
 void BSP_PostLoadingSkinFontPatch(void)
 {
     FontDescriptor_t FontDescriptor;
@@ -171,6 +174,7 @@ void BSP_PostLoadingSkinFontPatch(void)
         }
     }
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -189,8 +193,9 @@ SystemState_e BSP_PostOS_Initialize(void)
 
     //QSPI.Initialize();
     State = DIGINI_PostInitialize();
+  #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
-
+  #endif
     return State;
 }
 

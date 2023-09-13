@@ -240,10 +240,12 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 void ClassTaskGRBL::Run(void)
 {
 
+  #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     while(SKIN_pTask->IsSkinLoaded() == false)
     {
         nOS_Sleep(100);
     };
+  #endif
 
     for(;;)
     {

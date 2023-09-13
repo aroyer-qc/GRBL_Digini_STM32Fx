@@ -36,6 +36,8 @@
 
 //#define ETH_SOCK                                        0
 //#define ETH_PORT                                        30501
+#define DIGINI_MAX_PRINT_SIZE                           256
+
 
 #define DIGINI_USE_ASSERT                               DEF_DISABLED
 
