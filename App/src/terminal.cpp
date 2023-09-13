@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2023 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -33,8 +33,6 @@
 #include "lib_digini.h"
 #include "Settings.h"
 #include "task_grbl.h"
-//#include "GrIP.h"
-//#include "Platform.h"
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -54,185 +52,8 @@ struct TERM_QueueDataInfo_t
     size_t  Size;
 };
 
-//-------------------------------------------------------------------------------------------------
-// Variable(s) and object(s)
-//-------------------------------------------------------------------------------------------------
-
 class CQueue    Q_RX_Data;
 uint8_t         GetQueueArray[TERM_RX_DATA_Q_LENGTH * TERM_RX_DATA_Q_ITEM_SIZE];      // The array to use as the queue's storage area.
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           TX callback to free DMA buffer
-//
-//  Parameter(s):   pContext                Info on buffer to free
-//  Return:         void
-//
-//  Description:
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-function"
-static void TERM_TX_Callback(void* pContext)
-{
-    TERM_QueueDataInfo_t* pQ_Data;
-
-    pQ_Data = (TERM_QueueDataInfo_t *)pContext;
-    pMemoryPool->Free((void**)&pQ_Data->pBuffer);
-    pMemoryPool->Free((void**)&pQ_Data);
-}
-#pragma GCC diagnostic pop
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           RX callback to free DMA buffer
-//
-//  Parameter(s):   pContext                Info on buffer to send to Q for processing
-//  Return:         void
-//
-//  Description:
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-function"
-static void TERM_RX_Callback(void* pContext)
-{
-    uint8_t *            pBuffer;
-    UART_Variables_t*    pVariable;
-    TERM_QueueDataInfo_t Q_Data;
-
-
-    VAR_UNUSED(pContext);
-    pVariable = myUART_Terminal.GetInfoRX();
-    Q_Data.Size    = pVariable->SizeRX;
-    Q_Data.pBuffer = pVariable->pBufferRX;
-
-    if(Q_Data.Size != 0)
-    {
-        if(GRBL_RealTimeCommand(*Q_Data.pBuffer) == true)
-        {
-            pMemoryPool->Free((void**)&Q_Data.pBuffer);
-        }
-        else
-        {
-            if(Q_RX_Data.Send(&Q_Data) != true)
-            {
-                pMemoryPool->Free((void**)&Q_Data.pBuffer);     // Discarded as the controller might stuck doing a job
-            }
-        }
-    }
-
-    if((pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE)) != nullptr)
-    {
-        myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
-        return;
-    }
-
-    while(1)
-    {
-        __asm("nop");
-    };
-}
-#pragma GCC diagnostic pop
-
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           Initialize the low for printf
-//
-//  Parameter(s):   None
-//  Return:         void
-//
-//  Description:
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-void TERM_Initialize(void)
-{
-    uint8_t* pBuffer;
-
-    // Create a queue capable of containing 10 uint64_t values.
-    Q_RX_Data.CreateQueue(&GetQueueArray[0], TERM_RX_DATA_Q_LENGTH, TERM_RX_DATA_Q_ITEM_SIZE);
-
-    // Register callback for uart RX Bytes and TX Completed
- // TODO match with new class register type or something   myUART_Terminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
-  // myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
-
-    // Provide first RX buffer
-    pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE);
-    myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
-}
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:
-//
-//  Parameter(s):
-//
-//  Return:
-//
-//  Description:
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-int8_t Getc(char *c)
-{
-    static TERM_QueueDataInfo_t Q_DataRX;
-    static bool                 Processing = false;
-    static uint32_t             Pointer    = 0;
-
-    if(Processing == false)
-    {
-         if(Q_RX_Data.Receive(&Q_DataRX, NOS_NO_WAIT) == true)
-         {
-            Pointer      = 0;
-            Processing   = true;
-         }
-    }
-
-    // do we have something to process?
-    if(Processing == true)
-    {
-        *c = *(Q_DataRX.pBuffer + Pointer);
-        Pointer++;
-
-        if(Q_DataRX.Size == Pointer)     // this buffer has been extracted, free the block
-        {
-            Processing = false;
-            pMemoryPool->Free((void**)&Q_DataRX.pBuffer);
-        }
-
-        return 0;
-    }
-
-    return -1;
-}
-
-
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:
-//
-//  Parameter(s):
-//
-//  Return:
-//
-//  Description:
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-int Putc(const char c)
-{
-    printf("%c", c);
-    return 0;
-}
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -250,6 +71,8 @@ int Putc(const char c)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+// todo do my own version incorporated into digini and format.. if necessary
+
 void printFloat(float n, uint8_t decimal_places)
 {
     if(n < 0) {
@@ -350,6 +173,9 @@ void printFloat_RateValue(float n)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+
+// use digini console child process instead
+#if 0
 #if defined(__GNUC__)
 extern "C" int _write(int File, char* pBuf, int Length)
 //int _write(int File, char *pBuf, int Length)
@@ -418,4 +244,153 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
     // Return number of sent bytes
     return Length;
 }
+#endif
 
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           Initialize
+//
+//  Parameter(s):   None
+//  Return:         None
+//
+//  Description:
+//
+//  Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+void GRBL_Serial::Initialize(void)
+{
+    uint8_t* pBuffer;
+
+    // Create a queue capable of containing 10 uint64_t values.
+    Q_RX_Data.CreateQueue(&GetQueueArray[0], TERM_RX_DATA_Q_LENGTH, TERM_RX_DATA_Q_ITEM_SIZE);
+
+    // Register callback for uart RX Bytes and TX Completed
+    // TODO match with new class register type or something   myUART_Terminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
+  // myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
+
+    // Provide first RX buffer
+    pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE);
+    myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           ProcessRX
+//
+//  Parameter(s):   None
+//  Return:         None
+//
+//  Description:
+//
+//  Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+void GRBL_Serial::ProcessRX(void)
+{
+    uint8_t *            pBuffer;
+    UART_Variables_t*    pVariable;
+    TERM_QueueDataInfo_t Q_Data;
+
+    // See cli or vt100 for example
+
+    pVariable = myUART_Terminal.GetInfoRX();
+    Q_Data.Size    = pVariable->SizeRX;
+    Q_Data.pBuffer = pVariable->pBufferRX;
+
+    if(Q_Data.Size != 0)
+    {
+        if(GRBL_RealTimeCommand(*Q_Data.pBuffer) == true)
+        {
+            pMemoryPool->Free((void**)&Q_Data.pBuffer);
+        }
+        else
+        {
+            if(Q_RX_Data.Send(&Q_Data) != true)
+            {
+                pMemoryPool->Free((void**)&Q_Data.pBuffer);     // Discarded as the controller might stuck doing a job
+            }
+        }
+    }
+
+    if((pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE)) != nullptr)
+    {
+        myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
+        return;
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+//
+//  Name:           RealTimeCmd
+//
+//  Parameter(s):   RealTimeCommand             Character to be check
+//  Return:         IsItProcessed               - true      If character was a real time command
+//                                              - false     If not a valid real time command
+//
+//  Description:    Interpreter for GRBL real time command
+//
+//  Note(s):
+//
+//-------------------------------------------------------------------------------------------------
+bool GRBL_Serial::RealTimeCmd(char RealTimeCommand)
+{
+    bool IsItRealTime = true;
+
+    switch(RealTimeCommand)
+    {
+        case CMD_RESET:         MC_Reset();                                  break; // Call motion control reset routine.
+        case CMD_STATUS_REPORT: System_SetExecStateFlag(EXEC_STATUS_REPORT); break; // Set as true
+        case CMD_CYCLE_START:   System_SetExecStateFlag(EXEC_CYCLE_START);   break; // Set as true
+        case CMD_FEED_HOLD:     System_SetExecStateFlag(EXEC_FEED_HOLD);     break; // Set as true
+
+        // Real-time control characters extended ASCII only.
+        case CMD_SAFETY_DOOR:   System_SetExecStateFlag(EXEC_SAFETY_DOOR);   break; // Set as true
+        case CMD_JOG_CANCEL:
+        {
+            if(System.State & STATE_JOG)    // Block all other states from invoking motion cancel.
+            {
+                System_SetExecStateFlag(EXEC_MOTION_CANCEL);
+            }
+        }
+        break;
+
+        case CMD_FEED_OVR_RESET:            System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_RESET);              break;
+        case CMD_FEED_OVR_COARSE_PLUS:      System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_PLUS);        break;
+        case CMD_FEED_OVR_COARSE_MINUS:     System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_MINUS);       break;
+        case CMD_FEED_OVR_FINE_PLUS:        System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_PLUS);          break;
+        case CMD_FEED_OVR_FINE_MINUS:       System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_MINUS);         break;
+        case CMD_RAPID_OVR_RESET:           System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_RESET);             break;
+        case CMD_RAPID_OVR_MEDIUM:          System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_MEDIUM);            break;
+        case CMD_RAPID_OVR_LOW:             System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_LOW);               break;
+        case CMD_SPINDLE_OVR_RESET:         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_RESET);        break;
+        case CMD_SPINDLE_OVR_COARSE_PLUS:   System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_PLUS);  break;
+        case CMD_SPINDLE_OVR_COARSE_MINUS:  System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
+        case CMD_SPINDLE_OVR_FINE_PLUS:     System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_PLUS);    break;
+        case CMD_SPINDLE_OVR_FINE_MINUS:    System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
+        case CMD_SPINDLE_OVR_STOP:          System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);         break;
+        case CMD_COOLANT_FLOOD_OVR_TOGGLE:  System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
+        case CMD_COOLANT_MIST_OVR_TOGGLE:
+        {
+           if(Config.M7_Enable == true)
+           {
+               System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
+           }
+
+           // No break; we continue onto the default since M7 is not enabled
+        }
+
+        default:
+        {
+            if(RealTimeCommand < 0x80)
+            {
+                // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
+                // keeping only character that are not extended
+                IsItRealTime = false;
+            }
+        }
+        break;
+    }
+
+    return IsItRealTime;
+}

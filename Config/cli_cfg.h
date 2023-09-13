@@ -36,22 +36,11 @@
 #define CLI_STRING_SIZE                     32
 #define CLI_NUMBER_OF_SUPPORTED_PARAM       4
 #define CLI_NUMBER_OF_SECOND_FOR_STARTUP    10000                     // Startup will last 10 Seconds
-#define CLI_CMD_TIME_OUT                    5000                      // User has 5 seconds between character input while inputing an AT command
+#define CLI_CMD_TIME_OUT                    5000                      // User has 5 seconds between character input while inputing an CLI command
 
 // Number of parameter can be expanded, as needed
-#define X_CLI_CMD_DEF(X_CLI_CMD)   \
+#define X_CLI_USER_CMD_DEF(X_CLI_CMD)   \
 /*              ENUM_ID,        String,       Function,     Cmd Type,    Number,    Param1 -             Min1,    max1   Param2 -          Min2,   max2,     Param3 -              Min3,   max3,     Param4 -          Min4,   max4  */\
-    X_CLI_CMD ( CLI_HOLD,       "H",          CmdHOLD,      CLI_CMD_SP,  0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_RELEASE,    "R",          CmdRELEASE,   CLI_CMD_HP,  0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_MUTE,       "M",          CmdMUTE,      CLI_CMD_SP,  0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_UNMUTE,     "U",          CmdUNMUTE,    CLI_CMD_SP,  0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_VERSION,    "V",          CmdVERSION,   CLI_CMD_P,   0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_DEBUG,      "DBG",        CmdDBG_LEVEL, CLI_CMD_RW,  1,         BASE_HEXADECIMAL,     0x00,    0xFF,  0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-/* TODO generic command should be in the library and be enable by define */\
-\
-    X_CLI_CMD ( CLI_INFO,       "I",          CmdINFO,      CLI_CMD_P,   0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_RESET,      "RESET",      CmdRESET,     CLI_CMD_P,   0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
-    X_CLI_CMD ( CLI_STATUS,     "S",          CmdSTATUS,    CLI_CMD_P,   0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
     X_CLI_CMD ( CLI_TEST1,      "T1",         CmdTEST1,     CLI_CMD_RW,  0,         0,                    0,       0,     0,                0,      0,        0,                    0,      0,        0,                0,      0)     \
     X_CLI_CMD ( CLI_TEST2,      "T2",         CmdTEST2,     CLI_CMD_RW,  3,         BASE_DECIMAL,         0,       1,     BASE_DECIMAL,     0,      200,      BASE_DECIMAL,         10,     32000,    0,                0,      0)     \
     X_CLI_CMD ( CLI_TEST3,      "T3",         CmdTEST3,     CLI_CMD_RW,  4,         BASE_DECIMAL,         0,       3,     BASE_DECIMAL,     -300,   300,      BASE_HEXADECIMAL,     0x0000, 0xFFFF,   BASE_STRING,      0,      0)     \

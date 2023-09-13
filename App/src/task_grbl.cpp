@@ -208,7 +208,7 @@ nOS_Error ClassTaskGRBL::Initialize(void)
    // not sure if it is needed
     Report_InitializeMessage();
 
-    /*if(IsItInitialize == false)
+    if(IsItInitialize == false)
     {
         Error = nOS_ThreadCreate(&m_Handle,
                                  TaskGRBL_Wrapper,
@@ -217,10 +217,9 @@ nOS_Error ClassTaskGRBL::Initialize(void)
                                  TASK_GRBL_STACK_SIZE,
                                  TASK_GRBL_PRIO);
     }
-*/
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    //myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE, "GRBL");
+    myStacktistic.Register(&m_Stack[0], TASK_GRBL_STACK_SIZE, "GRBL");
   #endif
 
     return Error;
@@ -253,81 +252,9 @@ void ClassTaskGRBL::Run(void)
         Initialize();
 
         // Start Grbl-Advanced main loop. Processes program inputs and executes them.
-        Protocol_MainLoop();
+        //Protocol_MainLoop();
+        
+        nOS_Sleep(100);
     }
 }
 
-//-------------------------------------------------------------------------------------------------
-//
-//  Name:           GRBL_RealTimeCommand
-//
-//  Parameter(s):   RealTimeCommand             Character to be check
-//  Return:         IsItProcessed               - true      If character was a real time command
-//                                              - false     If not a valid real time command
-//
-//  Description:    Interpreter for GRBL real time command
-//
-//  Note(s):
-//
-//-------------------------------------------------------------------------------------------------
-bool GRBL_RealTimeCommand(char RealTimeCommand)
-{
-    bool IsItRealTime = true;
-
-    switch(RealTimeCommand)
-    {
-        case CMD_RESET:         MC_Reset();                                  break; // Call motion control reset routine.
-        case CMD_STATUS_REPORT: System_SetExecStateFlag(EXEC_STATUS_REPORT); break; // Set as true
-        case CMD_CYCLE_START:   System_SetExecStateFlag(EXEC_CYCLE_START);   break; // Set as true
-        case CMD_FEED_HOLD:     System_SetExecStateFlag(EXEC_FEED_HOLD);     break; // Set as true
-
-        // Real-time control characters extended ASCII only.
-        case CMD_SAFETY_DOOR:   System_SetExecStateFlag(EXEC_SAFETY_DOOR);   break; // Set as true
-        case CMD_JOG_CANCEL:
-        {
-            if(System.State & STATE_JOG)    // Block all other states from invoking motion cancel.
-            {
-                System_SetExecStateFlag(EXEC_MOTION_CANCEL);
-            }
-        }
-        break;
-
-        case CMD_FEED_OVR_RESET:            System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_RESET);              break;
-        case CMD_FEED_OVR_COARSE_PLUS:      System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_PLUS);        break;
-        case CMD_FEED_OVR_COARSE_MINUS:     System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_MINUS);       break;
-        case CMD_FEED_OVR_FINE_PLUS:        System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_PLUS);          break;
-        case CMD_FEED_OVR_FINE_MINUS:       System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_MINUS);         break;
-        case CMD_RAPID_OVR_RESET:           System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_RESET);             break;
-        case CMD_RAPID_OVR_MEDIUM:          System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_MEDIUM);            break;
-        case CMD_RAPID_OVR_LOW:             System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_LOW);               break;
-        case CMD_SPINDLE_OVR_RESET:         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_RESET);        break;
-        case CMD_SPINDLE_OVR_COARSE_PLUS:   System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_PLUS);  break;
-        case CMD_SPINDLE_OVR_COARSE_MINUS:  System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
-        case CMD_SPINDLE_OVR_FINE_PLUS:     System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_PLUS);    break;
-        case CMD_SPINDLE_OVR_FINE_MINUS:    System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
-        case CMD_SPINDLE_OVR_STOP:          System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);         break;
-        case CMD_COOLANT_FLOOD_OVR_TOGGLE:  System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
-        case CMD_COOLANT_MIST_OVR_TOGGLE:
-        {
-           if(Config.M7_Enable == true)
-           {
-               System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_MIST_OVR_TOGGLE);  break;
-           }
-
-           // No break; we continue onto the default since M7 is not enabled
-        }
-
-        default:
-        {
-            if(RealTimeCommand < 0x80)
-            {
-                // Throw away any unfound extended-ASCII character by not passing it to the serial buffer.
-                // keeping only character that are not extended
-                IsItRealTime = false;
-            }
-        }
-        break;
-    }
-
-    return IsItRealTime;
-}

@@ -40,12 +40,30 @@
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-void            TERM_Initialize         (void);
 void            printFloat              (float n, uint8_t decimal_places);
 int8_t          Getc                    (char *c);
 int             Putc                    (const char c);
 void            printFloat_CoordValue   (float n);
 void            printFloat_RateValue    (float n);
 extern "C" int  _write                  (int File, char* pBuf, int Length);
+
+
+class GRBL_Serial : public ChildProcessInterface
+{
+    public:
+
+   public:
+                            GRBL_Serial                 () {};
+
+        void                IF_Process                  (void);
+        nOS_Error           Initialize                  (Console* pConsole);
+        bool                RealTimeCommand             (char RealTimeCmd);
+
+    private:
+
+        void                ProcessRX                   (void);
+
+
+};
 
 //-------------------------------------------------------------------------------------------------

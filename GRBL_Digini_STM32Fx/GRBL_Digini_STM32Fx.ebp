@@ -271,6 +271,9 @@
 		<Unit filename="..\App\src\irq.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\App\src\lib_cli_user_command.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\App\src\main.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
