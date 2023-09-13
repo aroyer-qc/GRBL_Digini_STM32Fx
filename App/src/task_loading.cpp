@@ -94,7 +94,8 @@ nOS_Error ClassTaskLoading::Initialize(void)
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_Handle.stackPtr, &m_Stack[0], TASK_LOADING_STACK_SIZE, "No defined");
+    //myStacktistic.Register(&m_Handle.stackPtr, &m_Stack[0], TASK_LOADING_STACK_SIZE, "No defined");
+    myStacktistic.Register(&m_Stack[0], TASK_LOADING_STACK_SIZE, "No defined");
   #endif
 
     return Error;
