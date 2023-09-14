@@ -31,12 +31,17 @@
 #include "CoolantControl.h"
 #include "Protocol.h"
 #include "MotionControl.h"
-
 #include "GrIP.h"
-#include "Platform.h"
 #include "ServerTCP.h"
 
-#include "Print.h"
+// TODO replace by digini stuff temporary for compile
+#define Printf_Initialize()
+#define Printf(...)
+#define Printf_Float(...)
+#define Getc(...)
+#define Putc(...)
+#define Printf_Flush()
+
 
 
 // Line buffer size from the serial input stream to be executed.
@@ -112,7 +117,7 @@ void Protocol_MainLoop(void)
     {
         // Process one line of incoming serial data, as the data becomes available. Performs an
         // initial filtering by removing spaces and comments and capitalizing all letters.
-        while(Getc(&c) == 0)
+  // TODO alain royer remove for compiling debug version      while(Getc(&c) == 0)
         {
             if((c == '\n') || (c == '\r'))   // End of line reached
             {

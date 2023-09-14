@@ -36,13 +36,13 @@
 #define LABEL_LANGUAGE_DEF(X_LABEL)  \
     X_LABEL( LBL_OK,                     "Ok",                                          nullptr                                         ) \
     X_LABEL( LBL_OUTPUT,                 "Output",                                      "Sortie"                                        ) \
-    X_LABEL( LBL_CONTROLS,               "Controls",                                    "Contrôles"                                     ) \
-    X_LABEL( LBL_SYSTEM_SETUP,           "System Setup",                                "Configuration Système"                         ) \
+    X_LABEL( LBL_CONTROLS,               "Controls",                                    "Contr\x93les"                                  ) \
+    X_LABEL( LBL_SYSTEM_SETUP,           "System Setup",                                "Configuration Syst\x8ame"                      ) \
     X_LABEL( LBL_DIAGNOSTIC,             "Diagnostic",                                  "Diagnostique"                                  ) \
-    X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise à Niveau Logiciel"                        ) \
+    X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
     X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
-    X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Système"                                  ) \
-    X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Thématique          %%"                        ) \
+    X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Syst\x8ame"                               ) \
+    X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82 matique          %%"                    ) \
     X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                               nullptr                                         ) \
     X_LABEL( LBL_DATE,                   "%2d %02d %04d",                               nullptr                                         ) \
     X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
@@ -71,7 +71,7 @@
     X_LABEL( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
     X_LABEL( LBL_WARNINGS,               "Warnings",                                    "Alertes"                                       ) \
     X_LABEL( LBL_MEASURE,                "Measure",                                     "Mesure"                                        ) \
-    X_LABEL( LBL_REFERENCE,              "Reference",                                   "Réference"                                     ) \
+    X_LABEL( LBL_REFERENCE,              "Reference",                                   "R\x82" "ference"                               ) \
     X_LABEL( LBL_FUNCTIONS,              "Functions",                                   "Fonctions"                                     ) \
     X_LABEL( LBL_MODULES,                "Modules",                                     nullptr                                         ) \
     X_LABEL( LBL_AXIS_MM_BACK,           "-888.888",                                    nullptr                                         ) \
@@ -84,14 +84,14 @@
     X_LABEL( LBL_AXIS_B,                 "Axis B",                                      "Axe B"                                         ) \
     X_LABEL( LBL_AXIS_C,                 "Axis C",                                      "Axe C"                                         ) \
     X_LABEL( LBL_SPINDLE,                "Spindle",                                     "Broche"                                        ) \
-    X_LABEL( LBL_ENABLE,                 "Enabled",                                     "Activé"                                        ) \
+    X_LABEL( LBL_ENABLE,                 "Enabled",                                     "Activ\x82"                                     ) \
     X_LABEL( LBL_COOLANT,                "Coolant",                                     "Coolant"                                       ) \
     X_LABEL( LBL_MIST,                   "Mist",                                        "Mist"                                          ) \
     X_LABEL( LBL_SPEED_BACK,             "88888",                                       nullptr                                         ) \
     X_LABEL( LBL_SPEED,                  "%5ld",                                        nullptr                                         ) \
     X_LABEL( LBL_SPEED_FLOAT,            "%5.0f",                                       nullptr                                         ) \
-    X_LABEL( LBL_MIN_SPINDLE,            "Minimum Spindle Speed",                       "Vitesse Minimal de la broche"                  ) \
-    X_LABEL( LBL_MAX_SPINDLE,            "Maximum Spindle Speed",                       "Vitesse Maximal de la broche"                  ) \
+    X_LABEL( LBL_MIN_SPINDLE,            "Minimum Spindle Speed",                       "Vitesse Minimale de la broche"                 ) \
+    X_LABEL( LBL_MAX_SPINDLE,            "Maximum Spindle Speed",                       "Vitesse Maximale de la broche"                 ) \
     X_LABEL( LBL_RPM,                    "RPM",                                         nullptr                                         ) \
     X_LABEL( LBL_DRO,                    "DRO",                                         nullptr                                         ) \
     X_LABEL( LBL_TEST,                   "the quick brown fox jumps over the lazy dog", "portez ce vieux whisky au juge blond qui fume" ) \
@@ -100,35 +100,35 @@
     X_LABEL( LBL_XY_MAC,                 "XY",                                          nullptr                                         ) \
     X_LABEL( LBL_ZX_MAC,                 "ZX",                                          nullptr                                         ) \
     X_LABEL( LBL_XYZ_MAC,                "XYZ",                                         nullptr                                         ) \
-    X_LABEL( LBL_INPUT_CHECK,            "Diagnostic Input",                            "Diagnostique Entrée"                           ) \
-    X_LABEL( LBL_LIMIT_X,                "Input Limit X",                               "Entrée Limite X"                               ) \
-    X_LABEL( LBL_LIMIT_Y,                "Input Limit Y",                               "Entrée Limite Y"                               ) \
-    X_LABEL( LBL_LIMIT_Z,                "Input Limit Z",                               "Entrée Limite Z"                               ) \
-    X_LABEL( LBL_LIMIT_A,                "Input Limit A",                               "Entrée Limite A"                               ) \
-    X_LABEL( LBL_LIMIT_B,                "Input Limit B",                               "Entrée Limite B"                               ) \
-    X_LABEL( LBL_LIMIT_C,                "Input Limit C",                               "Entrée Limite C"                               ) \
-    X_LABEL( LBL_INPUT_ABORT,            "Input Abort",                                 "Entrée Avorter"                                ) \
-    X_LABEL( LBL_INPUT_RESUME,           "Input Resume",                                "Entrée Resumer"                                ) \
-    X_LABEL( LBL_INPUT_HOLD,             "Input Hold",                                  "Entrée Maintenir"                              ) \
-    X_LABEL( LBL_INPUT_PROBE,            "Input Probe",                                 "Entrée Sonde"                                  ) \
+    X_LABEL( LBL_INPUT_CHECK,            "Diagnostic Input",                            "Diagnostique Entr\x82" "e"                     ) \
+    X_LABEL( LBL_LIMIT_X,                "Input Limit X",                               "Entr\x82" "e Limite X"                         ) \
+    X_LABEL( LBL_LIMIT_Y,                "Input Limit Y",                               "Entr\x82" "e Limite Y"                         ) \
+    X_LABEL( LBL_LIMIT_Z,                "Input Limit Z",                               "Entr\x82" "e Limite Z"                         ) \
+    X_LABEL( LBL_LIMIT_A,                "Input Limit A",                               "Entr\x82" "e Limite A"                         ) \
+    X_LABEL( LBL_LIMIT_B,                "Input Limit B",                               "Entr\x82" "e Limite B"                         ) \
+    X_LABEL( LBL_LIMIT_C,                "Input Limit C",                               "Entr\x82" "e Limite C"                         ) \
+    X_LABEL( LBL_INPUT_ABORT,            "Input Abort",                                 "Entr\x82" "e Avorter"                          ) \
+    X_LABEL( LBL_INPUT_RESUME,           "Input Resume",                                "Entr\x82" "e Resumer"                          ) \
+    X_LABEL( LBL_INPUT_HOLD,             "Input Hold",                                  "Entr\x82" "e Maintenir"                        ) \
+    X_LABEL( LBL_INPUT_PROBE,            "Input Probe",                                 "Entr\x82" "e Sonde"                            ) \
     X_LABEL( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
     X_LABEL( LBL_INFO,                   "Information",                                 nullptr                                         ) \
     X_LABEL( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
     X_LABEL( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \
     X_LABEL( LBL_TEST_1,                 "Float",                                       "Flottant"                                      ) \
-    X_LABEL( LBL_TEST_2,                 "Decimal",                                     "Décimale"                                      ) \
+    X_LABEL( LBL_TEST_2,                 "Decimal",                                     "D\x82" "cimale"                                ) \
     X_LABEL( LBL_TEST_3,                 "Hexa",                                        nullptr                                         ) \
     X_LABEL( LBL_TEST_4,                 "String",                                      nullptr                                         ) \
-    X_LABEL( LBL_INPUT_DOOR,             "Input Safety Door",                           "Entrée Porte de Sureté"                        ) \
-    X_LABEL( LBL_INPUT_FEED,             "Input Feed",                                  "Entrée Feed"                                   ) \
-    X_LABEL( LBL_INPUT_START,            "Input Start",                                 "Entrée Démarrer"                               ) \
-    X_LABEL( LBL_INPUT_RESET,            "Input Reset",                                 "Entrée Remise à zéro"                          ) \
-    X_LABEL( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entrée E-Stop"                                 ) \
+    X_LABEL( LBL_INPUT_DOOR,             "Input Safety Door",                           "Entr\x82" "e Porte de Suret\x82"               ) \
+    X_LABEL( LBL_INPUT_FEED,             "Input Feed",                                  "Entr\x82" "e Feed"                             ) \
+    X_LABEL( LBL_INPUT_START,            "Input Start",                                 "Entr\x82" "e D\x82marrer"                      ) \
+    X_LABEL( LBL_INPUT_RESET,            "Input Reset",                                 "Entr\x82" "e Remise \x85 z\x82ro"              ) \
+    X_LABEL( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entr\x82" "e E-Stop"                           ) \
     /* Network label ( shared with VT100 also)*/ \
-    X_LABEL( LBL_NETWORK_INFO,           "Network Information",                         "Information Réseau"                            ) \
+    X_LABEL( LBL_NETWORK_INFO,           "Network Information",                         "Information R\x82seau"                         ) \
     X_LABEL( LBL_IP_ADDR,                "IPV4 Address . . . :",                        "Addresse IPV4  . . :"                          ) \
-    X_LABEL( LBL_IP_MASK,                "Subnet Masks . . . :",                        "Masque Sous-Réseau :"                          ) \
-    X_LABEL( LBL_IP_GATEWAY,             "Default Gateway  . :",                        "Passerelle Défaut  :"                          ) \
+    X_LABEL( LBL_IP_MASK,                "Subnet Masks . . . :",                        "Masque Sous-R\x82seau :"                       ) \
+    X_LABEL( LBL_IP_GATEWAY,             "Default Gateway  . :",                        "Passerelle D\x82" "faut  :"                    ) \
     X_LABEL( LBL_IP_DNS,                 "DNS Servers  . . . :",                        "Serveurs DNS . . . :"                          ) \
     X_LABEL( LBL_IP_DHCP_STATE,          "DHCP State . . . . :",                        "Status DHCP  . . . :"                          ) \
     X_LABEL( LBL_IP_LINK_STATE,          "Link State . . . . :",                        "Status Lien  . . . :"                          ) \

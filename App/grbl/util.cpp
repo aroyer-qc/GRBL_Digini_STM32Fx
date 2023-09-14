@@ -21,12 +21,22 @@
 #include "lib_digini.h"
 #include "Config.h"
 #include "Protocol.h"
-#include "Print.h"
 #include "System.h"
 #include "Settings.h"
 #include "util.h"
 
 #include "System32.h"
+
+
+
+// TODO replace by digini stuff temporary for compile
+#define Printf_Initialize()
+#define Printf(...)
+#define Printf_Float(...)
+#define Getc(...)
+#define Putc(...)
+#define Printf_Flush()
+
 
 
 #define MAX_INT_DIGITS 8 // Maximum number of digits in int32 (and float)

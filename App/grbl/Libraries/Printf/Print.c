@@ -2,11 +2,9 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
-#include "Print.h"
+//#include "Print.h"
 #include "Config.h"
 #include "GrIP.h"
-#include "Platform.h"
-
 
 #define MAX_BUFFER_SIZE     128
 

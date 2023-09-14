@@ -49,7 +49,7 @@
 #define DIGINI_USE_CMD_LINE                             DEF_ENABLED
 #define DIGINI_USE_VT100_MENU                           DEF_ENABLED
 
-#define DIGINI_USE_ETHERNET                             DEF_ENABLED
+#define DIGINI_USE_ETHERNET                             DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
@@ -62,13 +62,6 @@
 //
 
 #define DIGINI_USE_EEPROM			                    DEF_ENABLED
-
-//-------------------------------------------------------------------------------------------------
-// Multi language support
-//
-// Note: If it is DEF_ENABLED then you need to add to a database the item DIGINI_SYSTEM_LANGUAGE
-
-#define DIGINI_USE_MULTI_LANGUAGE_SUPPORT               DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // FAT FS Peripheral support

@@ -38,9 +38,19 @@
 #include "Stepper.h"
 #include "System.h"
 #include "Report.h"
-
-#include "Print.h"
 #include "System32.h"
+
+
+// TODO replace by digini stuff temporary for compile
+#define Printf_Initialize()
+#define Printf(...)
+#define Printf_Float(...)
+#define Getc(...)
+#define Putc(...)
+#define Printf_Flush()
+
+
+
 
 
 // Internal report utilities to reduce flash with repetitive tasks turned into functions.

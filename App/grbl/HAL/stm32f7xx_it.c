@@ -34,7 +34,6 @@
 #include "Settings.h"
 #include "Config.h"
 #include "MotionControl.h"
-#include "Platform.h"
 #include <stdbool.h>
 
 
