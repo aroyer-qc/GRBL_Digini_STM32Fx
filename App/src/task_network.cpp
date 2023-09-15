@@ -236,6 +236,7 @@ nOS_Error ClassNetwork::Initialize(void)
   #endif
 
     // Webserver task
+  /*
     Error = nOS_ThreadCreate(&m_WebServerHandle,
                              TaskWebServer_Wrapper,
                              this,
@@ -252,7 +253,7 @@ nOS_Error ClassNetwork::Initialize(void)
                              &m_NetworkStack[0],
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
-
+*/
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
     //myStacktistic.Register(&m_NetworkHandle.stackPtr,   &m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
     myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");

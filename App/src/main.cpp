@@ -48,11 +48,11 @@
 int main()
 {
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Initialize();                                 // Initialize the Stack Check process before any task
+    myStacktistic.Initialize();                             // Initialize the Stack Check process before any task
   #endif
 
     nOS_Init();
-    BSP_Initialize();               // All hardware and system initialization
+    BSP_Initialize();                                       // All hardware and system initialization
     //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
