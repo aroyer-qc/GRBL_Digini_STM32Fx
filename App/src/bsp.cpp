@@ -86,8 +86,9 @@
 // Const(s)
 //-------------------------------------------------------------------------------------------------
 
-// Offset to negative so right alignment work with size modification (Erasing zone handling fix)
 #if (DIGINI_USE_GRAFX == DEF_ENABLED)
+// Offset to negative so right alignment work with size modification (Erasing zone handling fix)
+// Since i cannot change the DIGITAL font from windows, I fix the offset here.
 const Font_e  DigitalFont[5]        =  { FT_DIGITAL_16, FT_DIGITAL_24, FT_DIGITAL_36, FT_DIGITAL_48, FT_DIGITAL_64};
 const uint8_t DigitalWidth[5]       =  { 10,            17,            22,            31,            40           };
 const uint8_t DigitalDotWidth[5]    =  { 4,             4,             8,             10,            12           };
@@ -154,8 +155,8 @@ void BSP_Initialize(void)
 //
 //  Note(s):        This is a patch
 //                      DS_Digital FONT does not handle fixed font properly, this patch override
-//                      position for each digit from 0 to 9, space and minus sign
-//                      Width is reset to fix value for all character
+//                      position for each digit from 0 to 9, space and minus sign.
+//                      Width is reset to fix value for all character.
 //
 //-------------------------------------------------------------------------------------------------
 #if (DIGINI_USE_GRAFX == DEF_ENABLED)
