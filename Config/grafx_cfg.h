@@ -39,9 +39,8 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define GRAFX_SKIN_FILENAME                       "grbl.skn"
-#define GRAFX_USE_A_SKIN
-#define GRAFX_USE_POINTING_DEVICE
+#define GRAFX_SKIN_FILENAME                     "grbl.skn"
+#define GRAFX_USE_POINTING_DEVICE               DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -105,21 +104,21 @@
 #endif
 #endif
 
-#ifdef GRAFX_USE_POINTING_DEVICE
+#if (GRAFX_USE_POINTING_DEVICE == DEF_ENABLED)
     #define GRAFX_PDI_SWAP_XY
     //#define GRAFX_PDI_INVERT_X
     //#define GRAFX_PDI_INVERT_Y
 #endif
 
-#define GRAFX_USE_LOAD_SKIN
+#define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
 #define GRAFX_USE_PDI_MULTI_EVENT                                                  // Enable support for Multi-touch
 //#define GRAFX_PDI_INTERRUPT_IO                                                   // Pointing device (touch) IRQ is not available on DISCO746
 
 
 //#define GRAFX_USE_TIMED_WIDGET
-//#define GRAFX_USE_FONT_SIZE_8
-//#define GRAFX_USE_FONT_SIZE_12
-#define GRAFX_USE_FONT_SIZE_16
+#define GRAFX_USE_FONT_SIZE_8                           DEF_DISABLED
+#define GRAFX_USE_FONT_SIZE_12                          DEF_DISABLED
+#define GRAFX_USE_FONT_SIZE_16                          DEF_ENABLED
 
 ///------------------------------------------------------------------------------------------------
 /// Color supported mode in this project
