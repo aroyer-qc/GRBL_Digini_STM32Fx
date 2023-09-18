@@ -49,7 +49,7 @@
 #define DIGINI_USE_CMD_LINE                             DEF_ENABLED
 #define DIGINI_USE_VT100_MENU                           DEF_ENABLED
 
-#define DIGINI_USE_ETHERNET                             DEF_ENABLED
+#define DIGINI_USE_ETHERNET                             DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
