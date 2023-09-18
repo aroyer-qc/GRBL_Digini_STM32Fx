@@ -263,7 +263,7 @@ nOS_Error ClassNetwork::Initialize(void)
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
-    dhcp_start(&m_NetIf);
+  //  dhcp_start(&m_NetIf);
 
     return Error;
 }

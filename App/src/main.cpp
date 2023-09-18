@@ -47,12 +47,19 @@
 //-------------------------------------------------------------------------------------------------
 int main()
 {
+    Language_e Language = LANG_FRENCH;
+
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
     myStacktistic.Initialize();                             // Initialize the Stack Check process before any task
   #endif
 
     nOS_Init();
     BSP_Initialize();                                       // All hardware and system initialization
+    nOS_Start();
+    BSP_PostOS_Initialize();
+
+    pTaskCOMM->Initialize();
+
     //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
@@ -60,11 +67,12 @@ int main()
   #endif
    // pTaskGRBL->Initialize();
 
-myLabel.SetLanguage(LANG_FRENCH);
+    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
+    myLabel.SetLanguage(Language);
 
-    nOS_Start();
-    BSP_PostOS_Initialize();
-    pTaskCOMM->Initialize();
+
+
+
 
   #ifdef DEBUG
     DateAndTime_t DateTime;

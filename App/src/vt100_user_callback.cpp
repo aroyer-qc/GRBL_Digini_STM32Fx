@@ -673,7 +673,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         pStr = &m_GenericString[0][0][0];
         GetStringInput(pStr, &InputID);             // Get the newly edit string
 
-        STR_strnstrip(pStr, strlen(pStr));          // Strip all trailing space
+        LIB_strnstrip(pStr, strlen(pStr));          // Strip all trailing space
 
         if(InputID == MISC_SETTING_SERIAL_NUMBER)
         {
