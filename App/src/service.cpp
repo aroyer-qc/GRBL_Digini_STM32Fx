@@ -59,13 +59,32 @@ Service type 7 - Return data to override position of a widget (Must be a memory 
 // Variable(s)
 //-------------------------------------------------------------------------------------------------`
 
-
 uint32_t    CoordinateSystem[5]       = {AXIS_COORD_SYSTEM_ABS, AXIS_COORD_SYSTEM_REL, AXIS_COORD_SYSTEM_MAC, AXIS_COORD_SYSTEM_ABS, AXIS_COORD_SYSTEM_MAC};
 bool        IsDisplayMachineEnable[5] = {true, true, false, true, false};
 
 uint32_t    Machine                   = (MACHINE_XYZ | MAC_AXIS_C);
 
 bool        IsTerminalEnabled         = false;
+
+//-------------------------------------------------------------------------------------------------
+// Support Function(s)
+//-------------------------------------------------------------------------------------------------`
+
+uint16_t GetIO_State(IO_ID_e LimitID)
+{
+    uint16_t State;
+
+    if(IO_IsItValid(LimitID) == true)
+    {
+        State = uint16_t(IO_GetInputPin(LimitID));
+    }
+    else
+    {
+        State = 2;  // Grayout
+    }
+
+    return State;
+}
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -507,6 +526,9 @@ static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubSer
 //
 //  Description:    This function return status on input
 //
+//  Note(s):        If IO is not defined, it will be grayout
+//                  TODO Might add further state control for enabled feature into setting menu!!
+//
 //-------------------------------------------------------------------------------------------------
 static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubService)
 {
@@ -515,85 +537,22 @@ static ServiceReturn_t* SERV_INPU(ServiceEvent_e* pServiceState, uint16_t SubSer
 
     switch(SubService)
     {
-        case 0:  State = uint16_t(IO_GetInputPin(IO_LIMIT_X));                 break;
-
-        case 1:
-        {
-          #ifdef GRBL_USE_AXIS_Y
-            State = uint16_t(IO_GetInputPin(IO_LIMIT_Y));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
-
-        case 2:
-        {
-          #ifdef GRBL_USE_AXIS_Z
-            State = uint16_t(IO_GetInputPin(IO_LIMIT_Z));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
-
-        case 3:
-        {
-          #ifdef GRBL_USE_LIMIT_A
-            State = uint16_t(IO_GetInputPin(IO_LIMIT_A));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
-
-        case 4:
-        {
-          #ifdef GRBL_USE_LIMIT_B
-            State = uint16_t(IO_GetInputPin(IO_LIMIT_B));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
-
-        case 5:
-        {
-          #ifdef GRBL_USE_LIMIT_C
-            State = uint16_t(IO_GetInputPin(IO_LIMIT_C));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
-
-        case 6:
-        {
-            State = uint16_t(IO_GetInputPin(IO_CONTROL_RESET));       // ABORT
-        }
-        break;
-
-        case 7:
-        {
-            State = uint16_t(IO_GetInputPin(IO_CONTROL_START));       // RESUME
-        }
-        break;
-
-        case 8:
-        {
-            State = uint16_t(IO_GetInputPin(IO_CONTROL_FEED));        // HOLD
-        }
-        break;
-
-        case 9:
-        {
-          #ifdef GRBL_USE_CONTROL_PROBE
-            State = uint16_t(IO_GetInputPin(IO_PROBE));
-          #else
-            State = 2;  // Grayout
-          #endif
-        }
-        break;
+        case 0:  State = GetIO_State(IO_LIMIT_X1);       break;
+        case 1:  State = GetIO_State(IO_LIMIT_Y1);       break;
+        case 2:  State = GetIO_State(IO_LIMIT_Z1);       break;
+        case 3:  State = GetIO_State(IO_LIMIT_A1);       break;
+        case 4:  State = GetIO_State(IO_LIMIT_B1);       break;
+        case 5:  State = GetIO_State(IO_LIMIT_C1);       break;
+        case 6:  State = GetIO_State(IO_LIMIT_X1);       break;
+        case 7:  State = GetIO_State(IO_LIMIT_Y1);       break;
+        case 8:  State = GetIO_State(IO_LIMIT_Z1);       break;
+        case 9:  State = GetIO_State(IO_LIMIT_A1);       break;
+        case 10: State = GetIO_State(IO_LIMIT_B1);       break;
+        case 11: State = GetIO_State(IO_LIMIT_C1);       break;
+        case 12: State = GetIO_State(IO_CONTROL_RESET);  break;
+        case 13: State = GetIO_State(IO_CONTROL_START);  break;
+        case 14: State = GetIO_State(IO_CONTROL_FEED);   break;
+        case 15: State = GetIO_State(IO_PROBE);          break;
     }
 
     if(*pServiceState != SERVICE_FINALIZE)

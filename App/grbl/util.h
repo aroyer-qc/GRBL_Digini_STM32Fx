@@ -40,27 +40,20 @@
 
 #define AXIS_MASK(A)                (1 << A)
 
-/*
-#define X_STEP_BIT                  0
-#define Y_STEP_BIT                  1
-#define Z_STEP_BIT                  2
-#define A_STEP_BIT                  3
-#define B_STEP_BIT                  4
-
-#define X_DIRECTION_BIT             0
-#define Y_DIRECTION_BIT             1
-#define Z_DIRECTION_BIT             2
-#define A_DIRECTION_BIT             3
-#define B_DIRECTION_BIT             4
-*/
-
-#define X1_LIMIT_BIT                0
-#define Y1_LIMIT_BIT                1
-#define Z1_LIMIT_BIT                2
-#define X2_LIMIT_BIT                3
-#define Y2_LIMIT_BIT                4
-#define Z2_LIMIT_BIT                5
-#define LIMIT_MASK                  ((1<<X1_LIMIT_BIT) | (1<<Y1_LIMIT_BIT) | (1<<Z1_LIMIT_BIT) | (1<<X2_LIMIT_BIT) | (1<<Y2_LIMIT_BIT) | (1<<Z2_LIMIT_BIT))
+#define X1_LIMIT_BIT                X_AXIS
+#define Y1_LIMIT_BIT                Y_AXIS
+#define Z1_LIMIT_BIT                Z_AXIS
+#define A1_LIMIT_BIT                A_AXIS
+#define B1_LIMIT_BIT                B_AXIS
+#define C1_LIMIT_BIT                C_AXIS
+#define X2_LIMIT_BIT                (X_AXIS + N_AXIS)
+#define Y2_LIMIT_BIT                (Y_AXIS + N_AXIS)
+#define Z2_LIMIT_BIT                (Z_AXIS + N_AXIS)
+#define A2_LIMIT_BIT                (A_AXIS + N_AXIS)
+#define B2_LIMIT_BIT                (B_AXIS + N_AXIS)
+#define C2_LIMIT_BIT                (C_AXIS + N_AXIS)
+#define LIMIT_MASK                  ((1 << X1_LIMIT_BIT) | (1 << Y1_LIMIT_BIT) | (1 << Z1_LIMIT_BIT) | (1 << A1_LIMIT_BIT) | (1 << B1_LIMIT_BIT) | (1 << C1_LIMIT_BIT) | \
+                                     (1 << X2_LIMIT_BIT) | (1 << Y2_LIMIT_BIT) | (1 << Z2_LIMIT_BIT) | (1 << A2_LIMIT_BIT) | (1 << B2_LIMIT_BIT) | (1 << C2_LIMIT_BIT))
 
 #define SPINDLE_ENABLE_BIT          0
 #define SPINDLE_DIRECTION_BIT       1

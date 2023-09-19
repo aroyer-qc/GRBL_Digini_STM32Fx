@@ -147,12 +147,18 @@ nOS_Error ClassTaskGRBL::Initialize(void)
 
     // ------------------------
     // Limit switch Input
-    IO_PinInit(IO_LIMIT_X);
-    IO_PinInit(IO_LIMIT_Y);
-    IO_PinInit(IO_LIMIT_Z);
-    IO_PinInit(IO_LIMIT_A);
-    IO_PinInit(IO_LIMIT_B);
-    //IO_PinInit(IO_LIMIT_C);
+    IO_PinInit(IO_LIMIT_X1);
+    IO_PinInit(IO_LIMIT_Y1);
+    IO_PinInit(IO_LIMIT_Z1);
+    IO_PinInit(IO_LIMIT_A1);
+    IO_PinInit(IO_LIMIT_B1);
+    IO_PinInit(IO_LIMIT_C1);
+    IO_PinInit(IO_LIMIT_X2);
+    IO_PinInit(IO_LIMIT_Y2);
+    IO_PinInit(IO_LIMIT_Z2);
+    IO_PinInit(IO_LIMIT_A2);
+    IO_PinInit(IO_LIMIT_B2);
+    IO_PinInit(IO_LIMIT_C2);
 
     // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
     Stepper_Initialize();       // timer!!
@@ -255,7 +261,7 @@ void ClassTaskGRBL::Run(void)
 
         // Start Grbl-Advanced main loop. Processes program inputs and executes them.
         //Protocol_MainLoop();
-        
+
         nOS_Sleep(100);
     }
 }

@@ -684,10 +684,5 @@ static void Planner_ComputeProfileParams(Planner_Block_t *block, float nominal_s
         block->max_entry_speed_sqr = nominal_speed*nominal_speed;
     }
 
-
-    // TODO use macro?
-    if(block->max_entry_speed_sqr > block->max_junction_speed_sqr)
-    {
-        block->max_entry_speed_sqr = block->max_junction_speed_sqr;
-    }
+    block->max_entry_speed_sqr = AbsMin(block->max_entry_speed_sqr, block->max_junction_speed_sqr);
 }

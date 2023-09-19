@@ -42,25 +42,17 @@
 
 void Limits_Initialize(void)
 {
-    IO_PinInit(IO_LIMIT_X);
-
-    if(Config.LatheModeEnable == false)
-    {
-        IO_PinInit(IO_LIMIT_Y);
-    }
-
-    IO_PinInit(IO_LIMIT_Z);
-
-#if 0
+    IO_PinInit(IO_LIMIT_X1);
     IO_PinInit(IO_LIMIT_X2);
 
     if(Config.LatheModeEnable == false)
     {
+        IO_PinInit(IO_LIMIT_Y1);
         IO_PinInit(IO_LIMIT_Y2);
     }
 
+    IO_PinInit(IO_LIMIT_Z1);
     IO_PinInit(IO_LIMIT_Z2);
-#endif
 
     // TODO: Hard limits via interrupt
     if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
@@ -84,38 +76,41 @@ void Limits_Disable(void)
 // Returns limit state as a bit-wise uint8 variable. Each bit indicates an axis limit, where
 // triggered is 1 and not triggered is 0. Invert mask is applied. Axes are defined by their
 // number in bit position, i.e. Z_AXIS is (1<<2) or bit 2, and Y_AXIS is (1<<1) or bit 1.
-uint8_t Limits_GetState(void)
+// Note(s): if IO is not define, limit reading will have no effect
+uint32_t Limits_GetState(void)
 {
-    uint8_t limit_state = 0;
+    uint32_t LimitState = 0;
 
-    limit_state  = (IO_GetOutputPin(IO_LIMIT_X) << X1_LIMIT_BIT);
+    LimitState  = uint32_t(IO_GetOutputPin(IO_LIMIT_X1)) << X1_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_X2)) << X2_LIMIT_BIT;
 
     if(Config.LatheModeEnable == false)
     {
-        limit_state |= (IO_GetOutputPin(IO_LIMIT_Y) << Y1_LIMIT_BIT);
+        LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_Y1)) << Y1_LIMIT_BIT;
+        LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_Y2)) << Y2_LIMIT_BIT;
     }
 
-    limit_state |= (IO_GetOutputPin(IO_LIMIT_Z) << Z1_LIMIT_BIT);
-
-    // Second limit
-/* TODO AR ... don't have pin on stm32f746 for more limit pin
-    limit_state |= (IO_GetOutputPin(GPIOC, GPIO_PIN_8) << X2_LIMIT_BIT);
-    limit_state |= (IO_GetOutputPin(GPIOC, GPIO_PIN_5) << Y2_LIMIT_BIT);
-    limit_state |= (IO_GetOutputPin(GPIOC, GPIO_PIN_6) << Z2_LIMIT_BIT);
-*/
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_Z1)) << Z1_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_Z2)) << Z2_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_A1)) << A1_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_A2)) << A2_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_B1)) << B1_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_B2)) << B2_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_C1)) << C1_LIMIT_BIT;
+    LimitState |= uint32_t(IO_GetOutputPin(IO_LIMIT_C2)) << C2_LIMIT_BIT;
 
     if(BIT_IS_FALSE(Settings.flags, BITFLAG_INVERT_LIMIT_PINS))
     {
-        limit_state ^= LIMIT_MASK;
+        LimitState ^= LIMIT_MASK;
     }
 
-    if(Config.LatheModeEnable == true)
-    {
-        // Clear Y-Limits in lathe mode
-        limit_state &= ~(1 << Y1_LIMIT_BIT | 1 << Y2_LIMIT_BIT);
-    }
+//    if(Config.LatheModeEnable == true)             why... already processed??
+//    {
+//        // Clear Y-Limits in lathe mode
+//        LimitState &= ~(1 << Y1_LIMIT_BIT | 1 << Y2_LIMIT_BIT);
+//    }
 
-    return limit_state;
+    return LimitState;
 }
 
 
@@ -143,10 +138,10 @@ void Limit_PinChangeISR(void) // DEFAULT: Limit pin change interrupt process.
         {
             if((Settings.system_flags & BITFLAG_FORCE_HARD_LIMIT_CHECK) !=0)
             {
-                uint8_t lim = Limits_GetState();
+                uint32_t Limits = Limits_GetState();
 
                 // Check limit pin state.
-                if(lim)
+                if(Limits != 0)
                 {
                     MC_Reset(); // Initiate system kill.
                     System_SetExecAlarm(EXEC_ALARM_HARD_LIMIT); // Indicate hard limit critical event
@@ -219,7 +214,8 @@ void Limits_GoHome(uint8_t cycle_mask)
     bool approach = true;
     float homing_rate = Settings.homing_seek_rate;
 
-    uint8_t limit_state, axislock, n_active_axis;
+    uint32_t Limit;
+    uint8_t axislock, n_active_axis;
     do
     {
         System_ConvertArraySteps2Mpos(target,sys_position);
@@ -302,12 +298,12 @@ void Limits_GoHome(uint8_t cycle_mask)
             if(approach)
             {
                 // Check limit state. Lock out cycle axes when they change.
-                limit_state = Limits_GetState();
+                Limit = Limits_GetState();
                 for(idx = 0; idx < N_AXIS; idx++)
                 {
                     if(axislock & step_pin[idx])
                     {
-                        if(limit_state & (1 << idx))
+                        if(Limit & (1 << idx))
                         {
                             if(Config.CoreXY_MachineEnable == true)
                             {
@@ -349,7 +345,7 @@ void Limits_GoHome(uint8_t cycle_mask)
                     System_SetExecAlarm(EXEC_ALARM_HOMING_FAIL_DOOR);
                 }
                 // Homing failure condition: Limit switch still engaged after pull-off motion
-                if(!approach && (Limits_GetState() & cycle_mask))
+                if((approach == 0) && (Limits_GetState() & cycle_mask))
                 {
                     System_SetExecAlarm(EXEC_ALARM_HOMING_FAIL_PULLOFF);
                 }

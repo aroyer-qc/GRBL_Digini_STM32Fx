@@ -150,8 +150,8 @@ void SysTick_Handler(void)
 	 * Therefore we just poll them in this 1ms task, which is hopefully fast
 	 * enough for critical events. Debouncing pins is also implemented here.
 	 */
-	uint8_t limits = Limits_GetState();
-	if(limits)
+	uint32_t limits = Limits_GetState();
+	if(limits != 0)
     {
 		// X-Y-Z Limit
 		if((DebounceCounterLimits == 0) && (Settings.system_flags & BITFLAG_ENABLE_LIMITS))
@@ -172,7 +172,7 @@ void SysTick_Handler(void)
 		}
 	}
 
-	if(DebounceCounterLimits && !limits)
+	if(DebounceCounterLimits && limits == 0)
     {
 		DebounceCounterLimits--;
 	}

@@ -85,7 +85,7 @@ NOS_ISR(EXTI9_5_IRQHandler)
     if((EXTI->PR & IO_PIN_MASK_8) != 0)
     {
         EXTI->PR = IO_PIN_MASK_8;
-        IO_CallBack(IO_ISR_LIMIT_Y);
+        IO_CallBack(IO_ISR_LIMIT_Y1);
     }
 
         EXTI->PR = IO_PIN_MASK_9;  // bug
@@ -115,7 +115,7 @@ NOS_ISR(EXTI15_10_IRQHandler)
     if((EXTI->PR & IO_PIN_MASK_15) != 0)
     {
         EXTI->PR = IO_PIN_MASK_15;
-        IO_CallBack(IO_ISR_LIMIT_X);    // It also serve IO_ISR_LIMIT_Z as they share EXTI15 line
+        IO_CallBack(IO_ISR_LIMIT_X1);    // It also serve IO_ISR_LIMIT_Z as they share EXTI15 line
     }
 }
 

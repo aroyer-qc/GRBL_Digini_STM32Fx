@@ -341,19 +341,31 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
         case VT100_CALLBACK_REFRESH:
         {
             // Temporary
-            myVT100.SetForeColor(IO_IsItValid(IO_LIMIT_X) ? VT100_COLOR_GREEN : VT100_COLOR_GREEN);
-            State = IO_GetInputPin(IO_LIMIT_X);
+            myVT100.SetForeColor(IO_IsItValid(IO_LIMIT_X1) ? VT100_COLOR_GREEN : VT100_COLOR_GREEN);
+            State = IO_GetInputPin(IO_LIMIT_X1);
             myVT100.InMenuPrintf(18, 11, LBL_CHAR, State ? '\254' : ' ');   // \254 is a full square font character
-            State = IO_GetInputPin(IO_LIMIT_Y);
+            State = IO_GetInputPin(IO_LIMIT_Y1);
             myVT100.InMenuPrintf(18, 12, LBL_CHAR, State ? '\254' : ' ');
-            State = IO_GetInputPin(IO_LIMIT_Z);
+            State = IO_GetInputPin(IO_LIMIT_Z1);
             myVT100.InMenuPrintf(18, 13, LBL_CHAR, State ? '\254' : ' ');
-            State = IO_GetInputPin(IO_LIMIT_A);
+            State = IO_GetInputPin(IO_LIMIT_A1);
             myVT100.InMenuPrintf(36, 11, LBL_CHAR, State ? '\254' : ' ');
-            State = IO_GetInputPin(IO_LIMIT_B);
+            State = IO_GetInputPin(IO_LIMIT_B1);
             myVT100.InMenuPrintf(36, 12, LBL_CHAR, State ? '\254' : ' ');
-            State = IO_GetInputPin(IO_LIMIT_C);
+            State = IO_GetInputPin(IO_LIMIT_C1);
             myVT100.InMenuPrintf(36, 13, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_X2);
+            myVT100.InMenuPrintf(22, 11, LBL_CHAR, State ? '\254' : ' ');   // \254 is a full square font character
+            State = IO_GetInputPin(IO_LIMIT_Y2);
+            myVT100.InMenuPrintf(22, 12, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_Z2);
+            myVT100.InMenuPrintf(22, 13, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_A2);
+            myVT100.InMenuPrintf(40, 11, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_B2);
+            myVT100.InMenuPrintf(40, 12, LBL_CHAR, State ? '\254' : ' ');
+            State = IO_GetInputPin(IO_LIMIT_C2);
+            myVT100.InMenuPrintf(40, 13, LBL_CHAR, State ? '\254' : ' ');
             State = IO_GetInputPin(IO_CONTROL_RESET);       // ABORT
             myVT100.InMenuPrintf(18, 14, LBL_CHAR, State ? '\254' : ' ');
             State = IO_GetInputPin(IO_CONTROL_START);       // RESUME

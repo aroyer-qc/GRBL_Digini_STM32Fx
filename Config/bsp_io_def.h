@@ -250,12 +250,18 @@
     X_IO( IO_DIR_A,             GPIOC,      6,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_B,             GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIR_C,             GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_X,           GPIOA,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_Y,           GPIOA,      8,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_Z,           GPIOB,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_A,           GPIOG,      9,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_B,           GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
-    X_IO( IO_LIMIT_C,           GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_X1,          GPIOA,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_Y1,          GPIOA,      8,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_Z1,          GPIOB,      15,     IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_A1,          GPIOG,      9,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_B1,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_C1,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_X2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_Y2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_Z2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_A2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_B2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
+    X_IO( IO_LIMIT_C2,          GPIOxx,     0,      IO_MODE_INPUT,        IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_OUT_1,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_OUT_2,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
     X_IO( IO_DIGITAL_OUT_3,     GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,          0)                \
@@ -297,7 +303,7 @@
     X_IO( IO_E2_WP,             GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_W5500_RESET,       GPIOxx,     0,      IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          1)                \
     X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
-    
+
 
 // Note(s) the pin IO_CALIB_OUT_DEBUG is only use in some debug case and must not be initialized on permanent base
 
@@ -323,10 +329,18 @@
 //-------------------------------------------------------------------------------------------------
 
 #define IO_IRQ_DEF(X_IO_IRQ) \
-  X_IO_IRQ(IO_ISR_LIMIT_X,        IO_LIMIT_X,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Y,        IO_LIMIT_Y,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Z,        IO_LIMIT_Z,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_A,        IO_LIMIT_A,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_X1,        IO_LIMIT_X1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_Y1,        IO_LIMIT_Y1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_Z1,        IO_LIMIT_Z1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_A1,        IO_LIMIT_A1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_B1,        IO_LIMIT_B1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_C1,        IO_LIMIT_C1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_X2,        IO_LIMIT_X1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_Y2,        IO_LIMIT_Y1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_Z2,        IO_LIMIT_Z1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_A2,        IO_LIMIT_A1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_B2,        IO_LIMIT_B1,        EXTI15_10_IRQn, IO_EXTI_TRIGGER_RISING_FALLING)  \
+  X_IO_IRQ(IO_ISR_LIMIT_C2,        IO_LIMIT_C1,        EXTI9_5_IRQn,   IO_EXTI_TRIGGER_RISING_FALLING)  \
 
 // IO_LIMIT_A is a fake limit switch
 

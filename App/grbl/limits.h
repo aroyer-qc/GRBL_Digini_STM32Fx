@@ -32,7 +32,7 @@ void Limits_Initialize(void);
 void Limits_Disable(void);
 
 // Returns limit state as a bit-wise uint8 variable.
-uint8_t Limits_GetState(void);
+uint32_t Limits_GetState(void);
 
 void Limit_PinChangeISR(void);
 

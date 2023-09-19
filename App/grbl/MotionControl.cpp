@@ -573,7 +573,7 @@ void MC_HomingCycle(uint8_t cycle_mask)
     // TODO: Move the pin-specific LIMIT_PIN call to limits.c as a function.
     if(Config.LimitSwitchAreTwoPerAxis == true)
     {
-        if(Limits_GetState())
+        if(Limits_GetState() != 0)
         {
             MC_Reset(); // Issue system reset and ensure Spindle and coolant are shutdown.
             System_SetExecAlarm(EXEC_ALARM_HARD_LIMIT);
