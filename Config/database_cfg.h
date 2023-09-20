@@ -71,12 +71,8 @@
     X_BKPREG_DBASE( TEST4,                  1,          1             )   \
     X_BKPREG_DBASE( TEST5,                  4,          4             )   \
 
-// TODO there is a mixup with the RTC cossin
-
-
-//                  Enum ID                     Driver,              Items QTY,        Items SubQTY     Item Size
-
 // Do not change position of SYSTEM_LANGUAGE and GRBL_SETTINGS_VERSION.
+//                  Enum ID                     Driver,              Items QTY,        Items SubQTY     Item Size
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
     X_EEPROM_DBASE( SYSTEM_LANGUAGE,            myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
     X_EEPROM_DBASE( GRBL_SETTINGS_VERSION,      myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
@@ -141,7 +137,7 @@ extern const uint32_t __user_ram_data_base__;
     X_ROM_DBASE( FIRMWARE_VERSION_TEXT, &OUR_FIRMWARE_VERSION[0],      1,                1,                 32/*sizeof(OUR_FIRMWARE_VERSION)    */ )   \
     X_ROM_DBASE( FW_GUI_NAME_TEXT,      &OUR_FIRMWARE_GUI_NAME[0],     1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_NAME)   */ )   \
     X_ROM_DBASE( FW_GUI_VERSION_TEXT,   &OUR_FIRMWARE_GUI_VERSION[0],  1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_VERSION)*/ )   \
-    X_ROM_DBASE( FW_BUILD_DATE_TEXT,    &OUR_BUILD_DATE[0],            1,                1,                 32/*sizeof(OUR_BUILD_DATE)         */  )   \
+    X_ROM_DBASE( FW_BUILD_DATE_TEXT,    &OUR_BUILD_DATE[0],            1,                1,                 32/*sizeof(OUR_BUILD_DATE)          */ )   \
 
 // System Database are record that are both in RAM ( cpu ram, board ram, nvram, backup register) and in rom (E2, etc..)
 // Also there is an interval and a start time to save them in E2 ( save can also be forced )

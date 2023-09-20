@@ -233,7 +233,7 @@ void Spindle_SetState(uint8_t state, float rpm)
         {
             if(state == SPINDLE_ENABLE_CCW)
             {
-                // TODO: May need to be rpm_min*(100/MAX_SPINDLE_SPEED_OVERRIDE);
+                // TODO: May need to be rpm_min * (100 / MAX_SPINDLE_SPEED_OVERRIDE);
                 rpm = 0.0;
             }
         }

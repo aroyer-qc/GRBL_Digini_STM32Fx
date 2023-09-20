@@ -83,7 +83,7 @@
 
 #define GRAFX_USE_MULTI_LINE
 
-#define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8           // TODO change this by next timing in widget config list
+#define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8
 
 #define GRAFX_USE_SLIDING_PAGE
 #define GRAFX_SLIDING_PAGE_GRANULARITY                  16          // Each step is 10 Pixel wide

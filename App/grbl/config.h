@@ -44,43 +44,11 @@
 #define BAUD_RATE   115200
 //#define BAUD_RATE 230400
 
-
-// Uncomment to use external I2C EEPROM
-#define USE_EXT_EEPROM
-
 // Uncomment for lathe mode
 //#define LATHE_MODE
 
 // NOTE: If VARIABLE_SPINDLE is enabled(default), this option has no effect as the PWM output and
 //#define VARIABLE_SPINDLE // Default enabled. Comment to disable.
-
-
-
-// This is not the way this GRBL version must work!!
-
-// this way of defining axis is easier for digini to handle axis display information (only choose one)
-//#define GRBL_MACHINE_USE_AXIS_XY      // Some plasma cutter setup (to be verified)
-//#define GRBL_MACHINE_USE_AXIS_XZ      // Lathe and some plasma cutter
-#define GRBL_MACHINE_USE_AXIS_XYZ       // Milling machine
-//#define GRBL_MACHINE_USE_AXIS_XYZA      // Milling machine with rotary axis
-
-#ifdef GRBL_MACHINE_USE_AXIS_XY
-#endif
-
-#ifdef GRBL_MACHINE_USE_AXIS_XZ
-#endif
-
-#ifdef GRBL_MACHINE_USE_AXIS_XYZ
-#endif
-
-#ifdef GRBL_MACHINE_USE_AXIS_XYZA
-#endif
-
-//Uncomment to enable.
-//#define GRBL_USE_AXIS_B
-//#define GRBL_USE_LIMIT_A
-//#define GRBL_USE_LIMIT_B
-//#define GRBL_USE_LIMIT_C
 
 #define GRBL_USE_COOLANT_FLOOD
 // for COOLANT MIST look for ENABLE_M7
