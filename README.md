@@ -19,7 +19,7 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >   * Digini graphics run parallel and independant of the main application, all graphics are handles via service.
 >   * Data are display by hooking to variables and/or by calling function(s), input are also done via variables and/or function(s). no graphic code exist in application.
 >   * Control over the application can be done via state machine and/or message at the discretion of the application user.
->   * Skin data is loaded from SD card via a skin file (.skn). to build a skin file you can used my application [GUI_Builder]([https://github.com/aroyer-qc/SkinGUI_Builder](https://github.com/aroyer-qc/GUI_Builder))
+>   * Skin data is loaded from SD card via a skin file (.skn). to build a skin file you can used my application [GUI_Builder](https://github.com/aroyer-qc/GUI_Builder)
 
   ## Widget list so far:
   
