@@ -1,6 +1,5 @@
 #pragma once
 
-#include "lib_digini.h"
 
 #define INT_MAX                         UINT32_MAX
 
@@ -72,5 +71,3 @@
 #define DHCP_DEBUG                      LWIP_DBG_ON
 #define UDP_DEBUG                       LWIP_DBG_ON
 #endif
-
-#define lwipPlatformDiag(...)           DEBUG_PrintSerialLog(CON_DEBUG_LEVEL_LWIP, __VA_ARGS__)
