@@ -1,0 +1,90 @@
+//-------------------------------------------------------------------------------------------------
+//
+//  File :  Skin_cfg.lst
+//
+//-------------------------------------------------------------------------------------------------
+//
+// Copyright(c) 2020 Alain Royer.
+// Email: aroyer.qc@gmail.com
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+// and associated documentation files (the "Software"), to deal in the Software without
+// restriction, including without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+// Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+// AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+//-------------------------------------------------------------------------------------------------
+//
+// Notes: List here all the image in the order they appear in the skin file
+//
+//-------------------------------------------------------------------------------------------------
+
+    BG_IMG,
+    GL_GRBL_LOGO,
+    BT_ORANGE_SQUARE,
+    BT_ORANGE_SQUARE_PR,
+    BT_SQUARE_GR,
+    BT_MENU,
+    BT_MENU_PR,
+    BT_MENU_GR,
+    GL_OK,
+    GL_OK_GR,
+    GL_CANCEL,
+    GL_CANCEL_PR,
+    GL_RETURN,
+    GL_LIMIT,
+    GL_MEASURE,
+    GL_MODULE,
+    GL_RANGE,
+    GL_REFERENCE,
+    GL_WARNING,
+    GL_INFO,
+    GL_DIAG,
+    GL_TOP_LEFT,
+    GL_TOP_RIGHT,
+    GL_BOTTOM_LEFT,
+    GL_BOTTOM_RIGHT,
+    GL_HORIZONTAL,
+    GL_VERTICAL,
+    GL_LED_RED_ON,
+    GL_LED_RED_OFF,
+    GL_LED_GREEN_ON,
+    GL_LED_GREEN_OFF,
+    GL_LED_YELLOW_ON,
+    GL_LED_YELLOW_OFF,
+    GL_LED_GRAY_OFF,
+    BT_SPHERE,
+    BT_SPHERE_PR,
+    BT_SPHERE_GR,
+    GL_A,
+    GL_A2,
+    GL_B,
+    GL_C,
+    GL_C2,
+    GL_XY,
+    GL_ZX,
+    GL_Z,
+    GL_TOOLS,
+    GL_CHECK_BOX,
+    GL_CHECK_BOX_PR,
+    GL_CHECK_BOX_GR,
+    BT_YELLOW,
+    BT_YELLOW_PR,
+    BT_YELLOW_GR,
+    BT_YELLOW_STD,
+    BT_YELLOW_STD_PR,
+    BT_YELLOW_STD_GR,
+    BT_YELLOW_LONG,
+    BT_YELLOW_LONG_PR,
+    BT_YELLOW_LONG_GR,
+    GL_UP,
+    GL_DOWN,
