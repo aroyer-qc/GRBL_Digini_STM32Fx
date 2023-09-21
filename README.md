@@ -19,8 +19,8 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
 >   * Digini graphics run parallel and independant of the main application, all graphics are handles via service.
 >   * Data are display by hooking to variables and/or by calling function(s), input are also done via variables and/or function(s). no graphic code exist in application.
 >   * Control over the application can be done via state machine and/or message at the discretion of the application user.
->   * Skin data is loaded from SD card via a skin file (.skn). to build a skin file you can used my application [SkinGUI_Builder](https://github.com/aroyer-qc/SkinGUI_Builder)
-  
+>   * Skin data is loaded from SD card via a skin file (.skn). to build a skin file you can used my application [GUI_Builder](https://github.com/aroyer-qc/GUI_Builder)
+
   ## Widget list so far:
   
 >    * Background widget to display background layer.
@@ -60,10 +60,17 @@ Digini is a HAL and GUI library written in embedded C++. It is highly optimized 
   ## Required Module:
   
 >    *   Digini                        (Branch Develop)
->    * module_FatFs                  (Branch main)
+>    *   module_FatFs                  (Branch main)
 >    *   module_jpg                    (Branch main)
->    * Module_Network_CMSIS_For_LWIP (WIP - Branch Main)
 >    *   lwip                          (Branch STABLE_2_1_x)
 >    *   module_picopng                (Branch main)
 >    *   module_STM32F7xx              (Branch main)
 >    *   nOS                           (Branch master)
+
+  ## Known issues
+  
+>    * Stepper not yet working, I need to test the STM32 timer and integrate them into the GRBL code.
+>    * Spindle not yet working, PWM need to be tested and integrated.
+>    * Cross exchange GRBL <-> GUI to be done..
+>    * A lot of graphic page to fix/complete.
+>    * Add sound capability to get some aptic feedback.
