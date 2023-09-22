@@ -207,6 +207,8 @@ nOS_Error ClassNetwork::Initialize(void)
 {
     nOS_Error Error;
 
+    lwipPlatformDiag("Initializing ClassNetwork\n");
+
     // Initialize the LwIP stack. Create tcp_ip stack thread
     tcpip_init(nullptr, nullptr);
 

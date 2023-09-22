@@ -410,7 +410,7 @@ void MC_UpdateSyncMove(void)
             // Apply
             Stepper_Ovr(out);
 
-            /*Printf("err %d\r", (int)(1000*in));
+            /*Printf("err %d\n", (int)(1000*in));
             Printf_Flush();*/
         }
     }

@@ -57,7 +57,6 @@ int main()
     BSP_Initialize();                                       // All hardware and system initialization
     nOS_Start();
     BSP_PostOS_Initialize();
-
     pTaskCOMM->Initialize();
 
     //pTaskLoading->Initialize();
@@ -69,10 +68,6 @@ int main()
 
     DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
     myLabel.SetLanguage(Language);
-
-
-
-
 
   #ifdef DEBUG
     DateAndTime_t DateTime;

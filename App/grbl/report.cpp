@@ -64,7 +64,6 @@ static void Report_SettingPrefix(uint8_t n)
 
 static void Report_LineFeed(void)
 {
-    Putc('\r');
     Putc('\n');
     Printf_Flush();
 }
@@ -135,13 +134,13 @@ void Report_StatusMessage(uint8_t status_code)
     switch(status_code)
     {
         case STATUS_OK: // STATUS_OK
-            Printf("ok\r");
+            Printf("ok\n");
             Printf_Flush();
             break;
 
         default:
             Printf("error:");
-            Printf("%d\r", status_code);
+            Printf("%d\n", status_code);
             Printf_Flush();
     }
 }
@@ -225,8 +224,8 @@ void Report_FeedbackMessage(uint8_t message_code)
 // Welcome message
 void Report_InitializeMessage(void)
 {
-    //Printf("\rGRBL-Advanced %s ['$' for help]\r", GRBL_VERSION);
-    Printf("\rGrbl %s [Advanced Edition | '$' for help]\r", GRBL_VERSION);
+    //Printf("\rGRBL-Advanced %s ['$' for help]\n", GRBL_VERSION);
+    Printf("\rGrbl %s [Advanced Edition | '$' for help]\n", GRBL_VERSION);
     Printf_Flush();
 }
 
@@ -234,8 +233,8 @@ void Report_InitializeMessage(void)
 // Grbl help message
 void Report_GrblHelp(void)
 {
-    Printf("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\r");
-    Printf("[GRBL-Advanced by Schildkroet]\r");
+    Printf("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\n");
+    Printf("[GRBL-Advanced by Schildkroet]\n");
     Printf_Flush();
 }
 
