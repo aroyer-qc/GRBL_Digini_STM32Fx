@@ -43,7 +43,7 @@
 
 #define MEM_SIZE                        8000                        // The size of the heap memory. If the application will send a lot of data that needs to be copied, this should be set high.
 #define TCP_SND_QUEUELEN                20                          // TCP_SND_QUEUELEN: TCP sender buffer space (pbufs). This must be at least as much as (2 * TCP_SND_BUF/TCP_MSS) for things to work.
-#define MEMP_NUM_TCP_SEG                TCP_SND_QUEUELEN            
+#define MEMP_NUM_TCP_SEG                TCP_SND_QUEUELEN
 #define TCP_OVERSIZE                    TCP_MSS                     // TCP_OVERSIZE: The maximum number of bytes that tcp_write may allocate ahead of time in an attempt to create shorter pbuf chains for transmission
                                                                     // The meaningful range is 0 to TCP_MSS. Some suggested values are:
                                                                     //      * 0:         Disable oversized allocation. Each tcp_write() allocates a new pbuf (old behaviour).
@@ -59,7 +59,7 @@
 #define TCP_RCV_SCALE                   2                           // Set TCP_RCV_SCALE to the desired scaling factor (shift count in the range of [0..14]).
 
 // PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. The default is designed to accommodate single full size TCP frame in one pbuf, including TCP_MSS, IP header, and link header.
-#define PBUF_POOL_SIZE                  LWIP_MEM_ALIGN_SIZE(TCP_MSS + 40 + PBUF_LINK_ENCAPSULATION_HLEN + PBUF_LINK_HLEN)
+#define PBUF_POOL_SIZE                  128 //LWIP_MEM_ALIGN_SIZE(TCP_MSS + 40 + PBUF_LINK_ENCAPSULATION_HLEN + PBUF_LINK_HLEN)
 
 #define ETHARP_SUPPORT_STATIC_ENTRIES   1
 

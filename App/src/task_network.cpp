@@ -35,22 +35,20 @@
 #define TASK_NETWORK_GLOBAL
 #include "task_network.h"
 #undef TASK_NETWORK_GLOBAL
-
-
 #include "ethernetif.h"
 #include "lwip/tcpip.h"
 #include "lwip/dhcp.h"
 #include "lwip/api.h"
 
-
-//#include "Ethernet.h"      TODO modify for lwip and lan8742...
-//#include "librairiGrIP.h"
-//#include "ServerTCP.h"
+//-------------------------------------------------------------------------------------------------
+// Private variable(s) and constant(s)
+//-------------------------------------------------------------------------------------------------
 
 u32_t nPageHits = 0;
 
-/* Format of dynamic web page: the page header */
-static const unsigned char PAGE_START[] = {
+// Format of dynamic web page: the page header
+static const unsigned char PAGE_START[] =
+{
 0x3c,0x21,0x44,0x4f,0x43,0x54,0x59,0x50,0x45,0x20,0x68,0x74,0x6d,0x6c,0x20,0x50,
 0x55,0x42,0x4c,0x49,0x43,0x20,0x22,0x2d,0x2f,0x2f,0x57,0x33,0x43,0x2f,0x2f,0x44,
 0x54,0x44,0x20,0x48,0x54,0x4d,0x4c,0x20,0x34,0x2e,0x30,0x31,0x2f,0x2f,0x45,0x4e,
@@ -153,12 +151,6 @@ static const unsigned char PAGE_START[] = {
 0x61,0x67,0x65,0x20,0x68,0x69,0x74,0x73,0x3a,0x0d,0x0a,0x00};
 
 //-------------------------------------------------------------------------------------------------
-// Private variable(s) and constant(s)
-//-------------------------------------------------------------------------------------------------
-
-//uint8_t MAC[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
-
-//-------------------------------------------------------------------------------------------------
 //
 //   Static Variables
 //
@@ -209,29 +201,10 @@ nOS_Error ClassNetwork::Initialize(void)
 
     lwipPlatformDiag("Initializing ClassNetwork\n");
 
-    // Initialize the LwIP stack. Create tcp_ip stack thread
-    tcpip_init(nullptr, nullptr);
-
-    // Initialize the LwIP stack and configure the network interface
-    ip_addr_t IP_Address;
-    ip_addr_t SubnetMask;
-    ip_addr_t GatewayIP;
-
-  //#if !LWIP_DHCP  maybe should set a default value
-    // use IP from ethernet_cfg.h
-    IP_ADDR4(&IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);
-    IP_ADDR4(&SubnetMask, ETH_SUBNET_MASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
-    IP_ADDR4(&GatewayIP,  ETH_GATEWAY_IP_ADDR0,  ETH_GATEWAY_IP_ADDR1,  ETH_GATEWAY_IP_ADDR2,  ETH_GATEWAY_IP_ADDR3);
-  //#endif
-
-    // Add the network interface
-    netif_add(&m_NetIf, &IP_Address, &SubnetMask, &GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
-
-    // Registers the default network interface
-    netif_set_default(&m_NetIf);
-
-    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
-    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
+    // Use IP from ethernet_cfg.h
+    IP_ADDR4(&m_IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);
+    IP_ADDR4(&m_SubnetMask, ETH_SUBNET_MASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
+    IP_ADDR4(&m_GatewayIP,  ETH_GATEWAY_IP_ADDR0,  ETH_GATEWAY_IP_ADDR1,  ETH_GATEWAY_IP_ADDR2,  ETH_GATEWAY_IP_ADDR3);
 
   #if LWIP_NETIF_LINK_CALLBACK
   //  netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
@@ -248,14 +221,14 @@ nOS_Error ClassNetwork::Initialize(void)
 
     // tcp echo server Init
     //TCP_EchoServerInitialize();
-
+  */
     Error = nOS_ThreadCreate(&m_NetworkHandle,
                              TaskNetwork_Wrapper,
                              this,
                              &m_NetworkStack[0],
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
-*/
+
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
     //myStacktistic.Register(&m_NetworkHandle.stackPtr,   &m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
     myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
@@ -293,6 +266,18 @@ void ClassNetwork::Network(void)
     void*           data;
     u16_t           len;
     err_t           recv_err;
+
+    // Add the network interface
+    netif_add(&m_NetIf, &m_IP_Address, &m_SubnetMask, &m_GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
+
+    // Registers the default network interface
+    netif_set_default(&m_NetIf);
+
+    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
+    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
+
+    // Initialize the LwIP stack. Create tcp_ip stack thread
+    tcpip_init(nullptr, nullptr);
 
 for(;;)
 { nOS_Sleep(100);}

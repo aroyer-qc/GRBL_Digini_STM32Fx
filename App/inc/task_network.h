@@ -88,6 +88,10 @@ class ClassNetwork
     static nOS_Thread      m_NetworkHandle;
     static nOS_Stack       m_NetworkStack       [TASK_NETWORK_STACK_SIZE];
 
+    ip_addr_t              m_IP_Address;
+    ip_addr_t              m_SubnetMask;
+    ip_addr_t              m_GatewayIP;
+
     struct netconn*        m_WebServerConn;
     struct netconn*        m_WebServerNewConn;
     struct netif           m_NetIf;
