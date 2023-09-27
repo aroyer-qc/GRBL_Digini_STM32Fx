@@ -3,7 +3,10 @@
 
 #define INT_MAX                         UINT32_MAX
 
+#define DEFAULT_THREAD_PRIO             3
 #define DEFAULT_THREAD_STACKSIZE        2048
+
+#define TCPIP_THREAD_PRIO               3
 #define TCPIP_THREAD_STACKSIZE          2048
 
 #define NO_SYS                          0                           // NO_SYS==0: Use lwIP with OS-awareness
