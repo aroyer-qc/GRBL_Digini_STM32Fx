@@ -234,7 +234,6 @@ void Report_InitializeMessage(void)
 void Report_GrblHelp(void)
 {
     Printf("[HLP:$$ $# $G $I $N $x=val $Nx=line $J=line $SLP $C $X $H ~ ! ? ctrl-x]\n");
-    Printf("[GRBL-Advanced by Schildkroet]\n");
     Printf_Flush();
 }
 
