@@ -43,8 +43,6 @@
     X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
     X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Syst\x8ame"                               ) \
     X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
-    X_LABEL( LBL_TIME,                   "%2d:%02d:%02d",                               nullptr                                         ) \
-    X_LABEL( LBL_DATE,                   "%2d %02d %04d",                               nullptr                                         ) \
     X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
     X_LABEL( LBL_0,                      "0",                                           nullptr                                         ) \
     X_LABEL( LBL_1,                      "1",                                           nullptr                                         ) \

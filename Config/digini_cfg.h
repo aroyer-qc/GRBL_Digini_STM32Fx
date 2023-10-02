@@ -78,7 +78,7 @@
 // GRAFX Configuration
 //
 
-#define DIGINI_USE_GRAFX                                DEF_DISABLED
+#define DIGINI_USE_GRAFX                                DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 // CRC Configuration

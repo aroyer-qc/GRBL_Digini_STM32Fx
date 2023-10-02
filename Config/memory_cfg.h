@@ -48,7 +48,7 @@
 
 //               Enum ID             Memory Group Name   Allocation Group Name   Nb of block     Size of block
 #define MEM_BLOCK_DEF(X_MEM_BLOCK)\
-    X_MEM_BLOCK( MEM_BLOCK,          Block,              AllocBlock,             32,            16U              )\
+    X_MEM_BLOCK( MEM_BLOCK,          Block,              AllocBlock,             64,            16U              )\
     X_MEM_BLOCK( MEM_BLOCK_0,        Block_0,            AllocBlock_0,           64,            64U              )\
     X_MEM_BLOCK( MEM_BLOCK_1,        Block_1,            AllocBlock_1,           64,            128U             )\
     X_MEM_BLOCK( MEM_BLOCK_2,        Block_2,            AllocBlock_2,           64,            256U             )\
