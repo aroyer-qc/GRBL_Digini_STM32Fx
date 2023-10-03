@@ -273,7 +273,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
 {
     bool    State;
     //int32_t Temperature;
-    uint8_t VerticalOffset;
+   // uint8_t VerticalOffset;
 
     VAR_UNUSED(Input);
 
@@ -410,8 +410,8 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
             VT100_PrintVoltage(28, VerticalOffset++, 4200);
             VT100_PrintVoltage(28, VerticalOffset++, 301);
 */
-            VerticalOffset += 3;
-            myVT100.SetCursorPosition(28, VerticalOffset++);
+ //           VerticalOffset += 3;
+ //           myVT100.SetCursorPosition(28, VerticalOffset++);
             if(1)//IO_Ctrl(IO_EXT_SWITCH, STATE_READ) == STATE_SET)
             {
                 myVT100.SetColor(VT100_COLOR_BLACK, VT100_COLOR_GREEN);

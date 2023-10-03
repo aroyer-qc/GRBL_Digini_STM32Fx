@@ -80,8 +80,6 @@
     X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Num\x82ro de S\x82rie"            ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SD_CARD_INFORMATION,              "SD-Card Information",                    "Information Carte SD"                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MEM_POOL_GROUP,                   "Group %d: %u X %u Bytes",                "Groupe %d %u X %u Bytes"                     ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MEM_BLOCK_USED,                   "Used Blocks : %u  Highest : %u  ",       "Blks Utilis\x82s: %u  Haut : %u  "           ) \
 
 
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro

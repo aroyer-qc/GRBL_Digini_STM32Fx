@@ -63,11 +63,13 @@ static IO_ID_e DigitalInputList[8] =
     IO_DIGITAL_IN_5, IO_DIGITAL_IN_6, IO_DIGITAL_IN_7, IO_DIGITAL_IN_8
 };
 
+/*
 static IO_ID_e AnalogOutputList[10] =
 {
     IO_ANALOG_OUT_1, IO_ANALOG_OUT_2, IO_ANALOG_OUT_3, IO_ANALOG_OUT_4, IO_ANALOG_OUT_5,
     IO_ANALOG_OUT_6, IO_ANALOG_OUT_7, IO_ANALOG_OUT_8, IO_ANALOG_OUT_9, IO_ANALOG_OUT_10
 };
+*/
 
 static Parser_Block_t gc_block;
 

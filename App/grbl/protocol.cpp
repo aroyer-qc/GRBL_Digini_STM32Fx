@@ -117,6 +117,8 @@ void Protocol_MainLoop(void)
     {
         // Process one line of incoming serial data, as the data becomes available. Performs an
         // initial filtering by removing spaces and comments and capitalizing all letters.
+       c = '\0';
+
        // while(Getc(&c) == 0)
         {
             if((c == '\n') || (c == '\r'))   // End of line reached
