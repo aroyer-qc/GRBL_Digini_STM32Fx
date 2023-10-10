@@ -433,9 +433,9 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
 
 //-------------------------------------------------------------------------------------------------
 //
-//  Name:           CALLBACK_MiscCfg
+//  Name:           CALLBACK_NetworkInfo
 //
-//  Description:    Menu setting configuration for orphan item
+//  Description:    Menu information about network
 //
 //  Note(s):
 //
@@ -517,9 +517,9 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+/*
 VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBackType_e Type)
 {
-    /*
     static int16_t  TemperatureAlarmLow;
     static int16_t  TemperatureAlarmHigh;
     static uint16_t BackupBatteryLowVoltage;
@@ -818,10 +818,10 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
             InMenuPrintf(VT100_STRING_SZ, &m_GenericString[3][0][0]);
         }
     }
-*/
+
     return VT100_INPUT_MENU_CHOICE;
 }
-
+*/
 //-------------------------------------------------------------------------------------------------
 
 #endif // (DIGINI_USE_VT100_MENU == DEF_ENABLED)

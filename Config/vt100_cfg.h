@@ -80,6 +80,10 @@
     X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Num\x82ro de S\x82rie"            ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SD_CARD_INFORMATION,              "SD-Card Information",                    "Information Carte SD"                        ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SELECT_LANGUAGE,                  "Toggle Language:",                       "Basculer de Langage:"                        ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_LANGUAGE_SELECTION,               "English   ( )  French    ( )",           "Anglais   ( )  Fran\x87" "ais  ( )"          ) \
+
+// TODO move all generic menu to  Lib_vt100_label.h
 
 
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro
@@ -90,12 +94,13 @@
 #define COMPARE_MenuStackUsage(x)       x
 #define COMPARE_MenuNetwork(x)          x
 #define COMPARE_MenuMiscStatistic(x)    x
+#define COMPARE_MenuSystemSetting(x)    x
 #define COMPARE_MenuDebug(x)    	    x
-#define COMPARE_MenuTest(x)     	    x
 #define COMPARE_MenuSD_Card(x)     	    x
-#define COMPARE_MenuSetting(x)		    x
-#define COMPARE_MenuSettingTime(x)      x
-#define COMPARE_MenuSetMisc(x) 		    x
+
+//#define COMPARE_MenuTest(x)     	    x
+//#define COMPARE_MenuSetting(x)		    x
+//#define COMPARE_MenuSettingTime(x)      x
 
 // Define here all the menu and sub menu you will use in the VT100 terminal
 #define VT100_MENU_DEF(ENTRY)  \
@@ -106,6 +111,7 @@
     ENTRY(MenuStackUsage     ) \
     ENTRY(MenuNetwork        ) \
     ENTRY(MenuMiscStatistic  ) \
+    ENTRY(MenuSystemSetting  ) \
     ENTRY(MenuDebug          ) \
     ENTRY(MenuSD_Card        ) \
 
@@ -113,7 +119,6 @@
 #define VT100_MENU_DEF_NU(ENTRY)\
     ENTRY(MenuTest           ) \
     ENTRY(MenuSetting        ) \
-    ENTRY(MenuSetMisc        ) \
     ENTRY(MenuSettingTime    ) \
 
 
@@ -123,12 +128,12 @@
     ENTRY(CALLBACK_ProductInformation ) \
     ENTRY(CALLBACK_StackUsage         ) \
     ENTRY(CALLBACK_NetworkInfo        ) \
-    ENTRY(CALLBACK_MiscStatistic      ) \
     ENTRY(CALLBACK_DebugLevelSetting  ) \
-    ENTRY(CALLBACK_TimeDateCfg        ) \
-    ENTRY(CALLBACK_MiscCfg            ) \
+    ENTRY(CALLBACK_MiscStatistic      ) \
+    ENTRY(CALLBACK_SystemSetting      ) \
     ENTRY(CALLBACK_InputReading       ) \
     ENTRY(CALLBACK_SD_CardInformation ) \
+    ENTRY(CALLBACK_TimeDateCfg        ) \
 
 
 // Here you define how you will navigate in the menu tree and action associated with them                   1st item of a menu
@@ -145,6 +150,7 @@
         ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   VT100_LBL_STACKTISTIC                           ) \
         ENTRY  (MENU,  MenuMain,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) \
         ENTRY  (MENU,  MenuMain,          ID_MISC_STAT,            CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             ) \
+        ENTRY  (MENU,  MenuMain,          ID_MISC_SETTING,         CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) \
         ENTRY  (MENU,  MenuMain,          ID_SD_CARD_MENU,         CALLBACK_None,                           MenuSD_Card,                      VT100_LBL_SD_CARD_INFORMATION                   ) \
 \
@@ -153,16 +159,22 @@
         ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   VT100_LBL_STACKTISTIC                           ) \
         ENTRY  (MENU,  MenuBoot,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) \
         ENTRY  (MENU,  MenuBoot,          ID_MISC_STAT,            CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             ) \
+        ENTRY  (MENU,  MenuBoot,          ID_MISC_SETTING,         CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) \
         ENTRY  (MENU,  MenuBoot,          ID_SD_CARD_MENU,         CALLBACK_None,                           MenuSD_Card,                      VT100_LBL_SD_CARD_INFORMATION                   ) \
 \
-        ENTRY  (MENU,  MenuInfo,          ID_INFO_DISPLAY,         CALLBACK_ProductInformation,             MenuRedirection,                  VT100_LBL_SYSTEM_INFO                           ) \
+        ENTRY  (MENU,  MenuInfo,          ID_INFO_STACK,           CALLBACK_ProductInformation,             MenuRedirection,                  VT100_LBL_SYSTEM_INFO                           ) \
 \
         ENTRY  (MENU,  MenuStackUsage,    ID_INFO_DISPLAY,         CALLBACK_StackUsage,                     MenuRedirection,                  VT100_LBL_STACKTISTIC                           ) \
 \
         ENTRY  (MENU,  MenuNetwork,       ID_NETWORK_INFO,         CALLBACK_NetworkInfo,                    MenuRedirection,                  LBL_NETWORK_INFO                                ) \
 \
         ENTRY  (MENU,  MenuMiscStatistic, ID_MISC_STAT,            CALLBACK_MiscStatistic,                  MenuRedirection,                  VT100_LBL_MISC_STAT                             ) \
+\
+        ENTRY  (MENU,  MenuSystemSetting, ID_SYSTEM_SETTING,       CALLBACK_SystemSetting,                  MenuRedirection,                  VT100_LBL_SYSTEM_SETTING                        ) \
+        ENTRY  (MENU,  MenuSystemSetting, ID_SYSTEM_LANGUAGE,      CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_LANGUAGE_SELECTION                    ) \
+        ENTRY  (MENU,  MenuSystemSetting, ID_MISC_SERIAL_NUMBER,   CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_SERIAL_NUMBER_SETTING                 ) \
+        ENTRY  (MENU,  MenuSystemSetting, ID_MISC_SAVE,            CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_SAVE_CONFIGURATION                    ) \
 \
         ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,         CALLBACK_SD_CardInformation,             MenuRedirection,                  VT100_LBL_SD_CARD_INFORMATION                   ) \
 \
@@ -194,12 +206,6 @@
         ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,         CALLBACK_None,                           MenuSetting,                      VT100_LBL_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,            CALLBACK_None,                           MenuTest,                         VT100_LBL_TEST                                  ) \
         ENTRY  (MENU,  MenuBoot,          ID_TEST_MISC,            CALLBACK_None,                           MenuSetMisc,                      VT100_LBL_MISCELLEANEOUS                        ) \
-\
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_TITLE,           CALLBACK_MiscCfg,                        MenuSetting,                      VT100_LBL_MISC_CONFIG_MENU                      ) \
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_OPT1,            CALLBACK_MiscCfg,                        MenuSetMisc,                      VT100_LBL_HOUR                                  ) \
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_OPT2,            CALLBACK_MiscCfg,                        MenuSetMisc,                      VT100_LBL_HOUR                                  ) \
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_SERIAL_NUMBER,   CALLBACK_MiscCfg,                        MenuSetMisc,                      VT100_LBL_SERIAL_NUMBER_SETTING                 ) \
-        ENTRY  (MENU,  MenuSetMisc,       ID_MISC_SAVE,            CALLBACK_MiscCfg,                        MenuSetMisc,                      VT100_LBL_SAVE_CONFIGURATION                    ) \
 \
         ENTRY  (MENU,  MenuSetting,       ID_SETTING_TITLE,        CALLBACK_None,                           MenuRedirection,                  VT100_LBL_SYSTEM_SETTING_MENU                   ) \
         ENTRY  (MENU,  MenuSetting,       ID_MISC_MENU,            CALLBACK_None,                           MenuSetMisc,                      VT100_LBL_MISCELLEANEOUS                        ) \

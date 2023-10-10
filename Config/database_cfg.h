@@ -75,12 +75,12 @@
 //                  Enum ID                     Driver,              Items QTY,        Items SubQTY     Item Size
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
     X_EEPROM_DBASE( SYSTEM_LANGUAGE,            myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
-    X_EEPROM_DBASE( GRBL_SETTINGS_VERSION,      myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( SYSTEM_SETTINGS_VERSION,    myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( SYSTEM_OEM_MODEL_NAME,      myE2_Setting,        1,                1,               sizeof(OEM_MODEL_NAME)     ) \
+    X_EEPROM_DBASE( SYSTEM_SERIAL_NUMBER,       myE2_Setting,        1,                1,               sizeof(OEM_SERIAL_NUMBER)  ) \
     X_EEPROM_DBASE( GRBL_CONFIGURATION,         myE2_Setting,        1,                1,               sizeof(Config_t)           ) \
     X_EEPROM_DBASE( GRBL_BUILD_INFO,            myE2_Setting,        1,                1,               STARTUP_LINE_LEN           ) \
     X_EEPROM_DBASE( GRBL_BUILD_INFO_CHKSUM,     myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
-    X_EEPROM_DBASE( GRBL_OEM_MODEL_NAME,        myE2_Setting,        1,                1,               sizeof(OEM_MODEL_NAME)     ) \
-    X_EEPROM_DBASE( GRBL_OEM_SERIAL_NUMBER,     myE2_Setting,        1,                1,               sizeof(OEM_SERIAL_NUMBER)  ) \
     X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,       myE2_Setting,        1,                1,               sizeof(Settings_t)         ) \
     X_EEPROM_DBASE( GRBL_TOOL_TABLE,            myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)       ) \
     X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,         myE2_Setting,        N_STARTUP_LINE,   1,               STARTUP_LINE_LEN           ) \
