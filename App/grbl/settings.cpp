@@ -79,7 +79,7 @@ void Settings_WriteCoordData(uint8_t CoordSelect, float *coord_data)
 void WriteGlobalSettings(void)
 {
     uint8_t Version = SETTINGS_VERSION;
-    DB_Central.Set(&Version, GRBL_SETTINGS_VERSION);
+    DB_Central.Set(&Version, SYSTEM_SETTINGS_VERSION);
     DB_Central.Set(&Settings, GRBL_GLOBAL_SETTINGS);
 }
 
@@ -296,7 +296,7 @@ uint8_t ReadGlobalSettings()
     // Check version-byte of eeprom
     uint8_t Version;
 
-    DB_Central.Get(&Version, GRBL_SETTINGS_VERSION);
+    DB_Central.Get(&Version, SYSTEM_SETTINGS_VERSION);
 
     if(Version == SETTINGS_VERSION)
     {

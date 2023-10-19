@@ -65,7 +65,7 @@ int main()
    // pTaskGRBL->Initialize();
 
 //    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
-    Language_e Language =     LANG_FRENCH;
+    Language_e Language = LANG_FRENCH;
     myLabel.SetLanguage(Language);
 
 
