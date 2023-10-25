@@ -440,6 +440,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#if (DIGINI_USE_ETHERNET == DEF_ENABLED)
 VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_CallBackType_e Type)
 {
     VAR_UNUSED(Input);
@@ -507,6 +508,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
 
     return VT100_INPUT_ESCAPE;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //

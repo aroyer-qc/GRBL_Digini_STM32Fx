@@ -85,6 +85,20 @@
 
 // TODO move all generic menu to  Lib_vt100_label.h
 
+// If Network is disabled menu option for Network is automatically removed
+#if (DIGINI_USE_ETHERNET == DEF_ENABLED)
+  #define NETWORK_CALLBACK          ENTRY(CALLBACK_NetworkInfo)
+  #define ENTRY_VT100_MENU_NETWORK  ENTRY(MenuNetwork)
+  #define ENTRY_NETWORK_MENU_MAIN   ENTRY  (MENU,  MenuMain,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                )
+  #define ENTRY_NETWORK_MENU_BOOT   ENTRY  (MENU,  MenuBoot,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                )
+  #define ENTRY_MENU_NETWORK        ENTRY  (MENU,  MenuNetwork,       ID_NETWORK_INFO,         CALLBACK_NetworkInfo,                    MenuRedirection,                  LBL_NETWORK_INFO                                )
+#else
+  #define NETWORK_CALLBACK
+  #define ENTRY_VT100_MENU_NETWORK
+  #define ENTRY_NETWORK_MENU_MAIN
+  #define ENTRY_NETWORK_MENU_BOOT
+  #define ENTRY_MENU_NETWORK
+#endif
 
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro
 #define COMPARE_MenuRedirection(x)      x
@@ -109,7 +123,7 @@
     ENTRY(MenuBoot           ) \
     ENTRY(MenuInfo           ) \
     ENTRY(MenuStackUsage     ) \
-    ENTRY(MenuNetwork        ) \
+    ENTRY_VT100_MENU_NETWORK   \
     ENTRY(MenuMiscStatistic  ) \
     ENTRY(MenuSystemSetting  ) \
     ENTRY(MenuDebug          ) \
@@ -121,20 +135,18 @@
     ENTRY(MenuSetting        ) \
     ENTRY(MenuSettingTime    ) \
 
-
 // Define here all the callback you will use in the VT100 terminal
 #define VT100_CALLBACK(ENTRY)           \
     ENTRY(CALLBACK_MenuRedirection    ) \
     ENTRY(CALLBACK_ProductInformation ) \
     ENTRY(CALLBACK_StackUsage         ) \
-    ENTRY(CALLBACK_NetworkInfo        ) \
+    NETWORK_CALLBACK                    \
     ENTRY(CALLBACK_DebugLevelSetting  ) \
     ENTRY(CALLBACK_MiscStatistic      ) \
     ENTRY(CALLBACK_SystemSetting      ) \
     ENTRY(CALLBACK_InputReading       ) \
     ENTRY(CALLBACK_SD_CardInformation ) \
     ENTRY(CALLBACK_TimeDateCfg        ) \
-
 
 // Here you define how you will navigate in the menu tree and action associated with them                   1st item of a menu
 //              Menu   Member Of          Item ID                  CALLBACK for refresh                     Navigate to this menu on <ESC>    Label ID
@@ -148,7 +160,7 @@
         ENTRY  (MENU,  MenuMain,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  VT100_LBL_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuMain,          ID_INFO_DISPLAY,         CALLBACK_None,                           MenuInfo,                         VT100_LBL_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuMain,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   VT100_LBL_STACKTISTIC                           ) \
-        ENTRY  (MENU,  MenuMain,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) \
+        ENTRY_NETWORK_MENU_MAIN                                                                                                                                                                 \
         ENTRY  (MENU,  MenuMain,          ID_MISC_STAT,            CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             ) \
         ENTRY  (MENU,  MenuMain,          ID_MISC_SETTING,         CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuMain,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) \
@@ -157,7 +169,7 @@
 		ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,           CALLBACK_None,                           VT100_MENU_NONE,                  VT100_LBL_MAIN_MENU                             ) \
         ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,         CALLBACK_None,                           MenuMain,                         VT100_LBL_SYSTEM_INFO                           ) \
         ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,        CALLBACK_None,                           MenuStackUsage,                   VT100_LBL_STACKTISTIC                           ) \
-        ENTRY  (MENU,  MenuBoot,          ID_NETWORK_INFO,         CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) \
+        ENTRY_NETWORK_MENU_BOOT                                                                                                                                                                 \
         ENTRY  (MENU,  MenuBoot,          ID_MISC_STAT,            CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             ) \
         ENTRY  (MENU,  MenuBoot,          ID_MISC_SETTING,         CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        ) \
         ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,           CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) \
@@ -167,7 +179,7 @@
 \
         ENTRY  (MENU,  MenuStackUsage,    ID_INFO_DISPLAY,         CALLBACK_StackUsage,                     MenuRedirection,                  VT100_LBL_STACKTISTIC                           ) \
 \
-        ENTRY  (MENU,  MenuNetwork,       ID_NETWORK_INFO,         CALLBACK_NetworkInfo,                    MenuRedirection,                  LBL_NETWORK_INFO                                ) \
+        ENTRY_MENU_NETWORK                                                                                                                                                                      \
 \
         ENTRY  (MENU,  MenuMiscStatistic, ID_MISC_STAT,            CALLBACK_MiscStatistic,                  MenuRedirection,                  VT100_LBL_MISC_STAT                             ) \
 \

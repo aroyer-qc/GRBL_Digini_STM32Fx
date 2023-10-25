@@ -53,8 +53,6 @@
 #define ETH_GATEWAY_IP_ADDR2                    0
 #define ETH_GATEWAY_IP_ADDR3                    1
 
-
-
 #define ETH_USE_PHY_LINK_IRQ                    DEF_DISABLED
 #define ETH_PHY_LINK_IO                         IO_NOT_DEFINED
 
