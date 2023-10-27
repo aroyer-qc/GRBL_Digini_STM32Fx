@@ -30,7 +30,7 @@
 
 #define VT100_STARTUP_MENU_CFG                  MenuMain
 
-#define VT100_USE_COLOR                         DEF_DISABLED
+#define VT100_USE_COLOR                         DEF_ENABLED
 #define VT100_USER_CALLBACK_INITIALIZE          DEF_DISABLED
 
 // Only one of those define can be used or none of them
@@ -38,50 +38,50 @@
 #define VT100_USE_USER_MENU_STATIC_INFO         DEF_DISABLED            // If user wish to create his own header or special formatting.
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MENU_TITLE,                       "GRBL Configuration Menu",                "Menu de Configuration GRBL"                  ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MAIN_MENU,                        "Main Menu",                              "Menu Principal"                              ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_INFO,                      "Display System Information",             "Information Syst\x8ame"                      ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG,                            "Debug",                                  "D\x82" "bogage"                              ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING,                   "System Settings",                        "Configuration Syst\x8ame"                    ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TEST,                             "Test",                                   "Test"                                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_STACKTISTIC,                      "Stack Usage",                            "Usage des Stacks"                            ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MISC_STAT,                        "Misc. Statistic",                        "Statistiques Divers"                         ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MISCELLEANEOUS,                   "Miscelleaneous",                         "Divers"                                      ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_MENU,                       "Debug Menu",                             "Menu de D\x82" "bogage"                      ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_1,                    "Dbg level 1  - System Status   ( )",     "Dbg level 1  - Status Syst\x8ame  ( )"       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_2,                    "Dbg level 2  - System Action   ( )",     "Dbg level 2  - Action Syst\x8ame  ( )"       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_3,                    "Dbg level 3  - System Health   ( )",     "Dbg level 3  - Sant\x82 Syst\x8ame   ( )"    ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_4,                    "Dbg level 4  - Monitor/Logs    ( )",     "Dbg level 4  - Moniteur/Logs   ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_5,                    "Dbg level 5  - Stack Warning   ( )",     "Dbg level 5  - Alerte Stack    ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_6,                    "Dbg level 6  - Ethernet driver ( )",     "Dbg level 6  - Pilote Ethernet ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_7,                    "Dbg level 7  - LWIP            ( )",     nullptr                                       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_8,                    "Dbg level 8  - Memory Pool     ( )",     "Dbg level 8  - R\x82serve m\x82moire ( )"    ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_9,                    "Dbg level 9  - Free            ( )",     "Dbg level 9  - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_10,                   "Dbg level 10 - Free            ( )",     "Dbg level 10 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_11,                   "Dbg level 11 - Free            ( )",     "Dbg level 11 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_12,                   "Dbg level 12 - Free            ( )",     "Dbg level 12 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_13,                   "Dbg level 13 - Free            ( )",     "Dbg level 13 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_14,                   "Dbg level 14 - Free            ( )",     "Dbg level 14 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_15,                   "Dbg level 15 - Free            ( )",     "Dbg level 15 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_16,                   "Dbg level 16 - Free            ( )",     "Dbg level 16 - Libre           ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING_MENU,              "System Settings Menu",                   "Menu Configuration Syst\x8ame"               ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE,                    "Time and Date",                          "Heure et Date"                               ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TEST_1,                           "Test 1",                                 "Test 1"                                      ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_1,                        "Poutine ski                    ( )",     "Poutine ski                    ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_2,                        "Poutine ski                    ( )",     "Poutine ski                    ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE_CONFIGURATION,      "Time and Date Configuration",            "Configuration Heure et Date"                 ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_HOUR,                             "Hour",                                   "Heure"                                       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MINUTE,                           "Minute",                                 "Minute"                                      ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SECOND,                           "Second",                                 "Seconde"                                     ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_DAY,                              "Day",                                    "Jour"                                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MONTH,                            "Month",                                  "Mois"                                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_YEAR,                             "Year",                                   "Ann\x82" "e"                                 ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_BLANK_FOR_SAVE,                   nullptr,                                  nullptr                                       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",       "Menu de Configuration Divers"                ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                  "Configurer Num\x82ro de S\x82rie"            ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SD_CARD_INFORMATION,              "SD-Card Information",                    "Information Carte SD"                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SELECT_LANGUAGE,                  "Toggle Language:",                       "Basculer de Langage:"                        ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_LANGUAGE_SELECTION,               "English   ( )  French    ( )",           "Anglais   ( )  Fran\x87" "ais  ( )"          ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MENU_TITLE,                       "GRBL Configuration Menu",                      "Menu de Configuration GRBL"                         ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MAIN_MENU,                        "Main Menu",                                    "Menu Principal"                                     ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_INFO,                      "Display System Information",                   "Information Syst\x8ame"                             ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG,                            "Debug",                                        "D\x82" "bogage"                                     ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING,                   "System Settings",                              "Configuration Syst\x8ame"                           ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_TEST,                             "Test",                                         "Test"                                               ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_STACKTISTIC,                      "Stack Usage",                                  "Usage des Stacks"                                   ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MISC_STAT,                        "Misc. Statistic",                              "Statistiques Divers"                                ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MISCELLEANEOUS,                   "Miscelleaneous",                               "Divers"                                             ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_MENU,                       "Debug Menu",                                   "Menu de D\x82" "bogage"                             ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_1,                    "Dbg level 1  - System Status   ( )",           "Dbg level 1  - Status Syst\x8ame  ( )"              ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_2,                    "Dbg level 2  - System Action   ( )",           "Dbg level 2  - Action Syst\x8ame  ( )"              ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_3,                    "Dbg level 3  - System Health   ( )",           "Dbg level 3  - Sant\x82 Syst\x8ame   ( )"           ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_4,                    "Dbg level 4  - Monitor/Logs    ( )",           "Dbg level 4  - Moniteur/Logs   ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_5,                    "Dbg level 5  - Stack Warning   ( )",           "Dbg level 5  - Alerte Stack    ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_6,                    "Dbg level 6  - Ethernet driver ( )",           "Dbg level 6  - Pilote Ethernet ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_7,                    "Dbg level 7  - LWIP            ( )",           nullptr                                              ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_8,                    "Dbg level 8  - Memory Pool     ( )",           "Dbg level 8  - R\x82serve m\x82moire ( )"           ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_9,                    "Dbg level 9  - Free            ( )",           "Dbg level 9  - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_10,                   "Dbg level 10 - Free            ( )",           "Dbg level 10 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_11,                   "Dbg level 11 - Free            ( )",           "Dbg level 11 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_12,                   "Dbg level 12 - Free            ( )",           "Dbg level 12 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_13,                   "Dbg level 13 - Free            ( )",           "Dbg level 13 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_14,                   "Dbg level 14 - Free            ( )",           "Dbg level 14 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_15,                   "Dbg level 15 - Free            ( )",           "Dbg level 15 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DEBUG_LEVEL_16,                   "Dbg level 16 - Free            ( )",           "Dbg level 16 - Libre           ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING_MENU,              "System Settings Menu",                         "Menu Configuration Syst\x8ame"                      ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE,                    "Time and Date",                                "Heure et Date"                                      ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_TEST_1,                           "Test 1",                                       "Test 1"                                             ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_1,                        "Poutine ski                    ( )",           "Poutine ski                    ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_2,                        "Poutine ski                    ( )",           "Poutine ski                    ( )"                 ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE_CONFIGURATION,      "Time and Date Configuration",                  "Configuration Heure et Date"                        ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_HOUR,                             "Hour",                                         "Heure"                                              ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MINUTE,                           "Minute",                                       "Minute"                                             ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SECOND,                           "Second",                                       "Seconde"                                            ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_DAY,                              "Day",                                          "Jour"                                               ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MONTH,                            "Month",                                        "Mois"                                               ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_YEAR,                             "Year",                                         "Ann\x82" "e"                                        ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_BLANK_FOR_SAVE,                   nullptr,                                        nullptr                                              ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",             "Menu de Configuration Divers"                       ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                        "Configurer Num\x82ro de S\x82rie"                   ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SD_CARD_INFORMATION,              "SD-Card Information",                          "Information Carte SD"                               ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_SELECT_LANGUAGE,                  "Toggle Language:",                             "Basculer de Langage:"                               ) \
+    X_VT100_USER_LBL_CFG( VT100_LBL_LANGUAGE_SELECTION,               "Choose Language: English  ( )  French   ( )",  "Choisir Langage: Anglais  ( )  Fran\x87" "ais ( )"  ) \
 
 // TODO move all generic menu to  Lib_vt100_label.h
 

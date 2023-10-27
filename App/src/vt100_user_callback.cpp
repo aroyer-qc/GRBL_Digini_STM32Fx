@@ -60,19 +60,21 @@
 // return VT100_InputType_e     Kind of input management for this page
 //
 //
-//         VT100_INPUT_ESCAPE      -> It is not a menu is this a page with information updated on
-//                                  screen, this kind of is not waiting any key other than
+//       VT100_INPUT_ESCAPE      -> It is not a menu, it his a page with information updated on
+//                                  screen, this kind of page is not waiting any key other than
 //                                  <ESCAPE> to exit
 //
-//         VT100_INPUT_MENU_CHOICE -> It tell the console it is a menu and waiting for an input.
+//       VT100_INPUT_SAVE_DATA   -> This value inform the myVT100 of the save has being processed.
 //
-//         VT100_INPUT_DECIMAL     -> If the callback make call for an VT100_SetDecimalInput(), then
+//       VT100_INPUT_MENU_CHOICE -> It tell the console it is a menu and waiting for an input.
+//
+//       VT100_INPUT_DECIMAL     -> If the callback make call for an VT100_SetDecimalInput(), then
 //                                  it must return with this enum value to tell the console what
 //                                  to do. It will comeback to the callback only when the input
 //                                  decimal mode will be escaped by <ESCAPE> or value validated by
 //                                  <ENTER>.
 //
-//         VT100_INPUT_STRING      -> If the callback make call for an VT100_SetStringInput(), then it
+//       VT100_INPUT_STRING      -> If the callback make call for an VT100_SetStringInput(), then it
 //                                  must return with this enum value to tell the console what to
 //                                  do. We will comeback to the callback only when the input
 //                                  decimal mode will be escaped by <ESCAPE> or value validated
