@@ -47,6 +47,8 @@
 //-------------------------------------------------------------------------------------------------
 int main()
 {
+    Language_e Language;
+
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
     myStacktistic.Initialize();                             // Initialize the Stack Check process before any task
   #endif
@@ -64,8 +66,8 @@ int main()
   #endif
    // pTaskGRBL->Initialize();
 
-//    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
-    Language_e Language = LANG_FRENCH;
+    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
+    // = LANG_FRENCH;
     myLabel.SetLanguage(Language);
 
 
