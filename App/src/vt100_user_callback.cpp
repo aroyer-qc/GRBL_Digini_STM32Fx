@@ -555,12 +555,6 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         InMenuPrintf(LBL_MISC_BACKUP_LOW_BATT);
         SetCursorPosition(13, PosY++);
         InMenuPrintf(LBL_MISC_POWER_LOW_BATT);
-        SetCursorPosition(13, PosY++);
-        InMenuPrintf(LBL_MISC_SERIAL_NUMBER);
-        SetCursorPosition(13, PosY++);
-        InMenuPrintf(LBL_MISC_LOCATION);
-        SetCursorPosition(13, PosY++);
-        InMenuPrintf(LBL_MISC_SITE_ID);
         Refresh = VT100_CFG_REFRESH_ALL;
     }
 
@@ -608,27 +602,6 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
                 return VT100_INPUT_DECIMAL;
             }
 
-            case MISC_SETTING_SERIAL_NUMBER:
-            {
-                //Size = SYS_GetSingleEntryTypeSize(SYS_SERIAL_NUMBER);
-                SetStringInput(32, 16, Size, Input, LBL_MISC_SERIAL_NUMBER, &m_GenericString[1][0][0]);
-                return VT100_INPUT_STRING;
-            }
-
-            case MISC_SETTING_LOCATION:
-            {
-               // Size = SYS_GetSingleEntryTypeSize(SYS_LOCATION);
-                SetStringInput(32, 16, Size, Input, LBL_MISC_LOCATION, &m_GenericString[2][0][0]);
-                return VT100_INPUT_STRING;
-            }
-
-            case MISC_SETTING_SITE_ID:
-            {
-              //  Size = SYS_GetSingleEntryTypeSize(SYS_SITE_ID);
-                SetStringInput(32, 16, Size, Input, LBL_MISC_SITE_ID, &m_GenericString[3][0][0]);
-                return VT100_INPUT_STRING;
-            }
-
             case MISC_SETTING_SAVE_CONFIGURATION:
             {
                 if(myVT100.GetConfigFlag(0) != 0)
@@ -651,21 +624,6 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
                     if((myVT100.GetConfigFlag(0) & VT100_MISC_CFG_REFRESH_SET_POINT_POWER_LOW_VOLTAGE) != 0)
                     {
                         // DB_Central.Set(&PowerBatteryLowVoltage, SYS_BATT_LOW_VOLTAGE_THRESHOLD);
-                    }
-
-                    if((myVT100.GetConfigFlag(0) & VT100_MISC_CFG_REFRESH_SERIAL) != 0)
-                    {
-                        // DB_Central.Set(&m_GenericString[1][0][0], SYS_SERIAL_NUMBER);
-                    }
-
-                    if((myVT100.GetConfigFlag(0) & VT100_MISC_CFG_REFRESH_LOCATION) != 0)
-                    {
-                        // DB_Central.Set(&m_GenericString[2][0][0], SYS_LOCATION);
-                    }
-
-                    if((myVT100.GetConfigFlag(0) & VT100_MISC_CFG_REFRESH_SITE_ID) != 0)
-                    {
-                        // DB_Central.Set(&m_GenericString[3][0][0], SYS_SITE_ID);
                     }
                 }
 
@@ -690,35 +648,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         GetStringInput(pStr, &InputID);             // Get the newly edit string
 
         LIB_strnstrip(pStr, strlen(pStr));          // Strip all trailing space
-
-        if(InputID == MISC_SETTING_SERIAL_NUMBER)
-        {
-            memcpy(&m_GenericString[1][0][0], pStr, VT100_STRING_SZ);
-            Refresh         |= VT100_MISC_CFG_REFRESH_SERIAL;
-            m_ConfigFlag[0] |= VT100_MISC_CFG_REFRESH_SERIAL;
-        }
-        else if(InputID == MISC_SETTING_LOCATION)
-        {
-            memcpy(&m_GenericString[2][0][0], pStr, VT100_STRING_SZ);
-            Refresh         |= VT100_MISC_CFG_REFRESH_LOCATION;
-            m_ConfigFlag[0] |= VT100_MISC_CFG_REFRESH_LOCATION;
-        }
-        else if(InputID == MISC_SETTING_SITE_ID)
-        {
-            memcpy(&m_GenericString[3][0][0], pStr, VT100_STRING_SZ);
-            Refresh         |= VT100_MISC_CFG_REFRESH_SITE_ID;
-            m_ConfigFlag[0] |= VT100_MISC_CFG_REFRESH_SITE_ID;
-        }
-        else if((InputID == 0) && (Input == DOOR_CTRL_MENU_TITLE) && (m_ConfigFlag[0] == 0))
-        {
-            // DB_Central.Get(&m_GenericString[1][0][0], SYS_SERIAL_NUMBER);
-            m_GenericString[1][0][Size] = '\0';
-            // DB_Central.Get(&m_GenericString[2][0][0], SYS_LOCATION);
-            m_GenericString[2][0][Size] = '\0';
-            // DB_Central.Get(&m_GenericString[3][0][0], SYS_SITE_ID);
-            m_GenericString[3][0][Size] = '\0';
-        }
-
+        
         /// Get decimal
         InputID = 0;
         GetDecimalInputValue(&EditedValue, &InputID);
@@ -803,25 +733,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         }
 
         PosY = 28;
-
-        if((Refresh & VT100_MISC_CFG_REFRESH_SERIAL) != 0)
-        {
-            SetCursorPosition(46, PosY);
-            InMenuPrintf(VT100_STRING_SZ, &m_GenericString[1][0][0]);
-        }
-
-        if((Refresh & VT100_MISC_CFG_REFRESH_LOCATION) != 0)
-        {
-            SetCursorPosition(46, PosY + 1);
-            InMenuPrintf(VT100_STRING_SZ, &m_GenericString[2][0][0]);
-        }
-
-        if((Refresh & VT100_MISC_CFG_REFRESH_SITE_ID) != 0)
-        {
-            SetCursorPosition(46, PosY + 2);
-            InMenuPrintf(VT100_STRING_SZ, &m_GenericString[3][0][0]);
-        }
-    }
+   }
 
     return VT100_INPUT_MENU_CHOICE;
 }
