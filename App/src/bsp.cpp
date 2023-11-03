@@ -143,6 +143,7 @@ void BSP_Initialize(void)
     DIGINI_Initialize();
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
+    myADC1_Driver.Initialize();
     RNG_Initialize();
 }
 
