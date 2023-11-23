@@ -45,9 +45,56 @@
 // Note(s):        Here we create the task that will start all the other
 //
 //-------------------------------------------------------------------------------------------------
+
+struct testChain
+{
+    uint8_t Poutine;
+    uint32_t Poutine2;
+    uint16_t Poutine3;
+    uint8_t Poutine4;
+};
+
+ChainList myTestChainList(sizeof(testChain));
+
 int main()
 {
     Language_e Language;
+
+    void* pDummy;
+
+    myTestChainList.AddNode(1, &pDummy);
+    myTestChainList.AddNode(2, &pDummy);
+    myTestChainList.AddNode(3, &pDummy);
+    myTestChainList.AddNode(4, &pDummy);
+    myTestChainList.AddNode(5, &pDummy);
+    myTestChainList.AddNode(6, &pDummy);
+    myTestChainList.AddNode(7, &pDummy);
+    myTestChainList.AddNode(8, &pDummy);
+    myTestChainList.AddNode(9, &pDummy);
+
+    static uint16_t number = myTestChainList.GetNumberOfNode();
+
+    myTestChainList.GetNodeDataPointer(5, &pDummy);
+    myTestChainList.GetNodeDataPointer(1, &pDummy);
+    myTestChainList.GetNodeDataPointer(4, &pDummy);
+    myTestChainList.GetNodeDataPointer(2, &pDummy);
+    myTestChainList.GetNodeDataPointer(3, &pDummy);
+    myTestChainList.GetNodeDataPointer(6, &pDummy);
+    myTestChainList.GetNodeDataPointer(7, &pDummy);
+    myTestChainList.GetNodeDataPointer(9, &pDummy);
+    myTestChainList.GetNodeDataPointer(8, &pDummy);
+
+
+
+    myTestChainList.RemoveNode(5);
+    myTestChainList.RemoveNode(7);
+    myTestChainList.RemoveNode(6);
+    myTestChainList.RemoveNode(3);
+    myTestChainList.RemoveNode(4);
+    myTestChainList.RemoveNode(8);
+    myTestChainList.RemoveNode(9);
+    myTestChainList.RemoveNode(1);
+    myTestChainList.RemoveNode(2);
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
     myStacktistic.Initialize();                             // Initialize the Stack Check process before any task
@@ -55,6 +102,7 @@ int main()
 
     nOS_Init();
     BSP_Initialize();                                       // All hardware and system initialization
+
     nOS_Start();
     BSP_PostOS_Initialize();
     pTaskCOMM->Initialize();

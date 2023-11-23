@@ -590,7 +590,11 @@
 		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_virtual_window.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Memory\inc\lib_chain_list.h" />
 		<Unit filename="..\Module\Digini\Memory\inc\lib_memory.h" />
+		<Unit filename="..\Module\Digini\Memory\src\lib_chain_list.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Memory\src\lib_memory.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
