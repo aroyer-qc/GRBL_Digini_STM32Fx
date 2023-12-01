@@ -211,8 +211,8 @@ nOS_Error ClassNetwork::Initialize(void)
   #endif
 
     // Webserver task
-  /*
-    Error = nOS_ThreadCreate(&m_WebServerHandle,
+
+    /*Error = nOS_ThreadCreate(&m_WebServerHandle,
                              TaskWebServer_Wrapper,
                              this,
                              &m_WebServerStack[0],
@@ -221,20 +221,35 @@ nOS_Error ClassNetwork::Initialize(void)
 
     // tcp echo server Init
     //TCP_EchoServerInitialize();
-  */
+
     Error = nOS_ThreadCreate(&m_NetworkHandle,
                              TaskNetwork_Wrapper,
                              this,
                              &m_NetworkStack[0],
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
-
+*/
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    //myStacktistic.Register(&m_NetworkHandle.stackPtr,   &m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
+memset(&m_NetworkStack[0], 0xFF, TASK_NETWORK_STACK_SIZE * 4);
+memset(&m_WebServerStack[0], 0xFF, TASK_WEBSERVER_STACK_SIZE * 4);
+
     myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
-    //myStacktistic.Register(&m_WebServerHandle.stackPtr, &m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
     myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
   #endif
+
+    // Add the network interface
+    netif_add(&m_NetIf, &m_IP_Address, &m_SubnetMask, &m_GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
+
+    // Registers the default network interface
+    netif_set_default(&m_NetIf);
+
+    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
+    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
+
+
+
+// temporary
+//ethernetif_init(&m_NetIf);
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 
@@ -266,15 +281,6 @@ void ClassNetwork::Network(void)
     void*           data;
     u16_t           len;
     err_t           recv_err;
-
-    // Add the network interface
-    netif_add(&m_NetIf, &m_IP_Address, &m_SubnetMask, &m_GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
-
-    // Registers the default network interface
-    netif_set_default(&m_NetIf);
-
-    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
-    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
 
     // Initialize the LwIP stack. Create tcp_ip stack thread
     tcpip_init(nullptr, nullptr);

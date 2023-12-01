@@ -439,7 +439,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_InputReading(uint8_t Input, VT100_Cal
 //
 //  Description:    Menu information about network
 //
-//  Note(s):
+//  Note(s):        Should move this into as part of Digini
 //
 //-------------------------------------------------------------------------------------------------
 #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
@@ -455,15 +455,21 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
             myVT100.InMenuPrintf(1, 5, LBL_NETWORK_INFO);
 
             myVT100.SetForeColor(VT100_COLOR_WHITE);
-            myVT100.InMenuPrintf(2, 8,  LBL_IP_ADDR);
-            myVT100.InMenuPrintf(2, 9,  LBL_IP_MASK);
-            myVT100.InMenuPrintf(2, 10, LBL_IP_GATEWAY);
-            myVT100.InMenuPrintf(2, 11, LBL_IP_DNS);
-            myVT100.InMenuPrintf(2, 13, LBL_IP_DHCP_STATE);
-            myVT100.InMenuPrintf(2, 14, LBL_IP_LINK_STATE);
-            myVT100.InMenuPrintf(2, 15, LBL_IP_LINK_SPEED);
-            myVT100.InMenuPrintf(2, 16, LBL_MAC_ADDRESS);
+            myVT100.InMenuPrintf(2,  8,  LBL_IP_ADDR);
+            myVT100.InMenuPrintf(2,  9,  LBL_IP_MASK);
+            myVT100.InMenuPrintf(2,  10, LBL_IP_GATEWAY);
+            myVT100.InMenuPrintf(2,  11, LBL_IP_DNS);
+            myVT100.InMenuPrintf(2,  13, LBL_IP_DHCP_STATE);
+            myVT100.InMenuPrintf(2,  14, LBL_IP_LINK_STATE);
+            myVT100.InMenuPrintf(2,  15, LBL_IP_LINK_SPEED);
+            myVT100.InMenuPrintf(2,  16, LBL_MAC_ADDRESS);
+            myVT100.InMenuPrintf(2,  18, LBL_ETH_RX_COUNT);
+            myVT100.InMenuPrintf(40, 18, LBL_ETH_DROP);
+            myVT100.InMenuPrintf(2,  19, LBL_ETH_TX_COUNT);
+            myVT100.InMenuPrintf(40, 19, LBL_ETH_DROP);
+
             myVT100.InMenuPrintf(       VT100_LBL_ESCAPE);
+
             // Add Lease obtain and expire???
         }
         break;
@@ -476,17 +482,17 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
             const char*      pSpeed;
 
             myVT100.SetForeColor(VT100_COLOR_WHITE);
-            myVT100.InMenuPrintf(24, 8,  LBL_STRING, ip_ntoa(&pNetif->ip_addr));
-            myVT100.InMenuPrintf(24, 9,  LBL_STRING, ip_ntoa(&pNetif->netmask));
-            myVT100.InMenuPrintf(24, 10, LBL_STRING, ip_ntoa(&pNetif->gw));
+            myVT100.InMenuPrintf(28, 8,  LBL_STRING, ip_ntoa(&pNetif->ip_addr));
+            myVT100.InMenuPrintf(28, 9,  LBL_STRING, ip_ntoa(&pNetif->netmask));
+            myVT100.InMenuPrintf(28, 10, LBL_STRING, ip_ntoa(&pNetif->gw));
 			//auto t = dns_getserver(0);
             ip_addr_t ipEmpty{};
-            myVT100.InMenuPrintf(24, 11, LBL_STRING, ip_ntoa(&ipEmpty));
+            myVT100.InMenuPrintf(28, 11, LBL_STRING, ip_ntoa(&ipEmpty));
 			//auto t = dns_getserver(1);
-            myVT100.InMenuPrintf(24, 12, LBL_STRING, ip_ntoa(&ipEmpty));
-            myVT100.InMenuPrintf(24, 13, LBL_STRING, "DHCP N/A");
+            myVT100.InMenuPrintf(28, 12, LBL_STRING, ip_ntoa(&ipEmpty));
+            myVT100.InMenuPrintf(28, 13, LBL_STRING, "DHCP N/A");
             LinkState = myETH_PHY->GetLinkState();
-            myVT100.InMenuPrintf(24, 14, LBL_STRING, (LinkState == ETH_LINK_UP) != 0 ? "Up  " : "Down");
+            myVT100.InMenuPrintf(28, 14, LBL_STRING, (LinkState == ETH_LINK_UP) != 0 ? "Up  " : "Down");
 
             LinkInfo = myETH_PHY->GetLinkInfo();
 
@@ -498,9 +504,15 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
 
             }
 
-            myVT100.InMenuPrintf(24, 15, LBL_STRING, pSpeed);
-            myVT100.InMenuPrintf(24, 16, LBL_MAC_ADDRESS_VALUE, pNetif->hwaddr[0], pNetif->hwaddr[1], pNetif->hwaddr[2],
+            myVT100.InMenuPrintf(28, 15, LBL_STRING, pSpeed);
+            myVT100.InMenuPrintf(28, 16, LBL_MAC_ADDRESS_VALUE, pNetif->hwaddr[0], pNetif->hwaddr[1], pNetif->hwaddr[2],
                                                                 pNetif->hwaddr[3], pNetif->hwaddr[4], pNetif->hwaddr[5]);
+
+
+            myVT100.InMenuPrintf(28, 18, LBL_LONG_UNSIGNED, DBG_RX_Count);
+            myVT100.InMenuPrintf(56, 18, LBL_LONG_UNSIGNED, DBG_RX_Drop);
+            myVT100.InMenuPrintf(28, 19, LBL_LONG_UNSIGNED, DBG_TX_Count);
+            myVT100.InMenuPrintf(56, 19, LBL_LONG_UNSIGNED, DBG_TX_Drop);
         }
         break;
 
@@ -648,7 +660,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_MiscCfg(uint8_t Input, VT100_CallBack
         GetStringInput(pStr, &InputID);             // Get the newly edit string
 
         LIB_strnstrip(pStr, strlen(pStr));          // Strip all trailing space
-        
+
         /// Get decimal
         InputID = 0;
         GetDecimalInputValue(&EditedValue, &InputID);
