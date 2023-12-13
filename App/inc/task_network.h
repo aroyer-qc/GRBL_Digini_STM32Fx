@@ -30,10 +30,6 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "nOS.h"
-#include "lwip/err.h"
-#include "lwip/netif.h"
-
 //-------------------------------------------------------------------------------------------------
 // Global Macro
 //-------------------------------------------------------------------------------------------------
@@ -87,14 +83,9 @@ class ClassNetwork
     static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];
     static nOS_Thread      m_NetworkHandle;
     static nOS_Stack       m_NetworkStack       [TASK_NETWORK_STACK_SIZE];
-
-    ip_addr_t              m_IP_Address;
-    ip_addr_t              m_SubnetMask;
-    ip_addr_t              m_GatewayIP;
-
     struct netconn*        m_WebServerConn;
     struct netconn*        m_WebServerNewConn;
-    struct netif           m_NetIf;
+
 
 
 

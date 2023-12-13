@@ -58,6 +58,8 @@ class ClassTaskCOMM
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
+// Only one instance for now
+
 TASK_COMM_EXTERN class ClassTaskCOMM  TaskCOMM;
 
 #ifdef TASK_COMM_GLOBAL
@@ -65,9 +67,5 @@ TASK_COMM_EXTERN class ClassTaskCOMM  TaskCOMM;
 #else
     extern       class ClassTaskCOMM* pTaskCOMM;
 #endif
-
-//-------------------------------------------------------------------------------------------------
-// Function prototype(s)
-//-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------

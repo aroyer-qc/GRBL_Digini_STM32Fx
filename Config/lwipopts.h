@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define INT_MAX                         UINT32_MAX
 
 #define DEFAULT_THREAD_PRIO             3

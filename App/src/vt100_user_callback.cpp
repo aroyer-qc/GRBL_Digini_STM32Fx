@@ -88,8 +88,6 @@
 
 #include "lib_digini.h"
 #include "grbl_advance.h"
-#include "ethernetif.h"
-#include "lwip/netif.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -467,8 +465,7 @@ VT100_InputType_e VT100_Terminal::CALLBACK_NetworkInfo(uint8_t Input, VT100_Call
             myVT100.InMenuPrintf(40, 18, LBL_ETH_DROP);
             myVT100.InMenuPrintf(2,  19, LBL_ETH_TX_COUNT);
             myVT100.InMenuPrintf(40, 19, LBL_ETH_DROP);
-
-            myVT100.InMenuPrintf(       VT100_LBL_ESCAPE);
+            myVT100.InMenuPrintf(        VT100_LBL_ESCAPE);
 
             // Add Lease obtain and expire???
         }

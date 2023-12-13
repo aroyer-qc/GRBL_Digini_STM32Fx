@@ -28,6 +28,7 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
+#include "lib_digini.h"
 #include "bsp.h"
 #include "Task_grbl.h"
 #include "Task_loading.h"
@@ -63,7 +64,8 @@ int main()
     //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-    pTaskNetwork->Initialize();
+    pLWIP_App->Initialize();
+    //pTaskNetwork->Initialize();
   #endif
    // pTaskGRBL->Initialize();
 
@@ -86,8 +88,13 @@ int main()
 
     for(;;)                                 // It is the idle task..
     {
-        pTaskCOMM->Process();
-        nOS_Yield();
+        pTaskCOMM->Process(); // should move this to own task! so option to run as a task or this as a process
+      #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
+        pLWIP_App->Process();
+        //pTaskNetwork->Process();
+      #endif
+
+        //nOS_Yield();
     }
 
     return 0;                               // will never return

@@ -35,10 +35,6 @@
 #define TASK_NETWORK_GLOBAL
 #include "task_network.h"
 #undef TASK_NETWORK_GLOBAL
-#include "ethernetif.h"
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/api.h"
 
 //-------------------------------------------------------------------------------------------------
 // Private variable(s) and constant(s)
@@ -201,15 +197,14 @@ nOS_Error ClassNetwork::Initialize(void)
 
     lwipPlatformDiag("Initializing ClassNetwork\n");
 
-    // Use IP from ethernet_cfg.h
-    IP_ADDR4(&m_IP_Address, ETH_IP_ADDR0,          ETH_IP_ADDR1,          ETH_IP_ADDR2,          ETH_IP_ADDR3);
-    IP_ADDR4(&m_SubnetMask, ETH_SUBNET_MASK_ADDR0, ETH_SUBNET_MASK_ADDR1, ETH_SUBNET_MASK_ADDR2, ETH_SUBNET_MASK_ADDR3);
-    IP_ADDR4(&m_GatewayIP,  ETH_GATEWAY_IP_ADDR0,  ETH_GATEWAY_IP_ADDR1,  ETH_GATEWAY_IP_ADDR2,  ETH_GATEWAY_IP_ADDR3);
+    /*Error = nOS_ThreadCreate(&m_NetworkHandle,
+                             TaskNetwork_Wrapper,
+                             this,
+                             &m_NetworkStack[0],
+                             TASK_NETWORK_STACK_SIZE,
+                             TASK_NETWORK_PRIO);
 
-  #if LWIP_NETIF_LINK_CALLBACK
-  //  netif_set_link_callback(&m_NetIf, ethernet_link_status_updated);        // done in ethernetif.c?
-  #endif
-
+    */
     // Webserver task
 
     /*Error = nOS_ThreadCreate(&m_WebServerHandle,
@@ -218,43 +213,21 @@ nOS_Error ClassNetwork::Initialize(void)
                              &m_WebServerStack[0],
                              TASK_WEBSERVER_STACK_SIZE,
                              TASK_WEBSERVER_PRIO);
+*/
 
     // tcp echo server Init
     //TCP_EchoServerInitialize();
 
-    Error = nOS_ThreadCreate(&m_NetworkHandle,
-                             TaskNetwork_Wrapper,
-                             this,
-                             &m_NetworkStack[0],
-                             TASK_NETWORK_STACK_SIZE,
-                             TASK_NETWORK_PRIO);
-*/
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
 memset(&m_NetworkStack[0], 0xFF, TASK_NETWORK_STACK_SIZE * 4);
-memset(&m_WebServerStack[0], 0xFF, TASK_WEBSERVER_STACK_SIZE * 4);
+//memset(&m_WebServerStack[0], 0xFF, TASK_WEBSERVER_STACK_SIZE * 4);
 
     myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
     myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
   #endif
 
-    // Add the network interface
-    netif_add(&m_NetIf, &m_IP_Address, &m_SubnetMask, &m_GatewayIP, nullptr, &ethernetif_init, &tcpip_input);
-
-    // Registers the default network interface
-    netif_set_default(&m_NetIf);
-
-    if(netif_is_link_up(&m_NetIf))  netif_set_up(&m_NetIf);          // When the netif is fully configured this function must be called
-    else                            netif_set_down(&m_NetIf);        // When the netif link is down this function must be called
-
-
-
-// temporary
-//ethernetif_init(&m_NetIf);
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
-
-  //  dhcp_start(&m_NetIf);
-
     return Error;
 }
 
@@ -282,8 +255,6 @@ void ClassNetwork::Network(void)
     u16_t           len;
     err_t           recv_err;
 
-    // Initialize the LwIP stack. Create tcp_ip stack thread
-    tcpip_init(nullptr, nullptr);
 
 for(;;)
 { nOS_Sleep(100);}

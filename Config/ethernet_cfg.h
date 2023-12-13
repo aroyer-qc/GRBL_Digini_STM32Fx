@@ -30,6 +30,13 @@
 // define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define ETH_USED_INTERFACE                      ETH_INTERFACE_RMII
+
+
+#define ETH_USE_TIME_STAMP                      DEF_DISABLED
+#define ETH_USE_CHECKSUM_OFFLOAD                DEF_DISABLED
+
+
 // MAC address configuration using GUID of the CPU.
 #define MAC_ADDR0	                            (((char *)0x1FF0F420)[0])
 #define MAC_ADDR1	                            (((char *)0x1FF0F420)[2])
@@ -72,6 +79,5 @@
 // ETH PHY Driver
 #define PHY_DRIVER_INCLUDE                      "lib_class_phy_LAN8742A.h"
 #define PHY_DRIVER_INTERFACE                    PHY_LAN8742A_Driver
-
 
 //-------------------------------------------------------------------------------------------------
