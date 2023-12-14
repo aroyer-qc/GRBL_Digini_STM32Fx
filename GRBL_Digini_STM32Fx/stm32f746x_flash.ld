@@ -27,13 +27,14 @@ _Min_Stack_Size = __STACK_SIZE;   /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH          (rx)  : ORIGIN = 0x08000000, LENGTH = 1024K
-    RAM            (rwx) : ORIGIN = 0x20000000, LENGTH = 320K /*240K*/
-   /* TCM            (rwx) : ORIGIN = 0x20000000, LENGTH = 64K*/
-    GFX_DISPLAY    (rwx) : ORIGIN = 0xC0000000, LENGTH = 7M
-    GFX_RAM_DBASE  (rwx) : ORIGIN = 0xC0700000, LENGTH = 1M - 64K
-    RAM_DBASE      (rwx) : ORIGIN = 0xC07F0000, LENGTH = 64K
-    GFX_QSPI_DBASE (rx)  : ORIGIN = 0x90000000, LENGTH = 128K
+    FLASH            (rx)  : ORIGIN = 0x08000000, LENGTH = 1024K
+    RAM              (rwx) : ORIGIN = 0x20000000, LENGTH = 304K - 512
+    DMA_ETH_DESC_RAM (rwx) : ORIGIN = 0x2004BE00, LENGTH = 512
+    DMA_ETH_BUF_RAM  (rwx) : ORIGIN = 0x2004C000, LENGTH = 16K
+    GFX_DISPLAY      (rwx) : ORIGIN = 0xC0000000, LENGTH = 7M
+    GFX_RAM_DBASE    (rwx) : ORIGIN = 0xC0700000, LENGTH = 1M - 64K
+    RAM_DBASE        (rwx) : ORIGIN = 0xC07F0000, LENGTH = 64K
+    GFX_QSPI_DBASE   (rx)  : ORIGIN = 0x90000000, LENGTH = 128K
 }
 
 /* Highest address of the user mode stack */
@@ -148,6 +149,29 @@ SECTIONS
     . = ALIGN(4);
   } >RAM
 
+  .RX_DescriptorSection (NOLOAD) :
+  {
+    . = ALIGN(4);
+    *(.RX_DescriptorSection)
+  } >DMA_ETH_DESC_RAM
+
+  .TX_DescriptorSection (NOLOAD) :
+  {
+    . = ALIGN(4);
+    *(.RX_DescriptorSection)
+  } >DMA_ETH_DESC_RAM
+
+  .RX_ArraySection (NOLOAD) :
+  {
+    . = ALIGN(4);
+    *(.RX_DescriptorSection)
+  } >DMA_ETH_BUF_RAM
+
+  .TX_ArraySection (NOLOAD) :
+  {
+    . = ALIGN(4);
+    *(.RX_DescriptorSection)
+  } >DMA_ETH_BUF_RAM
 
   /* Remove information from the standard libraries */
 /*  /DISCARD/ : */
@@ -169,5 +193,3 @@ SECTIONS
    /* Check if data + heap + stack exceeds RAM limit */
    ASSERT(__StackLimit >= __HeapLimit, "Region RAM overflowed with stack")
 }
-
-
