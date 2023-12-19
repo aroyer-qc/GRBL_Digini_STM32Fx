@@ -60,6 +60,7 @@ void                BSP_Initialize          (void);
 void                BSP_IRQ_Init            (void);
 SystemState_e       BSP_PostOS_Initialize   (void);
 void                BSP_SetBacklightLevel   (uint8_t Level);
+void                BSP_MPU_Config          (void);
 
 //-------------------------------------------------------------------------------------------------
 

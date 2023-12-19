@@ -338,6 +338,7 @@
 		<Unit filename="..\Config\menu_cfg.h" />
 		<Unit filename="..\Config\menu_link_cfg.h" />
 		<Unit filename="..\Config\menu_link_list_cfg.h" />
+		<Unit filename="..\Config\mpu_cfg.h" />
 		<Unit filename="..\Config\nOSConfig.h" />
 		<Unit filename="..\Config\project_def.h" />
 		<Unit filename="..\Config\pwm_cfg.h" />
@@ -728,6 +729,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_isr.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_mpu.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_rng.cpp">

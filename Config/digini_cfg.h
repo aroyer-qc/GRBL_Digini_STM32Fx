@@ -90,6 +90,11 @@
 #define DIGINI_USE_CRC                                  DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
+// MPU Configuration
+//
+#define DIGINI_MPU_DRIVER                               DEF_ENABLED
+
+//-------------------------------------------------------------------------------------------------
 //
 // Note: If it is DEF_ENABLED then you need also need to  "NOS_CONFIG_DEBUG  1"    in nOSConfig.h
 #define DIGINI_USE_STACKTISTIC                          DEF_ENABLED                 // Allow debugging of the stack, per code or using VT100 terminal

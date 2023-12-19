@@ -259,7 +259,7 @@ void ClassNetwork::Network(void)
 for(;;)
 { nOS_Sleep(100);}
 
-
+#if 0  // need to reenable LWIP_NETCONN    1
     // Create a new connection identifier.
     conn = netconn_new_with_proto_and_callback(NETCONN_TCP, 0, nullptr);            // maybe move this and not create the task if ethernet is not working
 
@@ -328,6 +328,7 @@ for(;;)
 
   //      nOS_Sleep(1);
   //  }
+  #endif
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -355,6 +356,7 @@ void ClassNetwork::WebServer(void)
 for(;;)
 { nOS_Sleep(100);}
 
+#if 0
     m_WebServerConn = netconn_new(NETCONN_TCP);                                     // Create a new TCP connection handle
 
     if(m_WebServerConn != nullptr)
@@ -377,6 +379,7 @@ for(;;)
             }
         }
     }
+#endif
 }
 
 /**
@@ -386,6 +389,7 @@ for(;;)
   */
 void ClassNetwork::WebServer_Serve(void)
 {
+    #if 0
     struct netbuf*  inbuf;
     err_t           recv_err;
     char*           buf;
@@ -453,6 +457,7 @@ void ClassNetwork::WebServer_Serve(void)
 
     /* Delete the buffer (netconn_recv gives us ownership, so we have to make sure to deallocate the buffer) */
     netbuf_delete(inbuf);
+#endif
 }
 
 /**
@@ -463,6 +468,7 @@ void ClassNetwork::WebServer_Serve(void)
   */
 void ClassNetwork::WebServer_DynamicPage(void)
 {
+    #if 0
     char* pPageBody;
     char* pPageHits;
 
@@ -488,6 +494,7 @@ void ClassNetwork::WebServer_DynamicPage(void)
 
     pMemoryPool->Free((void**)&pPageBody);
     pMemoryPool->Free((void**)&pPageHits);
+    #endif
 }
 
 //-------------------------------------------------------------------------------------------------

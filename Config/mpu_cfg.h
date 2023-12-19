@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : main.cpp
+//  File : mpu_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2023 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -24,82 +24,32 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+#pragma once
+
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
-#include "bsp.h"
-#include "Task_grbl.h"
-#include "Task_loading.h"
-#include "Task_network.h"
-#include "Task_comm.h"
-
 //-------------------------------------------------------------------------------------------------
-//
-// Name:           main
-// Parameter(s):   void
-// Return:         int
-//
-// Description:    main() what more can be said
-//
-// Note(s):        Here we create the task that will start all the other
-//
+// Define(s)
 //-------------------------------------------------------------------------------------------------
-int main()
-{
-    Language_e Language;
 
-    MPU_Initialize(MPU_PRIVILEGED_DEFAULT);
+// Configure the MPU attributes as:
 
-  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Initialize();                             // Initialize the Stack Check process before any task
-  #endif
+// give better description than this:Device memory for ETH DMA descriptors and buffer
 
-    nOS_Init();
-    BSP_Initialize();                                       // All hardware and system initialization
+//         Region number,   Base Address, Size,             Access Permission,       Is Bufferable,              Is Cacheable,              IsShareable,               Type Ext Field,   Disable Exec,                    Sub Region Disable  
+#define MPU_DEF(X_MPU) \
+    X_MPU( MPU_REGION_0,    0x00000000,   MPU_REGION_4GB,   MPU_REGION_NO_ACCESS,    MPU_ACCESS_NOT_BUFFERABLE,  MPU_ACCESS_NOT_CACHEABLE,  MPU_ACCESS_SHAREABLE,      MPU_TEX_LEVEL_0,  MPU_INSTRUCTION_ACCESS_DISABLE,  0x87               ) \
+    X_MPU( MPU_REGION_1,    0x2004C000,   MPU_REGION_16KB,  MPU_REGION_FULL_ACCESS,  MPU_ACCESS_NOT_BUFFERABLE,  MPU_ACCESS_NOT_CACHEABLE,  MPU_ACCESS_NOT_SHAREABLE,  MPU_TEX_LEVEL_1,  MPU_INSTRUCTION_ACCESS_ENABLE,   0x00               ) \
+    X_MPU( MPU_REGION_2,    0x2004BE00,   MPU_REGION_512B,  MPU_REGION_FULL_ACCESS,  MPU_ACCESS_BUFFERABLE,      MPU_ACCESS_NOT_CACHEABLE,  MPU_ACCESS_SHAREABLE,      MPU_TEX_LEVEL_0,  MPU_INSTRUCTION_ACCESS_ENABLE,   0x00               ) \
+    X_MPU( MPU_REGION_3,    0xC0000000,   MPU_REGION_8MB,   MPU_REGION_FULL_ACCESS,  MPU_ACCESS_NOT_BUFFERABLE,  MPU_ACCESS_CACHEABLE,      MPU_ACCESS_NOT_SHAREABLE,  MPU_TEX_LEVEL_0,  MPU_INSTRUCTION_ACCESS_ENABLE,   0x00               ) \
+    X_MPU( MPU_REGION_4,    0xA0000000,   MPU_REGION_8KB,   MPU_REGION_FULL_ACCESS,  MPU_ACCESS_BUFFERABLE,      MPU_ACCESS_NOT_CACHEABLE,  MPU_ACCESS_SHAREABLE,      MPU_TEX_LEVEL_0,  MPU_INSTRUCTION_ACCESS_DISABLE,  0x00               ) \
 
-    nOS_Start();
-    BSP_PostOS_Initialize();
-    pTaskCOMM->Initialize();
-
-    //pTaskLoading->Initialize();
-
-  #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-    pLWIP_App->Initialize();
-    //pTaskNetwork->Initialize();
-  #endif
-   // pTaskGRBL->Initialize();
-
-    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
-    // = LANG_FRENCH;
-    myLabel.SetLanguage(Language);
-
-
-  #ifdef DEBUG
-    DateAndTime_t DateTime;
-
-    DateTime.Date.Day    = 31;
-    DateTime.Date.Month  = 7;
-    DateTime.Date.Year   = 2023;
-    DateTime.Time.Hour   = 15;
-    DateTime.Time.Minute = 30;
-    DateTime.Time.Second = 1;
-    LIB_SetDateAndTime(&DateTime);
-  #endif
-
-    for(;;)                                 // It is the idle task..
-    {
-        pTaskCOMM->Process(); // should move this to own task! so option to run as a task or this as a process
-      #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-        pLWIP_App->Process();
-        //pTaskNetwork->Process();
-      #endif
-
-        //nOS_Yield();
-    }
-
-    return 0;                               // will never return
-}
+/*
+    X_MPU( MPU_REGION_5,     )
+    X_MPU( MPU_REGION_6,     )
+    X_MPU( MPU_REGION_7,     )
+*/
 
 //-------------------------------------------------------------------------------------------------

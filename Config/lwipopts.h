@@ -9,9 +9,9 @@
 #define TCPIP_THREAD_STACKSIZE          2048
 
 #define NO_SYS                          0                           // NO_SYS==0: Use lwIP with OS-awareness
-#define LWIP_NETCONN                    1                           // LWIP_NETCONN==1: Enable Netconn API (require to use api_lib.c)
+#define LWIP_NETCONN                    0                           // LWIP_NETCONN==1: Enable Netconn API (require to use api_lib.c)
 #define LWIP_SOCKET                     0                           // LWIP_SOCKET==1: Enable Socket API (require to use sockets.c)
-#define SYS_LIGHTWEIGHT_PROT            0                           // SYS_LIGHTWEIGHT_PROT==1: enable inter-task protection (and task-vs-interrupt protection) for certain critical regions during buffer allocation,
+#define SYS_LIGHTWEIGHT_PROT            1                           // SYS_LIGHTWEIGHT_PROT==1: enable inter-task protection (and task-vs-interrupt protection) for certain critical regions during buffer allocation,
                                                                     // deallocation and memory allocation and deallocation.
                                                                     // ATTENTION: This is required when using lwIP from more than one context! If you disable this, you must be sure what you are doing!
 
