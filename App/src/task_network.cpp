@@ -353,6 +353,12 @@ void ClassNetwork::WebServer(void)
 {
     err_t  err;
     err_t  accept_err;
+
+  // Initialize webserver demo
+  //http_server_socket_init();
+
+
+
 for(;;)
 { nOS_Sleep(100);}
 

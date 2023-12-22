@@ -32,10 +32,9 @@
 
 #define ETH_USED_INTERFACE                      ETH_INTERFACE_RMII
 
-
 #define ETH_USE_TIME_STAMP                      DEF_DISABLED
 #define ETH_USE_CHECKSUM_OFFLOAD                DEF_DISABLED
-
+#define ETH_DEBUG_PACKET_COUNT                  DEF_ENABLED
 
 // MAC address configuration using GUID of the CPU.
 #define MAC_ADDR0	                            (((char *)0x1FF0F420)[0])
