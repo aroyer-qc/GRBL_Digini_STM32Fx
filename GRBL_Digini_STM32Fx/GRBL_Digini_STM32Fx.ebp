@@ -992,6 +992,8 @@
 		<Unit filename="..\Module\lwip\src\include\lwip\api.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\arch.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\def.h" />
+		<Unit filename="..\Module\lwip\src\include\lwip\dhcp.h" />
+		<Unit filename="..\Module\lwip\src\include\lwip\err.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\etharp.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\mem.h" />
 		<Unit filename="..\Module\lwip\src\include\lwip\opt.h" />
