@@ -82,8 +82,8 @@ class ClassNetwork
     void            WebServer_Serve             (void);
     void            WebServer_DynamicPage       (void);
 
-    void            TCP_EchoServer_Initialize   (void);
-    err_t           TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
+    //void            TCP_EchoServer_Initialize   (void);
+    //rr_t           TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
 
     static nOS_Thread      m_WebServerHandle;
     static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];

@@ -4,7 +4,7 @@
 
 #include "Config.h"
 #include "CoolantControl.h"
-#include "debug.h"
+//#include "debug.h"
 #include "GCode.h"
 #include "Jog.h"
 #include "Limits.h"

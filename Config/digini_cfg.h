@@ -53,8 +53,7 @@
 //-------------------------------------------------------------------------------------------------
 // Ethernet
 //
-#define DIGINI_USE_ETHERNET                             DEF_ENABLED
-#define DIGINI_USE_LWIP                                 DEF_ENABLED
+#define DIGINI_USE_ETHERNET                             DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral

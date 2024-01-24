@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.60" revision="0" />
+	<EmBitzVersion release="2.61" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
@@ -92,6 +92,7 @@
 			<Add directory="..\module\Digini\Peripheral\inc\port\fatfs" />
 			<Add directory="..\module\Digini\Peripheral\inc\port\STM32F7xx\fatfs" />
 			<Add directory="..\module\Digini\Peripheral\inc\device" />
+			<Add directory="..\module\Digini\Peripheral\inc\device\NetworkDevice" />
 			<Add directory="..\Module\Digini\Peripheral\inc\interface" />
 			<Add directory="..\module\Digini\Digini\inc" />
 			<Add directory="..\module\Digini\Grafx\inc" />
@@ -357,28 +358,6 @@
 		<Unit filename="..\Config\widget_cfg.h" />
 		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cc.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cc.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\cpu.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\lwip_errno.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\perf.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\arch\sys_arch.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\ethernetif.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\lib_class_process_lwip.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Architecture\lwip\lib_class_process_lwip.h" />
-		<Unit filename="..\Module\Digini\Architecture\lwip\modified tcpip.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli_expanding_macro.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli.cpp">
@@ -829,184 +808,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Utility\src\port\STM32F7xx\lib_stacktistic_STM32F7.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\api_lib.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\api_msg.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\err.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\if_api.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netbuf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netdb.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\netifapi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\sockets.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\api\tcpip.c">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\altcp_proxyconnect.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\fs.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\http_client.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\http\httpd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\apps\sntp\sntp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp_alloc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\altcp_tcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\def.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\dns.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\inet_chksum.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\init.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\acd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\autoip.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\dhcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\etharp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\icmp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\igmp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4_addr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv4\ip4_frag.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\dhcp6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ethip6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\icmp6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\inet6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6_addr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\ip6_frag.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\mld6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\ipv6\nd6.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\mem.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\memp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\netif.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\pbuf.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\raw.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\stats.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\sys.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp_in.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\tcp_out.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\timeouts.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\core\udp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\include\lwip\api.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\arch.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\def.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\dhcp.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\err.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\etharp.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\mem.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\opt.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\pbuf.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\snmp.h" />
-		<Unit filename="..\Module\lwip\src\include\lwip\stats.h" />
-		<Unit filename="..\Module\lwip\src\netif\bridgeif.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\netif\bridgeif_fdb.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\lwip\src\netif\ethernet.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\module_FatFs\inc\ff.h" />

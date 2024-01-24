@@ -76,7 +76,7 @@
 #define IF_NAME "dg0"
 
 // ETH PHY Driver
-#define PHY_DRIVER_INCLUDE                      "lib_class_phy_LAN8742A.h"
+#define PHY_DRIVER_INCLUDE                      "lib_class_PHY_LAN8742A.h"
 #define PHY_DRIVER_INTERFACE                    PHY_LAN8742A_Driver
 
 //-------------------------------------------------------------------------------------------------

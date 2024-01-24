@@ -40,6 +40,7 @@
 // Private variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
+/*
 u32_t nPageHits = 0;
 
 // Format of dynamic web page: the page header
@@ -145,7 +146,7 @@ static const unsigned char PAGE_START[] =
 0x6e,0x74,0x2d,0x66,0x61,0x6d,0x69,0x6c,0x79,0x3a,0x20,0x56,0x65,0x72,0x64,0x61,
 0x6e,0x61,0x3b,0x22,0x3e,0x4e,0x75,0x6d,0x62,0x65,0x72,0x20,0x6f,0x66,0x20,0x70,
 0x61,0x67,0x65,0x20,0x68,0x69,0x74,0x73,0x3a,0x0d,0x0a,0x00};
-
+*/
 //-------------------------------------------------------------------------------------------------
 //
 //   Static Variables
@@ -195,7 +196,7 @@ nOS_Error ClassNetwork::Initialize(void)
 {
     nOS_Error Error;
 
-    lwipPlatformDiag("Initializing ClassNetwork\n");
+   // lwipPlatformDiag("Initializing ClassNetwork\n");
 
     /*Error = nOS_ThreadCreate(&m_NetworkHandle,
                              TaskNetwork_Wrapper,
@@ -246,14 +247,14 @@ memset(&m_NetworkStack[0], 0xFF, TASK_NETWORK_STACK_SIZE * 4);
 //-------------------------------------------------------------------------------------------------
 void ClassNetwork::Network(void)
 {
-    struct netconn* conn;
-    struct netconn* newconn;
-    err_t           err;
-    err_t           accept_err;
-    struct netbuf*  buf;
+  //  struct netconn* conn;
+ //   struct netconn* newconn;
+   // err_t           err;
+   // err_t           accept_err;
+   // struct netbuf*  buf;
     void*           data;
-    u16_t           len;
-    err_t           recv_err;
+  //  u16_t           len;
+   // err_t           recv_err;
 
 
 for(;;)
@@ -351,8 +352,8 @@ for(;;)
 //-------------------------------------------------------------------------------------------------
 void ClassNetwork::WebServer(void)
 {
-    err_t  err;
-    err_t  accept_err;
+   // err_t  err;
+  //  err_t  accept_err;
 
   // Initialize webserver demo
   //http_server_socket_init();
