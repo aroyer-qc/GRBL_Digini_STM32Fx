@@ -35,6 +35,8 @@
 #include "Task_network.h"
 #include "Task_comm.h"
 
+IP_Manager myIP_Manager;
+
 //-------------------------------------------------------------------------------------------------
 //
 // Name:           main
@@ -66,8 +68,8 @@ int main()
     //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-    //pLWIP_App->Initialize();
-    //pTaskNetwork->Initialize();
+    myIP_Manager.Initialize(ETH_IF_GRBL);
+    pTaskNetwork->Initialize();
   #endif
    // pTaskGRBL->Initialize();
 
@@ -92,7 +94,6 @@ int main()
     {
         pTaskCOMM->Process(); // should move this to own task! so option to run as a task or this as a process
       #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-        //pLWIP_App->Process();
         //pTaskNetwork->Process();
       #endif
 
