@@ -196,7 +196,7 @@ nOS_Error ClassNetwork::Initialize(void)
 {
     nOS_Error Error;
 
-   // lwipPlatformDiag("Initializing ClassNetwork\n");
+   // Diag("Initializing ClassNetwork\n");
 
     /*Error = nOS_ThreadCreate(&m_NetworkHandle,
                              TaskNetwork_Wrapper,

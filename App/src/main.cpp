@@ -68,11 +68,24 @@ int main()
     //pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-    myIP_Manager.Initialize(ETH_IF_GRBL);
+
+// MAC address configuration using GUID of the CPU.
+//#define MAC_ADDR0	                            (((char *)0x1FF0F420)[0])
+//#define MAC_ADDR1	                            (((char *)0x1FF0F420)[2])
+//#define MAC_ADDR2	                            (((char *)0x1FF0F420)[4])
+//#define MAC_ADDR3	                            (((char *)0x1FF0F420)[6])
+//#define MAC_ADDR4	                            (((char *)0x1FF0F420)[8])
+//#define MAC_ADDR5	                            (((char *)0x1FF0F420)[10])
+    // to debug
+    IP_MAC_Address_t MAC = {MAC_ADDR0, MAC_ADDR1, MAC_ADDR2, MAC_ADDR3, MAC_ADDR4, MAC_ADDR5};
+    myIP_Manager.Initialize(ETH_IF_GRBL, &MAC);
+    
     pTaskNetwork->Initialize();
   #endif
    // pTaskGRBL->Initialize();
 
+
+// move this to labael ????? myLabel should read language by itself
     DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
     // = LANG_FRENCH;
     myLabel.SetLanguage(Language);
