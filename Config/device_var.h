@@ -44,6 +44,13 @@
 
 #if 0  // Other as example
 
+#ifdef __CLASS_WS281x__
+ extern class WS281x2                    WS281x_LedStream;
+ #ifdef LIB_WS281x_GLOBAL
+  class WS281x2                          WS281x_LedStream;
+ #endif
+#endif
+
 #ifdef __CLASS_CS43L22__
  extern class CS43L22                    CS43L22_AudioCodec;
  #ifdef LIB_CS43L22_GLOBAL

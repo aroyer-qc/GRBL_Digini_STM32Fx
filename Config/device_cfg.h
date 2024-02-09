@@ -59,5 +59,6 @@
 //#include "lib_class_audio_codec_CS43L22.h"
 //#include "lib_class_gpio_MAX4598.h"
 //#include "lib_LMT86.h"
+//#include "lib_class_WS281x.h"
 
 //-------------------------------------------------------------------------------------------------
