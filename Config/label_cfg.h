@@ -30,6 +30,8 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+// Notes some default label exist in the file "lib_label.h"
+
 #define     LABEL_USE_TIME_AND_DATE             DEF_ENABLED
 #define     LABEL_USE_PRODUCT_INFO              DEF_ENABLED
 
@@ -41,7 +43,6 @@
     X_LABEL( LBL_DIAGNOSTIC,             "Diagnostic",                                  "Diagnostique"                                  ) \
     X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
     X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
-    X_LABEL( LBL_SYSTEM_INFO,            "System Info",                                 "Info Syst\x8ame"                               ) \
     X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
     X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
     X_LABEL( LBL_0,                      "0",                                           nullptr                                         ) \

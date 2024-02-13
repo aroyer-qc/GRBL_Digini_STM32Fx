@@ -37,7 +37,6 @@
 #define MEMORY_POOL_USE_STAT                        DEF_ENABLED
 #define MEMORY_POOL_RESTRICT_ALLOC_TO_BLOCK_SIZE    DEF_DISABLED    // If Enable we allow only closest block size that are greater to be allocated
 
-
 // Add here all group of memory block needed and their size
 
 // Memory block 0:      general all around block

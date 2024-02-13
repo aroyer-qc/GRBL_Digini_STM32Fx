@@ -179,8 +179,6 @@
                                  ENTRY  (MENU,  MenuSystemSetting, ID_MISC_TEMPERATURE_UNIT,            CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_TEMPERATURE_UNIT_SELECTION            )  \
                                  ENTRY  (MENU,  MenuSystemSetting, ID_MISC_SAVE,                        CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_SAVE_CONFIGURATION                    )  \
 \
-                                 ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,                     CALLBACK_SD_CardInformation,             MenuRedirection,                  VT100_LBL_SD_CARD_INFORMATION                   )  \
-\
                                  ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,                      CALLBACK_DebugLevelSetting,              MenuRedirection,                  VT100_LBL_DEBUG_MENU                            )  \
                                  ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_1                         )  \
                                  ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_1,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_2                         )  \
@@ -198,6 +196,8 @@
                                  ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_D,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_14                        )  \
                                  ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_E,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_15                        )  \
                                  ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_F,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_16                        )  \
+\
+                                 ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,                     CALLBACK_SD_CardInformation,             MenuRedirection,                  VT100_LBL_SD_CARD_INFORMATION                   )  \
 \
 
 // ------------------------------------------------------------------------------------------------------------------

@@ -34,7 +34,6 @@
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-
 #ifdef __CLASS_PULSE_COUNTER__
  extern class PULSE_Counter              mySpindleCounter;
  #ifdef LIB_PULSE_COUNTER_GLOBAL
