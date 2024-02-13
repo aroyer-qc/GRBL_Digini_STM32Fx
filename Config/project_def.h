@@ -51,7 +51,6 @@ extern const char OUR_FIRMWARE_BUILD_DATE[];
 // Configurable value
 extern char OEM_VENDOR_NAME[8];
 extern char OEM_MODEL_NAME[24];
-extern char OEM_FIRMWARE_NAME[164];
 extern char OEM_SERIAL_NUMBER[SERIAL_NUMBER_SIZE];
 
 #ifdef BSP_GLOBAL

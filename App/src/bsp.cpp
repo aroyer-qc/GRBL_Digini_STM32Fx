@@ -50,7 +50,9 @@
 #include "Task_network.h"
 #include "Task_comm.h"
 
+#if (USE_ETH_DRIVER == DEF_ENABLED) && (DIGINI_USE_ETHERNET == DEF_ENABLED)
 IP_Manager myIP_Manager;
+#endif // (DIGINI_USE_ETHERNET == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
@@ -206,7 +208,7 @@ SystemState_e BSP_PostOS_Initialize(void)
   #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
   #endif
-  
+
     pTaskCOMM->Initialize();
 
     //pTaskLoading->Initialize();
@@ -223,7 +225,7 @@ SystemState_e BSP_PostOS_Initialize(void)
     // to debug
     IP_MAC_Address_t MAC = {MAC_ADDR0, MAC_ADDR1, MAC_ADDR2, MAC_ADDR3, MAC_ADDR4, MAC_ADDR5};
     myIP_Manager.Initialize(ETH_IF_GRBL, &MAC);
-    
+
     pTaskNetwork->Initialize();
   #endif
    // pTaskGRBL->Initialize();
@@ -247,7 +249,7 @@ SystemState_e BSP_PostOS_Initialize(void)
     DateTime.Time.Second = 1;
     LIB_SetDateAndTime(&DateTime);
   #endif
-  
+
     return State;
 }
 

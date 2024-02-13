@@ -498,13 +498,13 @@ static ServiceReturn_t* SERV_INFO(ServiceEvent_e* pServiceState, uint16_t SubSer
         {
             switch(SubService)
             {
-                case 0: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_NAME);          break;
-                case 1: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_VERSION);       break;
-                case 2: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_NAME);      break;
-                case 3: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_GUI_VERSION);   break;
-                case 4: snprintf(pBuffer, 24, "%s", OEM_MODEL_NAME);             break;
-                case 5: snprintf(pBuffer, 24, "%s", OEM_FIRMWARE_SERIAL_NUMBER); break;
-                case 6: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_BUILD_DATE);    break;
+                case 0: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_NAME);           break;
+                case 1: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_VERSION);        break;
+                case 2: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_DIGINI_NAME);    break;
+                case 3: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_DIGINI_VERSION); break;
+                case 4: snprintf(pBuffer, 24, "%s", OEM_MODEL_NAME);              break;
+                case 5: snprintf(pBuffer, 24, "%s", OEM_SERIAL_NUMBER);           break;
+                case 6: snprintf(pBuffer, 24, "%s", OUR_FIRMWARE_BUILD_DATE);     break;
                 // Add Config version
             }
 

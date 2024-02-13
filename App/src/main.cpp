@@ -30,6 +30,8 @@
 
 #include "lib_digini.h"
 #include "bsp.h"
+#include "Task_comm.h"
+
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -56,10 +58,10 @@ int main()
     BSP_Initialize();                           // All hardware and system initialization
     nOS_Start();
     BSP_PostOS_Initialize();                    // All initialization that must be done after the OS is started
-    
-    for(;;)                                 // It is the idle task..
+
+    for(;;)                                     // It is the idle task..
     {
-        pTaskCOMM->Process(); // should move this to own task! so option to run as a task or this as a process
+        pTaskCOMM->Process();  // should move this to own task! so option to run as a task or this as a process
       #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
         //pTaskNetwork->Process();
       #endif
