@@ -36,13 +36,6 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// Define(s)
-//-------------------------------------------------------------------------------------------------
-
-#define GRAFX_SKIN_FILENAME                     "grbl.skn"
-#define GRAFX_USE_POINTING_DEVICE               DEF_ENABLED
-
-//-------------------------------------------------------------------------------------------------
 //
 // Memory mapping for STM32F746G-DISCO
 //
@@ -60,6 +53,12 @@
 //          0xC07C 0000              256K database for skin info
 //
 //-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
+// Define(s)
+//-------------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------------------------
 // GRAFX Configuration for decompressing data
 //
 // Note(s) you must provide memory address for decompressing input and output data
@@ -67,12 +66,17 @@
 //-------------------------------------------------------------------------------------------------
 
 // Du to memory limitation (8M), we use unused layer for temporary decoding
-#define GRAFX_RAW_INPUT_DATA_ADDRESS        0xC00BF400   // 128K
-#define GRAFX_DECODE_ARRAY_ADDRESS          0xC00DF400   // 224K
-#define GRAFX_APPEND_ARRAY_ADDRESS          0xC0117400   // 224K
-#define GRAFX_PREFIX_ARRAY_ADDRESS          0xC014F400   // 224K
-#define GRAFX_DECOMPRESS_METHOD_ADDRESS     0xC0187400   // 8K
-#define GRAFX_DATA_SIZE_ADDRESS             0xC0189400   // 8K
+#define GRAFX_RAW_INPUT_DATA_ADDRESS                    0xC00BF400      // 128K
+#define GRAFX_DECODE_ARRAY_ADDRESS                      0xC00DF400      // 224K
+#define GRAFX_APPEND_ARRAY_ADDRESS                      0xC0117400      // 224K
+#define GRAFX_PREFIX_ARRAY_ADDRESS                      0xC014F400      // 224K
+#define GRAFX_DECOMPRESS_METHOD_ADDRESS                 0xC0187400      // 8K
+#define GRAFX_DATA_SIZE_ADDRESS                         0xC0189400      // 8K
+
+//-------------------------------------------------------------------------------------------------
+
+#define GRAFX_SKIN_FILENAME                             "grbl.skn"
+#define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 
@@ -81,7 +85,7 @@
 #define GRAFX_USE_RAM_DATA                              DEF_ENABLED     // this setting is not very clear at this point... probably for LCD with ram access
 #define GRAFX_USE_ROM_DATA                              DEF_DISABLED
 
-#define GRAFX_USE_MULTI_LINE
+#define GRAFX_USE_MULTI_LINE                            DEF_ENABLED
 
 #define GRAFX_TICK_WAIT_BETWEEN_REFRESH_LOOP            8
 
@@ -93,8 +97,8 @@
 #define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER         DEF_ENABLED     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER         DEF_ENABLED
 
-//#define GRAFX_DEBUG_GUI
-//#define GRAFX_PAINT_BOX_DEBUG
+#define GRAFX_DEBUG_GUI                                 DEF_DISABLED
+#define GRAFX_PAINT_BOX_DEBUG                           DEF_DISABLED
 #define GRAFX_PAINT_BOX_DEBUG_COLOR                     RED
 
 #ifdef DIGINI_USE_QSPI
@@ -104,47 +108,47 @@
 #endif
 
 #if (GRAFX_USE_POINTING_DEVICE == DEF_ENABLED)
-    #define GRAFX_PDI_SWAP_XY     // todo use DEF_xxxx
-    //#define GRAFX_PDI_INVERT_X // todo use DEF_xxxx
-    //#define GRAFX_PDI_INVERT_Y // todo use DEF_xxxx
+  #define GRAFX_PDI_SWAP_XY                             DEF_ENABLED
+  #define GRAFX_PDI_INVERT_X                            DEF_DISABLED    // Not existent on this setup
+  #define GRAFX_PDI_INVERT_Y                            DEF_DISABLED    // Not existent on this setup
 #endif
 
 #define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
-#define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED                // Enable support for Multi-touch
-//#define GRAFX_PDI_INTERRUPT_IO                                                   // Pointing device (touch) IRQ is not available on DISCO746
+#define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED     // Enable support for Multi-touch
+#define GRAFX_PDI_INTERRUPT_IO                          DEF_DISABLED    // Pointing device (touch) IRQ is not available on DISCO746
 
 
 //#define GRAFX_USE_TIMED_WIDGET
-#define GRAFX_USE_FONT_SIZE_8                           DEF_DISABLED
-#define GRAFX_USE_FONT_SIZE_12                          DEF_DISABLED
+#define GRAFX_USE_FONT_SIZE_8                           DEF_DISABLED    // Not used on this setup
+#define GRAFX_USE_FONT_SIZE_12                          DEF_DISABLED    // Not used on this setup
 #define GRAFX_USE_FONT_SIZE_16                          DEF_ENABLED
 
 ///------------------------------------------------------------------------------------------------
 /// Color supported mode in this project
-#define GRAFX_COLOR_ARGB8888
-//#define GRAFX_COLOR_RGB888
-#define GRAFX_COLOR_RGB565
-//#define GRAFX_COLOR_ARGB1555
-//#define GRAFX_COLOR_ARGB4444
-//#define GRAFX_COLOR_L8
-//#define GRAFX_COLOR_AL44
-//#define GRAFX_COLOR_AL88
-//#define GRAFX_COLOR_L4
-//#define GRAFX_COLOR_A8
-//#define GRAFX_COLOR_A4
-//#define GRAFX_COLOR_RGB332
-//#define GRAFX_COLOR_RGB444
+#define GRAFX_COLOR_ARGB8888                            DEF_ENABLED
+#define GRAFX_COLOR_RGB888                              DEF_DISABLED
+#define GRAFX_COLOR_RGB565                              DEF_ENABLED
+#define GRAFX_COLOR_ARGB1555                            DEF_DISABLED
+#define GRAFX_COLOR_ARGB4444                            DEF_DISABLED
+#define GRAFX_COLOR_L8                                  DEF_DISABLED
+#define GRAFX_COLOR_AL44                                DEF_DISABLED
+#define GRAFX_COLOR_AL88                                DEF_DISABLED
+#define GRAFX_COLOR_L4                                  DEF_DISABLED
+#define GRAFX_COLOR_A8                                  DEF_DISABLED
+#define GRAFX_COLOR_A4                                  DEF_DISABLED
+#define GRAFX_COLOR_RGB332                              DEF_DISABLED
+#define GRAFX_COLOR_RGB444                              DEF_DISABLED
 
 #define DIGINI_MAX_PRINT_NUMBER_OF_LINE                 8               // This is the maximum number of line in the same string
 
 // Default service available in Grafx
-#define USE_SERV_DATE                                                   // Service to provide the date
-#define USE_SERV_INPD                                                   // Service to input a decimal value
-#define USE_SERV_INPF                                                   // Service to input a float value
-#define USE_SERV_INPH                                                   // Service to input a Hexa value
-//#define USE_SERV_INPS                                                 // Service to input a string
-#define USE_SERV_TIME                                                   // Service to provide time
-#define USE_SERV_XCHG                                                   // Special service to exchange data.
+#define USE_SERV_DATE                                   DEF_ENABLED     // Service to provide the date
+#define USE_SERV_INPD                                   DEF_ENABLED     // Service to input a decimal value
+#define USE_SERV_INPF                                   DEF_ENABLED     // Service to input a float value
+#define USE_SERV_INPH                                   DEF_ENABLED     // Service to input a Hexa value
+#define USE_SERV_INPS                                   DEF_DISABLED    // Service to input a string
+#define USE_SERV_TIME                                   DEF_ENABLED     // Service to provide time
+#define USE_SERV_XCHG                                   DEF_ENABLED     // Special service to exchange data.
 
 //-------------------------------------------------------------------------------------------------
 

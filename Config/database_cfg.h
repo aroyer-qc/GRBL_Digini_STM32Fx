@@ -50,7 +50,6 @@
 #define     DBASE_INDEX_QSPI_RANGE              6000
 
 // specific to Grafx support
-
 #define     DBASE_MAX_SKIN_IMAGE_QTY            256                                 // this is max the number of image in database
 #define     DBASE_MAX_SKIN_FONT_QTY             32                                  // this is max the number of font in database
 
@@ -74,18 +73,18 @@
 // Do not change position of SYSTEM_LANGUAGE and GRBL_SETTINGS_VERSION.
 //                  Enum ID                     Driver,              Items QTY,        Items SubQTY     Item Size
 #define EEPROM_DBASE_DEF(X_EEPROM_DBASE) \
-    X_EEPROM_DBASE( SYSTEM_LANGUAGE,            myE2_Setting,        1,                1,               sizeof(Language_e)         ) \
-    X_EEPROM_DBASE( SYSTEM_SETTINGS_VERSION,    myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
-    X_EEPROM_DBASE( SYSTEM_OEM_MODEL_NAME,      myE2_Setting,        1,                1,               sizeof(OEM_MODEL_NAME)     ) \
-    X_EEPROM_DBASE( SYSTEM_SERIAL_NUMBER,       myE2_Setting,        1,                1,               sizeof(OEM_SERIAL_NUMBER)  ) \
-    X_EEPROM_DBASE( SYSTEM_TEMPERATURE_UNIT,    myE2_Setting,        1,                1,               sizeof(TempUnit_e)         ) \
-    X_EEPROM_DBASE( GRBL_CONFIGURATION,         myE2_Setting,        1,                1,               sizeof(Config_t)           ) \
-    X_EEPROM_DBASE( GRBL_BUILD_INFO,            myE2_Setting,        1,                1,               STARTUP_LINE_LEN           ) \
-    X_EEPROM_DBASE( GRBL_BUILD_INFO_CHKSUM,     myE2_Setting,        1,                1,               sizeof(uint8_t)            ) \
-    X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,       myE2_Setting,        1,                1,               sizeof(Settings_t)         ) \
-    X_EEPROM_DBASE( GRBL_TOOL_TABLE,            myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)       ) \
-    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,         myE2_Setting,        N_STARTUP_LINE,   1,               STARTUP_LINE_LEN           ) \
-    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK_CHKSUM,  myE2_Setting,        N_STARTUP_LINE,   1,               sizeof(uint8_t)            ) \
+    X_EEPROM_DBASE( SYSTEM_LANGUAGE,            myE2_Setting,        1,                1,               sizeof(Language_e)                 ) \
+    X_EEPROM_DBASE( SYSTEM_SETTINGS_VERSION,    myE2_Setting,        1,                1,               sizeof(uint8_t)                    ) \
+    X_EEPROM_DBASE( SYSTEM_OEM_MODEL_NAME,      myE2_Setting,        1,                1,               sizeof(OEM_MODEL_NAME)             ) \
+    X_EEPROM_DBASE( SYSTEM_SERIAL_NUMBER,       myE2_Setting,        1,                1,               sizeof(OEM_FIRMWARE_SERIAL_NUMBER) ) \
+    X_EEPROM_DBASE( SYSTEM_TEMPERATURE_UNIT,    myE2_Setting,        1,                1,               sizeof(TempUnit_e)                 ) \
+    X_EEPROM_DBASE( GRBL_CONFIGURATION,         myE2_Setting,        1,                1,               sizeof(Config_t)                   ) \
+    X_EEPROM_DBASE( GRBL_BUILD_INFO,            myE2_Setting,        1,                1,               STARTUP_LINE_LEN                   ) \
+    X_EEPROM_DBASE( GRBL_BUILD_INFO_CHKSUM,     myE2_Setting,        1,                1,               sizeof(uint8_t)                    ) \
+    X_EEPROM_DBASE( GRBL_GLOBAL_SETTINGS,       myE2_Setting,        1,                1,               sizeof(Settings_t)                 ) \
+    X_EEPROM_DBASE( GRBL_TOOL_TABLE,            myE2_Setting,        MAX_TOOL_NR,      1,               sizeof(ToolParams_t)               ) \
+    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK,         myE2_Setting,        N_STARTUP_LINE,   1,               STARTUP_LINE_LEN                   ) \
+    X_EEPROM_DBASE( GRBL_STARTUP_BLOCK_CHKSUM,  myE2_Setting,        N_STARTUP_LINE,   1,               sizeof(uint8_t)                    ) \
 
 
 // Configurable value
@@ -138,7 +137,7 @@ extern const uint32_t __user_ram_data_base__;
     X_ROM_DBASE( FIRMWARE_VERSION_TEXT, &OUR_FIRMWARE_VERSION[0],      1,                1,                 32/*sizeof(OUR_FIRMWARE_VERSION)    */ )   \
     X_ROM_DBASE( FW_GUI_NAME_TEXT,      &OUR_FIRMWARE_GUI_NAME[0],     1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_NAME)   */ )   \
     X_ROM_DBASE( FW_GUI_VERSION_TEXT,   &OUR_FIRMWARE_GUI_VERSION[0],  1,                1,                 32/*sizeof(OUR_FIRMWARE_GUI_VERSION)*/ )   \
-    X_ROM_DBASE( FW_BUILD_DATE_TEXT,    &OUR_BUILD_DATE[0],            1,                1,                 32/*sizeof(OUR_BUILD_DATE)          */ )   \
+    X_ROM_DBASE( FW_BUILD_DATE_TEXT,    &OUR_FIRMWARE_BUILD_DATE[0],   1,                1,                 32/*sizeof(OUR_FIRMWARE_BUILD_DATE) */ )   \
 
 // System Database are record that are both in RAM ( cpu ram, board ram, nvram, backup register) and in rom (E2, etc..)
 // Also there is an interval and a start time to save them in E2 ( save can also be forced )

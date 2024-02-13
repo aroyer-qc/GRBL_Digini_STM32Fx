@@ -104,7 +104,7 @@ NOS_ISR(EXTI9_5_IRQHandler)
 //-------------------------------------------------------------------------------------------------
 NOS_ISR(EXTI15_10_IRQHandler)
 {
-  #ifdef GRAFX_PDI_INTERRUPT_IO
+  #if (GRAFX_PDI_INTERRUPT_IO == DEF_ENABLED)
     if((EXTI->PR & IO_PIN_MASK_13) != 0)
     {
         EXTI->PR = IO_PIN_MASK_13;

@@ -29,7 +29,6 @@
 
 
 #define GRBL_VERSION            "1.1i"
-#define GRBL_VERSION_BUILD      __DATE__ //OUR_BUILD_DATE
 
 
 #define     PULSES_PER_REV          360

@@ -32,6 +32,8 @@
 
 #define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading Number of child process .
 
+// TODO is it the best place to put this....???
+
 //#define CON_DEBUG_LEVEL_1 to 16
 #define CON_DEBUG_LEVEL_SYSTEM_STATUS           CON_DEBUG_LEVEL_1
 #define CON_DEBUG_LEVEL_SYSTEM_ACTION           CON_DEBUG_LEVEL_2

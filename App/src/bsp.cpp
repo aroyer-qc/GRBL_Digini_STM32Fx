@@ -45,6 +45,13 @@
 #include "bsp.h"
 #undef  BSP_GLOBAL
 
+#include "Task_grbl.h"
+#include "Task_loading.h"
+#include "Task_network.h"
+#include "Task_comm.h"
+
+IP_Manager myIP_Manager;
+
 //-------------------------------------------------------------------------------------------------
 // Define(s)
 //-------------------------------------------------------------------------------------------------
@@ -199,6 +206,48 @@ SystemState_e BSP_PostOS_Initialize(void)
   #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
   #endif
+  
+    pTaskCOMM->Initialize();
+
+    //pTaskLoading->Initialize();
+
+  #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
+
+// MAC address configuration using GUID of the CPU.
+//#define MAC_ADDR0	                            (((char *)0x1FF0F420)[0])
+//#define MAC_ADDR1	                            (((char *)0x1FF0F420)[2])
+//#define MAC_ADDR2	                            (((char *)0x1FF0F420)[4])
+//#define MAC_ADDR3	                            (((char *)0x1FF0F420)[6])
+//#define MAC_ADDR4	                            (((char *)0x1FF0F420)[8])
+//#define MAC_ADDR5	                            (((char *)0x1FF0F420)[10])
+    // to debug
+    IP_MAC_Address_t MAC = {MAC_ADDR0, MAC_ADDR1, MAC_ADDR2, MAC_ADDR3, MAC_ADDR4, MAC_ADDR5};
+    myIP_Manager.Initialize(ETH_IF_GRBL, &MAC);
+    
+    pTaskNetwork->Initialize();
+  #endif
+   // pTaskGRBL->Initialize();
+
+    Language_e Language;
+
+// move this to label ????? myLabel should read language by itself
+    DB_Central.Get(&Language, SYSTEM_LANGUAGE, 0, 0);
+    // = LANG_FRENCH;
+    myLabel.SetLanguage(Language);
+
+
+  #ifdef DEBUG
+    DateAndTime_t DateTime;
+
+    DateTime.Date.Day    = 31;
+    DateTime.Date.Month  = 7;
+    DateTime.Date.Year   = 2023;
+    DateTime.Time.Hour   = 15;
+    DateTime.Time.Minute = 30;
+    DateTime.Time.Second = 1;
+    LIB_SetDateAndTime(&DateTime);
+  #endif
+  
     return State;
 }
 

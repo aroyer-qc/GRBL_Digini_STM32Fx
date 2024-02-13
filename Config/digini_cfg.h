@@ -104,5 +104,4 @@
 // Debug special feature
 #define DIGINI_DEBUG_SDCARD_INFO_ON_VT100               DEF_ENABLED
 
-
 //-------------------------------------------------------------------------------------------------
