@@ -30,7 +30,17 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading Number of child process .
+#define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading number of child process.
+
+
+// This define if enabled will trap every line starting with CON_TRAP_COMMENT_CHARACTER so the peer
+// module connected to the serial port can send information for watching user or debugging purpose.
+// By enabling the feature the code will not parse a line with CON_TRAP_COMMENT_CHARACTER until the
+// CON_TRAP_COMMENT_END_OF_LINE_MARKER is detected.
+#define CON_TRAP_COMMENT_INCOMING_LINE          DEF_ENABLED
+#define CON_TRAP_COMMENT_CHARACTER              '#'
+#define CON_TRAP_COMMENT_END_OF_LINE_MARKER     '\n'
+#define CON_TRAP_COMMENT_TIME_OUT               50
 
 // TODO is it the best place to put this....???
 
