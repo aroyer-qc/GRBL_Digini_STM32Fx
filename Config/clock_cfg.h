@@ -36,7 +36,7 @@
 #define SYS_LSI_VALUE                               32768
 #define SYSTICK_RATE                                1000
 
-#define LIB_TIMING_CFG_DELAY_LOOP_VALUE_FOR_1_USEC  1000 // TODO need to be set and fine tuned
+#define CFG_DELAY_TIMING_LOOP_VALUE_FOR_1_USEC      1000 // TODO need to be set and fine tuned
 
 // User clock selection
 #define SYS_PLL_SOURCE_MUX                          RCC_PLLCFGR_PLLSRC_HSE      // RCC_PLLCFGR_PLLSRC_HSE or

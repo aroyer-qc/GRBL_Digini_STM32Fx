@@ -1,7 +1,6 @@
 /*
 *****************************************************************************
 **
-
 **  File        : stm32f746_flash.ld
 **
 **  Abstract    : Linker script for STM32F746NGHx Device with
