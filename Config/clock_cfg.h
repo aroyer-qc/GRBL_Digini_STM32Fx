@@ -30,46 +30,43 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define SYS_HSE_VALUE                               25000000
-#define SYS_HSI_VALUE                               16000000
-#define SYS_LSE_VALUE                               32768
-#define SYS_LSI_VALUE                               32768
-#define SYSTICK_RATE                                1000
+#define CFG_HSE_VALUE                               25000000
+#define CFG_HSI_VALUE                               16000000
+#define CFG_LSE_VALUE                               32768
+#define CFG_LSI_VALUE                               32768
+#define CFG_SYSTICK_RATE                            1000
 
 #define CFG_DELAY_TIMING_LOOP_VALUE_FOR_1_USEC      1000 // TODO need to be set and fine tuned
 
 // User clock selection
-#define SYS_PLL_SOURCE_MUX                          RCC_PLLCFGR_PLLSRC_HSE      // RCC_PLLCFGR_PLLSRC_HSE or
-                                                                                // RCC_PLLCFGR_PLLSRC_HSI
-#define SYS_CLOCK_MUX                               RCC_CFGR_SW_PLL             // RCC_CFGR_SW_HSI or
+#define CFG_SYS_PLL_MUX                             CFG_RCC_PLLCFGR_PLLSRC_HSE  // CFG_RCC_PLLCFGR_PLLSRC_HSE or
+                                                                                // CFG_RCC_PLLCFGR_PLLSRC_HSI
+#define CFG_SYS_CLOCK_MUX                           RCC_CFGR_SW_PLL             // RCC_CFGR_SW_HSI or
                                                                                 // RCC_CFGR_SW_HSE or
                                                                                 // RCC_CFGR_SW_PLL
-
-#define SYS_CLOCK_PLL_SOURCE
-
 // User PLL configuration
 
 // For xxx MHz HCLK on HSI
-#define HSI_PLLM_SOURCE                             SYS_HSI_VALUE
-#define HSI_PLLM_DIVIDER                            8
-#define HSI_PLLM_N_MULTIPLIER                       100
-#define HSI_PLLM_P_DIVIDER                          2
-#define HSI_PLLM_Q_DIVIDER                          2
-//#define HSI_PLLM_R_DIVIDER                          2
+//#define  CFG_PLLM_SOURCE                          CFG_HSI_VALUE
+//#define  CFG_PLLM_DIVIDER                         8
+//#define  CFG_PLLM_N_MULTIPLIER                    100
+//#define  CFG_PLLM_P_DIVIDER                       2
+//#define  CFG_PLLM_Q_DIVIDER                       2
+//#define  CFG_PLLM_R_DIVIDER                       2
 
 // For xxx MHz HCLK on HSE
-#define HSE_PLLM_SOURCE                             SYS_HSE_VALUE
-#define HSE_PLLM_DIVIDER                            25
-#define HSE_PLLM_N_MULTIPLIER                       432
-#define HSE_PLLM_P_DIVIDER                          2
-#define HSE_PLLM_Q_DIVIDER                          9
+#define CFG_PLLM_SOURCE                             CFG_HSE_VALUE
+#define CFG_PLLM_DIVIDER                            25
+#define CFG_PLLM_N_MULTIPLIER                       432
+#define CFG_PLLM_P_DIVIDER                          2
+#define CFG_PLLM_Q_DIVIDER                          9
 //#define HSE_PLLM_R_DIVIDER                          2
 
 //#define CORTEX_SYSTEM_TIMER                         LL_SYSTICK_CLKSOURCE_HCLK_DIV8               // LL_SYSTICK_CLKSOURCE_HCLK (/1) or LL_SYSTICK_CLKSOURCE_HCLK_DIV8
 
 // User clock and divider
-#define HCLK_DIVIDER                                RCC_CFGR_HPRE_DIV1          // (AHB Prescaler) 1,2,4,8,16,64,128,256,512
-#define APB1_CLK_DIVIDER                            RCC_CFGR_PPRE1_DIV4         // 1,2,4,8,16
-#define APB2_CLK_DIVIDER                            RCC_CFGR_PPRE2_DIV2         // 1,2,4,8,16
+#define CFG_HCLK_DIVIDER                            CFG_RCC_CFGR_HPRE_DIV1          // (AHB Prescaler) 1,2,4,8,16,64,128,256,512
+#define CFG_APB1_CLK_DIVIDER                        CFG_RCC_CFGR_PPRE1_DIV4         // 1,2,4,8,16
+#define CFG_APB2_CLK_DIVIDER                        CFG_RCC_CFGR_PPRE2_DIV2         // 1,2,4,8,16
 
 //-------------------------------------------------------------------------------------------------
