@@ -38,17 +38,6 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-// TODO move this to the database lib
-#define     DBASE_INTERFACE_POOL                7                                   // Size of the interface pool (must fit next define)
-
-#define     DBASE_INDEX_BKPREG_RANGE            0
-#define     DBASE_INDEX_EEPROM_RANGE            1000
-#define     DBASE_INDEX_HARD_RANGE              2000
-#define     DBASE_INDEX_RAM_RANGE               3000
-#define     DBASE_INDEX_ROM_RANGE               4000
-#define     DBASE_INDEX_SYSTEM_RANGE            5000
-#define     DBASE_INDEX_QSPI_RANGE              6000
-
 // specific to Grafx support
 #define     DBASE_MAX_SKIN_IMAGE_QTY            256                                 // this is max the number of image in database
 #define     DBASE_MAX_SKIN_FONT_QTY             32                                  // this is max the number of font in database
