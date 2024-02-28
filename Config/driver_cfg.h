@@ -39,7 +39,7 @@
 #define USE_ADC_DRIVER              DEF_ENABLED
 #define USE_DAC_DRIVER              DEF_ENABLED
 #define USE_IO_BUS_DRIVER           DEF_DISABLED
-#define USE_ETH_DRIVER              DEF_ENABLED
+#define USE_ETH_DRIVER              DEF_DISABLED
 #define USE_I2C_DRIVER              DEF_ENABLED
 #define USE_I2S_DRIVER              DEF_DISABLED
 #define USE_PWM_DRIVER              DEF_DISABLED
