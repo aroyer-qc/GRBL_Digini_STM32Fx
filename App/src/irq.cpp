@@ -356,7 +356,7 @@ NOS_ISR(TIM8_CC_IRQHandler)
 #if (TIM_DRIVER_SUPPORT_TIM9_CFG == DEF_ENABLED)
 NOS_ISR(TIM1_BRK_TIM9_IRQHandler)
 {
-    myTIM_GRBL_Stepper.CallBack(true);
+   // myTIM_GRBL_Stepper.CallBack(true);
 }
 #endif
 
