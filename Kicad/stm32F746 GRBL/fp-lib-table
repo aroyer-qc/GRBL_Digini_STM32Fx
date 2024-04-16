@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "stm32F746 GRBL")(type "KiCad")(uri "C:/Workspace/GRBL_Digini_STM32Fx/Kicad/stm32F746 GRBL.pretty")(options "")(descr ""))
+)
