@@ -75,9 +75,26 @@
   (pad "16" thru_hole oval (at 12.7 0) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp 4b9a7964-1543-4057-868d-2a833c667835))
   (pad "17" thru_hole oval (at 2.54 0) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp 7ac75692-ae18-489b-a334-0298b09a3ce6))
   (pad "18" thru_hole oval (at 5.08 0) (size 1.6 1.6) (drill 0.8) (layers "*.Cu" "*.Mask") (tstamp 9ead4359-6b09-4324-85d2-6d2819031b81))
-  (model "${KIPRJMOD}/Driver TMC2209 v3.STEP"
-    (offset (xyz 6.4 -8.8 3.4))
-    (scale (xyz 1 1 0.98))
-    (rotate (xyz -90 0 90))
+  (pad "19" thru_hole circle (at 8.128 2.54) (size 1.6 1.6) (drill 0.762) (layers "*.Cu" "*.Mask") (tstamp 4d2ec78e-9a49-4a69-a2c4-8d9fd63ec06f))
+  (pad "20" thru_hole circle (at 4.572 2.54) (size 1.6 1.6) (drill 0.762) (layers "*.Cu" "*.Mask") (tstamp 29b7e550-af47-49ed-80e8-24bc3771e4d7))
+  (model "${KIPRJMOD}/TMC2130-V3.0.step"
+    (offset (xyz 6.35 -9 9.6))
+    (scale (xyz 1 1 1))
+    (rotate (xyz -90 0 0))
+  )
+  (model "${KIPRJMOD}/Cap_radial_side_mount.step"
+    (offset (xyz 6.4 -2.7 0))
+    (scale (xyz 0.95 0.95 0.95))
+    (rotate (xyz 180 180 0))
+  )
+  (model "${KIPRJMOD}/PinSocket_1x08_P2.54mm_Vertical.step"
+    (offset (xyz 0 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
+  )
+  (model "${KIPRJMOD}/PinSocket_1x08_P2.54mm_Vertical.step"
+    (offset (xyz 13 0 0))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 0 0))
   )
 )
