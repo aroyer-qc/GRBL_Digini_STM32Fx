@@ -482,8 +482,32 @@
   },
   "sheets": [
     [
-      "405dd8ac-1e27-4df2-86ec-700b9ccd7e1a",
+      "2c79a78e-687a-4954-b7b9-175bc3470bd7",
       ""
+    ],
+    [
+      "0e599e31-db06-4931-8186-d1a5f0284840",
+      "Arduino Connector"
+    ],
+    [
+      "8d1e1584-2808-4a74-84c8-15e2fc5b3024",
+      "Driver"
+    ],
+    [
+      "585de0eb-2e78-4574-a9c5-9112c493af27",
+      "IO_Expansion"
+    ],
+    [
+      "cfe63f02-1987-4919-8e32-0515eff710ca",
+      "Power"
+    ],
+    [
+      "eddc17cf-fbda-41ce-9eec-af5043ce77b7",
+      "Output"
+    ],
+    [
+      "abf0269a-35a8-42ce-9ae3-10e8d1caac6b",
+      "Input"
     ]
   ],
   "text_variables": {}
