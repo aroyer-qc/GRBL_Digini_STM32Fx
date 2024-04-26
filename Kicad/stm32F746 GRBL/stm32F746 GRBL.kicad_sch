@@ -28,23 +28,6 @@
     )
   )
 
-  (sheet (at 88.9 63.5) (size 25.4 25.4) (fields_autoplaced)
-    (stroke (width 0.1524) (type solid))
-    (fill (color 0 0 0 0.0000))
-    (uuid 585de0eb-2e78-4574-a9c5-9112c493af27)
-    (property "Sheetname" "IO_Expansion" (at 88.9 62.7884 0)
-      (effects (font (size 1.27 1.27)) (justify left bottom))
-    )
-    (property "Sheetfile" "IO_expansion.kicad_sch" (at 88.9 89.4846 0)
-      (effects (font (size 1.27 1.27)) (justify left top))
-    )
-    (instances
-      (project "stm32F746 GRBL"
-        (path "/2c79a78e-687a-4954-b7b9-175bc3470bd7" (page "4"))
-      )
-    )
-  )
-
   (sheet (at 38.1 63.5) (size 25.4 25.4) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))
