@@ -4825,7 +4825,7 @@
   (symbol (lib_id "stm32F746 GRBL:RJ") (at 23.495 44.45 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 7c7bec98-bc3c-49aa-9ea1-aa0e104e38b6)
-    (property "Reference" "RJ5" (at 23.495 39.37 90)
+    (property "Reference" "RJ4" (at 23.495 39.37 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "0R" (at 20.828 42.418 0)
@@ -4843,7 +4843,7 @@
     (instances
       (project "stm32F746 GRBL"
         (path "/2c79a78e-687a-4954-b7b9-175bc3470bd7/8d1e1584-2808-4a74-84c8-15e2fc5b3024"
-          (reference "RJ5") (unit 1)
+          (reference "RJ4") (unit 1)
         )
       )
     )
@@ -5507,7 +5507,7 @@
   (symbol (lib_id "stm32F746 GRBL:RJ") (at 19.685 44.45 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b589b362-31fc-42c6-aadb-c8934231c771)
-    (property "Reference" "RJ4" (at 19.685 39.37 90)
+    (property "Reference" "RJ5" (at 19.685 39.37 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "0R" (at 17.145 42.418 0)
@@ -5525,7 +5525,7 @@
     (instances
       (project "stm32F746 GRBL"
         (path "/2c79a78e-687a-4954-b7b9-175bc3470bd7/8d1e1584-2808-4a74-84c8-15e2fc5b3024"
-          (reference "RJ4") (unit 1)
+          (reference "RJ5") (unit 1)
         )
       )
     )
