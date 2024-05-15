@@ -50,7 +50,6 @@
  // Declare gc extern struct
 Parser_State_t gc_state;
 
-
 static IO_ID_e DigitalOutputList[8] =
 {
     IO_DIGITAL_OUT_1, IO_DIGITAL_OUT_2, IO_DIGITAL_OUT_3, IO_DIGITAL_OUT_4,
@@ -151,8 +150,9 @@ uint8_t GC_ExecuteLine(char *line)
     uint16_t int_value = 0;
     uint16_t mantissa = 0;
     float old_xyz[N_AXIS] = {0.0};
-    uint8_t change_tool = 0, update_tooltable = 0, apply_tool = 0;
-
+    uint8_t change_tool = 0;
+    uint8_t update_tooltable = 0;
+    uint8_t apply_tool = 0;
 
     memcpy(old_xyz, gc_state.position, N_AXIS*sizeof(float));
 
@@ -170,12 +170,14 @@ uint8_t GC_ExecuteLine(char *line)
     {
         // Import the next g-code word, expecting a letter followed by a value. Otherwise, error out.
         letter = line[char_counter];
+        
         if((letter < 'A') || (letter > 'Z'))
         {
             return STATUS_EXPECTED_COMMAND_LETTER;
         } // [Expected word letter]
 
         char_counter++;
+        
         if(Read_Float(line, &char_counter, &value) == false)
         {
             return STATUS_BAD_NUMBER_FORMAT;
@@ -322,7 +324,7 @@ uint8_t GC_ExecuteLine(char *line)
                     case 38:
                         // Check for G0/1/2/3/38 being called with G10/28/30/92 on same block.
                         // * G43.1 is also an axis command but is not explicitly defined this way.
-                        if(axis_command)
+                        if(axis_command != AXIS_COMMAND_NONE)
                         {
                             // [Axis word/command conflict]
                             return STATUS_GCODE_AXIS_COMMAND_CONFLICT;
@@ -412,7 +414,7 @@ uint8_t GC_ExecuteLine(char *line)
                         // NOTE: The NIST g-code standard vaguely states that when a tool length offset is changed,
                         // there cannot be any axis motion or coordinate offsets updated. Meaning G43, G43.1, and G49
                         // all are explicit axis commands, regardless if they require axis words or not.
-                        if(axis_command)
+                        if(axis_command != AXIS_COMMAND_NONE)
                         {
                             // [Axis word/command conflict]
                             return STATUS_GCODE_AXIS_COMMAND_CONFLICT;
@@ -475,7 +477,7 @@ uint8_t GC_ExecuteLine(char *line)
 
                 // Check for more than one command per Modal group violations in the current block
                 // NOTE: Variable 'word_bit' is always assigned, if the command is valid.
-                if(BIT_IS_TRUE(command_words,BIT(word_bit)))
+                if(BIT_IS_TRUE(command_words, BIT(word_bit)))
                 {
                     return STATUS_GCODE_MODAL_GROUP_VIOLATION;
                 }
@@ -516,6 +518,7 @@ uint8_t GC_ExecuteLine(char *line)
                     case 4:
                     case 5:
                         word_bit = MODAL_GROUP_M7;
+                        
                         switch(int_value)
                         {
                             case 3:
@@ -592,6 +595,7 @@ uint8_t GC_ExecuteLine(char *line)
                             return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
                         }
                         break;
+                    
                     case 63:
                     case 65:
                         if(Config.DigitalOutputEnable == true)
@@ -823,7 +827,7 @@ uint8_t GC_ExecuteLine(char *line)
     // command has been sent. If so, set axis command to current motion mode.
     if(axis_words)
     {
-        if(!axis_command)
+        if(axis_command == AXIS_COMMAND_NONE)
         {
             // Assign implicit motion-mode
             axis_command = AXIS_COMMAND_MOTION_MODE;
@@ -1694,7 +1698,7 @@ uint8_t GC_ExecuteLine(char *line)
         BIT_FALSE(value_words, (BIT(WORD_N)|BIT(WORD_F)|BIT(WORD_S)|BIT(WORD_T))); // Remove single-meaning value words.
     }
 
-    if(axis_command)
+    if(axis_command != AXIS_COMMAND_NONE)
     {
         #if 0  //from GRBL32 they have this...
                 // --- YSV 22-06-2018
@@ -2012,7 +2016,7 @@ uint8_t GC_ExecuteLine(char *line)
             // Move to intermediate position before going home. Obeys current coordinate system and offsets
             // and absolute and incremental modes.
             pl_data->condition |= PL_COND_FLAG_RAPID_MOTION; // Set rapid motion condition flag.
-            if(axis_command)
+            if(axis_command != AXIS_COMMAND_NONE)
             {
                 MC_Line(gc_block.values.xyz, pl_data);
             }

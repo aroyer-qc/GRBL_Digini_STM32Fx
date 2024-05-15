@@ -17,13 +17,13 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "lib_digini.h"
 #include <string.h>
 #include "ToolChange.h"
 #include "GCode.h"
 #include "MotionControl.h"
 #include "Protocol.h"
 #include "System.h"
-#include "System32.h"
 #include "SpindleControl.h"
 #include "Settings.h"
 #include "Config.h"
@@ -85,7 +85,7 @@ void TC_ChangeCurrentTool(void)
     pl_data.line_number = gc_state.line_number;
 
     MC_Line(position, &pl_data);
-    Delay_ms(20);
+    LIB_Delay_mSec(20);
 
     Spindle_Stop();
 
@@ -150,7 +150,7 @@ void TC_ProbeTLS(void)
     // Probe TLS fast
     position[TOOL_LENGTH_OFFSET_AXIS] -= 200.0;
     uint8_t ret = MC_ProbeCycle(position, &pl_data, flags);
-    
+
     if(ret != GC_PROBE_FOUND)
     {
         // Error
@@ -191,7 +191,7 @@ void TC_ProbeTLS(void)
         gc_state.ToolLengthOffset[TOOL_LENGTH_OFFSET_AXIS] = toolOffset / Settings.steps_per_mm[TOOL_LENGTH_OFFSET_AXIS];
     }
 
-    Delay_ms(5);
+    LIB_Delay_mSec(5);
 
     // Move Z up
     position[TOOL_LENGTH_OFFSET_AXIS] = 0.0;

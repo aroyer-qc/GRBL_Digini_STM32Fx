@@ -28,8 +28,6 @@
 #include "Stepper.h"
 #include "Protocol.h"
 #include "Limits.h"
-#include "System32.h"
-
 
 // Homing axis search Distance multiplier. Computed by this value times the cycle travel.
 #ifndef HOMING_AXIS_SEARCH_SCALAR
@@ -373,7 +371,7 @@ void Limits_GoHome(uint8_t cycle_mask)
         while(0x3F & axislock);
 
         Stepper_Reset(); // Immediately force kill steppers and reset step segment buffer.
-        Delay_ms(Settings.homing_debounce_delay); // Delay to allow transient dynamics to dissipate.
+        LIB_Delay_mSec(Settings.homing_debounce_delay); // Delay to allow transient dynamics to dissipate.
 
         // Reverse direction and reset homing rate for locate cycle(s).
         approach = !approach;

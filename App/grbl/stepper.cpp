@@ -20,7 +20,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "lib_digini.h"
-#include "Config.h"
+#include "config.h"
 #include "Planner.h"
 #include "Probe.h"
 #include "GCode.h"
@@ -29,7 +29,6 @@
 #include "Settings.h"
 #include "util.h"
 #include "Stepper.h"
-#include "System32.h"
 
 
 // Some useful constants.
@@ -54,11 +53,11 @@
 // NOTE: AMASS cutoff frequency multiplied by ISR overdrive factor must not exceed maximum step frequency.
 // NOTE: Current settings are set to overdrive the ISR to no more than 16kHz, balancing CPU overhead
 // and timer accuracy.  Do not alter these settings unless you know what you are doing.
-#define MAX_AMASS_LEVEL         3
+#define MAX_AMASS_LEVEL             3
 // AMASS_LEVEL0: Normal operation. No AMASS. No upper cutoff frequency. Starts at LEVEL1 cutoff frequency.
-#define AMASS_LEVEL1            (uint32_t)(F_TIMER_STEPPER/8000) // Over-drives ISR (x2). Defined as SYSTEM_CORE_CLOCK/(Cutoff frequency in Hz)
-#define AMASS_LEVEL2            (uint32_t)(F_TIMER_STEPPER/4000) // Over-drives ISR (x4)
-#define AMASS_LEVEL3            (uint32_t)(F_TIMER_STEPPER/2000) // Over-drives ISR (x8)
+#define AMASS_LEVEL1                (uint32_t)(F_TIMER_STEPPER/8000) // Over-drives ISR (x2). Defined as SYSTEM_CORE_CLOCK/(Cutoff frequency in Hz)
+#define AMASS_LEVEL2                (uint32_t)(F_TIMER_STEPPER/4000) // Over-drives ISR (x4)
+#define AMASS_LEVEL3                (uint32_t)(F_TIMER_STEPPER/2000) // Over-drives ISR (x8)
 
 #if MAX_AMASS_LEVEL <= 0
     error "AMASS must have 1 or more levels to operate correctly."
@@ -70,7 +69,7 @@
     #define STEP_TIMER_MIN          (uint16_t)((F_TIMER_STEPPER / 120000))
 #endif
 
-#define G96_UPDATE_CNT      20
+#define G96_UPDATE_CNT              20
 
 
 // Stores the planner block Bresenham algorithm execution data for the segments in the segment
@@ -81,10 +80,10 @@
 // data for its own use.
 typedef struct
 {
-    uint32_t steps[N_AXIS];
-    uint32_t step_event_count;
-    uint8_t direction_bits;
-    uint8_t is_pwm_rate_adjusted; // Tracks motions that require constant laser power/rate
+    uint32_t    steps[N_AXIS];
+    uint32_t    step_event_count;
+    uint8_t     direction_bits;
+    uint8_t     is_pwm_rate_adjusted; // Tracks motions that require constant laser power/rate
 } Stepper_Block_t;
 
 
@@ -94,11 +93,11 @@ typedef struct
 // the planner, where the remaining planner block steps still can.
 typedef struct
 {
-    uint16_t n_step;           // Number of step events to be executed for this segment
-    uint16_t cycles_per_tick;  // Step Distance traveled per ISR tick, aka step rate.
-    uint8_t  st_block_index;   // Stepper block data index. Uses this information to execute this segment.
-    uint8_t amass_level;    // Indicates AMASS level for the ISR to execute this segment
-    uint8_t spindle_pwm;
+    uint16_t    n_step;             // Number of step events to be executed for this segment
+    uint16_t    cycles_per_tick;    // Step Distance traveled per ISR tick, aka step rate.
+    uint8_t     st_block_index;     // Stepper block data index. Uses this information to execute this segment.
+    uint8_t     amass_level;        // Indicates AMASS level for the ISR to execute this segment
+    uint8_t     spindle_pwm;
 
     uint8_t backlash_motion;
 } Stepper_Segment_t;
@@ -109,23 +108,23 @@ typedef struct
 {
     // Used by the bresenham line algorithm
     // Counter variables for the bresenham line tracer
-    uint32_t counter_x;
-    uint32_t counter_y;
-    uint32_t counter_z;
-    uint32_t counter_a;
-    uint32_t counter_b;
-    uint32_t counter_c;
+    uint32_t            counter_x;
+    uint32_t            counter_y;
+    uint32_t            counter_z;
+    uint32_t            counter_a;
+    uint32_t            counter_b;
+    uint32_t            counter_c;
 
-    uint8_t execute_step;     // Flags step execution for each interrupt.
-    uint8_t step_pulse_time;  // Step pulse reset time after step rise
-    uint8_t step_outbits;         // The next stepping-bits to be output
-    uint8_t dir_outbits;
-    uint32_t steps[N_AXIS];
+    uint8_t             execute_step;       // Flags step execution for each interrupt.
+    uint8_t             step_pulse_time;    // Step pulse reset time after step rise
+    uint8_t             step_outbits;       // The next stepping-bits to be output
+    uint8_t             dir_outbits;
+    uint32_t            steps[N_AXIS];
 
-    uint16_t step_count;       // Steps remaining in line segment motion
-    uint8_t exec_block_index; // Tracks the current st_block index. Change indicates new block.
-    Stepper_Block_t *exec_block;   // Pointer to the block data for the segment being executed
-    Stepper_Segment_t *exec_segment;  // Pointer to the segment being executed
+    uint16_t            step_count;         // Steps remaining in line segment motion
+    uint8_t             exec_block_index;   // Tracks the current st_block index. Change indicates new block.
+    Stepper_Block_t*    exec_block;         // Pointer to the block data for the segment being executed
+    Stepper_Segment_t*  exec_segment;       // Pointer to the segment being executed
 } Stepper_t;
 
 
@@ -133,30 +132,30 @@ typedef struct
 // based on the current executing planner block.
 typedef struct
 {
-    uint8_t st_block_index;  // Index of stepper common data block being prepped
+    uint8_t st_block_index;         // Index of stepper common data block being prepped
     uint8_t recalculate_flag;
 
-    float dt_remainder;
-    float steps_remaining;
-    float step_per_mm;
-    float req_mm_increment;
+    float   dt_remainder;
+    float   steps_remaining;
+    float   step_per_mm;
+    float   req_mm_increment;
 
     // Parking
     uint8_t last_st_block_index;
-    float last_steps_remaining;
-    float last_step_per_mm;
-    float last_dt_remainder;
+    float   last_steps_remaining;
+    float   last_step_per_mm;
+    float   last_dt_remainder;
 
-    uint8_t ramp_type;      // Current segment ramp state
-    float mm_complete;      // End of velocity profile from end of current planner block in (mm).
+    uint8_t ramp_type;              // Current segment ramp state
+    float   mm_complete;            // End of velocity profile from end of current planner block in (mm).
     // NOTE: This value must coincide with a step(no mantissa) when converted.
-    float current_speed;    // Current speed at the end of the segment buffer (mm/min)
-    float maximum_speed;    // Maximum speed of executing block. Not always nominal speed. (mm/min)
-    float exit_speed;       // Exit speed of executing block (mm/min)
-    float accelerate_until; // Acceleration ramp end measured from end of block (mm)
-    float decelerate_after; // Deceleration ramp start measured from end of block (mm)
+    float   current_speed;          // Current speed at the end of the segment buffer (mm/min)
+    float   maximum_speed;          // Maximum speed of executing block. Not always nominal speed. (mm/min)
+    float   exit_speed;             // Exit speed of executing block (mm/min)
+    float   accelerate_until;       // Acceleration ramp end measured from end of block (mm)
+    float   decelerate_after;       // Deceleration ramp start measured from end of block (mm)
 
-    float inv_rate;    // Used by PWM laser mode to speed up segment calculations.
+    float   inv_rate;               // Used by PWM laser mode to speed up segment calculations.
     uint8_t current_spindle_pwm;
 } Stepper_PrepData_t;
 
@@ -176,8 +175,8 @@ static uint8_t dir_port_invert_mask;
 
 // Pointers for the step segment being prepped from the planner buffer. Accessed only by the
 // main program. Pointers may be planning segments or planner blocks ahead of what being executed.
-static Planner_Block_t *pl_block;     // Pointer to the planner block being prepped
-static Stepper_Block_t *st_prep_block;  // Pointer to the stepper block data being prepped
+static Planner_Block_t* pl_block;       // Pointer to the planner block being prepped
+static Stepper_Block_t* st_prep_block;  // Pointer to the stepper block data being prepped
 
 static Stepper_PrepData_t prep;
 
@@ -227,8 +226,7 @@ static uint8_t update_g96 = G96_UPDATE_CNT;
 // Initialize and start the stepper motor subsystem
 void Stepper_Initialize(void)
 {
-    // Init TIM9
-   // TIM9_Init();  TODO AR
+    myTIM_GRBL_Stepper.Initialize();
 }
 
 
@@ -247,23 +245,23 @@ void Stepper_WakeUp(void)
     }
 
     // Give steppers some time to wake up
-    Delay_ms(10);
+    LIB_Delay_mSec(10);
 
     // Initialize stepper output bits to ensure first ISR call does not step.
     //st.step_outbits = step_port_invert_mask;
     st.step_outbits = 0;
 
     // Enable Stepper Driver Interrupt
-    TIM9->CR1 |= TIM_CR1_CEN;
+    myTIM_GRBL_Stepper.Start();
 }
 
 
 // Stepper shutdown
-void Stepper_Disable(uint8_t ovr_disable)
+void Stepper_Disable(bool ovr_disable)
 {
     // Disable Stepper Driver Interrupt.
-    TIM9->CR1 &= ~TIM_CR1_CEN;
-    Delay_us(1);
+    myTIM_GRBL_Stepper.Stop();
+    LIB_Delay_uSec(1);
 
     // Reset stepper pins
     Stepper_PortResetISR();
@@ -275,11 +273,11 @@ void Stepper_Disable(uint8_t ovr_disable)
     {
         // Force stepper dwell to lock axes for a defined amount of time to ensure the axes come to a complete
         // stop and not drift from residual inertial forces at the end of the last movement.
-        Delay_ms(Settings.stepper_idle_lock_time);
+        LIB_Delay_mSec(Settings.stepper_idle_lock_time);
         pin_state = true; // Override. Disable steppers.
     }
 
-    if(ovr_disable)
+    if(ovr_disable == true)
     {
         // Disable
         pin_state = true;
@@ -466,17 +464,19 @@ void Stepper_MainISR(void)
                 {
                     new_cycles_per_tick = 0xFFFF;
                 }
-                if(new_cycles_per_tick < STEP_TIMER_MIN-50)
+                if(new_cycles_per_tick < (STEP_TIMER_MIN - 50))
                 {
-                    new_cycles_per_tick = STEP_TIMER_MIN-50;
+                    new_cycles_per_tick = STEP_TIMER_MIN - 50;
                 }
             }
 
-            // Update TIM9 register for next interrupt
+            // Update TIMER register for next interrupt
             //TIM9->ARR = st.exec_segment->cycles_per_tick;
             //TIM9->CCR1 = (uint16_t)(st.exec_segment->cycles_per_tick * 0.6);
-            TIM9->ARR = (uint16_t)new_cycles_per_tick;
-            TIM9->CCR1 = (uint16_t)(new_cycles_per_tick * 0.6);
+
+            myTIM_GRBL_Stepper.SetReload(new_cycles_per_tick);                                      // TIM9->ARR = (uint16_t)new_cycles_per_tick;
+            myTIM_GRBL_Stepper.SetCompareChannel(TIM_CHANNEL_1, (uint16_t)(new_cycles_per_tick * 0.6)); // TIM9->CCR1 = (uint16_t)(new_cycles_per_tick * 0.6);
+
             st.step_count = st.exec_segment->n_step; // NOTE: Can sometimes be zero when moving slow.
 
             // If the new segment starts a new planner block, initialize stepper variables and counters.
@@ -580,7 +580,7 @@ void Stepper_MainISR(void)
         else
         {
             // Segment buffer empty. Shutdown.
-            Stepper_Disable(0);
+            Stepper_Disable(false);
 
             // Ensure pwm is set properly upon completion of rate-controlled motion.
             if(Config.VariableSpindleEnable == true)
@@ -851,7 +851,7 @@ void Stepper_GenerateStepDirInvertMasks(void)
 void Stepper_Reset(void)
 {
     // Initialize stepper driver idle state.
-    Stepper_Disable(0);
+    Stepper_Disable(false);
 
     // Initialize stepper algorithm variables.
     memset(&prep, 0, sizeof(Stepper_PrepData_t));

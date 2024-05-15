@@ -1,32 +1,5 @@
-/**
-  ******************************************************************************
-  * @file    Project/STM32F4xx_StdPeriph_Templates/stm32f4xx_it.c
-  * @author  MCD Application Team
-  * @version V1.5.0
-  * @date    06-March-2015
-  * @brief   Main Interrupt Service Routines.
-  *          This file provides template for all exceptions handler and
-  *          peripherals interrupt service routine.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2015 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software
-  * distributed under the License is distributed on an "AS IS" BASIS,
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
 /* Includes ------------------------------------------------------------------*/
+#include "lib_digini.h"
 #include "stm32f7xx_it.h"
 #include "Limits.h"
 #include "Stepper.h"
@@ -36,44 +9,28 @@
 #include "MotionControl.h"
 #include <stdbool.h>
 
-
 #define RPM_FILTER_NUM      3
 
+extern void Limit_PinChangeISR(void);
 
-/** @addtogroup Template_Project
-  * @{
-  */
+extern "C"
+{
 
-/* Private typedef -----------------------------------------------------------*/
-/* Private define ------------------------------------------------------------*/
-/* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 volatile uint8_t DebounceCounterControl = 0;
 volatile uint8_t DebounceCounterLimits = 0;
-/* Private function prototypes -----------------------------------------------*/
-/* Private functions ---------------------------------------------------------*/
 
-extern void Limit_PinChangeISR(void);
+/* Private functions ---------------------------------------------------------*/
 extern void System_PinChangeISR(void);
 
 
 // Counter for milliseconds
 static volatile uint32_t gMillis = 0;
 
-uint32_t spindle_rpm = 0;
-uint16_t tim4_cnt_prev = 0;
+uint32_t spindle_rpm             = 0;
+uint16_t tim4_cnt_prev           = 0;
 uint32_t rpm_arr[RPM_FILTER_NUM] = {0};
-uint8_t rpm_idx = 0;
-
-
-/******************************************************************************/
-/*            Cortex-M4 Processor Exceptions Handlers                         */
-/******************************************************************************/
-
-uint32_t millis(void)
-{
-	return gMillis;
-}
+uint8_t rpm_idx                  = 0;
 
 
 void ProcessReceive(char c)
@@ -82,41 +39,43 @@ void ProcessReceive(char c)
 	// not passed into the main buffer, but these set system state flag bits for realtime execution.
 	switch(c)
 	{
-	case CMD_RESET:         MC_Reset(); break; // Call motion control reset routine.
-	case CMD_RESET_HARD:    NVIC_SystemReset();     // Perform hard reset
-	case CMD_STATUS_REPORT: System_SetExecStateFlag(EXEC_STATUS_REPORT);break;
-	case CMD_CYCLE_START:   System_SetExecStateFlag(EXEC_CYCLE_START); break; // Set as true
-	case CMD_FEED_HOLD:     System_SetExecStateFlag(EXEC_FEED_HOLD); break; // Set as true
-	case CMD_STEPPER_DISABLE:     Stepper_Disable(1); break; // Set as true
+	case CMD_RESET:             MC_Reset();                                     break;  // Call motion control reset routine.
+	case CMD_RESET_HARD:        NVIC_SystemReset();                                     // Perform hard reset
+	case CMD_STATUS_REPORT:     System_SetExecStateFlag(EXEC_STATUS_REPORT);    break;
+	case CMD_CYCLE_START:       System_SetExecStateFlag(EXEC_CYCLE_START);      break;  // Set as true
+	case CMD_FEED_HOLD:         System_SetExecStateFlag(EXEC_FEED_HOLD);        break;  // Set as true
+	case CMD_STEPPER_DISABLE:   Stepper_Disable(true);                          break;
 
 	default:
-		if(c > 0x7F)
+		if(c >= ASCII_EXTENDED_BEGIN)
 		{ // Real-time control characters are extended ACSII only.
 			switch(c)
 			{
-                case CMD_SAFETY_DOOR: System_SetExecStateFlag(EXEC_SAFETY_DOOR); break; // Set as true
+                case CMD_SAFETY_DOOR:               System_SetExecStateFlag(EXEC_SAFETY_DOOR);                          break; // Set as true
                 case CMD_JOG_CANCEL:
+                {
 				    if(System.State & STATE_JOG)
 				    { // Block all other states from invoking motion cancel.
                         System_SetExecStateFlag(EXEC_MOTION_CANCEL);
                     }
+                }
 				break;
 
-                case CMD_FEED_OVR_RESET: System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_RESET); break;
-                case CMD_FEED_OVR_COARSE_PLUS: System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_PLUS); break;
-                case CMD_FEED_OVR_COARSE_MINUS: System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_MINUS); break;
-                case CMD_FEED_OVR_FINE_PLUS: System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_PLUS); break;
-                case CMD_FEED_OVR_FINE_MINUS: System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_MINUS); break;
-                case CMD_RAPID_OVR_RESET: System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_RESET); break;
-                case CMD_RAPID_OVR_MEDIUM: System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_MEDIUM); break;
-                case CMD_RAPID_OVR_LOW: System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_LOW); break;
-                case CMD_SPINDLE_OVR_RESET: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_RESET); break;
-                case CMD_SPINDLE_OVR_COARSE_PLUS: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_PLUS); break;
-                case CMD_SPINDLE_OVR_COARSE_MINUS: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
-                case CMD_SPINDLE_OVR_FINE_PLUS: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_PLUS); break;
-                case CMD_SPINDLE_OVR_FINE_MINUS: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS); break;
-                case CMD_SPINDLE_OVR_STOP: System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP); break;
-                case CMD_COOLANT_FLOOD_OVR_TOGGLE: System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
+                case CMD_FEED_OVR_RESET:            System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_RESET);              break;
+                case CMD_FEED_OVR_COARSE_PLUS:      System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_PLUS);        break;
+                case CMD_FEED_OVR_COARSE_MINUS:     System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_COARSE_MINUS);       break;
+                case CMD_FEED_OVR_FINE_PLUS:        System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_PLUS);          break;
+                case CMD_FEED_OVR_FINE_MINUS:       System_SetExecMotionOverrideFlag(EXEC_FEED_OVR_FINE_MINUS);         break;
+                case CMD_RAPID_OVR_RESET:           System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_RESET);             break;
+                case CMD_RAPID_OVR_MEDIUM:          System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_MEDIUM);            break;
+                case CMD_RAPID_OVR_LOW:             System_SetExecMotionOverrideFlag(EXEC_RAPID_OVR_LOW);               break;
+                case CMD_SPINDLE_OVR_RESET:         System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_RESET);        break;
+                case CMD_SPINDLE_OVR_COARSE_PLUS:   System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_PLUS);  break;
+                case CMD_SPINDLE_OVR_COARSE_MINUS:  System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_COARSE_MINUS); break;
+                case CMD_SPINDLE_OVR_FINE_PLUS:     System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_PLUS);    break;
+                case CMD_SPINDLE_OVR_FINE_MINUS:    System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_FINE_MINUS);   break;
+                case CMD_SPINDLE_OVR_STOP:          System_SetExecAccessoryOverrideFlag(EXEC_SPINDLE_OVR_STOP);         break;
+                case CMD_COOLANT_FLOOD_OVR_TOGGLE:  System_SetExecAccessoryOverrideFlag(EXEC_COOLANT_FLOOD_OVR_TOGGLE); break;
                 case CMD_COOLANT_MIST_OVR_TOGGLE:
                 {
                     if(Config.M7_Enable == true)
@@ -189,7 +148,7 @@ void SysTick_Handler(void)
       MC_UpdateSyncMove();
     }
 
-	if(gMillis%25 == 0)
+	if((gMillis % 25) == 0)
     {
         // 25ms Task (min 7 RPM)
         uint16_t cnt = (uint16_t)Encoder_GetValue();
@@ -209,6 +168,7 @@ void SysTick_Handler(void)
         // Calculate RPM and smooth it
         float rpm = ((cnt_diff * 40.0) / PULSES_PER_REV) * 60.0;
         rpm_arr[rpm_idx++] = (uint32_t)rpm;
+
         if(rpm_idx > (RPM_FILTER_NUM-1))
         {
             rpm_idx = 0;
@@ -261,7 +221,7 @@ void TIM3_IRQHandler(void)
 {
     if(TIM_GetITStatus(TIM3, TIM_IT_CC4) == SET)
     {
-        /* Clear TIM3 Capture compare interrupt pending bit */
+        // Clear TIM3 Capture compare interrupt pending bit
         TIM_ClearITPendingBit(TIM3, TIM_IT_CC4);
     }
 }
@@ -406,9 +366,5 @@ void USART6_IRQHandler(void)
 }
 #endif
 
-/**
-  * @}
-  */
 
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+}

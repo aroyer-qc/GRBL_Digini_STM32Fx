@@ -28,7 +28,6 @@
 #include "GCode.h"
 #include "Probe.h"
 #include "Limits.h"
-#include "System32.h"
 #include "Protocol.h"
 #include "SpindleControl.h"
 #include "Stepper.h"
@@ -819,7 +818,7 @@ void MC_Reset(void)
                 System_SetExecAlarm(EXEC_ALARM_ABORT_CYCLE);
             }
 
-            Stepper_Disable(0); // Force kill steppers. Position has likely been lost.
+            Stepper_Disable(false);         // Force kill steppers. Position has likely been lost.
         }
     }
 }

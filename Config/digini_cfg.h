@@ -51,7 +51,7 @@
 //-------------------------------------------------------------------------------------------------
 // Ethernet
 //
-#define DIGINI_USE_ETHERNET                             DEF_ENABLED
+#define DIGINI_USE_ETHERNET                             DEF_DISABLED
 //#define ETH_SOCK                                        0
 //#define ETH_PORT                                        30501
 

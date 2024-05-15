@@ -25,10 +25,6 @@
 #include "Settings.h"
 #include "util.h"
 
-#include "System32.h"
-
-
-
 // TODO replace by digini stuff temporary for compile
 #define Printf_Initialize()
 #define Printf(...)
@@ -36,8 +32,6 @@
 #define Getc(...)
 #define Putc(...)
 #define Printf_Flush()
-
-
 
 #define MAX_INT_DIGITS 8 // Maximum number of digits in int32 (and float)
 
@@ -246,7 +240,7 @@ float convert_delta_vector_to_unit_vector(float *vector)
     {
         if(vector[idx] != 0.0)
         {
-            magnitude += vector[idx]*vector[idx];
+            magnitude += vector[idx] * vector[idx];
         }
     }
 

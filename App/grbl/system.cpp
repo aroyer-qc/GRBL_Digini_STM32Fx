@@ -28,8 +28,6 @@
 #include "Stepper.h"
 #include "System.h"
 #include "ToolChange.h"
-#include "System32.h"
-
 
 // This replace all the configuration that was previously set by config.h
 void System_LoadConfig(void)
@@ -467,7 +465,7 @@ uint8_t System_ExecuteLine(char *line)
                     if(!System.Abort)    // Execute startup scripts after successful homing.
                     {
                         System.State = STATE_IDLE; // Set to IDLE when complete.
-                        Stepper_Disable(0); // Set steppers to the settings idle state before returning.
+                        Stepper_Disable(false); // Set steppers to the settings idle state before returning.
 
                         if(line[2] == 0)
                         {

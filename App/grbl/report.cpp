@@ -26,6 +26,7 @@
   different style feedback is desired (i.e. JSON), then a user can change these following
   methods to accomodate their needs.
 */
+#include "lib_digini.h"
 #include <string.h>
 #include "util.h"
 #include "Config.h"
@@ -38,8 +39,6 @@
 #include "Stepper.h"
 #include "System.h"
 #include "Report.h"
-#include "System32.h"
-
 
 // TODO replace by digini stuff temporary for compile
 #define Printf_Initialize()
@@ -152,8 +151,7 @@ void Report_AlarmMessage(uint8_t alarm_code)
     Printf("ALARM:");
     Printf("%d", alarm_code);
     Report_LineFeed();
-
-    Delay_ms(200); // Force delay to ensure message clears serial write buffer.
+    LIB_Delay_mSec(200); // Force delay to ensure message clears serial write buffer.
 }
 
 
