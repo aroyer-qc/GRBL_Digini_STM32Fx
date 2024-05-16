@@ -45,6 +45,9 @@
 
 //#define DS3502_VOLUME_I2C_SLAVE_ADDRESS         0x28
 
+#define MCP23008_INPUT_1_8_IOEXP_I2C_SLAVE_ADDRESS  0x20
+#define MCP23008_INPUT_8_16_IOEXP_I2C_SLAVE_ADDRESS 0x21
+#define MCP23017_IO_EXPANDER_I2C_SLAVE_ADDRESS      0x24
 
 //-------------------------------------------------------------------------------------------------
 // Include file(s)
@@ -55,6 +58,7 @@
 //#include "lib_class_I2C_si4703.h"
 #include "lib_class_I2C_EEprom.h"
 #include "lib_class_pulse_counter.h"
+#include "lib_class_I2C_MCP230xx.h"
 //#include "lib_class_I2C_DS3502.h"
 //#include "lib_class_audio_codec_CS43L22.h"
 //#include "lib_class_gpio_MAX4598.h"

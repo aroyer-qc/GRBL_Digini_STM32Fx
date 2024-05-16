@@ -41,7 +41,16 @@
  #endif
 #endif
 
-#if 0  // Other as example
+#ifdef __CLASS_MCP230XX__
+ extern class MCP230xx                   MCP23008_Input1_8;
+ extern class MCP230xx                   MCP23008_Input9_16;
+ extern class MCP230xx                   MCP23017_IO;
+ #ifdef LIB_MCP230XX_GLOBAL
+  class MCP230xx                         MCP23008_Input1_8;
+  class MCP230xx                         MCP23008_Input9_16;
+  class MCP230xx                         MCP23017_IO;
+ #endif
+#endif
 
 #ifdef __CLASS_WS281x__
  extern class WS281x2                    WS281x_LedStream;
@@ -49,6 +58,8 @@
   class WS281x2                          WS281x_LedStream;
  #endif
 #endif
+
+#if 0  // Other as example
 
 #ifdef __CLASS_CS43L22__
  extern class CS43L22                    CS43L22_AudioCodec;

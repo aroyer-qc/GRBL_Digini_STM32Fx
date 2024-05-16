@@ -203,6 +203,15 @@ SystemState_e BSP_PostOS_Initialize(void)
 {
     SystemState_e State = SYS_READY;
 
+    MCP23008_Input1_8.Initialize  (&myI2C_External, MCP23008_INPUT_1_8_IOEXP_I2C_SLAVE_ADDRESS,  MCP23008_DEVICE);
+    MCP23008_Input9_16.Initialize (&myI2C_External, MCP23008_INPUT_8_16_IOEXP_I2C_SLAVE_ADDRESS, MCP23008_DEVICE);
+    MCP23017_IO.Initialize        (&myI2C_External, MCP23017_IO_EXPANDER_I2C_SLAVE_ADDRESS,      MCP23017_DEVICE);
+
+    MCP23008_Input1_8.PinInitInput (IO_PIN_MASK_ALL_LOW, MCP230xx_INPUT_NO_PULL);   // All 8 pin are inputs
+    MCP23008_Input9_16.PinInitInput(IO_PIN_MASK_ALL_LOW, MCP230xx_INPUT_NO_PULL);   // All 8 pin are inputs
+    MCP23017_IO.PinInitOutput      (IO_PIN_MASK_ALL_LOW | IO_PIN_MASK_8, MCP230xx_IO_PUSH_PULL, MCP230xx_IO_LOW); // IO 0 to 8 are output set to 0
+    MCP23017_IO.PinInitInput       (IO_PIN_MASK_14 | IO_PIN_MASK_15, MCP230xx_INPUT_NO_PULL);                     // IO 14 to 15 are input
+
     //QSPI.Initialize();
     State = DIGINI_PostInitialize();
   #if (DIGINI_USE_GRAFX == DEF_ENABLED)

@@ -67,6 +67,7 @@
 // Pointing device, here it is the capacitive touch screen
 #define GRAFX_PDI_HARD_INTERFACE            (void*)&myI2C_Control                       // I2C for the pointing device interface
 #define PDI_DRIVER_INCLUDE                  "lib_class_i2c_FT5336.h"
+
 // For the Audio
 //#include "lib_class_audio_codec_WM8994.h"
 //#define DIGINI_AUDIO_DRIVER_ARG_CTRL            (void*)&myI2C_Control    // For the audio device interface control
