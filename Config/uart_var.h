@@ -28,11 +28,35 @@
 //
 //-------------------------------------------------------------------------------------------------
 
+#ifdef UART_DRIVER_GLOBAL
+
+//-------------------------------------------------------------------------------------------------
+// Define(s)
+//-------------------------------------------------------------------------------------------------
+
+#define UART_STANDARD_CONFIGURATION_RX ( DMA_MODE_NORMAL             | \
+                                         DMA_PERIPHERAL_TO_MEMORY    | \
+                                         DMA_PERIPHERAL_NO_INCREMENT | \
+                                         DMA_MEMORY_INCREMENT        | \
+                                         DMA_PERIPHERAL_SIZE_8_BITS  | \
+                                         DMA_MEMORY_SIZE_8_BITS      | \
+                                         DMA_PERIPHERAL_BURST_SINGLE | \
+                                         DMA_MEMORY_BURST_SINGLE     | \
+                                         DMA_PRIORITY_HIGH)
+
+#define UART_STANDARD_CONFIGURATION_TX ( DMA_MODE_NORMAL             | \
+                                         DMA_MEMORY_TO_PERIPH        | \
+                                         DMA_PERIPH_NO_INCREMENT     | \
+                                         DMA_MEMORY_INCREMENT        | \
+                                         DMA_PERIPHERAL_SIZE_8_BITS  | \
+                                         DMA_MEMORY_SIZE_8_BITS      | \
+                                         DMA_PERIPHERAL_BURST_SINGLE | \
+                                         DMA_MEMORY_BURST_SINGLE     | \
+                                         DMA_PRIORITY_HIGH)
+
 //-------------------------------------------------------------------------------------------------
 // Constant(s)
 //-------------------------------------------------------------------------------------------------
-
-#ifdef UART_DRIVER_GLOBAL
 
 const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER] =
 {
@@ -163,132 +187,196 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
   #if (UART_DRIVER_SUPPORT_UART1_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_1,
-        DMA_CHANNEL_4,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF2,           // RX_IT_Flag
-        DMA2_Stream2,               // RX_DMA_TypeDef
-      // Other choice
-        // LL_DMA_CHANNEL_4,        // DMA_Channel RX
-        // DMA_HIFCR_CTCIF5,        // RX_IT_Flag
-        // DMA2_Stream5,            // RX_DMA_TypeDef
-        DMA_CHANNEL_4,              // DMA_Channel TX
-        DMA_HIFCR_CTCIF7,           // TX_IT_Flag
-        DMA2_Stream7,               // TX_DMA_TypeDef
-        DMA2_Stream7_IRQn,          // TX_IRQn
-        RCC_AHB1ENR_DMA2EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
+            DMA2_Stream2,                                   // RX_DMA_TypeDef
+            DMA2_Stream2_IRQn,                              // TX_IRQn
+            4,
+
+         // Other choice
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // DMA_Channel RX
+         // DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
+         // DMA2_Stream5,                                   // RX_DMA_TypeDef
+         // DMA2_Stream5_IRQn,                              // TX_IRQn
+        },
+
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF7,                               // TX_IT_Flag
+            DMA2_Stream7,                                   // TX_DMA_TypeDef
+            DMA2_Stream7_IRQn,                              // TX_IRQn
+            4,
+        },
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART2_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_2,
-        DMA_CHANNEL_4,              // DMA_Channel RX
-        DMA_HIFCR_CTCIF5,           // RX_IT_Flag
-        DMA1_Stream5,               // RX_DMA_TypeDef
-        DMA_CHANNEL_4,              // DMA_Channel TX
-        DMA_HIFCR_CTCIF6,           // TX_IT_Flag
-        DMA1_Stream6,               // TX_DMA_TypeDef
-        DMA1_Stream6_IRQn,          // TX_IRQn
 
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
+            DMA1_Stream5,                                   // TX_DMA_TypeDef
+            DMA1_Stream5_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF6,                               // TX_IT_Flag
+            DMA1_Stream6,                                   // TX_DMA_TypeDef
+            DMA1_Stream6_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 
-  #if (UART_DRIVER_SUPPORT_UART3_DMA_CFG == DEF_ENABLED)
+#if (UART_DRIVER_SUPPORT_UART3_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_3,
-        DMA_CHANNEL_4,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF1,           // RX_IT_Flag
-        DMA1_Stream1,               // RX_DMA_TypeDef
-        DMA_CHANNEL_4,              // DMA_Channel TX
-        DMA_LIFCR_CTCIF3,           // TX_IT_Flag
-        DMA1_Stream3,               // TX_DMA_TypeDef
-        DMA1_Stream3_IRQn,          // TX_IRQn
-      // Other choice
-        //LL_DMA_CHANNEL_7,         // DMA_Channel TX
-        //DMA_HIFCR_CTCIF4,         // TX_IT_Flag
-        //DMA1_Stream4,             // TX_DMA_TypeDef
-        //DMA1_Stream4_IRQn,        // TX_IRQn
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF1,                               // RX_IT_Flag
+            DMA1_Stream1,                                   // RX_DMA_TypeDef
+            DMA1_Stream1_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_LIFCR_CTCIF3,                               // TX_IT_Flag
+            DMA1_Stream3,                                   // TX_DMA_TypeDef
+            DMA1_Stream3_IRQn,                              // TX_IRQn
+
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_7, // Configuration + DMA_Channel TX
+         // DMA_HIFCR_CTCIF4,                               // TX_IT_Flag
+         // DMA1_Stream4,                                   // TX_DMA_TypeDef
+         // DMA1_Stream4_IRQn,                              // TX_IRQn
+        },
+
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART4_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_4,
-        DMA_CHANNEL_4,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF2,           // RX_IT_Flag
-        DMA1_Stream2,               // RX_DMA_TypeDef
-        DMA_CHANNEL_4,              // DMA_Channel TX
-        DMA_HIFCR_CTCIF4,           // TX_IT_Flag
-        DMA1_Stream4,               // TX_DMA_TypeDef
-        DMA1_Stream4_IRQn,          // TX_IRQn
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
+            DMA1_Stream2,                                   // RX_DMA_TypeDef
+            DMA1_Stream2_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF4,                               // TX_IT_Flag
+            DMA1_Stream4,                                   // TX_DMA_TypeDef
+            DMA1_Stream4_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART5_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_5,
-        DMA_CHANNEL_4,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF0,           // RX_IT_Flag
-        DMA1_Stream0,               // RX_DMA_TypeDef
-        DMA_CHANNEL_4,              // DMA_Channel TX
-        DMA_HIFCR_CTCIF7,           // TX_IT_Flag
-        DMA1_Stream7,               // TX_DMA_TypeDef
-        DMA1_Stream7_IRQn,          // TX_IRQn
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF0,                               // RX_IT_Flag
+            DMA1_Stream0,                                   // RX_DMA_TypeDef
+            DMA1_Stream0_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF7,                               // TX_IT_Flag
+            DMA1_Stream7,                                   // TX_DMA_TypeDef
+            DMA1_Stream7_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART6_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_6,
-        DMA_CHANNEL_5,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF1,           // RX_IT_Flag
-        DMA2_Stream1,               // RX_DMA_TypeDef
-        DMA2_Stream1_IRQn,          // RX_IRQn
-      // Other choice
-        // DMA_CHANNEL_5,           // DMA_Channel RX
-        // DMA_LIFCR_CTCIF2,        // RX_IT_Flag
-        // DMA2_Stream2,            // RX_DMA_TypeDef
-        DMA_CHANNEL_5,              // DMA_Channel TX
-        DMA_HIFCR_CTCIF6,           // TX_IT_Flag
-        DMA2_Stream6,               // TX_DMA_TypeDef
-        DMA2_Stream6_IRQn,          // TX_IRQn
-      // Other choice
-        // DMA_CHANNEL_5,           // DMA_Channel TX
-        // DMA_HIFCR_CTCIF7,        // TX_IT_Flag
-        // DMA2_Stream7,            // TX_DMA_TypeDef
-        // DMA2_Stream7_IRQn,       // TX_IRQn
-        RCC_AHB1ENR_DMA2EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF1,                               // RX_IT_Flag
+            DMA2_Stream1,                                   // RX_DMA_TypeDef
+            DMA2_Stream1_IRQn,                              // RX_IRQn
+
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+         // DMA_CHANNEL_5,                                  // DMA_Channel RX
+         // DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
+         // DMA2_Stream2,                                   // RX_DMA_TypeDef
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF6,                               // TX_IT_Flag
+            DMA2_Stream6,                                   // TX_DMA_TypeDef
+            DMA2_Stream6_IRQn,                              // TX_IRQn
+
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
+         // DMA_HIFCR_CTCIF7,                               // TX_IT_Flag
+         // DMA2_Stream7,                                   // TX_DMA_TypeDef
+         // DMA2_Stream7_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART7_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_7,
-        DMA_CHANNEL_5,              // DMA_Channel RX
-        DMA_LIFCR_CTCIF3,           // RX_IT_Flag
-        DMA1_Stream3,               // RX_DMA_TypeDef
-        DMA_CHANNEL_5,              // DMA_Channel TX
-        DMA_LIFCR_CTCIF1,           // TX_IT_Flag
-        DMA1_Stream1,               // TX_DMA_TypeDef
-        DMA1_Stream1_IRQn,          // TX_IRQn
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF3,                               // RX_IT_Flag
+            DMA1_Stream3,                                   // RX_DMA_TypeDef
+            DMA1_Stream3_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
+            DMA_LIFCR_CTCIF1,                               // TX_IT_Flag
+            DMA1_Stream1,                                   // TX_DMA_TypeDef
+            DMA1_Stream1_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 
   #if (UART_DRIVER_SUPPORT_UART8_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_8,
-        DMA_CHANNEL_5,              // DMA_Channel RX
-        DMA_HIFCR_CTCIF6,           // RX_IT_Flag
-        DMA1_Stream6,               // RX_DMA_TypeDef
-        DMA_CHANNEL_5,              // DMA_Channel TX
-        DMA_LIFCR_CTCIF0,           // TX_IT_Flag
-        DMA1_Stream0,               // TX_DMA_TypeDef
-        DMA1_Stream0_IRQn,          // TX_IRQn
-        RCC_AHB1ENR_DMA1EN,         // RCC_APBxPeriph
+
+        // DMA_RX
+        {
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF6,                               // RX_IT_Flag
+            DMA1_Stream6,                                   // RX_DMA_TypeDef
+            DMA1_Stream6_IRQn,                              // TX_IRQn
+        },
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
+            DMA_LIFCR_CTCIF0,                               // TX_IT_Flag
+            DMA1_Stream0,                                   // TX_DMA_TypeDef
+            DMA1_Stream0_IRQn,                              // TX_IRQn
+        },
     },
   #endif
 };

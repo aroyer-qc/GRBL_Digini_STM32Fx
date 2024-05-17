@@ -605,6 +605,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\lib_ethernet_typedef.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_sdio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\fatfs\lib_class_fatfs_usb.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_dma.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_i2c.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_qspi.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\lib_class_rtc.h" />
@@ -619,6 +620,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dac.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dma.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_eth.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_i2c.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_qspi.h" />
@@ -628,7 +630,6 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_tim.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_uart.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7.h" />
-		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_dma.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_io.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_isr.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_rng.h" />
@@ -670,6 +671,9 @@
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dac.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dma.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_eth.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -678,8 +682,6 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_pwm.cpp">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_qspi.cpp">
 			<Option compilerVar="CC" />
@@ -692,8 +694,6 @@
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_spi.cpp">
 			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_tim.cpp">
 			<Option compilerVar="CC" />
@@ -705,9 +705,6 @@
 			<Option compilerVar="CC" />
 			<Option compile="0" />
 			<Option link="0" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_dma.cpp">
-			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_io.cpp">
 			<Option compilerVar="CC" />
