@@ -185,16 +185,124 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
       #endif
 	},
   #endif
+
+  #if (SPI_DRIVER_SUPPORT_SPI4_CFG == DEF_ENABLED)
+	{
+	    DRIVER_SPI4_ID,
+		SPI4,                       // SPIx
+        IO_SPI4_CLK,                // CLK
+        IO_SPI4_MOSI,               // MOSI
+        IO_SPI4_MISO,               // MISO
+		IO_SPI4_NSS,				// NSS if no IO exist user can use IO_NOT_DEFINED
+		SPI_SPEED_FCLK_DIV64,
+		SPI_FULL_DUPLEX,            // SPI_FULL_DUPLEX or SPI_HALF_DUPLEX
+
+		SPI4_IRQn,                  // IRQn_Channel
+
+      #if (SPI_DRIVER_SUPPORT_DMA_CFG == DEF_ENABLED)
+        // DMA_RX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF3,                              // RX_IT_Flag
+            DMA1_Stream3,                                  // RX_DMA_TypeDef
+            DMA1_Stream3_IRQn,                             // TX_IRQn
+        },
+
+        // DMA_TX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF4,                              // RX_IT_Flag
+            DMA1_Stream4,                                  // RX_DMA_TypeDef
+            DMA1_Stream4_IRQn,                             // TX_IRQn
+        },
+      #endif
+	},
+  #endif
+
+  #if (SPI_DRIVER_SUPPORT_SPI5_CFG == DEF_ENABLED)
+	{
+	    DRIVER_SPI5_ID,
+		SPI5,                       // SPIx
+        IO_SPI5_CLK,                // CLK
+        IO_SPI5_MOSI,               // MOSI
+        IO_SPI5_MISO,               // MISO
+		IO_SPI5_NSS,				// NSS if no IO exist user can use IO_NOT_DEFINED
+		SPI_SPEED_FCLK_DIV64,
+		SPI_FULL_DUPLEX,            // SPI_FULL_DUPLEX or SPI_HALF_DUPLEX
+
+		SPI3_IRQn,                  // IRQn_Channel
+
+      #if (SPI_DRIVER_SUPPORT_DMA_CFG == DEF_ENABLED)
+        // DMA_RX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_2, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF3,                              // RX_IT_Flag
+            DMA1_Stream3,                                  // RX_DMA_TypeDef
+            DMA1_Stream3_IRQn,                             // TX_IRQn
+
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_7, // DMA_Channel RX
+         // DMA_LIFCR_CTCIF5,                               // RX_IT_Flag
+         // DMA1_Stream5,                                   // RX_DMA_TypeDef
+         // DMA1_Stream5_IRQn,                              // TX_IRQn
+        },
+
+        // DMA_TX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_2, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF4,                              // RX_IT_Flag
+            DMA1_Stream4,                                  // RX_DMA_TypeDef
+            DMA1_Stream4_IRQn,                             // TX_IRQn
+
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_7, // DMA_Channel RX
+         // DMA_HIFCR_CTCIF6,                               // RX_IT_Flag
+         // DMA1_Stream6,                                   // RX_DMA_TypeDef
+         // DMA1_Stream6_IRQn,                              // TX_IRQn
+        },
+      #endif
+	},
+  #endif
+
+  #if (SPI_DRIVER_SUPPORT_SPI6_CFG == DEF_ENABLED)
+	{
+	    DRIVER_SPI6_ID,
+		SPI6,                       // SPIx
+        IO_SPI6_CLK,                // CLK
+        IO_SPI6_MOSI,               // MOSI
+        IO_SPI6_MISO,               // MISO
+		IO_SPI6_NSS,				// NSS if no IO exist user can use IO_NOT_DEFINED
+		SPI_SPEED_FCLK_DIV64,
+		SPI_FULL_DUPLEX,            // SPI_FULL_DUPLEX or SPI_HALF_DUPLEX
+
+		SPI3_IRQn,                  // IRQn_Channel
+
+      #if (SPI_DRIVER_SUPPORT_DMA_CFG == DEF_ENABLED)
+        // DMA_RX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_1, // Configuration + DMA_Channel RX
+            DMA_LIFCR_CTCIF6,                              // RX_IT_Flag
+            DMA1_Stream6,                                  // RX_DMA_TypeDef
+            DMA1_Stream6_IRQn,                             // TX_IRQn
+        },
+
+        // DMA_TX
+        {
+            SPI_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_1, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF5,                              // RX_IT_Flag
+            DMA1_Stream5,                                  // RX_DMA_TypeDef
+            DMA1_Stream5_IRQn,                             // TX_IRQn
+        },
+      #endif
+	},
+  #endif
 };
 
-
-// TODO need to add 4,5,6
-
-class SPI_Driver mySPI_ForLCD(DRIVER_SPI1_ID);
+//class SPI_Driver mySPI_ForLCD(DRIVER_SPI1_ID);        // Example
 
 #else // SPI_DRIVER_GLOBAL
 
 extern       SPI_Info_t     SPI_Info[NB_OF_SPI_DRIVER];
-extern class SPI_Driver     mySPI_ForLCD;
+//extern class SPI_Driver     mySPI_ForLCD;             // Example
 
 #endif // SPI_DRIVER_GLOBAL
