@@ -42,17 +42,17 @@
                                          DMA_MEMORY_SIZE_8_BITS      | \
                                          DMA_PERIPHERAL_BURST_SINGLE | \
                                          DMA_MEMORY_BURST_SINGLE     | \
-                                         DMA_PRIORITY_HIGH)
+                                         DMA_PRIORITY_LEVEL_HIGH)
 
 #define UART_STANDARD_CONFIGURATION_TX ( DMA_MODE_NORMAL             | \
-                                         DMA_MEMORY_TO_PERIPH        | \
-                                         DMA_PERIPH_NO_INCREMENT     | \
+                                         DMA_MEMORY_TO_PERIPHERAL    | \
+                                         DMA_PERIPHERAL_NO_INCREMENT | \
                                          DMA_MEMORY_INCREMENT        | \
                                          DMA_PERIPHERAL_SIZE_8_BITS  | \
                                          DMA_MEMORY_SIZE_8_BITS      | \
                                          DMA_PERIPHERAL_BURST_SINGLE | \
                                          DMA_MEMORY_BURST_SINGLE     | \
-                                         DMA_PRIORITY_HIGH)
+                                         DMA_PRIORITY_LEVEL_HIGH)
 
 //-------------------------------------------------------------------------------------------------
 // Constant(s)

@@ -44,6 +44,44 @@ SDIO_Info_t SDIO_Info =
     IO_SD_CLK,              // SDIO CLK
     IO_SD_CMD,				// Command line to SDIO
     IO_DETECT_SD_CARD,      // Card detect line
+
+    // DMA SDIO RX
+    {
+        // Configuration
+        DMA_MODE_PERIPHERAL_FLOW_CTRL    |
+        DMA_MEMORY_TO_PERIPHERAL         |
+        DMA_PERIPHERAL_NO_INCREMENT      |
+        DMA_MEMORY_INCREMENT             |
+        DMA_PERIPHERAL_SIZE_32_BITS      |
+        DMA_MEMORY_SIZE_32_BITS          |
+        DMA_PRIORITY_LEVEL_VERY_HIGH     |
+        DMA_PERIPHERAL_BURST_INC4        |
+        DMA_MEMORY_BURST_INC4            |
+        DMA_CHANNEL_4,                          // Connected to channel 4
+        DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
+        DMA2_Stream3,                           // DMA_Stream_TypeDef
+        DMA2_Stream3_IRQn
+        //4,                                      // PreempPrio
+    },
+
+    // DMA SDIO TX
+    {
+        // Configuration
+        DMA_MODE_PERIPHERAL_FLOW_CTRL    |
+        DMA_MEMORY_TO_PERIPHERAL         |
+        DMA_PERIPHERAL_NO_INCREMENT      |
+        DMA_MEMORY_INCREMENT             |
+        DMA_PERIPHERAL_SIZE_32_BITS      |
+        DMA_MEMORY_SIZE_32_BITS          |
+        DMA_PRIORITY_LEVEL_VERY_HIGH     |
+        DMA_PERIPHERAL_BURST_INC4        |
+        DMA_MEMORY_BURST_INC4            |
+        DMA_CHANNEL_4,                          // Connected to channel 4
+        DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
+        DMA2_Stream6,                           // DMA_Stream_TypeDef
+        DMA2_Stream6_IRQn
+        //4,                                      // PreempPrio
+    },
 };
 #endif
 
