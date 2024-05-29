@@ -190,17 +190,18 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
 
         // DMA_RX
         {
-            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
-            DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
-            DMA2_Stream2,                                   // RX_DMA_TypeDef
-            DMA2_Stream2_IRQn,                              // TX_IRQn
-            4,
-
          // Other choice
-         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // DMA_Channel RX
-         // DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
-         // DMA2_Stream5,                                   // RX_DMA_TypeDef
-         // DMA2_Stream5_IRQn,                              // TX_IRQn
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+         // DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
+         // DMA2_Stream2,                                   // RX_DMA_TypeDef
+         // DMA2_Stream2_IRQn,                              // TX_IRQn
+         // 4,
+
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // DMA_Channel RX
+            DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
+            DMA2_Stream5,                                   // RX_DMA_TypeDef
+            DMA2_Stream5_IRQn,                              // TX_IRQn
+            4,
         },
 
         // DMA_TX

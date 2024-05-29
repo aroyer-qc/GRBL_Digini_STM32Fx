@@ -150,13 +150,13 @@ NOS_ISR(SDMMC1_IRQHandler)
 NOS_ISR(DMA2_Stream3_IRQHandler)
 {
     // Process DMA2 Stream3
-    mySDIO.DMA_Stream3IRQHandler();
+    mySDIO.RX_IRQHandler();
 }
 
 NOS_ISR(DMA2_Stream6_IRQHandler)
 {
     // Process DMA2 Stream6
-    mySDIO.DMA_Stream6IRQHandler();
+    mySDIO.TX_IRQHandler();
 }
 #endif
 

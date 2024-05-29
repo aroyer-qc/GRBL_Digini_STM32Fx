@@ -591,6 +591,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_pulse_counter.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_class_qspi_n25Qxxx.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\device\lib_fatfs_disk.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\device\port\STM32F7xx\stm32f746xx.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\digini_diskio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio.h" />
 		<Unit filename="..\Module\Digini\Peripheral\inc\FatFs\diskio_def.h" />
@@ -835,9 +836,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\module_picopng\picopng.h" />
-		<Unit filename="..\Module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f746xx.h" />
-		<Unit filename="..\Module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include\stm32f7xx.h" />
-		<Unit filename="..\Module\module_STM32F7xx\STM32F7xx_HAL_Driver\Inc\stm32f7xx_hal.h" />
 		<Unit filename="..\Module\nOS\inc\nOS.h" />
 		<Unit filename="..\Module\nOS\inc\port\GCC\ARM_Cortex_M7\nOSPort.h" />
 		<Unit filename="..\Module\nOS\src\nOSAlarm.c">
