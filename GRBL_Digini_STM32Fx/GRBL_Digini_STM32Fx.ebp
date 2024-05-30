@@ -89,27 +89,13 @@
 			<Add symbol="STM32F7xx" />
 			<Add directory="..\App\grbl\" />
 			<Add directory="..\module\Digini\Peripheral\inc\port\STM32F7xx" />
-			<Add directory="..\module\Digini\Peripheral\inc\port\fatfs" />
 			<Add directory="..\module\Digini\Peripheral\inc\port\STM32F7xx\fatfs" />
-			<Add directory="..\module\Digini\Peripheral\inc\device" />
-			<Add directory="..\module\Digini\Peripheral\inc\device\NetworkDevice" />
-			<Add directory="..\Module\Digini\Peripheral\inc\interface" />
-			<Add directory="..\module\Digini\Digini\inc" />
-			<Add directory="..\module\Digini\Grafx\inc" />
-			<Add directory="..\module\Digini\Grafx\inc\basic" />
-			<Add directory="..\module\Digini\Grafx\inc\color" />
-			<Add directory="..\module\Digini\Grafx\inc\driver" />
-			<Add directory="..\module\Digini\Grafx\inc\driver\STM32F7xx" />
-			<Add directory="..\module\Digini\Grafx\inc\font" />
-			<Add directory="..\module\Digini\Grafx\inc\layer" />
-			<Add directory="..\module\Digini\Grafx\inc\skin" />
-			<Add directory="..\module\Digini\Grafx\inc\task" />
-			<Add directory="..\module\Digini\Grafx\inc\widget" />
 			<Add directory="..\module\module_STM32F7xx\STM32F7xx_HAL_Driver\Inc" />
 			<Add directory="..\module\module_STM32F7xx\CMSIS\Device\ST\STM32F7xx\Include" />
-			<Add directory="..\module\module_STM32F7xx\CMSIS\Include" />
 			<Add directory="..\module\lwip\src\include" />
 			<Add directory="..\module\lwip\src" />
+			<Add directory="..\Module\Digini" />
+			<Add directory="..\Module\module_STM32F7xx\CMSIS\Include" />
 		</Compiler>
 		<Cpp>
 			<Add option="-mfloat-abi=hard" />
