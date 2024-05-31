@@ -42,6 +42,21 @@
 //#define DIGINI_APP_USE_TICK_HOOK                      DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
+// Static memory allocation
+//
+#define DIGINI_USE_STATIC_MEMORY_ALLOC                  DEF_ENABLED
+
+//-------------------------------------------------------------------------------------------------
+// Database support
+//
+#define DIGINI_USE_DATABASE                             DEF_ENABLED
+
+//-------------------------------------------------------------------------------------------------
+// Static memory allocation
+//
+#define DIGINI_USE_LABEL                                DEF_ENABLED
+
+//-------------------------------------------------------------------------------------------------
 // Use Console/VT100/CmdLine
 //
 #define DIGINI_USE_CONSOLE                              DEF_ENABLED

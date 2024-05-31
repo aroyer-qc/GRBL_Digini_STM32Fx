@@ -61,7 +61,7 @@ SDIO_Info_t SDIO_Info =
         DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
         DMA2_Stream3,                           // DMA_Stream_TypeDef
         DMA2_Stream3_IRQn
-        //4,                                      // PreempPrio
+        //4,                                    // PreempPrio
     },
 
     // DMA SDIO TX
@@ -80,7 +80,7 @@ SDIO_Info_t SDIO_Info =
         DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
         DMA2_Stream6,                           // DMA_Stream_TypeDef
         DMA2_Stream6_IRQn
-        //4,                                      // PreempPrio
+        //4,                                    // PreempPrio
     },
 };
 #endif
