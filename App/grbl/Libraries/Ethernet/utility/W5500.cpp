@@ -15,7 +15,7 @@
   You should have received a copy of the GNU General Public License
   along with program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "W5500.h"
 #include "System32.h"
 

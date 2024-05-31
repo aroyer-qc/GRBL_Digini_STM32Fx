@@ -33,7 +33,7 @@
 #define TASK_GRBL_GLOBAL
 #include "Task_grbl.h"
 #undef TASK_GRBL_GLOBAL
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 
 #if 0
 // for the real time command

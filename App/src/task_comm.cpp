@@ -35,7 +35,7 @@
 #define TASK_COMM_GLOBAL
 #include "task_comm.h"
 #undef  TASK_COMM_GLOBAL
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 
 //-------------------------------------------------------------------------------------------------
 //

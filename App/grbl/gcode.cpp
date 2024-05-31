@@ -20,7 +20,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "System.h"
 #include "Settings.h"
 #include "Jog.h"
@@ -170,14 +170,14 @@ uint8_t GC_ExecuteLine(char *line)
     {
         // Import the next g-code word, expecting a letter followed by a value. Otherwise, error out.
         letter = line[char_counter];
-        
+
         if((letter < 'A') || (letter > 'Z'))
         {
             return STATUS_EXPECTED_COMMAND_LETTER;
         } // [Expected word letter]
 
         char_counter++;
-        
+
         if(Read_Float(line, &char_counter, &value) == false)
         {
             return STATUS_BAD_NUMBER_FORMAT;
@@ -518,7 +518,7 @@ uint8_t GC_ExecuteLine(char *line)
                     case 4:
                     case 5:
                         word_bit = MODAL_GROUP_M7;
-                        
+
                         switch(int_value)
                         {
                             case 3:
@@ -595,7 +595,7 @@ uint8_t GC_ExecuteLine(char *line)
                             return STATUS_GCODE_UNSUPPORTED_COMMAND; // [Unsupported M command]
                         }
                         break;
-                    
+
                     case 63:
                     case 65:
                         if(Config.DigitalOutputEnable == true)

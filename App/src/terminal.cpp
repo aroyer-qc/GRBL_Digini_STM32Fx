@@ -30,7 +30,7 @@
 
 #include "terminal.h"
 #include "Config.h"
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "Settings.h"
 #include "task_grbl.h"
 

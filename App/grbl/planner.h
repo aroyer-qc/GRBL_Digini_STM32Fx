@@ -22,7 +22,7 @@
 #ifndef PLANNER_H
 #define PLANNER_H
 
-#include "lib_macro.h"
+#include "./Digini/Digini/inc/lib_macro.h"
 //#include <stdint.h>
 #include "util.h"
 

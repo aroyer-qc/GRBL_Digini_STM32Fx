@@ -54,15 +54,15 @@
 //-------------------------------------------------------------------------------------------------
 
 // Put here included for all high level driver. Driver for device not in the CPU
-//#include "lib_class_quadrature_encoder.h"
-//#include "lib_class_I2C_si4703.h"
-#include "lib_class_I2C_EEprom.h"
-#include "lib_class_pulse_counter.h"
-#include "lib_class_I2C_MCP230xx.h"
-//#include "lib_class_I2C_DS3502.h"
-//#include "lib_class_audio_codec_CS43L22.h"
-//#include "lib_class_gpio_MAX4598.h"
-//#include "lib_LMT86.h"
-//#include "lib_class_WS281x.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_quadrature_encoder.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_I2C_si4703.h"
+#include "./Digini/Peripheral/inc/device/lib_class_I2C_EEprom.h"
+#include "./Digini/Peripheral/inc/device/lib_class_pulse_counter.h"
+#include "./Digini/Peripheral/inc/device/lib_class_I2C_MCP230xx.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_I2C_DS3502.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_audio_codec_CS43L22.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_gpio_MAX4598.h"
+//#include "./Digini/Peripheral/inc/device/lib_LMT86.h"
+//#include "./Digini/Peripheral/inc/device/lib_class_WS281x.h"
 
 //-------------------------------------------------------------------------------------------------

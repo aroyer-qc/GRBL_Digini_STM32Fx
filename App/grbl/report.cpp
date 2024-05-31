@@ -26,7 +26,7 @@
   different style feedback is desired (i.e. JSON), then a user can change these following
   methods to accomodate their needs.
 */
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include <string.h>
 #include "util.h"
 #include "Config.h"

@@ -39,7 +39,7 @@
 #define ERROR_GLOBAL
 #include "error.h"
 #undef ERROR_GLOBAL
-#include "lib_macro.h"
+#include "./Digini/Digini/inc/lib_macro.h"
 
 //-------------------------------------------------------------------------------------------------
 //

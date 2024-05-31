@@ -34,7 +34,7 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #define TASK_LOADING_GLOBAL
 #include "Task_loading.h"
 #undef TASK_LOADING_GLOBAL

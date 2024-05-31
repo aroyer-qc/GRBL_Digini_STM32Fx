@@ -30,9 +30,9 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "lib_label.h"
+#include "./Digini/Digini/inc/lib_label.h"
 #include "project_def.h"
-#include "lib_typedef.h"
+#include "./Digini/Digini/inc/lib_typedef.h"
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)

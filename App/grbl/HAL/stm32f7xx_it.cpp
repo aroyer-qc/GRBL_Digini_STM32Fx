@@ -1,5 +1,5 @@
 /* Includes ------------------------------------------------------------------*/
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "stm32f7xx_it.h"
 #include "Limits.h"
 #include "Stepper.h"

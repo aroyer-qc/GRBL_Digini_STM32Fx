@@ -34,7 +34,7 @@
 // Include(s)
 //-------------------------------------------------------------------------------------------------
 
-// #include "lib_define.h"  to confirm we don't need
+// #include "./Digini/Digini/inc/lib_define.h"  to confirm we don't need
 
 //-------------------------------------------------------------------------------------------------
 // Global Define(s)

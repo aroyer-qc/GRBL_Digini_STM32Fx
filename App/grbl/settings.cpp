@@ -20,7 +20,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "Config.h"
 #include "GCode.h"
 #include "Limits.h"

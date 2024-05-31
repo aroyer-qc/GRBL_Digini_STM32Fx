@@ -19,7 +19,7 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "lib_digini.h"
+#include "./Digini/lib_digini.h"
 #include "System.h"
 #include "Protocol.h"
 #include "GCode.h"
