@@ -190,17 +190,17 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
 
         // DMA_RX
         {
-         // Other choice
+            // Other choice
          // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
          // DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
          // DMA2_Stream2,                                   // RX_DMA_TypeDef
-         // DMA2_Stream2_IRQn,                              // TX_IRQn
+         // DMA2_Stream2_IRQn,                              // RX_IRQn
          // 4,
 
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // DMA_Channel RX
             DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
             DMA2_Stream5,                                   // RX_DMA_TypeDef
-            DMA2_Stream5_IRQn,                              // TX_IRQn
+            DMA2_Stream5_IRQn,                              // RX_IRQn
             4,
         },
 
@@ -223,8 +223,8 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
         {
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
             DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
-            DMA1_Stream5,                                   // TX_DMA_TypeDef
-            DMA1_Stream5_IRQn,                              // TX_IRQn
+            DMA1_Stream5,                                   // RX_DMA_TypeDef
+            DMA1_Stream5_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -236,7 +236,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
     },
   #endif
 
-#if (UART_DRIVER_SUPPORT_UART3_DMA_CFG == DEF_ENABLED)
+  #if (UART_DRIVER_SUPPORT_UART3_DMA_CFG == DEF_ENABLED)
     {
         UART_DRIVER_ID_3,
 
@@ -245,7 +245,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
             DMA_LIFCR_CTCIF1,                               // RX_IT_Flag
             DMA1_Stream1,                                   // RX_DMA_TypeDef
-            DMA1_Stream1_IRQn,                              // TX_IRQn
+            DMA1_Stream1_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -260,7 +260,6 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
          // DMA1_Stream4,                                   // TX_DMA_TypeDef
          // DMA1_Stream4_IRQn,                              // TX_IRQn
         },
-
     },
   #endif
 
@@ -273,7 +272,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
             DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
             DMA1_Stream2,                                   // RX_DMA_TypeDef
-            DMA1_Stream2_IRQn,                              // TX_IRQn
+            DMA1_Stream2_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -294,7 +293,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
             DMA_LIFCR_CTCIF0,                               // RX_IT_Flag
             DMA1_Stream0,                                   // RX_DMA_TypeDef
-            DMA1_Stream0_IRQn,                              // TX_IRQn
+            DMA1_Stream0_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -319,9 +318,9 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
 
             // Other choice
          // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
-         // DMA_CHANNEL_5,                                  // DMA_Channel RX
          // DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
          // DMA2_Stream2,                                   // RX_DMA_TypeDef
+            DMA2_Stream2_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -348,7 +347,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
             DMA_LIFCR_CTCIF3,                               // RX_IT_Flag
             DMA1_Stream3,                                   // RX_DMA_TypeDef
-            DMA1_Stream3_IRQn,                              // TX_IRQn
+            DMA1_Stream3_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
@@ -369,7 +368,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
             DMA_HIFCR_CTCIF6,                               // RX_IT_Flag
             DMA1_Stream6,                                   // RX_DMA_TypeDef
-            DMA1_Stream6_IRQn,                              // TX_IRQn
+            DMA1_Stream6_IRQn,                              // RX_IRQn
         },
         // DMA_TX
         {
