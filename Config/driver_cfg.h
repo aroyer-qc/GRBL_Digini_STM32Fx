@@ -73,5 +73,4 @@
 //#define DIGINI_AUDIO_DRIVER_ARG_CTRL            (void*)&myI2C_Control    // For the audio device interface control
 //#define DIGINI_AUDIO_DRIVER_ARG_DATA            (void*)&mySAI            // For the audio device interface data
 
-
 #define SDIO_USE_MAXIMUM_INFORMATION        DEF_ENABLED

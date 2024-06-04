@@ -197,7 +197,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
          // DMA2_Stream2_IRQn,                              // RX_IRQn
          // 4,
 
-            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // DMA_Channel RX
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
             DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
             DMA2_Stream5,                                   // RX_DMA_TypeDef
             DMA2_Stream5_IRQn,                              // RX_IRQn
@@ -226,6 +226,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             DMA1_Stream5,                                   // RX_DMA_TypeDef
             DMA1_Stream5_IRQn,                              // RX_IRQn
         },
+        
         // DMA_TX
         {
             UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
@@ -349,6 +350,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             DMA1_Stream3,                                   // RX_DMA_TypeDef
             DMA1_Stream3_IRQn,                              // RX_IRQn
         },
+        
         // DMA_TX
         {
             UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
@@ -370,6 +372,7 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
             DMA1_Stream6,                                   // RX_DMA_TypeDef
             DMA1_Stream6_IRQn,                              // RX_IRQn
         },
+        
         // DMA_TX
         {
             UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_5, // Configuration + DMA_Channel TX
@@ -385,12 +388,6 @@ const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER] =
 class UART_Driver myUART_Terminal(TERMINAL_SERIAL);
 
 #else // UART_DRIVER_GLOBAL
-
-extern const UART_Info_t UART_Info[NB_OF_REAL_UART_DRIVER];
-
-#if (UART_DRIVER_DMA_CFG == DEF_ENABLED)
-extern const UART_DMA_Info_t UART_DMA_Info[NB_OF_UART_DMA_DRIVER];
-#endif
 
 extern class UART_Driver myUART_Terminal;
 
