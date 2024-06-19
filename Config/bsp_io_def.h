@@ -305,8 +305,6 @@
     X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_MODE_OUTPUT,       IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,          0)                \
 
 
-// Note(s) the pin IO_CALIB_OUT_DEBUG is only use in some debug case and must not be initialized on permanent base
-
 //-------------------------------------------------------------------------------------------------
 //
 //          Parameter 1:  This is the ID of the IO IRQ pin

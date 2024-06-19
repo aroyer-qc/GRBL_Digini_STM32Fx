@@ -26,7 +26,7 @@
 //
 //  This is the place for any device driver not related to CPU peripheral.
 //
-//  There is exception: Ethernet, EEprom, FatFs, LWIP
+//  There is exception: Ethernet, EEprom, FatFs
 //
 //-------------------------------------------------------------------------------------------------
 

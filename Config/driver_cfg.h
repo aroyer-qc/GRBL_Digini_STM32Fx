@@ -58,6 +58,7 @@
     #define USE_USB_OTG_HS_CODE     DEF_DISABLED
 
 
+
 // Driver and/or peripheral to use with this project
 
 // LCD Display

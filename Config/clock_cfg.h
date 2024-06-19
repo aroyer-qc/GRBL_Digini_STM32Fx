@@ -36,6 +36,9 @@
 #define CFG_LSI_VALUE                               32768
 #define CFG_SYSTICK_RATE                            1000
 
+#define CFG_MCO_1                                   DEF_ENABLED
+#define CFG_MCO_2                                   DEF_DISABLED
+
 #define CFG_DELAY_TIMING_LOOP_VALUE_FOR_1_USEC      1000 // TODO need to be set and fine tuned
 
 // User clock selection
@@ -68,5 +71,8 @@
 #define CFG_HCLK_DIVIDER                            CFG_RCC_CFGR_HPRE_DIV1          // (AHB Prescaler) 1,2,4,8,16,64,128,256,512
 #define CFG_APB1_CLK_DIVIDER                        CFG_RCC_CFGR_PPRE1_DIV4         // 1,2,4,8,16
 #define CFG_APB2_CLK_DIVIDER                        CFG_RCC_CFGR_PPRE2_DIV2         // 1,2,4,8,16
+
+#define CFG_MCO_1                                   (CFG_RCC_CFGR_MCO1_PLL | CFG_RCC_CFGR_MCO1PRE_DIV5)
+#define CFG_MCO_2                                   (CFG_RCC_CFGR_MCO2_HSE | CFG_RCC_CFGR_MCO2PRE_DIV5)
 
 //-------------------------------------------------------------------------------------------------
