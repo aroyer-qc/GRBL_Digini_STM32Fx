@@ -29,6 +29,13 @@
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// Define(s)
+//-------------------------------------------------------------------------------------------------
+
+#define IFCR_CLEAR_MASK_STREAM3 (DMA_LIFCR_CTCIF3 | DMA_LIFCR_CHTIF3 | DMA_LIFCR_CTEIF3 | DMA_LIFCR_CDMEIF3 | DMA_LIFCR_CFEIF3)
+#define IFCR_CLEAR_MASK_STREAM6 (DMA_HIFCR_CTCIF6 | DMA_HIFCR_CHTIF6 | DMA_HIFCR_CTEIF6 | DMA_HIFCR_CDMEIF6 | DMA_HIFCR_CFEIF6)
+
+//-------------------------------------------------------------------------------------------------
 // Constant(s)
 //-------------------------------------------------------------------------------------------------
 
@@ -49,7 +56,7 @@ SDIO_Info_t SDIO_Info =
     {
         // Configuration
         DMA_MODE_PERIPHERAL_FLOW_CTRL    |
-        DMA_MEMORY_TO_PERIPHERAL         |
+        DMA_PERIPHERAL_TO_MEMORY         |
         DMA_PERIPHERAL_NO_INCREMENT      |
         DMA_MEMORY_INCREMENT             |
         DMA_PERIPHERAL_SIZE_32_BITS      |
@@ -58,7 +65,7 @@ SDIO_Info_t SDIO_Info =
         DMA_PERIPHERAL_BURST_INC4        |
         DMA_MEMORY_BURST_INC4            |
         DMA_CHANNEL_4,                          // Connected to channel 4
-        DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
+        IFCR_CLEAR_MASK_STREAM3,
         DMA2_Stream3,                           // DMA_Stream_TypeDef
         DMA2_Stream3_IRQn
         //4,                                    // PreempPrio
@@ -77,7 +84,7 @@ SDIO_Info_t SDIO_Info =
         DMA_PERIPHERAL_BURST_INC4        |
         DMA_MEMORY_BURST_INC4            |
         DMA_CHANNEL_4,                          // Connected to channel 4
-        DMA_HIFCR_CTCIF4 | DMA_HIFCR_CHTIF4,    // Transfer complete and Half transfer Flag             // to validate
+        IFCR_CLEAR_MASK_STREAM6,
         DMA2_Stream6,                           // DMA_Stream_TypeDef
         DMA2_Stream6_IRQn
         //4,                                    // PreempPrio

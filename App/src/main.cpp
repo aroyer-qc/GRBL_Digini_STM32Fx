@@ -32,7 +32,6 @@
 #include "bsp.h"
 #include "Task_comm.h"
 
-
 //-------------------------------------------------------------------------------------------------
 //
 // Name:           main
@@ -63,10 +62,8 @@ int main()
     {
         pTaskCOMM->Process();  // should move this to own task! so option to run as a task or this as a process
       #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-        //pTaskNetwork->Process();
+        pTaskNetwork->Process();
       #endif
-
-        //nOS_Yield();
     }
 
     return 0;                               // will never return
