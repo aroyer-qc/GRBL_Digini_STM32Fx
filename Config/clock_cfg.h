@@ -36,9 +36,6 @@
 #define CFG_LSI_VALUE                               32768
 #define CFG_SYSTICK_RATE                            1000
 
-#define CFG_MCO_1                                   DEF_ENABLED
-#define CFG_MCO_2                                   DEF_DISABLED
-
 #define CFG_DELAY_TIMING_LOOP_VALUE_FOR_1_USEC      1000 // TODO need to be set and fine tuned
 
 // User clock selection
