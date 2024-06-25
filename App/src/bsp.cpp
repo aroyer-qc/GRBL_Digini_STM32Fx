@@ -48,7 +48,6 @@
 #include "Task_grbl.h"
 #include "Task_loading.h"
 #include "Task_network.h"
-#include "Task_comm.h"
 
 #if (USE_ETH_DRIVER == DEF_ENABLED) && (DIGINI_USE_ETHERNET == DEF_ENABLED)
 IP_Manager myIP_Manager;
