@@ -250,9 +250,9 @@ SystemState_e BSP_PostOS_Initialize(void)
   #ifdef DEBUG
     DateAndTime_t DateTime;
 
-    DateTime.Date.Day    = 31;
-    DateTime.Date.Month  = 7;
-    DateTime.Date.Year   = 2023;
+    DateTime.Date.Day    = 25;
+    DateTime.Date.Month  = 6;
+    DateTime.Date.Year   = 2024;
     DateTime.Time.Hour   = 15;
     DateTime.Time.Minute = 30;
     DateTime.Time.Second = 1;

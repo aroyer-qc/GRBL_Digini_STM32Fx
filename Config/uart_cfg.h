@@ -30,11 +30,11 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define UART_ISR_RX_BYTE_CFG                    DEF_DISABLED
-#define UART_ISR_RX_ERROR_CFG                   DEF_ENABLED                 // need this because we need to flush buffer if any error since they are dynamically assign.
-#define UART_ISR_RX_IDLE_CFG                    DEF_ENABLED
-#define UART_ISR_TX_EMPTY_CFG                   DEF_DISABLED
-#define UART_ISR_TX_COMPLETED_CFG               DEF_ENABLED
+#define UART_DRIVER_RX_BYTE_CFG                 DEF_DISABLED
+#define UART_DRIVER_RX_ERROR_CFG                DEF_DISABLED                 // need this because we need to flush buffer if any error since they are dynamically assign.
+#define UART_DRIVER_RX_IDLE_CFG                 DEF_ENABLED
+#define UART_DRIVER_TX_EMPTY_CFG                DEF_DISABLED
+#define UART_DRIVER_TX_COMPLETED_CFG            DEF_ENABLED
 
 #define UART_DRIVER_SUPPORT_UART1_CFG           DEF_ENABLED
 #define UART_DRIVER_SUPPORT_UART2_CFG           DEF_DISABLED
