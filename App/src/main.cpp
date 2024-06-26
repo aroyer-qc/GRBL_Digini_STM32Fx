@@ -59,13 +59,15 @@ int main()
 
     for(;;)                                     // It is the idle task..
     {
-        pTaskCOMM->Process();  // should move this to own task! so option to run as a task or this as a process
+      #if (DIGINI_USE_COMM_AS_A_TASK == DEF_DISABLED)
+        pTaskCOMM->Process();
+      #endif
       #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
         pTaskNetwork->Process();
       #endif
     }
 
-    return 0;                               // will never return
+    return 0;                                   // will never return
 }
 
 //-------------------------------------------------------------------------------------------------

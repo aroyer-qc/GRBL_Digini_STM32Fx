@@ -61,14 +61,14 @@
 //
 #define DIGINI_USE_COMM_MODULE                          DEF_ENABLED
 #define DIGINI_USE_COMM_UART                            &myUART_Terminal
-#define DIGINI_USE_COMM_AS_A_TASK                       DEF_DISABLED        // Otherwise it is a process that need to be incluse in your choice of task
+#define DIGINI_USE_COMM_AS_A_TASK                       DEF_DISABLED         // Otherwise it is a process that need to be incluse in your choice of task
 
 // Only set this if DIGINI_USE_COMM_AS_A_TASK is DEF_ENABLED
-#define TASK_COMM_PRIO                                  5                   
+#define TASK_COMM_PRIO                                  7
 #define TASK_COMM_STACK_SIZE                            256
 
 //-------------------------------------------------------------------------------------------------
-// COMM support module 
+// COMM support module
 //
 #define DIGINI_USE_CONSOLE                              DEF_ENABLED
 #define DIGINI_USE_CMD_LINE                             DEF_ENABLED
@@ -78,8 +78,6 @@
 // Ethernet
 //
 #define DIGINI_USE_ETHERNET                             DEF_DISABLED
-//#define ETH_SOCK                                        0
-//#define ETH_PORT                                        30501
 
 //-------------------------------------------------------------------------------------------------
 // High level Peripheral
@@ -117,7 +115,7 @@
 //-------------------------------------------------------------------------------------------------
 // MPU Configuration
 //
-#define DIGINI_MPU_DRIVER                               DEF_ENABLED
+#define DIGINI_MPU_DRIVER                               DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 //
