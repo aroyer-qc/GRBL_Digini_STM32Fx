@@ -59,7 +59,7 @@ int main()
 
     for(;;)                                     // It is the idle task..
     {
-      #if (DIGINI_USE_COMM_AS_A_TASK == DEF_DISABLED)
+      #if (DIGINI_USE_COMM_MODULE == DEF_ENABLED) && (DIGINI_USE_COMM_AS_A_TASK == DEF_ENABLED)
         pTaskCOMM->Process();
       #endif
       #if (DIGINI_USE_ETHERNET == DEF_ENABLED)

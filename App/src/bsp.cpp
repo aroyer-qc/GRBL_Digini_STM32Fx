@@ -217,7 +217,10 @@ SystemState_e BSP_PostOS_Initialize(void)
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
   #endif
 
+  #if (DIGINI_USE_COMM_MODULE == DEF_ENABLED)
     pTaskCOMM->Initialize();
+  #endif
+
 
     pTaskLoading->Initialize();
 
