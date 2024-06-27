@@ -221,7 +221,6 @@ SystemState_e BSP_PostOS_Initialize(void)
     pTaskCOMM->Initialize();
   #endif
 
-
     pTaskLoading->Initialize();
 
   #if (DIGINI_USE_ETHERNET == DEF_ENABLED)

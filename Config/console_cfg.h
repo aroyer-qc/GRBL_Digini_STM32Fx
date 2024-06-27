@@ -30,6 +30,8 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define CON_USE_COMM_UART                       &myUART_Terminal
+
 #define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading number of child process.
 
 
@@ -51,7 +53,7 @@
 #define CON_DEBUG_LEVEL_MONITOR_LOGS            CON_DEBUG_LEVEL_4
 #define CON_DEBUG_LEVEL_STACK_WARNING           CON_DEBUG_LEVEL_5
 #define CON_DEBUG_LEVEL_ETHERNET                CON_DEBUG_LEVEL_6
-#define CON_DEBUG_LEVEL_LWIP                    CON_DEBUG_LEVEL_7
+#define CON_DEBUG_LEVEL_NANO_IP                 CON_DEBUG_LEVEL_7
 #define CON_DEBUG_LEVEL_MEMORY_POOL             CON_DEBUG_LEVEL_8
 
 //-------------------------------------------------------------------------------------------------
