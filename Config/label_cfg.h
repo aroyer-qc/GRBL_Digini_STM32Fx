@@ -32,7 +32,8 @@
 
 // Notes some default label exist in the file "lib_label.h"
 
-#define     LABEL_USE_TIME_AND_DATE             DEF_ENABLED
+#define     LABEL_USE_DATE                      DEF_ENABLED
+#define     LABEL_USE_TIME                      DEF_ENABLED
 #define     LABEL_USE_PRODUCT_INFO              DEF_ENABLED
 
 #define LABEL_LANGUAGE_DEF(X_LABEL)  \

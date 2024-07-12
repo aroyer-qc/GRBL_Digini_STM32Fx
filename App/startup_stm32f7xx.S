@@ -110,8 +110,22 @@ LoopFillZerobss:
 
 /* Call the clock system initialization function.*/
   bl  SystemInit
+  
 /* Call static constructors */
   bl __libc_init_array
+  
+  /* Fill the stack with watermark */
+  ldr  r3, =_StackBottom;
+  mov   r2, sp
+  movs  r4, 0xFFFFFFFF
+  b     LoopFillStack
+FillStack:
+  str   r4,     [r3],   #4
+LoopFillStack:
+  cmp  r2,     r3
+  bne  FillStack
+  
+  
 /* Call the application's entry point.*/
   bl  main
   bx  lr
