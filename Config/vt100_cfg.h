@@ -58,53 +58,25 @@
     X_VT100_USER_LBL_CFG( VT100_LBL_LANGUAGE_SELECTION,               "Choose Language:  English ( )  French   ( )",              "Choisir Langage:  Anglais ( )  Fran\x87" "ais ( )"          ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_TEMPERATURE_UNIT_SELECTION,       "Choose Temp Unit:      \xF8" "C ( )        \xF8" "F ( )",  "Choisir Unit\x82 Temp:    \xF8" "C ( )        \xF8" "F ( )" ) \
 
-// TODO move all generic menu to  Lib_vt100_label.h
-
-
-// Note(s) ther is standard definition in the VT100 
+// Note(s) ther is standard definition in the VT100
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro)
 #define COMPARE_MenuRedirection(x)      x
 #define COMPARE_MenuBoot(x)    		    x
-#define COMPARE_MenuMiscStatistic(x)    x
 #define COMPARE_MenuSystemSetting(x)    x
 
-//#define COMPARE_MenuTest(x)     	    x
-//#define COMPARE_MenuSetting(x)	    x
-//#define COMPARE_MenuSettingTime(x)    x
 
 // Define here all the menu and sub menu you will use in the VT100 terminal
-#define VT100_MENU_DEF(ENTRY)  \
-                                                ENTRY(MenuRedirection    )  \
-                                                ENTRY(MenuMain           )  \
-                                                ENTRY(MenuBoot           )  \
-    IF_USE( LABEL_USE_PRODUCT_INFO,             ENTRY(MenuInfo           ) )\
-    IF_USE( DIGINI_USE_STACKTISTIC,             ENTRY(MenuStackUsage     ) )\
-    IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY(MenuMemoryPool     ) )\
-    IF_USE( DIGINI_USE_DEBUG_IN_CONSOLE,        ENTRY(MenuDebug          ) )\
-    IF_USE( DIGINI_USE_ETHERNET,                ENTRY(MenuNetwork        ) )\
-    IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY(MenuSD_Card        ) )\
-                                                ENTRY(MenuSystemSetting  )  \
-                                                ENTRY(MenuMiscStatistic  )  \
-
-// those are not used at this time
-#define VT100_MENU_DEF_NU(ENTRY)\
-    ENTRY(MenuTest           ) \
-    ENTRY(MenuSetting        ) \
-    ENTRY(MenuSettingTime    ) \
+#define VT100_USER_MENU_DEF(ENTRY)  \
+    ENTRY(MenuRedirection    )  \
+    ENTRY(MenuBoot           )  \
+    ENTRY(MenuSystemSetting  )  \
 
 // Define here all the callback you will use in the VT100 terminal
-#define VT100_CALLBACK(ENTRY)           \
-                                                ENTRY(CALLBACK_MenuRedirection    )  \
-    IF_USE( LABEL_USE_PRODUCT_INFO,             ENTRY(CALLBACK_ProductInformation ) )\
-    IF_USE( DIGINI_USE_STACKTISTIC,             ENTRY(CALLBACK_StackUsage         ) )\
-    IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY(CALLBACK_MemoryPool         ) )\
-    IF_USE( DIGINI_USE_DEBUG_IN_CONSOLE,        ENTRY(CALLBACK_DebugLevelSetting  ) )\
-    IF_USE( DIGINI_USE_ETHERNET,                ENTRY(CALLBACK_NetworkInfo        ) )\
-    IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY(CALLBACK_SD_CardInformation ) )\
-                                                ENTRY(CALLBACK_MiscStatistic      )  \
-                                                ENTRY(CALLBACK_SystemSetting      )  \
-                                                ENTRY(CALLBACK_InputReading       )  \
-                                                ENTRY(CALLBACK_TimeDateCfg        )  \
+#define VT100_USER_CALLBACK(ENTRY)           \
+    ENTRY(CALLBACK_MenuRedirection    )  \
+    ENTRY(CALLBACK_SystemSetting      )  \
+    ENTRY(CALLBACK_InputReading       )
+//   ENTRY(CALLBACK_TimeDateCfg        )
 
 // Here you define how you will navigate in the menu tree and action associated with them                             1st item of a menu
 //                                                     Menu   Member Of          Item ID                              CALLBACK for refresh                     Navigate to this menu on <ESC>    Label ID
@@ -123,7 +95,6 @@
     IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY  (MENU,  MenuMain,          ID_MEMORY_POOL_MENU,                 CALLBACK_None,                           MenuMemoryPool,                   VT100_LBL_MEMORY_POOL_STAT                      ) )\
     IF_USE( DIGINI_USE_ETHERNET,                ENTRY  (MENU,  MenuMain,          ID_NETWORK_INFO,                     CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) )\
     IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY  (MENU,  MenuMain,          ID_SD_CARD_MENU,                     CALLBACK_None,                           MenuSD_Card,                      LBL_SD_CARD_INFORMATION                         ) )\
-                                                ENTRY  (MENU,  MenuMain,          ID_MISC_STAT,                        CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             )  \
                                                 ENTRY  (MENU,  MenuMain,          ID_MISC_SETTING,                     CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        )  \
 \
                                                 ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,                       CALLBACK_None,                           VT100_MENU_NONE,                  VT100_LBL_MAIN_MENU                             )  \
@@ -133,7 +104,6 @@
     IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY  (MENU,  MenuBoot,          ID_MEMORY_POOL_MENU,                 CALLBACK_None,                           MenuMemoryPool,                   VT100_LBL_MEMORY_POOL_STAT                      ) )\
     IF_USE( DIGINI_USE_ETHERNET,                ENTRY  (MENU,  MenuBoot,          ID_NETWORK_INFO,                     CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) )\
     IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY  (MENU,  MenuBoot,          ID_SD_CARD_MENU,                     CALLBACK_None,                           MenuSD_Card,                      LBL_SD_CARD_INFORMATION                         ) )\
-                                                ENTRY  (MENU,  MenuBoot,          ID_MISC_STAT,                        CALLBACK_None,                           MenuMiscStatistic,                VT100_LBL_MISC_STAT                             )  \
                                                 ENTRY  (MENU,  MenuBoot,          ID_MISC_SETTING,                     CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        )  \
 \
     IF_USE( LABEL_USE_PRODUCT_INFO,             ENTRY  (MENU,  MenuInfo,          ID_INFO_STACK,                       CALLBACK_ProductInformation,             MenuRedirection,                  VT100_LBL_SYSTEM_INFO                           ) )\
@@ -144,8 +114,6 @@
 \
     IF_USE( DIGINI_USE_ETHERNET,                ENTRY  (MENU,  MenuNetwork,       ID_NETWORK_INFO,                     CALLBACK_NetworkInfo,                    MenuRedirection,                  LBL_NETWORK_INFO                                ) )\
 \
-                                                ENTRY  (MENU,  MenuMiscStatistic, ID_MISC_STAT,                        CALLBACK_MiscStatistic,                  MenuRedirection,                  VT100_LBL_MISC_STAT                             )  \
-\
                                                 ENTRY  (MENU,  MenuSystemSetting, ID_SYSTEM_SETTING,                   CALLBACK_SystemSetting,                  MenuRedirection,                  VT100_LBL_SYSTEM_SETTING                        )  \
                                                 ENTRY  (MENU,  MenuSystemSetting, ID_SYSTEM_LANGUAGE,                  CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_LANGUAGE_SELECTION                    )  \
                                                 ENTRY  (MENU,  MenuSystemSetting, ID_MISC_SERIAL_NUMBER,               CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_SERIAL_NUMBER_SETTING                 )  \
@@ -153,54 +121,25 @@
                                                 ENTRY  (MENU,  MenuSystemSetting, ID_MISC_SAVE,                        CALLBACK_SystemSetting,                  MenuSystemSetting,                VT100_LBL_SAVE_CONFIGURATION                    )  \
     IF_USE( DIGINI_USE_DEBUG_IN_CONSOLE, \
                                                 ENTRY  (MENU,  MenuDebug,         ID_DEBUG_TITLE,                      CALLBACK_DebugLevelSetting,              MenuRedirection,                  VT100_LBL_DEBUG_MENU                            )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_1                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_1,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_2                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_2,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_3                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_3,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_4                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_4,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_5                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_5,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_6                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_6,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_7                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_7,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_8                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_8,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_9                         )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_9,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_10                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_A,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_11                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_B,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_12                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_C,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_13                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_D,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_14                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_E,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_15                        )  \
-                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_F,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        VT100_LBL_DEBUG_LEVEL_16                        )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_0,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_1                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_1,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_2                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_2,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_3                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_3,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_4                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_4,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_5                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_5,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_6                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_6,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_7                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_7,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_8                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_8,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_9                               )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_9,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_10                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_A,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_11                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_B,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_12                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_C,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_13                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_D,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_14                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_E,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_15                              )  \
+                                                ENTRY  (MENU,  MenuDebug,         ID_DBG_LVL_F,                        CALLBACK_DebugLevelSetting,              MenuDebug,                        LBL_DEBUG_LEVEL_16                              )  \
     ) \
 \
-                                                ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,                     CALLBACK_SD_CardInformation,             MenuRedirection,                  LBL_SD_CARD_INFORMATION                          )  \
+                                                ENTRY  (MENU,  MenuSD_Card,       ID_SD_CARD_MENU,                     CALLBACK_SD_CardInformation,             MenuRedirection,                  LBL_SD_CARD_INFORMATION                         )  \
 \
 
 // ------------------------------------------------------------------------------------------------------------------
-
-#define NOT_USED\
-        ENTRY  (MENU,  MenuMain,          ID_SETTING_MENU,          CALLBACK_None,                           MenuSetting,                      VT100_LBL_SYSTEM_SETTING                        ) \
-        ENTRY  (MENU,  MenuMain,          ID_TEST_MENU,             CALLBACK_None,                           MenuTest,                         VT100_LBL_TEST                                  ) \
-        ENTRY  (MENU,  MenuMain,          ID_TEST_MISC,             CALLBACK_None,                           MenuSetMisc,                      VT100_LBL_MISCELLEANEOUS                        ) \
-        ENTRY  (MENU,  MenuBoot,          ID_SETTING_MENU,          CALLBACK_None,                           MenuSetting,                      VT100_LBL_SYSTEM_SETTING                        ) \
-        ENTRY  (MENU,  MenuBoot,          ID_TEST_MENU,             CALLBACK_None,                           MenuTest,                         VT100_LBL_TEST                                  ) \
-        ENTRY  (MENU,  MenuBoot,          ID_TEST_MISC,             CALLBACK_None,                           MenuSetMisc,                      VT100_LBL_MISCELLEANEOUS                        ) \
-\
-        ENTRY  (MENU,  MenuSetting,       ID_SETTING_TITLE,         CALLBACK_None,                           MenuRedirection,                  VT100_LBL_SYSTEM_SETTING_MENU                   ) \
-        ENTRY  (MENU,  MenuSetting,       ID_MISC_MENU,             CALLBACK_None,                           MenuSetMisc,                      VT100_LBL_MISCELLEANEOUS                        ) \
-        ENTRY  (MENU,  MenuSetting,       ID_TIME_MENU,             CALLBACK_None,                           MenuSettingTime,                  VT100_LBL_TIME_AND_DATE                         ) \
-\
-        ENTRY  (MENU,  MenuTest,          ID_TEST_1,                CALLBACK_InputReading,                   MenuRedirection,                  VT100_LBL_TEST                                  ) \
-        ENTRY  (MENU,  MenuTest,          ID_TEST_2,                CALLBACK_InputReading,                   MenuTest,                         VT100_LBL_TEST_1                                ) \
-        ENTRY  (MENU,  MenuTest,          ID_TEST_3,                CALLBACK_InputReading,                   MenuTest,                         VT100_LBL_POUTINE_1                             ) \
-        ENTRY  (MENU,  MenuTest,          ID_TEST_4,                CALLBACK_InputReading,                   MenuTest,                         VT100_LBL_POUTINE_2                             ) \
-\
-		ENTRY  (MENU,  MenuSettingTime,   ID_TIME_DATE_TITLE,       CALLBACK_TimeDateCfg,                    MenuSetting,                      VT100_LBL_TIME_AND_DATE_CONFIGURATION           ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_HOUR,                  CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_HOUR                                  ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_MINUTE,                CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_MINUTE                                ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_SECOND,                CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_SECOND                                ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_DAY,                   CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_DAY                                   ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_MONTH,                 CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_MONTH                                 ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_YEAR,                  CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_YEAR                                  ) \
-        ENTRY  (MENU,  MenuSettingTime,   ID_TIME_DATE_SAVE,        CALLBACK_TimeDateCfg,                    MenuSettingTime,                  VT100_LBL_SAVE_CONFIGURATION                    ) \
-
-//-------------------------------------------------------------------------------------------------
-

@@ -38,6 +38,7 @@ MEMORY
 
 /* Highest address of the user mode stack */
 _estack = ORIGIN(RAM) + LENGTH(RAM);
+_StackBottom = _estack - __STACK_SIZE;
 
 /* Define output sections */
 SECTIONS

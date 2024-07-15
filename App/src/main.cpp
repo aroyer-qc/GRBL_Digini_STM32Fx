@@ -46,12 +46,7 @@ int main()
 {
     ISR_Disable();
 
-    MPU_Initialize(MPU_PRIVILEGED_DEFAULT);
-
-  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Initialize();                 // Initialize the Stack Check process before any task
-  #endif
-
+  //  MPU_Initialize(MPU_PRIVILEGED_DEFAULT);
     nOS_Init();
     BSP_Initialize();                           // All hardware and system initialization
     nOS_Start();
