@@ -30,42 +30,16 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-// Notes some default label exist in the file "lib_label.h"
-
+// Notes some default label exist in the file "lib_label.h", some of them can be enable/disable in this configuration
 #define     LABEL_USE_DATE                      DEF_ENABLED
 #define     LABEL_USE_TIME                      DEF_ENABLED
 #define     LABEL_USE_PRODUCT_INFO              DEF_ENABLED
+#define     LABEL_USE_DECIMAL_KEY               DEF_ENABLED             // Enable label 0-9 and dot, del, sign, sign inversion
+#define     LABEL_USE_HEXADECIMAL_KEY           DEF_ENABLED             // Enable label A-F
 
 #define LABEL_LANGUAGE_DEF(X_LABEL)  \
-    X_LABEL( LBL_OK,                     "Ok",                                          nullptr                                         ) \
-    X_LABEL( LBL_OUTPUT,                 "Output",                                      "Sortie"                                        ) \
-    X_LABEL( LBL_CONTROLS,               "Controls",                                    "Contr\x93les"                                  ) \
-    X_LABEL( LBL_SYSTEM_SETUP,           "System Setup",                                "Configuration Syst\x8ame"                      ) \
-    X_LABEL( LBL_DIAGNOSTIC,             "Diagnostic",                                  "Diagnostique"                                  ) \
     X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
-    X_LABEL( LBL_HISTORY_LOG,            "History Log",                                 "Historique"                                    ) \
     X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
-    X_LABEL( LBL_PERCENT,                "%2d",                                         nullptr                                         ) \
-    X_LABEL( LBL_0,                      "0",                                           nullptr                                         ) \
-    X_LABEL( LBL_1,                      "1",                                           nullptr                                         ) \
-    X_LABEL( LBL_2,                      "2",                                           nullptr                                         ) \
-    X_LABEL( LBL_3,                      "3",                                           nullptr                                         ) \
-    X_LABEL( LBL_4,                      "4",                                           nullptr                                         ) \
-    X_LABEL( LBL_5,                      "5",                                           nullptr                                         ) \
-    X_LABEL( LBL_6,                      "6",                                           nullptr                                         ) \
-    X_LABEL( LBL_7,                      "7",                                           nullptr                                         ) \
-    X_LABEL( LBL_8,                      "8",                                           nullptr                                         ) \
-    X_LABEL( LBL_9,                      "9",                                           nullptr                                         ) \
-    X_LABEL( LBL_A,                      "A",                                           nullptr                                         ) \
-    X_LABEL( LBL_B,                      "B",                                           nullptr                                         ) \
-    X_LABEL( LBL_C,                      "C",                                           nullptr                                         ) \
-    X_LABEL( LBL_D,                      "D",                                           nullptr                                         ) \
-    X_LABEL( LBL_E,                      "E",                                           nullptr                                         ) \
-    X_LABEL( LBL_F,                      "F",                                           nullptr                                         ) \
-    X_LABEL( LBL_DOT,                    ".",                                           nullptr                                         ) \
-    X_LABEL( LBL_DEL,                    "Del",                                         nullptr                                         ) \
-    X_LABEL( LBL_SIGN,                   "-",                                           nullptr                                         ) \
-    X_LABEL( LBL_TOGGLE_SIGN,            "+/-",                                         nullptr                                         ) \
     X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
     X_LABEL( LBL_RANGE,                  "Ranges",                                      "Plages"                                        ) \
     X_LABEL( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
@@ -95,7 +69,6 @@
     X_LABEL( LBL_RPM,                    "RPM",                                         nullptr                                         ) \
     X_LABEL( LBL_DRO,                    "DRO",                                         nullptr                                         ) \
     X_LABEL( LBL_TEST,                   "the quick brown fox jumps over the lazy dog", "portez ce vieux whisky au juge blond qui fume" ) \
-    X_LABEL( LBL_MAIN_MENU,              "Main Menu",                                   "Menu Principal"                                ) \
     X_LABEL( LBL_MAC_SELECT,             "Machine Configuration",                       "Configuration Machine"                         ) \
     X_LABEL( LBL_XY_MAC,                 "XY",                                          nullptr                                         ) \
     X_LABEL( LBL_ZX_MAC,                 "ZX",                                          nullptr                                         ) \

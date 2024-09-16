@@ -30,8 +30,8 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define VT100_STARTUP_MENU_CFG                  MenuMain
-#define VT100_MENU_MAIN_FALLBACK_CFG            VT100_MENU_NONE         // if you change the VT100_STARTUP_MENU_CFG to other menu, put the name of the menu here. Otherwisweit will exit the VT100 menu system.
+#define VT100_STARTUP_MENU_CFG                  MenuMain                // User can choose another menu startup entry for VT100.
+#define VT100_MENU_MAIN_FALLBACK_CFG            VT100_MENU_NONE         // if you change the VT100_STARTUP_MENU_CFG to other menu, put the name of the menu here. Otherwiswe it will exit the VT100 menu system.
 #define VT100_USE_COLOR                         DEF_ENABLED
 #define VT100_USER_CALLBACK_INITIALIZE          DEF_DISABLED
 
@@ -39,24 +39,23 @@
 #define VT100_USE_STANDARD_MENU_STATIC_INFO     DEF_ENABLED             // VT100 Class provide its own header. then enable this if it is desire.
 #define VT100_USE_USER_MENU_STATIC_INFO         DEF_DISABLED            // If user wish to create his own header or special formatting.
 
+// Configuration option in menu system, choose the one you want
+#define VT100_USE_LANGUAGE_SELECTION            DEF_ENABLED
+#define VT100_USE_TEMPERATURE_SELECTION         DEF_ENABLED
+#define VT100_USE_SERIAL_NUMBER_SETTING         DEF_ENABLED
+#define VT100_USE_TIME_AND_DATE_SETTING         DEF_ENABLED
+
+
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
     X_VT100_USER_LBL_CFG( VT100_LBL_MENU_TITLE,                       "GRBL Configuration Menu",                                  "Menu de Configuration GRBL"                                 ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_TEST,                             "Test",                                                     "Test"                                                       ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_MISC_STAT,                        "Misc. Statistic",                                          "Statistiques Divers"                                        ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_MISCELLEANEOUS,                   "Miscelleaneous",                                           "Divers"                                                     ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_TEST_1,                           "Test 1",                                                   "Test 1"                                                     ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_1,                        "Poutine ski                    ( )",                       "Poutine ski                    ( )"                         ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_POUTINE_2,                        "Poutine ski                    ( )",                       "Poutine ski                    ( )"                         ) \
 \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE_CONFIGURATION,      "Time and Date Configuration",                              "Configuration Heure et Date"                                ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TIME_AND_DATE,                    "Time and Date",                                            "Heure et Date"                                              ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING,                   "System Settings",                                          "Configuration Syst\x8ame"                                   ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",                         "Menu de Configuration Divers"                               ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING_MENU,              "System Settings Menu",                                     "Menu Configuration Syst\x8ame"                              ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SERIAL_NUMBER_SETTING,            "Setting Serial Number",                                    "Configurer Num\x82ro de S\x82rie"                           ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SELECT_LANGUAGE,                  "Toggle Language:",                                         "Basculer de Langage:"                                       ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_LANGUAGE_SELECTION,               "Choose Language:  English ( )  French   ( )",              "Choisir Langage:  Anglais ( )  Fran\x87" "ais ( )"          ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_TEMPERATURE_UNIT_SELECTION,       "Choose Temp Unit:      \xF8" "C ( )        \xF8" "F ( )",  "Choisir Unit\x82 Temp:    \xF8" "C ( )        \xF8" "F ( )" ) \
 
 // Note(s) ther is standard definition in the VT100
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro)
