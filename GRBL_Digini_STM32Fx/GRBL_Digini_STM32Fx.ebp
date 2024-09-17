@@ -360,6 +360,7 @@
 		<Unit filename="..\Module\Digini\Comm\VT100\src\lib_vt100_callback.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Database\inc\lib_class_database.h" />
 		<Unit filename="..\Module\Digini\Database\src\lib_class_database.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -514,6 +515,7 @@
 		<Unit filename="..\Module\Digini\Grafx\src\widget\lib_widget_virtual_window.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\lib_digini.h" />
 		<Unit filename="..\Module\Digini\Memory\src\lib_memory.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
