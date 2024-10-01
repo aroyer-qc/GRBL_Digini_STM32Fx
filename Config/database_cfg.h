@@ -127,6 +127,10 @@ extern const uint32_t __user_ram_data_base__;
     X_ROM_DBASE( FW_DIGINI_NAME_TEXT,    &OUR_FIRMWARE_DIGINI_NAME[0],    1,                1,                 32/*sizeof(OUR_FIRMWARE_DIGINI_NAME)   */ )   \
     X_ROM_DBASE( FW_DIGINI_VERSION_TEXT, &OUR_FIRMWARE_DIGINI_VERSION[0], 1,                1,                 32/*sizeof(OUR_FIRMWARE_DIGINI_VERSION)*/ )   \
     X_ROM_DBASE( FW_BUILD_DATE_TEXT,     &OUR_FIRMWARE_BUILD_DATE[0],     1,                1,                 32/*sizeof(OUR_FIRMWARE_BUILD_DATE)    */ )   \
+    X_ROM_DBASE( MODEL_NAME_TEXT,        &OEM_MODEL_NAME[0],              1,                1,                 sizeof(OEM_SERIAL_NUMBER)           )   \
+    X_ROM_DBASE( SERIAL_NUMBER_TEXT,     &OEM_SERIAL_NUMBER[0],           1,                1,                 sizeof(OEM_SERIAL_NUMBER)           )   \
+
+
 
 // System Database are record that are both in RAM ( cpu ram, board ram, nvram, backup register) and in rom (E2, etc..)
 // Also there is an interval and a start time to save them in E2 ( save can also be forced )

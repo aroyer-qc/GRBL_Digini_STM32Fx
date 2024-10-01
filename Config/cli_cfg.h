@@ -40,10 +40,10 @@
 
 // Number of parameter can be expanded, as needed
 #define X_CLI_USER_CMD_DEF(X_CLI_CMD)   \
-/*              ENUM_ID,        String,       Function,     Cmd Type,    Param1 -             Min1,    max1   Param2 -          Min2,   max2,     Param3 -              Min3,   max3,     Param4 -          Min4,   max4  */\
-    X_CLI_CMD ( CLI_TEST1,      "T1",         CmdTEST1,     CLI_CMD_RW                                                                                                                                                   )  \
-    X_CLI_CMD ( CLI_TEST2,      "T2",         CmdTEST2,     CLI_CMD_RW,  BASE_DECIMAL,         0,       1,     BASE_DECIMAL,     0,      200,      BASE_DECIMAL,         10,     32000                                   )  \
-    X_CLI_CMD ( CLI_TEST3,      "T3",         CmdTEST3,     CLI_CMD_RW,  BASE_DECIMAL,         0,       3,     BASE_DECIMAL,     -300,   300,      BASE_HEXADECIMAL,     0x0000, 0xFFFF,   BASE_STRING,      0,      0   )  \
+/*              ENUM_ID,        String,       Help Definition (If Used),  Function,     Cmd Type,    Param1 -             Min1,    max1   Param2 -          Min2,   max2,     Param3 -              Min3,   max3,     Param4 -          Min4,   max4  */\
+    X_CLI_CMD ( CLI_TEST1,      "T1",         LBL_NULL,                   CmdTEST1,     CLI_CMD_RW                                                                                                                                                   )  \
+    X_CLI_CMD ( CLI_TEST2,      "T2",         LBL_NULL,                   CmdTEST2,     CLI_CMD_RW,  BASE_DECIMAL,         0,       1,     BASE_DECIMAL,     0,      200,      BASE_DECIMAL,         10,     32000                                   )  \
+    X_CLI_CMD ( CLI_TEST3,      "T3",         LBL_NULL,                   CmdTEST3,     CLI_CMD_RW,  BASE_DECIMAL,         0,       3,     BASE_DECIMAL,     -300,   300,      BASE_HEXADECIMAL,     0x0000, 0xFFFF,   BASE_STRING,      0,      0   )  \
 
 //-------------------------------------------------------------------------------------------------
 
