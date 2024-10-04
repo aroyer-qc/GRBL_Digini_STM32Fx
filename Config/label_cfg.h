@@ -31,13 +31,13 @@
 //-------------------------------------------------------------------------------------------------
 
 // Notes some default label exist in the file "lib_label.h", some of them can be enable/disable in this configuration
-#define     LABEL_USE_DATE                      DEF_ENABLED
-#define     LABEL_USE_TIME                      DEF_ENABLED
-#define     LABEL_USE_PRODUCT_INFO              DEF_ENABLED
-#define     LABEL_USE_DECIMAL_KEY               DEF_ENABLED             // Enable label 0-9 and dot, del, sign, sign inversion
-#define     LABEL_USE_HEXADECIMAL_KEY           DEF_ENABLED             // Enable label A-F
+#define     DIGINI_USE_LABEL_DATE                      DEF_ENABLED
+#define     DIGINI_USE_LABEL_TIME                      DEF_ENABLED
+#define     DIGINI_USE_LABEL_PRODUCT_INFO              DEF_ENABLED
+#define     DIGINI_USE_LABEL_DECIMAL_KEY               DEF_ENABLED             // Enable label 0-9 and dot, del, sign, sign inversion
+#define     DIGINI_USE_LABEL_HEXADECIMAL_KEY           DEF_ENABLED             // Enable label A-F
 
-#define LABEL_LANGUAGE_DEF(X_LABEL)  \
+#define USER_LABEL_LANGUAGE_DEF(X_LABEL)  \
     X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
     X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
     X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
