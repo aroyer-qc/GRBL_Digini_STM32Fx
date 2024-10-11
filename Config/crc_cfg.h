@@ -131,6 +131,14 @@
 #define DIGINI_USE_CRC_64_XZ                DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
+//
+// Hardware CRC for STM32F7
+
+#define DIGINI_USE_HW_CRC32_BZIP2           DEF_DISABLED
+#define DIGINI_USE_HW_CRC32_MPEG_2          DEF_DISABLED
+#define DIGINI_USE_HW_CRC32_POSIX           DEF_DISABLED
+#define DIGINI_USE_HW_CRC32_SATA            DEF_DISABLED
+// TODO more to come
 
 
 
