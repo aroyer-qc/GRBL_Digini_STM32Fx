@@ -37,7 +37,5 @@
 #define SPI_DRIVER_SUPPORT_SPI5_CFG         DEF_DISABLED
 #define SPI_DRIVER_SUPPORT_SPI6_CFG         DEF_DISABLED
 
-#define SPI_DRIVER_SUPPORT_DMA_CFG          DEF_ENABLED
-
 //-------------------------------------------------------------------------------------------------
 
