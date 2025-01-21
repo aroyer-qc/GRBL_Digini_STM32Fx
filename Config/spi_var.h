@@ -74,10 +74,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
         SPI1,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI1_CLK,                // CLK
-        IO_SPI1_MOSI,               // MOSI
-        IO_SPI1_MISO,               // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
         SPI1_IRQn,                  // IRQn_Channel
 
         // DMA_RX
@@ -115,10 +111,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
 		SPI2,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI2_CLK,                // CLK
-        IO_SPI2_MOSI,               // MOSI
-        IO_NOT_DEFINED,             // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
 		SPI2_IRQn,                  // IRQn_Channel
 
         // DMA_RX
@@ -144,10 +136,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
 		SPI3,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI3_CLK,                // CLK
-        IO_SPI3_MOSI,               // MOSI
-        IO_SPI3_MISO,               // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
 		SPI3_IRQn,                  // IRQn_Channel
 
         // DMA_RX
@@ -185,10 +173,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
 		SPI4,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI4_CLK,                // CLK
-        IO_SPI4_MOSI,               // MOSI
-        IO_SPI4_MISO,               // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
 		SPI4_IRQn,                  // IRQn_Channel
 
         // DMA_RX
@@ -225,10 +209,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
 		SPI5,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI5_CLK,                // CLK
-        IO_SPI5_MOSI,               // MOSI
-        IO_SPI5_MISO,               // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
 		SPI5_IRQn,                  // IRQn_Channel
 
         // DMA_RX
@@ -266,10 +246,6 @@ SPI_Info_t SPI_Info[NB_OF_SPI_DRIVER] =
 		SPI6,                       // SPIx
         SPI_STANDARD_CONFIG,        // Configuration
 		24000000,                   // The DAC chip is 12 inche away from CPU on 790A, so reduced comm speed
-        IO_SPI6_CLK,                // CLK
-        IO_SPI6_MOSI,               // MOSI
-        IO_SPI6_MISO,               // MISO
-        IO_NOT_DEFINED,             // NSS  N/U
 		SPI6_IRQn,                  // IRQn_Channel
 
         // DMA_RX
