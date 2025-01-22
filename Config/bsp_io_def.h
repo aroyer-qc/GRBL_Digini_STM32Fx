@@ -350,13 +350,6 @@
     X_IO_GROUP( IO_SDRAM_ON_PORT_H,         GPIOH,      SDRAM_PIN_ON_PORT_H,       IO_CFG_SDRAM_AF12)          \
 /* ----------------------------------------------------------------------------------------------------------*/
 
-
-
-
-
-
-
-
 //-------------------------------------------------------------------------------------------------
 //
 //          Parameter 1:  This is the ID of the IO IRQ pin
@@ -371,28 +364,36 @@
 //                          EXTI4_IRQn                  EXTI Line4 Interrupt
 //                          EXTI9_5_IRQn                External Line[9:5] Interrupts
 //                          EXTI15_10_IRQn              External Line[15:10] Interrupts
-
+//
 //          Parameter 4:    Priority
 //
 //          Parameter 5:    IO_EXTI_TRIGGER_RISING
 //                          IO_EXTI_TRIGGER_FALLING
 //                          IO_EXTI_TRIGGER_RISING_FALLING
 //
+//          Parameter 6:    Callback function pointer
+//
+//          Parameter 7:    Argument pointer for callback
+//
 //-------------------------------------------------------------------------------------------------
 
 #define IO_IRQ_DEF(X_IO_IRQ) \
-  X_IO_IRQ(IO_ISR_LIMIT_X1,        IO_LIMIT_X1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Y1,        IO_LIMIT_Y1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Z1,        IO_LIMIT_Z1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_A1,        IO_LIMIT_A1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_B1,        IO_LIMIT_B1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_C1,        IO_LIMIT_C1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_X2,        IO_LIMIT_X1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Y2,        IO_LIMIT_Y1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_Z2,        IO_LIMIT_Z1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_A2,        IO_LIMIT_A1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_B2,        IO_LIMIT_B1,        EXTI15_10_IRQn, 6, IO_EXTI_TRIGGER_RISING_FALLING)  \
-  X_IO_IRQ(IO_ISR_LIMIT_C2,        IO_LIMIT_C1,        EXTI9_5_IRQn,   6, IO_EXTI_TRIGGER_RISING_FALLING)  \
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------*/\
+/*         Enum ID                 Pin ID              EXTI Pin Source  Priority    Trigger                             CallBack                Argument    */\
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------*/\
+  X_IO_IRQ(IO_ISR_LIMIT_X1,        IO_LIMIT_X1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_Y1,        IO_LIMIT_Y1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_Z1,        IO_LIMIT_Z1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_A1,        IO_LIMIT_A1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_B1,        IO_LIMIT_B1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_C1,        IO_LIMIT_C1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_X2,        IO_LIMIT_X1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_Y2,        IO_LIMIT_Y1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_Z2,        IO_LIMIT_Z1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_A2,        IO_LIMIT_A1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_B2,        IO_LIMIT_B1,        EXTI15_10_IRQn,  6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+  X_IO_IRQ(IO_ISR_LIMIT_C2,        IO_LIMIT_C1,        EXTI9_5_IRQn,    6,          IO_EXTI_TRIGGER_RISING_FALLING,     nullptr,                nullptr)      \
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------------*/\
 
 // IO_LIMIT_A is a fake limit switch
 

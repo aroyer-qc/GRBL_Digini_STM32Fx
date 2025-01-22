@@ -145,9 +145,8 @@ void BSP_Initialize(void)
   #endif
 
     ISR_Initialize();
+    IO_InitializeAll();         //    LED_Init(IO_LED1); //    IO_TogglePin(IO_LED1);
     BSP_SDRAM_Initialize();
-    LED_Init(IO_LED1);
-    IO_TogglePin(IO_LED1);
     DIGINI_Initialize();
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
@@ -311,10 +310,12 @@ static void BSP_SDRAM_Initialize(void)
     //| PH3 <-> FMC_SDNE0  |
     //| PH5 <-> FMC_SDNWE  |
     //+--------------------+
-    for(uint32_t IO_Id = uint32_t(IO_FMC_D0); IO_Id <= uint32_t(IO_FMC_SDNWE); IO_Id++)
-    {
-        IO_PinInit(IO_ID_e(IO_Id));
-    }
+
+   // done into IO_InitializeAll()
+   // for(uint32_t IO_Id = uint32_t(IO_FMC_D0); IO_Id <= uint32_t(IO_FMC_SDNWE); IO_Id++)
+   // {
+   //     IO_PinInit(IO_ID_e(IO_Id));
+   // }
 
     // FMC SDRAM Bank configuration
     // Timing configuration for 100Mhz as SD clock frequency (System clock is up to 200Mhz)
