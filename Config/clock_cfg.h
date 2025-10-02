@@ -31,9 +31,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define CFG_HSE_VALUE                               25000000
-#define CFG_HSI_VALUE                               16000000
 #define CFG_LSE_VALUE                               32768
-#define CFG_LSI_VALUE                               32768
 #define CFG_SYSTICK_RATE                            1000
 
 #define CFG_DELAY_TIMING_LOOP_VALUE_FOR_1_USEC      1000 // TODO need to be set and fine tuned
@@ -71,5 +69,19 @@
 
 #define CFG_MCO_1                                   (CFG_RCC_CFGR_MCO1_PLL | CFG_RCC_CFGR_MCO1PRE_DIV5)
 #define CFG_MCO_2                                   (CFG_RCC_CFGR_MCO2_HSE | CFG_RCC_CFGR_MCO2PRE_DIV5)
+
+//-------------------------------------------------------------------------------------------------
+// multiplexer clock source
+
+// Define the MUX for module that you will need.        See lib_STM32F7_system_clock for clock selection option.
+
+#define CFG_USART1_SOURCE_MUX                       CFG_USART1_PCLK2
+#define CFG_USART2_SOURCE_MUX                       CFG_USART2_PCLK1
+#define CFG_USART3_SOURCE_MUX                       CFG_USART3_PCLK1
+#define CFG_UART4_SOURCE_MUX                        CFG_UART4_PCLK1
+#define CFG_UART5_SOURCE_MUX                        CFG_UART5_PCLK1
+#define CFG_USART6_SOURCE_MUX                       CFG_USART6_PCLK2
+#define CFG_UART7_SOURCE_MUX                        CFG_UART7_PCLK1
+#define CFG_UART8_SOURCE_MUX                        CFG_UART8_PCLK1
 
 //-------------------------------------------------------------------------------------------------

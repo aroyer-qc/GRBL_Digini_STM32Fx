@@ -40,8 +40,6 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     {
         DRIVER_I2C1_ID,             // DRIVER_I2Cx_ID
         I2C1,                       // pI2Cx
-        IO_I2C1_SCL,                // SCL
-        IO_I2C1_SDA,                // SDA
       #if (I2C_DRIVER_SUPPORT_CLK_SELECTION_CFG == DEF_ENABLED)
         I2C1_SELECT_PLCK1,
       #endif
@@ -66,8 +64,6 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     {
         DRIVER_I2C2_ID,             // DRIVER_I2Cx_ID
         I2C2,                       // pI2Cx
-        IO_I2C2_SCL,                // SCL
-        IO_I2C2_SDA,                // SDA
       #if (I2C_DRIVER_SUPPORT_CLK_SELECTION_CFG == DEF_ENABLED)
         I2C2_SELECT_PLCK1,
       #endif
@@ -92,8 +88,6 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     {
         DRIVER_I2C3_ID,             // DRIVER_I2Cx_ID
         I2C3,                       // pI2Cx
-        IO_I2C3_SCL,                // SCL
-        IO_I2C3_SDA,                // SDA
       #if (I2C_DRIVER_SUPPORT_CLK_SELECTION_CFG == DEF_ENABLED)
         I2C3_SELECT_PLCK1,
       #endif
@@ -118,8 +112,6 @@ I2C_Info_t I2C_Info[NB_OF_I2C_DRIVER] =
     {
         DRIVER_I2C4_ID,             // DRIVER_I2Cx_ID
         I2C4,                       // pI2Cx
-        IO_I2C4_SCL,                // SCL
-        IO_I2C4_SDA,                // SDA
       #if (I2C_DRIVER_SUPPORT_CLK_SELECTION_CFG == DEF_ENABLED)
         I2C3_SELECT_PLCK1,
       #endif

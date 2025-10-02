@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.62" revision="0" />
+	<EmBitzVersion release="2.64" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
@@ -528,6 +528,9 @@
 		<Unit filename="..\Module\Digini\NanoIP\src\Device\lib_class_PHY_LAN8742A.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dma.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_uart.h" />
+		<Unit filename="..\Module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_system_clock.h" />
 		<Unit filename="..\Module\Digini\Peripheral\src\device\lib_class_i2c_EEprom.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -560,6 +563,9 @@
 			<Option link="0" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_adc.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_crc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_dac.cpp">
@@ -613,7 +619,7 @@
 		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_rng.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\system_clock.c">
+		<Unit filename="..\Module\Digini\Peripheral\src\port\STM32F7xx\lib_STM32F7_system_clock.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\RTOS_Wrapper\src\nOS\lib_class_queue.cpp">

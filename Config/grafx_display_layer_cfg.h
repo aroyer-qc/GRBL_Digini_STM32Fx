@@ -27,7 +27,7 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-//           Name of the layer              Initial layer      Pixel Format            Size X          Size Y
+//           Name of the layer              Initial layer      Pixel Format            Size X                 Size Y
 #define LAYER_DEF(X_LAYER) \
     X_LAYER( BACKGROUND_DISPLAY_LAYER_0,    LAYER_BACKGROUND,  PIXEL_FORMAT_RGB565,    GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
     X_LAYER( FOREGROUND_DISPLAY_LAYER_0,    LAYER_FOREGROUND,  PIXEL_FORMAT_ARGB8888,  GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\

@@ -81,7 +81,6 @@ extern char OEM_CONFIG_VERSION[24];
 
 
 
-
     // don't seem to be used     X_EEPROM_DBASE( GRBL_PARAMETERS,        myE2_Setting,        1,                1,               sizeof(ToolTable_t)        )
 
 //                Enum ID                 Items QTY,       Items SubQTY       Item Size               Get/Set Callback

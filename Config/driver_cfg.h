@@ -38,7 +38,7 @@
 
 #define USE_ADC_DRIVER              DEF_ENABLED
 #define USE_CAN_DRIVER              DEF_DISABLED
-#define USE_CRC_DRIVER              DEF_DISABLED
+#define USE_CRC_DRIVER              DEF_ENABLED
 #define USE_DAC_DRIVER              DEF_ENABLED
 #define USE_IO_BUS_DRIVER           DEF_DISABLED
 #define USE_ETH_DRIVER              DEF_DISABLED
@@ -56,8 +56,6 @@
 #define USE_USB_DRIVER              DEF_DISABLED
     #define USE_USB_OTG_FS_CODE     DEF_DISABLED
     #define USE_USB_OTG_HS_CODE     DEF_DISABLED
-
-
 
 // Driver and/or peripheral to use with this project
 

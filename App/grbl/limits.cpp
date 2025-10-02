@@ -37,21 +37,10 @@
     #define HOMING_AXIS_LOCATE_SCALAR   5.0 // Must be > 1 to ensure limit switch is cleared.
 #endif
 
+// IO with those name must exist into bsp_io_def.h if used (IO_LIMIT_X1, IO_LIMIT_X2, IO_LIMIT_Y1, IO_LIMIT_Y2, IO_LIMIT_Z1, IO_LIMIT_Z2)
 
 void Limits_Initialize(void)
 {
-    IO_PinInit(IO_LIMIT_X1);
-    IO_PinInit(IO_LIMIT_X2);
-
-    if(Config.LatheModeEnable == false)
-    {
-        IO_PinInit(IO_LIMIT_Y1);
-        IO_PinInit(IO_LIMIT_Y2);
-    }
-
-    IO_PinInit(IO_LIMIT_Z1);
-    IO_PinInit(IO_LIMIT_Z2);
-
     // TODO: Hard limits via interrupt
     if(BIT_IS_TRUE(Settings.flags, BITFLAG_HARD_LIMIT_ENABLE))
     {

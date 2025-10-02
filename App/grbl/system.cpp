@@ -32,11 +32,11 @@
 // This replace all the configuration that was previously set by config.h
 void System_LoadConfig(void)
 {
-    uint16_t CalculatedCRC;
-    CRC_Calc Config_CRC(CRC_16_CCITT_FALSE);
+    uint16_t    CalculatedCRC;
+    CRC_Driver  CRC_Block;
 
     DB_Central.Get(&Config, GRBL_CONFIGURATION);
-    CalculatedCRC = uint16_t(Config_CRC.CalculateFullBuffer((uint8_t*)&Config, sizeof(Config_t)));
+    CalculatedCRC = uint16_t(CRC_Block.CalculateBuffer((const uint32_t*)&Config, sizeof(Config_t), CRC_HW_16_CCITT_FALSE));
 
     if(Config.CRC_Check != CalculatedCRC)
     {

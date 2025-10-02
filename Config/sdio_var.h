@@ -44,14 +44,6 @@
 #if (USE_SDIO_DRIVER == DEF_ENABLED)
 SDIO_Info_t SDIO_Info =
 {
-    IO_SD_D0,               // SDIO Data 0 to 3
-    IO_SD_D1,
-    IO_SD_D2,
-    IO_SD_D3,
-    IO_SD_CLK,              // SDIO CLK
-    IO_SD_CMD,				// Command line to SDIO
-    IO_DETECT_SD_CARD,      // Card detect line
-
     // DMA SDIO RX
     {
         // Configuration

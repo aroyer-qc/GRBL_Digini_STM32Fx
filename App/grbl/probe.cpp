@@ -29,10 +29,11 @@
 static uint8_t probe_invert_mask;
 
 
+// IO with those name must exist into bsp_io_def.h (IO_PROBE)
+
 // Probe pin initialization routine.
 void Probe_Initialize(void)
 {
-    IO_PinInit(IO_PROBE);
     Probe_ConfigureInvertMask(false); // Initialize invert mask.*/
 }
 

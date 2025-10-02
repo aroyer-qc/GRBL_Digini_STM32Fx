@@ -80,85 +80,20 @@ extern "C" void TaskGRBL_Wrapper(void* pvParameters)
 //
 //  Description:    Initialize
 //
-//  Note(s):
+//  Note(s):        IO with those name must exist into bsp_io_def.h if they are used:  ??? may be they need to be define if we use a single app..
+//
+//                  IO_STEP_DUAL_AXIS, IO_DIR_DUAL_AXIS, IO_SPINDLE_PWM, IO_COOLANT_FLOOD,
+//                  IO_COOLANT_MIST, IO_SPINDLE_ENABLE, IO_SPINDLE_DIRECTION, IO_CONTROL_RESET,
+//                  IO_CONTROL_FEED, IO_CONTROL_START, IO_SAFETY_DOOR, IO_ENABLE_DRIVE,
+//                  IO_STEP_X, IO_STEP_Y, IO_STEP_Z, IO_STEP_A, IO_STEP_B, IO_STEP_C,
+//                  IO_DIR_X,  IO_DIR_Y,  IO_DIR_Z,  IO_DIR_A,  IO_DIR_B,  IO_DIR_C,
+//                  IO_LIMIT_X1, IO_LIMIT_Y1, IO_LIMIT_Z1, IO_LIMIT_X2, IO_LIMIT_Y2, IO_LIMIT_Z2
+//                  IO_LIMIT_A1, IO_LIMIT_B1, IO_LIMIT_C1, IO_LIMIT_A2, IO_LIMIT_B2, IO_LIMIT_C2
 //
 //-------------------------------------------------------------------------------------------------
 nOS_Error ClassTaskGRBL::Initialize(void)
 {
     nOS_Error Error = NOS_OK;
-
-  #ifdef ENABLE_DUAL_AXIS
-    IO_PinInit(IO_STEP_DUAL_AXIS);
-    IO_PinInit(IO_DIR_DUAL_AXIS);
-  #endif
-
-    // ------------------------
-    // Coolant IO
-    IO_PinInit(IO_COOLANT_FLOOD);
-    IO_PinInit(IO_COOLANT_MIST);
-
-    // ------------------------
-    // Probe IO
-    IO_PinInit(IO_PROBE);
-
-    // ------------------------
-    // Spindle IO
- #ifdef VARIABLE_SPINDLE
-  #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
-    IO_PinInit(IO_SPINDLE_ENABLE);
-  #else
-   #ifndef ENABLE_DUAL_AXIS
-    #if USE_SPINDLE_DIRECTION_PIN
-    IO_PinInit(IO_SPINDLE_DIRECTION);
-    #endif
-   #endif
-  #endif
- #else
-    IO_PinInit(IO_SPINDLE_ENABLE);
-  #ifndef ENABLE_DUAL_AXIS
-   #if USE_SPINDLE_DIRECTION_PIN
-    IO_PinInit(IO_SPINDLE_DIRECTION);
-   #endif
-  #endif
- #endif
-
-    // ------------------------
-    // User Control Input
-    IO_PinInit(IO_CONTROL_RESET);
-    IO_PinInit(IO_CONTROL_FEED);
-    IO_PinInit(IO_CONTROL_START);
-    IO_PinInit(IO_SAFETY_DOOR);
-
-    // ------------------------
-    // Stepper Control Output
-    IO_PinInit(IO_STEP_X);
-    IO_PinInit(IO_STEP_Y);
-    IO_PinInit(IO_STEP_Z);
-    IO_PinInit(IO_STEP_A);
-    IO_PinInit(IO_STEP_B);
-    //IO_PinInit(IO_STEP_C);
-    IO_PinInit(IO_DIR_X);
-    IO_PinInit(IO_DIR_Y);
-    IO_PinInit(IO_DIR_Z);
-    IO_PinInit(IO_DIR_A);
-    IO_PinInit(IO_DIR_B);
-    IO_PinInit(IO_DIR_C);
-    IO_PinInit(IO_ENABLE_DRIVE);
-
-    // ------------------------
-    // Limit switch Input
-    IO_PinInit(IO_LIMIT_X1);
-    IO_PinInit(IO_LIMIT_Y1);
-    IO_PinInit(IO_LIMIT_Z1);
-    IO_PinInit(IO_LIMIT_A1);
-    IO_PinInit(IO_LIMIT_B1);
-    IO_PinInit(IO_LIMIT_C1);
-    IO_PinInit(IO_LIMIT_X2);
-    IO_PinInit(IO_LIMIT_Y2);
-    IO_PinInit(IO_LIMIT_Z2);
-    IO_PinInit(IO_LIMIT_A2);
-    IO_PinInit(IO_LIMIT_B2);
-    IO_PinInit(IO_LIMIT_C2);
 
     // TODO AR fix this TERM_Initialize();         // Init terminal (UART or Virtual)
     Stepper_Initialize();       // timer!!

@@ -26,12 +26,10 @@
 #include "CoolantControl.h"
 #include "Config.h"
 
+// IO with those name must exist into bsp_io_def.h  (IO_COOLANT, IO_COOLANT_FLOOD, IO_COOLANT_MIST)
+
 void Coolant_Initialize(void)
 {
-  	IO_PinInit(IO_COOLANT);
-  	IO_PinInit(IO_COOLANT_FLOOD);
-  	IO_PinInit(IO_COOLANT_MIST);
-
   	// TODO should invert the pin if set to!!
 }
 

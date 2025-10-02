@@ -99,6 +99,9 @@
     X_IO_CFG( IO_CFG_OUTPUT_PP_LS_DEF1,                 IO_MODE_OUTPUT,     IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,        1)                     \
 /* ETH IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
     X_IO_CFG( IO_CFG_ETH_AF11,                          IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_VERY_HIGH,  IO_AF11_ETH)           \
+/* UART IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_UART_TX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
+    X_IO_CFG( IO_CFG_UART_RX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_NO_PULL,   IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
 /* I2C IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
     X_IO_CFG( IO_CFG_I2C_AF4,                           IO_MODE_ALTERNATE,  IO_TYPE_PIN_OD,        IO_SPEED_FREQ_MEDIUM,     IO_AF4_I2C)            \
 /* LCD IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
@@ -109,11 +112,11 @@
     X_IO_CFG( IO_CFG_QSPI_PP_AF9,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_QSPI)           \
     X_IO_CFG( IO_CFG_QSPI_PP_AF10,                      IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_HIGH,       IO_AF10_QSPI)          \
 /* SDMMC IO's CFG --------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_SDMMC_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,   IO_AF12_SDMMC1)       \
+    X_IO_CFG( IO_CFG_SDMMC_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_SDMMC1)        \
 /* SDRAM IO's CFG --------------------------------------------------------------------------------------------------------------------------------*/\
     X_IO_CFG( IO_CFG_SDRAM_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_FMC)           \
 /* TIM IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_TIM1_PP_LS,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,         IO_AF1_TIM)           \
+    X_IO_CFG( IO_CFG_TIM1_PP_LS,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,        IO_AF1_TIM)            \
 /* -----------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
@@ -142,13 +145,13 @@
 /* QSPI Serial Flash IO's ----------------------------------------------------------------------*/\
 /*   X_IO( IO_FLASH_RESET,      GPIOC,      12,     IO_CFG_OUTPUT_PP_LS_DEF0)                   */\
 /* UART IO's -----------------------------------------------------------------------------------*/\
-    X_IO( IO_UART1_RX,          GPIOB,      7,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_NO_PULL,  IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)        \
-    X_IO( IO_UART1_TX,          GPIOA,      9,      IO_MODE_ALTERNATE,    IO_TYPE_PIN_PP,       IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)        \
+    X_IO( IO_UART1_RX,          GPIOB,      7,      IO_CFG_UART_RX_AF7)                           \
+    X_IO( IO_UART1_TX,          GPIOA,      9,      IO_CFG_UART_TX_AF7)                           \
+/* SD Card IO's --------------------------------------------------------------------------------*/\
+    X_IO( IO_DETECT_SD_CARD,    GPIOC,      13,     IO_CFG_INPUT_PU_LS)                           \
 /* LCD IO's ------------------------------------------------------------------------------------*/\
     X_IO( IO_LCD_TFT_DISPLAY,   GPIOI,      12,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
     X_IO( IO_LCD_TFT_BL_CTRL,   GPIOK,      3,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-/* SDIO IO's -----------------------------------------------------------------------------------*/\
-    X_IO( IO_DETECT_SD_CARD,    GPIOC,      13,     IO_CFG_INPUT_PU_LS)                           \
 /* GRBL IO's -----------------------------------------------------------------------------------*/\
     X_IO( IO_ENABLE_DRIVE,      GPIOI,      2,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
     X_IO( IO_STEP_X,            GPIOG,      6,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
@@ -238,13 +241,13 @@
 //|  PA7 <-> CRS_DV        |  PC5 <-> RXD1         |  PG13 <-> TXD0             |
 //|                        |                       |  PG14 <-> TXD1             |
 //|------------------------------------------------------------------------------
-    
+
 #define ETH_PIN_ON_PORT_A       (IO_PIN_1  | IO_PIN_2  | IO_PIN_7)
 #define ETH_PIN_ON_PORT_C       (IO_PIN_1  | IO_PIN_4  | IO_PIN_5)
 #define ETH_PIN_ON_PORT_G       (IO_PIN_2  | IO_PIN_11 | IO_PIN_13 | IO_PIN_14)
 
 //---------------------------------------------------------------------------------------
-//                                I2C pins assignment                                   \  
+//                                I2C pins assignment                                   |
 //---------------------------------------------------------------------------------------
 
 #define I2C1_PIN_ON_PORT_B      (IO_PIN_8  | IO_PIN_9)
@@ -277,7 +280,7 @@
 #define LCD_PIN_ON_PORT_K         (IO_PIN_0  | IO_PIN_1  | IO_PIN_2  | IO_PIN_4  | IO_PIN_5  | IO_PIN_6  | IO_PIN_7)
 
 //---------------------------------------------------------------------------------------
-//                                QSPI pins assignment                                  \  
+//                                QSPI pins assignment                                  |
 //---------------------------------------------------------------------------------------
 
 #define QSPI_PIN_ON_PORT_B_AF9    (IO_PIN_2)
@@ -286,14 +289,14 @@
 #define QSPI_PIN_ON_PORT_E        (IO_PIN_2)
 
 //---------------------------------------------------------------------------------------
-//                                SDMMC pins assignment                                 \  
+//                                SDMMC pins assignment                                 |
 //---------------------------------------------------------------------------------------
 
 #define SDMMC_PIN_ON_PORT_C       (IO_PIN_8  | IO_PIN_9  | IO_PIN_10 | IO_PIN_11 | IO_PIN_12)
 #define SDMMC_PIN_ON_PORT_D       (IO_PIN_2)
 
 //---------------------------------------------------------------------------------------
-//                                SDRAM pins assignment                                 \  
+//                                SDRAM pins assignment                                 |
 //---------------------------------------------------------------------------------------
 //| PC3 <-> FMC_SDCKE0 | PE0  <-> FMC_NBL0  | PF0  <-> FMC_A0     | PG0  <-> FMC_A10    |
 //|--------------------| PE1  <-> FMC_NBL1  | PF1  <-> FMC_A1     | PG1  <-> FMC_A11    |
@@ -334,8 +337,8 @@
     X_IO_GROUP( IO_LCD_ON_PORT_J,           GPIOJ,      LCD_PIN_ON_PORT_J,         IO_CFG_LCD_AF14)            \
     X_IO_GROUP( IO_LCD_ON_PORT_K,           GPIOK,      LCD_PIN_ON_PORT_K,         IO_CFG_LCD_AF14)            \
 /* QSPI -----------------------------------------------------------------------------------------------------*/\
-    X_IO_GROUP( IO_QSPI_ON_PORT_B_PP_AF9,   GPIOB,      QSPI_PIN_ON_PORT_B,        IO_CFG_QSPI_PP_AF9)         \
-    X_IO_GROUP( IO_QSPI_ON_PORT_B_PP_AF10,  GPIOB,      QSPI_PIN_ON_PORT_B,        IO_CFG_QSPI_PP_AF10)        \
+    X_IO_GROUP( IO_QSPI_ON_PORT_B_PP_AF9,   GPIOB,      QSPI_PIN_ON_PORT_B_AF9,    IO_CFG_QSPI_PP_AF9)         \
+    X_IO_GROUP( IO_QSPI_ON_PORT_B_PP_AF10,  GPIOB,      QSPI_PIN_ON_PORT_B_AF10,   IO_CFG_QSPI_PP_AF10)        \
     X_IO_GROUP( IO_QSPI_ON_PORT_D_NP_AF9,   GPIOD,      QSPI_PIN_ON_PORT_D,        IO_CFG_QSPI_NP_AF9)         \
     X_IO_GROUP( IO_QSPI_ON_PORT_E_NP_AF9,   GPIOE,      QSPI_PIN_ON_PORT_E,        IO_CFG_QSPI_NP_AF9)         \
 /* SDMMC ----------------------------------------------------------------------------------------------------*/\

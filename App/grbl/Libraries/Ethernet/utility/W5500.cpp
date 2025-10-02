@@ -38,11 +38,10 @@ static inline void WriteSn(SOCKET _s, uint16_t _addr, uint8_t _data);
 static inline uint16_t ReadSnArray(SOCKET _s, uint16_t _addr, uint8_t *_buf, uint16_t len);
 static inline uint16_t WriteSnArray(SOCKET _s, uint16_t _addr, uint8_t *_buf, uint16_t len);
 
+// IO with those name must exist into bsp_io_def.h  (IIO_W5500_RESET)
 
 void W5500_Initialize(void)
 {
-    IO_PinInit(IO_W5500_RESET);
-
     //Spi_Init(SPI_W5500, SPI_MODE0);
 
     // Set clock to 21 Mhz (W5500 should support up to about 80 Mhz)

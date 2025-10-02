@@ -311,12 +311,6 @@ static void BSP_SDRAM_Initialize(void)
     //| PH5 <-> FMC_SDNWE  |
     //+--------------------+
 
-   // done into IO_InitializeAll()
-   // for(uint32_t IO_Id = uint32_t(IO_FMC_D0); IO_Id <= uint32_t(IO_FMC_SDNWE); IO_Id++)
-   // {
-   //     IO_PinInit(IO_ID_e(IO_Id));
-   // }
-
     // FMC SDRAM Bank configuration
     // Timing configuration for 100Mhz as SD clock frequency (System clock is up to 200Mhz)
     // Set SDRAM bank configuration parameters

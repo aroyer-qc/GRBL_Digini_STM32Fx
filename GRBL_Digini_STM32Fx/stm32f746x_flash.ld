@@ -171,8 +171,6 @@ SECTIONS
   {
     . = ALIGN(4);
     *(.RX_DescriptorSection)
-  } >DMA_ETH_BUF_RAM
-
   /* Remove information from the standard libraries */
 /*  /DISCARD/ : */
 /*  {*/
@@ -181,15 +179,17 @@ SECTIONS
     /*libgcc.a ( * )*/
   /*}*/
 
-  .ARM.attributes 0 : { *(.ARM.attributes) }
+  } >DMA_ETH_BUF_RAM
 
-   __StackLimit = _estack - _Min_Stack_Size;
+    .ARM.attributes 0 : { *(.ARM.attributes) }
 
-  	__gfx_display_base__   = ORIGIN(GFX_DISPLAY);
+    __StackLimit = _estack - _Min_Stack_Size;
+
+    __gfx_display_base__   = ORIGIN(GFX_DISPLAY);
 	__gfx_ram_data_base__  = ORIGIN(GFX_RAM_DBASE);
 	__user_ram_data_base__ = ORIGIN(RAM_DBASE);
 	__gfx_qspi_data_base__ = ORIGIN(GFX_QSPI_DBASE);
 
-   /* Check if data + heap + stack exceeds RAM limit */
-   ASSERT(__StackLimit >= __HeapLimit, "Region RAM overflowed with stack")
+    /* Check if data + heap + stack exceeds RAM limit */
+    ASSERT(__StackLimit >= __HeapLimit, "Region RAM overflowed with stack")
 }

@@ -34,13 +34,10 @@ static bool SpindleDirectionClockwise = true;
 
 //extern uint32_t spindle_rpm;
 
+// IO with those name must exist into bsp_io_def.h (IO_SPINDLE_ENABLE, IO_SPINDLE_DIRECTION, IO_SPINDLE_PWM)
 
 void Spindle_Initialize(void)
 {
-    IO_PinInit(IO_SPINDLE_ENABLE);
-    IO_PinInit(IO_SPINDLE_DIRECTION);
-    IO_PinInit(IO_SPINDLE_PWM);
-
     // Configure variable Spindle PWM and enable pin, if required, PWM and enable are
     // combined unless configured otherwise.
 
