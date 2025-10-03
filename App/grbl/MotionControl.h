@@ -19,8 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef MOTIONCONTROL_H
-#define MOTIONCONTROL_H
+#pragma once
 
 #include <stdint.h>
 #include "Planner.h"
@@ -38,45 +37,26 @@
 #define HOMING_CYCLE_C                  BIT(C_AXIS)
 
 
-void MC_Initialize(void);
-
-void MC_SyncBacklashPosition(void);
+void    MC_Initialize           (void);
+void    MC_SyncBacklashPosition (void);
 
 // Execute linear motion in absolute millimeter coordinates. Feed rate given in millimeters/second
 // unless invert_feed_rate is true. Then the FeedRate means that the motion should be completed in
 // (1 minute)/FeedRate time.
-void MC_Line(float *target, Planner_LineData_t *pl_data);
-
-void MC_LineSync(float *target, Planner_LineData_t *pl_data, float pitch);
-
-void MC_LineSyncStart(void);
-
-void MC_UpdateSyncMove(void);
+void    MC_Line                 (float* target, Planner_LineData_t* pl_data);
+void    MC_LineSync             (float* target, Planner_LineData_t* pl_data, float pitch);
+void    MC_LineSyncStart        (void);
+void    MC_UpdateSyncMove       (void);
 
 // Execute an arc in offset mode format. position == current xyz, target == target xyz,
 // offset == offset from current xyz, axis_XXX defines circle plane in tool space, axis_linear is
 // the direction of helical travel, radius == circle radius, is_clockwise_arc boolean. Used
 // for vector transformation direction.
-void MC_Arc(float *target, Planner_LineData_t *pl_data, float *position, float *offset, float radius,
-            uint8_t axis_0, uint8_t axis_1, uint8_t axis_linear, uint8_t is_clockwise_arc);
-
-// Dwell for a specific number of seconds
-void MC_Dwell(float seconds);
-
-// Perform homing cycle to locate machine zero. Requires limit switches.
-void MC_HomingCycle(uint8_t cycle_mask);
-
-// Perform tool length probe cycle. Requires probe switch.
-uint8_t MC_ProbeCycle(float *target, Planner_LineData_t *pl_data, uint8_t parser_flags);
-
-// Handles updating the override control state.
-void MC_OverrideCtrlUpdate(bool OverrideState);
-
-// Plans and executes the single special motion case for parking. Independent of main planner buffer.
-void MC_ParkingMotion(float *parking_target, Planner_LineData_t *pl_data);
-
-// Performs system reset. If in motion state, kills all motion and sets system alarm.
-void MC_Reset(void);
-
-
-#endif // MOTIONCONTROL_H
+void    MC_Arc                  (float* target, Planner_LineData_t* pl_data, float* position, float* offset, float radius,
+                                 uint8_t axis_0, uint8_t axis_1, uint8_t axis_linear, uint8_t is_clockwise_arc);
+void    MC_Dwell                (float seconds);                                                        // Dwell for a specific number of seconds
+void    MC_HomingCycle          (uint8_t cycle_mask);                                                   // Perform homing cycle to locate machine zero. Requires limit switches.
+uint8_t MC_ProbeCycle           (float* target, Planner_LineData_t* pl_data, uint8_t parser_flags);     // Perform tool length probe cycle. Requires probe switch.
+void    MC_OverrideCtrlUpdate   (bool OverrideState);                                                   // Handles updating the override control state.
+void    MC_ParkingMotion        (float* parking_target, Planner_LineData_t* pl_data);                   // Plans and executes the single special motion case for parking. Independent of main planner buffer.
+void    MC_Reset                (void);                                                                 // Performs system reset. If in motion state, kills all motion and sets system alarm.

@@ -18,8 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef SYSTEM_H
-#define SYSTEM_H
+#pragma once
 
 #include <stdint.h>
 #include "util.h"
@@ -329,5 +328,3 @@ void System_SetExecAccessoryOverrideFlag(uint8_t mask);
 void System_ClearExecMotionOverride(void);
 void System_ClearExecAccessoryOverrides(void);
 
-
-#endif // SYSTEM_H

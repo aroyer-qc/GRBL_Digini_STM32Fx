@@ -19,24 +19,13 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef PROTOCOL_H
-#define PROTOCOL_H
-
+#pragma once
 
 // Starts Grbl main loop. It handles all incoming characters from the serial port and executes
 // them as they complete. It is also responsible for finishing the initialization procedures.
-void Protocol_MainLoop(void);
+void    Protocol_MainLoop           (void);
+void    Protocol_ExecuteRealtime    (void);     // Checks and executes a realtime command at various stop points in main program
+void    Protocol_ExecRtSystem       (void);
+void    Protocol_AutoCycleStart     (void);     // Executes the auto cycle feature, if enabled.
+void    Protocol_BufferSynchronize  (void);     // Block until all buffered steps are executed
 
-// Checks and executes a realtime command at various stop points in main program
-void Protocol_ExecuteRealtime(void);
-
-void Protocol_ExecRtSystem(void);
-
-// Executes the auto cycle feature, if enabled.
-void Protocol_AutoCycleStart(void);
-
-// Block until all buffered steps are executed
-void Protocol_BufferSynchronize(void);
-
-
-#endif // PROTOCOL_H

@@ -18,8 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef JOG_H
-#define JOG_H
+#pragma once
 
 #include <stdint.h>
 #include "GCode.h"
@@ -31,7 +30,4 @@
 
 
 // Sets up valid jog motion received from g-code parser, checks for soft-limits, and executes the jog.
-uint8_t Jog_Execute(Planner_LineData_t *pl_data, Parser_Block_t *gc_block);
-
-
-#endif // JOG_H
+uint8_t Jog_Execute(Planner_LineData_t* pl_data, Parser_Block_t* gc_block);

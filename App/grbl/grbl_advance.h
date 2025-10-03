@@ -1,6 +1,4 @@
-#ifndef GRBL_ADVANCE_H_INCLUDED
-#define GRBL_ADVANCE_H_INCLUDED
-
+#pragma once
 
 #include "Config.h"
 #include "CoolantControl.h"
@@ -19,6 +17,3 @@
 #include "System.h"
 #include "util.h"
 #include "ToolChange.h"
-
-
-#endif // GRBL_ADVANCE_H_INCLUDED

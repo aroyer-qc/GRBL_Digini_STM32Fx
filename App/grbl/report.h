@@ -18,8 +18,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef REPORT_H
-#define REPORT_H
+#pragma once
 
 #include <stdint.h>
 
@@ -92,52 +91,21 @@
 #define MESSAGE_INVALID_TOOL            12
 
 
-// Prints system status messages.
-void Report_StatusMessage(uint8_t status_code);
-
-// Prints system alarm messages.
-void Report_AlarmMessage(uint8_t alarm_code);
-
-// Prints miscellaneous feedback messages.
-void Report_FeedbackMessage(uint8_t message_code);
-
-// Prints welcome message
-void Report_InitializeMessage(void);
-
-// Prints Grbl help and current global settings
-void Report_GrblHelp(void);
-
-// Prints Grbl global settings
-void Report_GrblSettings(void);
-
-// Prints an echo of the pre-parsed line received right before execution.
-void Report_EchoLineReceived(char *line);
-
-// Prints realtime status report
-void Report_RealtimeStatus(void);
-
-// Prints recorded probe position
-void Report_ProbeParams(void);
-
-// Prints tls position
-void Report_TLSParams(void);
-
-// Print tool table
-void Report_ToolParams(uint8_t tool_nr);
-
-// Prints Grbl NGC parameters (coordinate offsets, probe)
-void Report_NgcParams(void);
-
-// Prints current g-code parser mode state
-void Report_GCodeModes(void);
-
-// Prints startup line when requested and executed.
-void Report_StartupLine(uint8_t n, char *line);
-
-void Report_ExecuteStartupMessage(char *line, uint8_t status_code);
-
-// Prints build info and user info
-void Report_BuildInfo(char *line);
+void    Report_StatusMessage            (uint8_t status_code);              // Prints system status messages.
+void    Report_AlarmMessage             (uint8_t alarm_code);               // Prints system alarm messages.
+void    Report_FeedbackMessage          (uint8_t message_code);             // Prints miscellaneous feedback messages.
+void    Report_InitializeMessage        (void);                             // Prints welcome message
+void    Report_GrblHelp                 (void);                             // Prints Grbl help and current global settings
+void    Report_GrblSettings             (void);                             // Prints Grbl global settings
+void    Report_EchoLineReceived         (char *line);                       // Prints an echo of the pre-parsed line received right before execution.
+void    Report_RealtimeStatus           (void);                             // Prints realtime status report
+void    Report_ProbeParams              (void);                             // Prints recorded probe position
+void    Report_TLSParams                (void);                             // Prints tls position
+void    Report_ToolParams               (uint8_t tool_nr);                  // Print tool table
+void    Report_NgcParams                (void);                             // Prints Grbl NGC parameters (coordinate offsets, probe)
+void    Report_GCodeModes               (void);                             // Prints current g-code parser mode state
+void    Report_StartupLine              (uint8_t n, char* line);            // Prints startup line when requested and executed.
+void    Report_ExecuteStartupMessage    (char* line, uint8_t status_code);
+void    Report_BuildInfo                (char* line);                       // Prints build info and user info
 
 
-#endif // REPORT_H

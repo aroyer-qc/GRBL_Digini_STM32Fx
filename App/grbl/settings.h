@@ -19,8 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#pragma once
 
 #include <stdint.h>
 #include "util.h"
@@ -144,44 +143,19 @@ typedef struct
 extern Settings_t Settings;
 
 
-// Initialize the configuration subsystem (load settings from EEPROM)
-void Settings_Initialize(void);
-
-// Helper function to clear and restore EEPROM defaults
-void Settings_Restore(uint8_t restore_flag);
-
-// A helper method to set new settings from command line
-uint8_t Settings_StoreGlobalSetting(uint8_t parameter, float value);
-
-// Save current position to tls position
-void Settings_StoreTlsPosition(void);
-
-// Stores the protocol line variable as a startup line in EEPROM
-void Settings_StoreStartupLine(uint8_t n, char *line);
-
-// Stores tool table in EEPROM
-void Settings_StoreToolTable(ToolTable_t *table);
-
-void Settings_StoreToolParams(uint8_t tool_nr, ToolParams_t *params);
-
-// Read tool table
-bool Settings_ReadToolTable(ToolTable_t *table);
-
-// Reads an EEPROM startup line to the protocol line variable
-bool Settings_ReadStartupLine(uint8_t n, char *line);
-
-// Stores build info user-defined string
-void Settings_StoreBuildInfo(char *line);
-
-// Reads build info user-defined string
-bool Settings_ReadBuildInfo(char *line);
-
-// Writes selected coordinate data to EEPROM
-void Settings_WriteCoordData(uint8_t CoordSelect, float *coord_data);
-
-// Reads selected coordinate data from EEPROM
-uint8_t Settings_ReadCoordData(uint8_t CoordSelect, float *coord_data);
+void    Settings_Initialize             (void);                                     // Initialize the configuration subsystem (load settings from EEPROM)
+void    Settings_Restore                (uint8_t restore_flag);                     // Helper function to clear and restore EEPROM defaults
+uint8_t Settings_StoreGlobalSetting     (uint8_t parameter, float value);           // A helper method to set new settings from command line
+void    Settings_StoreTlsPosition       (void);                                     // Save current position to tls position
+void    Settings_StoreStartupLine       (uint8_t n, char *line);                    // Stores the protocol line variable as a startup line in EEPROM
+void    Settings_StoreToolTable         (ToolTable_t *table);                       // Stores tool table in EEPROM
+void    Settings_StoreToolParams        (uint8_t tool_nr, ToolParams_t *params);
+bool    Settings_ReadToolTable          (ToolTable_t *table);                       // Read tool table
+bool    Settings_ReadStartupLine        (uint8_t n, char *line);                    // Reads an EEPROM startup line to the protocol line variable
+void    Settings_StoreBuildInfo         (char *line);                               // Stores build info user-defined string
+bool    Settings_ReadBuildInfo          (char *line);                               // Reads build info user-defined string
+void    Settings_WriteCoordData         (uint8_t CoordSelect, float *coord_data);   // Writes selected coordinate data to EEPROM
+uint8_t Settings_ReadCoordData          (uint8_t CoordSelect, float *coord_data);   // Reads selected coordinate data from EEPROM
 
 // Returns the step pin mask according to Grbl's internal axis numbering
 
-#endif // SETTINGS_H

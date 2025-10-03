@@ -19,8 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GCODE_H
-#define GCODE_H
+#pragma once
 
 #include <stdint.h>
 #include "util.h"
@@ -33,27 +32,27 @@
 // a unique motion. These are defined in the NIST RS274-NGC v3 g-code standard, available online,
 // and are similar/identical to other g-code interpreters by manufacturers (Haas,Fanuc,Mazak,etc).
 // NOTE: Modal group define values must be sequential and starting from zero.
-#define MODAL_GROUP_G0      0   // [G4,G10,G28,G28.1,G30,G30.1,G53,G92,G92.1] Non-Modal
-#define MODAL_GROUP_G1      1   // [G0,G1,G2,G3,G33,G38.2,G38.3,G38.4,G38.5,G76,G80,G81,G82,G83] Motion
-#define MODAL_GROUP_G2      2   // [G17,G18,G19] Plane selection
-#define MODAL_GROUP_G3      3   // [G90,G91] Distance mode
-#define MODAL_GROUP_G4      4   // [G91.1] Arc IJK Distance mode
-#define MODAL_GROUP_G5      5   // [G93,G94] Feed rate mode
-#define MODAL_GROUP_G6      6   // [G20,G21] Units
-#define MODAL_GROUP_G7      7   // [G40] Cutter radius compensation mode. G41/42 NOT SUPPORTED.
-#define MODAL_GROUP_G8      8   // [G43.1,G49] Tool length offset
-#define MODAL_GROUP_G12     9   // [G54,G55,G56,G57,G58,G59] Coordinate system selection
-#define MODAL_GROUP_G13     10  // [G61] Control mode
+#define MODAL_GROUP_G0                      0   // [G4,G10,G28,G28.1,G30,G30.1,G53,G92,G92.1] Non-Modal
+#define MODAL_GROUP_G1                      1   // [G0,G1,G2,G3,G33,G38.2,G38.3,G38.4,G38.5,G76,G80,G81,G82,G83] Motion
+#define MODAL_GROUP_G2                      2   // [G17,G18,G19] Plane selection
+#define MODAL_GROUP_G3                      3   // [G90,G91] Distance mode
+#define MODAL_GROUP_G4                      4   // [G91.1] Arc IJK Distance mode
+#define MODAL_GROUP_G5                      5   // [G93,G94] Feed rate mode
+#define MODAL_GROUP_G6                      6   // [G20,G21] Units
+#define MODAL_GROUP_G7                      7   // [G40] Cutter radius compensation mode. G41/42 NOT SUPPORTED.
+#define MODAL_GROUP_G8                      8   // [G43.1,G49] Tool length offset
+#define MODAL_GROUP_G12                     9   // [G54,G55,G56,G57,G58,G59] Coordinate system selection
+#define MODAL_GROUP_G13                     10  // [G61] Control mode
 
-#define MODAL_GROUP_G10     11  // [G98, G99] Canned Cycles Return Mode
-#define MODAL_GROUP_G14     12  // [G96, G97] Spindle Speed Mode
-#define MODAL_GROUP_G15     13  // [G7, G8] Lathe Diameter Mode
+#define MODAL_GROUP_G10                     11  // [G98, G99] Canned Cycles Return Mode
+#define MODAL_GROUP_G14                     12  // [G96, G97] Spindle Speed Mode
+#define MODAL_GROUP_G15                     13  // [G7, G8] Lathe Diameter Mode
 
-#define MODAL_GROUP_M4      11  // [M0,M1,M2,M30] Stopping
-#define MODAL_GROUP_M7      12  // [M3,M4,M5] Spindle turning
-#define MODAL_GROUP_M8      13  // [M7,M8,M9] Coolant control
-#define MODAL_GROUP_M9      14  // [M56] Override control
-#define MODAL_GROUP_MO      15  // [M62,M63] Digital Outputs, [M66] Wait for digital inputs, [M67] Analog Outputs
+#define MODAL_GROUP_M4                      11  // [M0,M1,M2,M30] Stopping
+#define MODAL_GROUP_M7                      12  // [M3,M4,M5] Spindle turning
+#define MODAL_GROUP_M8                      13  // [M7,M8,M9] Coolant control
+#define MODAL_GROUP_M9                      14  // [M56] Override control
+#define MODAL_GROUP_MO                      15  // [M62,M63] Digital Outputs, [M66] Wait for digital inputs, [M67] Analog Outputs
 
 // Define command actions for within execution-type Modal groups (motion, stopping, non-Modal). Used
 // internally by the parser to know which command to execute.
@@ -155,63 +154,63 @@
 
 
 // Define parameter word mapping.
-#define WORD_F      0
-#define WORD_I      1
-#define WORD_J      2
-#define WORD_K      3
-#define WORD_L      4
-#define WORD_N      5
-#define WORD_P      6
-#define WORD_R      7
-#define WORD_S      8
-#define WORD_T      9
-#define WORD_X      10
-#define WORD_Y      11
-#define WORD_Z      12
-#define WORD_Q      13
-#define WORD_A      14
-#define WORD_B      15
-#define WORD_C      16
-#define WORD_D      17
-#define WORD_H      18
-#define WORD_E      19
+#define WORD_F                              0
+#define WORD_I                              1
+#define WORD_J                              2
+#define WORD_K                              3
+#define WORD_L                              4
+#define WORD_N                              5
+#define WORD_P                              6
+#define WORD_R                              7
+#define WORD_S                              8
+#define WORD_T                              9
+#define WORD_X                              10
+#define WORD_Y                              11
+#define WORD_Z                              12
+#define WORD_Q                              13
+#define WORD_A                              14
+#define WORD_B                              15
+#define WORD_C                              16
+#define WORD_D                              17
+#define WORD_H                              18
+#define WORD_E                              19
 
 // Define g-code parser position updating flags
-#define GC_UPDATE_POS_TARGET    0 // Must be zero
-#define GC_UPDATE_POS_SYSTEM    1
-#define GC_UPDATE_POS_NONE      2
+#define GC_UPDATE_POS_TARGET                0 // Must be zero
+#define GC_UPDATE_POS_SYSTEM                1
+#define GC_UPDATE_POS_NONE                  2
 
 // Define probe cycle exit states and assign proper position updating.
-#define GC_PROBE_FOUND          GC_UPDATE_POS_SYSTEM
-#define GC_PROBE_ABORT          GC_UPDATE_POS_NONE
-#define GC_PROBE_FAIL_INIT      GC_UPDATE_POS_NONE
-#define GC_PROBE_FAIL_END       GC_UPDATE_POS_TARGET
+#define GC_PROBE_FOUND                      GC_UPDATE_POS_SYSTEM
+#define GC_PROBE_ABORT                      GC_UPDATE_POS_NONE
+#define GC_PROBE_FAIL_INIT                  GC_UPDATE_POS_NONE
+#define GC_PROBE_FAIL_END                   GC_UPDATE_POS_TARGET
 
 #ifdef SET_CHECK_MODE_PROBE_TO_START
-#define GC_PROBE_CHECK_MODE   GC_UPDATE_POS_NONE
+#define GC_PROBE_CHECK_MODE                 GC_UPDATE_POS_NONE
 #else
-#define GC_PROBE_CHECK_MODE   GC_UPDATE_POS_TARGET
+#define GC_PROBE_CHECK_MODE                 GC_UPDATE_POS_TARGET
 #endif
 
 
 // Define gcode parser flags for handling special cases.
-#define GC_PARSER_NONE                  0 // Must be zero.
-#define GC_PARSER_JOG_MOTION            BIT(0)
-#define GC_PARSER_CHECK_MANTISSA        BIT(1)
-#define GC_PARSER_ARC_IS_CLOCKWISE      BIT(2)
-#define GC_PARSER_PROBE_IS_AWAY         BIT(3)
-#define GC_PARSER_PROBE_IS_NO_ERROR     BIT(4)
-#define GC_PARSER_LASER_FORCE_SYNC      BIT(5)
-#define GC_PARSER_LASER_DISABLE         BIT(6)
-#define GC_PARSER_LASER_ISMOTION        BIT(7)
+#define GC_PARSER_NONE                      0 // Must be zero.
+#define GC_PARSER_JOG_MOTION                BIT(0)
+#define GC_PARSER_CHECK_MANTISSA            BIT(1)
+#define GC_PARSER_ARC_IS_CLOCKWISE          BIT(2)
+#define GC_PARSER_PROBE_IS_AWAY             BIT(3)
+#define GC_PARSER_PROBE_IS_NO_ERROR         BIT(4)
+#define GC_PARSER_LASER_FORCE_SYNC          BIT(5)
+#define GC_PARSER_LASER_DISABLE             BIT(6)
+#define GC_PARSER_LASER_ISMOTION            BIT(7)
 
 
-#define DIGITAL_CONTROL_OFF             false
-#define DIGITAL_CONTROL_ON              true
+#define DIGITAL_CONTROL_OFF                 false
+#define DIGITAL_CONTROL_ON                  true
 
-#define WAITONINPUT_CONTROL 1
-#define ANALOG_CONTROL 1
-#define ACCEL_SCALING 1
+#define WAITONINPUT_CONTROL                 1
+#define ANALOG_CONTROL                      1
+#define ACCEL_SCALING                       1
 
 // NOTE: When this struct is zeroed, the above defines set the defaults for the system.
 typedef struct
@@ -242,61 +241,54 @@ typedef struct
 
 typedef struct
 {
-    uint16_t d;
-    uint8_t h;
-    float e;
-    float f;         // Feed
-    float ijk[N_AXIS];    // I,J,K Axis arc offsets
-    uint8_t l;       // G10 or canned cycles parameters
-    int32_t n;       // Line number
-    float p;         // G10 or dwell parameters
-    float q;        // G82 peck drilling
-    float r;         // Arc radius
-    float s;         // Spindle speed
-    uint8_t t;       // Tool selection
-    float xyz[N_AXIS];    // X,Y,Z Translational axes
+    uint16_t    d;
+    uint8_t     h;
+    float       e;
+    float       f;              // Feed
+    float       ijk[N_AXIS];    // I,J,K Axis arc offsets
+    uint8_t     l;              // G10 or canned cycles parameters
+    int32_t     n;              // Line number
+    float       p;              // G10 or dwell parameters
+    float       q;              // G82 peck drilling
+    float       r;              // Arc radius
+    float       s;              // Spindle speed
+    uint8_t     t;              // Tool selection
+    float       xyz[N_AXIS];    // X,Y,Z Translational axes
 } GC_Values_t;
 
 
 typedef struct
 {
-    GC_Modal_t      Modal;
+    GC_Modal_t  Modal;
 
-    float spindle_speed;            // RPM
-    float FeedRate;                // Millimeters/min
-    uint8_t tool;                   // Tracks tool number.
-    int32_t line_number;            // Last line number sent
-    float spindle_limit;            // Max RPM for G96
+    float       spindle_speed;              // RPM
+    float       FeedRate;                   // Millimeters/min
+    uint8_t     tool;                       // Tracks tool number.
+    int32_t     line_number;                // Last line number sent
+    float       spindle_limit;              // Max RPM for G96
 
-    float position[N_AXIS];         // Where the interpreter considers the tool to be at this point in the code
-    float CoordSystem[N_AXIS];     // Current work coordinate system (G54+). Stores offset from absolute machine
+    float       position[N_AXIS];           // Where the interpreter considers the tool to be at this point in the code
+    float       CoordSystem[N_AXIS];        // Current work coordinate system (G54+). Stores offset from absolute machine
 
     // position in mm. Loaded from EEPROM when called.
-    float coord_offset[N_AXIS];     // Retains the G92 coordinate offset (work coordinates) relative to
+    float       coord_offset[N_AXIS];       // Retains the G92 coordinate offset (work coordinates) relative to
 
     // machine zero in mm. Non-persistent. Cleared upon reset and boot.
-    float ToolLengthOffset[N_AXIS];       // Tracks tool length offset value when enabled.
+    float       ToolLengthOffset[N_AXIS];   // Tracks tool length offset value when enabled.
 } Parser_State_t;
 
 
 typedef struct
 {
-    uint8_t non_modal_command;
-    GC_Modal_t Modal;
+    uint8_t     non_modal_command;
+    GC_Modal_t  Modal;
     GC_Values_t values;
 } Parser_Block_t;
 
 extern Parser_State_t gc_state;
 
 
-// Initialize the parser
-void GC_Initialize(void);
+void        GC_Initialize       (void);         // Initialize the parser
+void        GC_SyncPosition     (void);         // Set g-code parser position. Input in steps.
+uint8_t     GC_ExecuteLine      (char* line);   // Execute one block of rs275/ngc/g-code
 
-// Set g-code parser position. Input in steps.
-void GC_SyncPosition(void);
-
-// Execute one block of rs275/ngc/g-code
-uint8_t GC_ExecuteLine(char *line);
-
-
-#endif // GCODE_H

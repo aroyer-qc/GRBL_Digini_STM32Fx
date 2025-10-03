@@ -19,28 +19,13 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef LIMITS_H
-#define LIMITS_H
+#pragma once
 
 #include <stdint.h>
 
-
-// Initialize the limits module
-void Limits_Initialize(void);
-
-// Disables hard limits.
-void Limits_Disable(void);
-
-// Returns limit state as a bit-wise uint8 variable.
-uint32_t Limits_GetState(void);
-
-void Limit_PinChangeISR(void);
-
-// Perform one portion of the homing cycle based on the input settings.
-void Limits_GoHome(uint8_t cycle_mask);
-
-// Check for soft limit violations
-void Limits_SoftCheck(float *target);
-
-
-#endif // LIMITS_H
+void        Limits_Initialize       (void);                 // Initialize the limits module
+void        Limits_Disable          (void);                 // Disables hard limits.
+uint32_t    Limits_GetState         (void);                 // Returns limit state as a bit-wise uint8 variable.
+void        Limit_PinChangeISR      (void);
+void        Limits_GoHome           (uint8_t cycle_mask);   // Perform one portion of the homing cycle based on the input settings.
+void        Limits_SoftCheck        (float* target);        // Check for soft limit violations

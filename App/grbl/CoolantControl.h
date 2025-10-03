@@ -33,20 +33,10 @@
 #define COOLANT_STATE_MIST          BIT(1)
 
 
-// Initializes coolant control pins.
-void Coolant_Initialize(void);
-
-// Immediately disables coolant pins.
-void Coolant_Stop(void);
-
-// Returns current coolant output state. Overrides may alter it from programmed state.
-uint8_t Coolant_GetState(void);
-
-// Sets the coolant pins according to state specified.
-void Coolant_SetState(uint8_t mode);
-
-// G-code parser entry-point for setting coolant states. Checks for and executes additional conditions.
-void Coolant_Sync(uint8_t mode);
-
+void        Coolant_Initialize      (void);                 // Initializes coolant control pins.
+void        Coolant_Stop            (void);                 // Immediately disables coolant pins.
+uint8_t     Coolant_GetState        (void);                 // Returns current coolant output state. Overrides may alter it from programmed state.
+void        Coolant_SetState        (uint8_t mode);         // Sets the coolant pins according to state specified.
+void        Coolant_Sync            (uint8_t mode);         // G-code parser entry-point for setting coolant states. Checks for and executes additional conditions.
 
 #endif // COOLANTCONTROL_H

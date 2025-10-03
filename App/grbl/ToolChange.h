@@ -18,17 +18,13 @@
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef TOOLCHANGE_H_INCLUDED
-#define TOOLCHANGE_H_INCLUDED
-
+#pragma once
 
 #include <stdint.h>
 
 
-void TC_Initialize(void);
-void TC_ChangeCurrentTool(void);
-void TC_ProbeTLS(void);
-void TC_ApplyToolOffset(void);
+void    TC_Initialize           (void);
+void    TC_ChangeCurrentTool    (void);
+void    TC_ProbeTLS             (void);
+void    TC_ApplyToolOffset      (void);
 
-
-#endif /* TOOLCHANGE_H_INCLUDED */

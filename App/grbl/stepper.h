@@ -26,16 +26,16 @@
 #include <stdbool.h>
 
 
-void    Stepper_Initialize(void);                       // Initialize and setup the stepper motor subsystem
-void    Stepper_WakeUp(void);                           // Enable steppers, but cycle does not start unless called by motion control or realtime command.
-void    Stepper_Disable(bool ovr_disable);              // Immediately disables steppers    TODO AR this does not seem to be right as a function name!!!
-void    Stepper_MainISR(void);                          // Main ISR
-void    Stepper_PortResetISR(void);                     // Stepper Port Reset ISR
-void    Stepper_GenerateStepDirInvertMasks(void);       // Generate the step and direction port invert masks.
-void    Stepper_Reset(void);                            // Reset the stepper subsystem variables
-void    Stepper_ParkingSetupBuffer(void);               // Changes the run state of the step segment buffer to execute the special parking motion.
-void    Stepper_ParkingRestoreBuffer(void);             // Restores the step segment buffer to the normal run state after a parking motion.
-void    Stepper_PrepareBuffer(void);                    // Reloads step segment buffer. Called continuously by realtime execution system.
-void    Stepper_UpdatePlannerBlockParams(void);         // Called by planner_recalculate() when the executing block is updated by the new plan.
-float   Stepper_GetRealtimeRate(void);                  // Called by realtime status reporting if realtime rate reporting is enabled in config.h.
-void    Stepper_Ovr(float ovr);
+void    Stepper_Initialize                  (void);                 // Initialize and setup the stepper motor subsystem
+void    Stepper_WakeUp                      (void);                 // Enable steppers, but cycle does not start unless called by motion control or realtime command.
+void    Stepper_Disable                     (bool ovr_disable);     // Immediately disables steppers    TODO AR this does not seem to be right as a function name!!!
+void    Stepper_MainISR                     (void);                 // Main ISR
+void    Stepper_PortResetISR                (void);                 // Stepper Port Reset ISR
+void    Stepper_GenerateStepDirInvertMasks  (void);                 // Generate the step and direction port invert masks.
+void    Stepper_Reset                       (void);                 // Reset the stepper subsystem variables
+void    Stepper_ParkingSetupBuffer          (void);                 // Changes the run state of the step segment buffer to execute the special parking motion.
+void    Stepper_ParkingRestoreBuffer        (void);                 // Restores the step segment buffer to the normal run state after a parking motion.
+void    Stepper_PrepareBuffer               (void);                 // Reloads step segment buffer. Called continuously by realtime execution system.
+void    Stepper_UpdatePlannerBlockParams    (void);                 // Called by planner_recalculate() when the executing block is updated by the new plan.
+float   Stepper_GetRealtimeRate             (void);                 // Called by realtime status reporting if realtime rate reporting is enabled in config.h.
+void    Stepper_Ovr                         (float ovr);

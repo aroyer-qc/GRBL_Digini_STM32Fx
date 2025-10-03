@@ -19,8 +19,7 @@
   You should have received a copy of the GNU General Public License
   along with Grbl-Advanced.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef PLANNER_H
-#define PLANNER_H
+#pragma once
 
 #include "./Digini/Digini/inc/lib_macro.h"
 //#include <stdint.h>
@@ -92,53 +91,29 @@ typedef struct
 } Planner_LineData_t;
 
 
-// Initialize and reset the motion plan subsystem
-void Planner_Initialize(void);
-void Planner_Reset(void);       // Reset all
-void Planner_ResetBuffer(void); // Reset buffer only.
+void                Planner_Initialize                  (void);                     // Initialize and reset the motion plan subsystem
+void                Planner_Reset                       (void);                     // Reset all
+void                Planner_ResetBuffer                 (void);                     // Reset buffer only.
 
 // Add a new linear movement to the buffer. target[N_AXIS] is the signed, absolute target position
 // in millimeters. Feed rate specifies the speed of the motion. If feed rate is inverted, the feed
 // rate is taken to mean "frequency" and would complete the operation in 1/FeedRate minutes.
-uint8_t Planner_BufferLine(float *target, Planner_LineData_t *pl_data);
+uint8_t             Planner_BufferLine                  (float* target, Planner_LineData_t* pl_data);
+void                Planner_DiscardCurrentBlock         (void);                     // Called when the current block is no longer needed. Discards the block and makes the memory available for new blocks.
+Planner_Block_t*    Planner_GetSystemMotionBlock        (void);                     // Gets the planner block for the special system motion cases. (Parking/Homing)
+Planner_Block_t*    Planner_GetCurrentBlock             (void);                     // Gets the current block. Returns NULL if buffer empty
+uint8_t             Planner_NextBlockIndex              (uint8_t block_index);      // Called periodically by step segment buffer. Mostly used internally by planner.
+float               Planner_GetExecBlockExitSpeedSqr    (void);                     // Called by step segment buffer when computing executing block velocity profile.
 
-// Called when the current block is no longer needed. Discards the block and makes the memory
-// availible for new blocks.
-void Planner_DiscardCurrentBlock(void);
-
-// Gets the planner block for the special system motion cases. (Parking/Homing)
-Planner_Block_t *Planner_GetSystemMotionBlock(void);
-
-// Gets the current block. Returns NULL if buffer empty
-Planner_Block_t *Planner_GetCurrentBlock(void);
-
-// Called periodically by step segment buffer. Mostly used internally by planner.
-uint8_t Planner_NextBlockIndex(uint8_t block_index);
-
-// Called by step segment buffer when computing executing block velocity profile.
-float Planner_GetExecBlockExitSpeedSqr(void);
-
-// Called by main program during planner calculations and step segment buffer during initialization.
-float Planner_ComputeProfileNominalSpeed(Planner_Block_t *block);
-
-// Re-calculates buffered motions profile parameters upon a motion-based override change.
-void Planner_UpdateVelocityProfileParams(void);
-
-// Reset the planner position vector (in steps)
-void Planner_SyncPosition(void);
-
-// Reinitialize plan with a partially completed block
-void Planner_CycleReinitialize(void);
-
-// Returns the number of available blocks are in the planner buffer.
-uint8_t Planner_GetBlockBufferAvailable(void);
+float               Planner_ComputeProfileNominalSpeed  (Planner_Block_t* block);   // Called by main program during planner calculations and step segment buffer during initialization.
+void                Planner_UpdateVelocityProfileParams (void);                     // Re-calculates buffered motions profile parameters upon a motion-based override change.
+void                Planner_SyncPosition                (void);                     // Reset the planner position vector (in steps)
+void                Planner_CycleReinitialize           (void);                     // Reinitialize plan with a partially completed block
+uint8_t             Planner_GetBlockBufferAvailable     (void);                     // Returns the number of available blocks are in the planner buffer.
 
 // Returns the number of active blocks are in the planner buffer.
 // NOTE: Deprecated. Not used unless classic status reports are enabled in config.h
-uint8_t Planner_GetBlockBufferCount(void);
-
+uint8_t             Planner_GetBlockBufferCount         (void);
+uint8_t             Planner_CheckBufferFull             (void);
 // Returns the status of the block ring buffer. True, if buffer is full.
-uint8_t Planner_CheckBufferFull(void);
 
-
-#endif // PLANNER_H
