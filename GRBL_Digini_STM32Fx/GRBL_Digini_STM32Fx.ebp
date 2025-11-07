@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.64" revision="0" />
+	<EmBitzVersion release="2.65" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="GRBL_Digini_STM32Fx" />
@@ -414,6 +414,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Grafx\src\color\lib_grafx_color.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\Module\Digini\Grafx\src\driver\generic\lib_STM32xxx_Grafx_GenDriver.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Grafx\src\driver\lib_grafx_driver.cpp">
