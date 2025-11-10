@@ -302,6 +302,8 @@
 		<Unit filename="..\Config\device_var.h" />
 		<Unit filename="..\Config\digini_cfg.h" />
 		<Unit filename="..\Config\diskio_drv_cfg.h" />
+		<Unit filename="..\Config\dma_cfg.h" />
+		<Unit filename="..\Config\dma_var.h" />
 		<Unit filename="..\Config\driver_cfg.h" />
 		<Unit filename="..\Config\eeprom_cfg.h" />
 		<Unit filename="..\Config\eeprom_var.h" />

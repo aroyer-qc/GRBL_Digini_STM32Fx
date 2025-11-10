@@ -44,8 +44,8 @@ const DMA_Info_t DMA_Info_WS281x =
     DMA_CHANNEL_3,                          // Connected to channel 3
     DMA_LIFCR_CTCIF3 | DMA_LIFCR_CHTIF3,    // Transfer complete and Half transfer Flag
     DMA1_Stream5,                           // DMA_Stream_TypeDef
-    DMA1_Stream5_IRQn
-    //4,                                      // PreempPrio
+    DMA1_Stream5_IRQn,
+    6,                                      // PreempPrio
 };
 
 #endif // DMA_DRIVER_GLOBAL

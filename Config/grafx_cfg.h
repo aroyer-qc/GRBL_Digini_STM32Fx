@@ -134,7 +134,7 @@
 #define GRAFX_COLOR_AL44                                DEF_DISABLED
 #define GRAFX_COLOR_AL88                                DEF_DISABLED
 #define GRAFX_COLOR_L4                                  DEF_DISABLED
-#define GRAFX_COLOR_A8                                  DEF_ENABLED     // Needed for the font transfer
+#define GRAFX_COLOR_A8                                  DEF_ENABLED     // Needed for the FONT transfer
 #define GRAFX_COLOR_A4                                  DEF_DISABLED
 #define GRAFX_COLOR_RGB332                              DEF_DISABLED
 #define GRAFX_COLOR_RGB444                              DEF_DISABLED
