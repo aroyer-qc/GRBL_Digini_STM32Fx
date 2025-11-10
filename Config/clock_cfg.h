@@ -43,24 +43,31 @@
                                                                                 // RCC_CFGR_SW_HSE or
                                                                                 // RCC_CFGR_SW_PLL
 // User PLL configuration
-
-// For xxx MHz HCLK on HSI
-//#define  CFG_PLLM_SOURCE                          CFG_HSI_VALUE
-//#define  CFG_PLLM_DIVIDER                         8
-//#define  CFG_PLLM_N_MULTIPLIER                    100
-//#define  CFG_PLLM_P_DIVIDER                       2
-//#define  CFG_PLLM_Q_DIVIDER                       2
-//#define  CFG_PLLM_R_DIVIDER                       2
-
 // For xxx MHz HCLK on HSE
-#define CFG_PLLM_SOURCE                             CFG_HSE_VALUE
-#define CFG_PLLM_DIVIDER                            25
-#define CFG_PLLM_N_MULTIPLIER                       432
-#define CFG_PLLM_P_DIVIDER                          2
-#define CFG_PLLM_Q_DIVIDER                          9
-//#define HSE_PLLM_R_DIVIDER                          2
+#define CFG_PLL_SOURCE                              CFG_HSE_VALUE
+#define CFG_PLL_M_DIVIDER                           25
+#define CFG_PLL_N_MULTIPLIER                        432
+#define CFG_PLL_P_DIVIDER                           2
+#define CFG_PLL_Q_DIVIDER                           9
+
+// PLLSAI
+#define CFG_PLLSAI_N_MULTIPLIER                     192
+#define CFG_PLLSAI_P_DIVIDER                        4                           // 48 MHz for USB
+#define CFG_PLLSAI_Q_DIVIDER                        9
+#define CFG_PLLSAI_R_DIVIDER                        5                           // 5 for 9.6 MHz for LTDC
+
+// PLLI2S
+#define CFG_PLLI2S_N_MULTIPLIER                     100
+#define CFG_PLLI2S_P_DIVIDER                        2
+#define CFG_PLLI2S_Q_DIVIDER                        2
+#define CFG_PLLI2S_R_DIVIDER                        2
+
+#define CFG_ENABLE_PLLSAI                           1
+#define CFG_ENABLE_PLLI2S                           0
 
 //#define CORTEX_SYSTEM_TIMER                         LL_SYSTICK_CLKSOURCE_HCLK_DIV8               // LL_SYSTICK_CLKSOURCE_HCLK (/1) or LL_SYSTICK_CLKSOURCE_HCLK_DIV8
+
+#define CFG_LCD_CLOCK_DIVIDER                       CFG_RCC_DCKCFGR1_LCD_CLK_DIV4
 
 // User clock and divider
 #define CFG_HCLK_DIVIDER                            CFG_RCC_CFGR_HPRE_DIV1          // (AHB Prescaler) 1,2,4,8,16,64,128,256,512
@@ -75,6 +82,8 @@
 
 // Define the MUX for module that you will need.        See lib_STM32F7_system_clock for clock selection option.
 
+#define CFG_SAI1_SOURCE_MUX                         CFG_SAI1_PLLSAIQ
+#define CFG_SAI2_SOURCE_MUX                         CFG_SAI2_PLLSAIQ
 #define CFG_USART1_SOURCE_MUX                       CFG_USART1_PCLK2
 #define CFG_USART2_SOURCE_MUX                       CFG_USART2_PCLK1
 #define CFG_USART3_SOURCE_MUX                       CFG_USART3_PCLK1
@@ -83,5 +92,6 @@
 #define CFG_USART6_SOURCE_MUX                       CFG_USART6_PCLK2
 #define CFG_UART7_SOURCE_MUX                        CFG_UART7_PCLK1
 #define CFG_UART8_SOURCE_MUX                        CFG_UART8_PCLK1
+#define CFG_USB_SOURCE_MUX                          CFG_USB_PLLQ
 
 //-------------------------------------------------------------------------------------------------

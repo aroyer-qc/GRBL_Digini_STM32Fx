@@ -393,6 +393,7 @@
 		<Unit filename="..\Module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\Module\Digini\Grafx\inc\driver\generic\lib_STM32xxx_lcd_480x272 - RK043FN48H.h" />
 		<Unit filename="..\Module\Digini\Grafx\src\basic\lib_basic_alpha.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -421,12 +422,8 @@
 		<Unit filename="..\Module\Digini\Grafx\src\driver\generic\lib_STM32xxx_Grafx_GenDriver.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\driver\lib_grafx_driver.cpp">
+		<Unit filename="..\Module\Digini\Grafx\src\driver\generic\lib_STM32xxx_lcd_480x272 - RK043FN48H.cpp">
 			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\Module\Digini\Grafx\src\driver\STM32F7xx\lib_STM32F7_lcd_480x272 - RK043FN48H.cpp">
-			<Option compilerVar="CC" />
-			<Option weight="0" />
 		</Unit>
 		<Unit filename="..\Module\Digini\Grafx\src\font\lib_class_font.cpp">
 			<Option compilerVar="CC" />
