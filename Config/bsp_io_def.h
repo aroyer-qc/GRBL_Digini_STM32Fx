@@ -134,91 +134,91 @@
 
 #define IO_DEF(X_IO) \
 /* ---------------------------------------------------------------------------------------------*/\
-/*        ENUM ID of the IO,    IO Port,    IO Pin, IO Config                                   */\
+/*        ENUM ID of the IO,    IO Port,    IO Pin, 	IO Config                               */\
 /* Input IO's ----------------------------------------------------------------------------------*/\
-    X_IO( IO_USER_BUTTON,       GPIOI,      11,     IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_USB1_VBUS,         GPIOJ,      12,     IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_USB1_OVR,          GPIOD,      4,      IO_CFG_INPUT_NP_LS)                           \
+    X_IO( IO_USER_BUTTON,       GPIOI,      IO_PIN_11,  IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_USB1_VBUS,         GPIOJ,      IO_PIN_12,  IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_USB1_OVR,          GPIOD,      IO_PIN_4,   IO_CFG_INPUT_NP_LS)                       \
 /* Output IO's ---------------------------------------------------------------------------------*/\
-    X_IO( IO_LED1,              GPIOI,      1,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_USB1_PWR,          GPIOD,      54,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
+    X_IO( IO_LED1,              GPIOI,      IO_PIN_1,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_USB1_PWR,          GPIOD,      IO_PIN_5,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
 /* QSPI Serial Flash IO's ----------------------------------------------------------------------*/\
-/*   X_IO( IO_FLASH_RESET,      GPIOC,      12,     IO_CFG_OUTPUT_PP_LS_DEF0)                   */\
+/*   X_IO( IO_FLASH_RESET,      GPIOC,      IO_PIN_12,  IO_CFG_OUTPUT_PP_LS_DEF0)               */\
 /* UART IO's -----------------------------------------------------------------------------------*/\
-    X_IO( IO_UART1_RX,          GPIOB,      7,      IO_CFG_UART_RX_AF7)                           \
-    X_IO( IO_UART1_TX,          GPIOA,      9,      IO_CFG_UART_TX_AF7)                           \
+    X_IO( IO_UART1_RX,          GPIOB,      IO_PIN_7,   IO_CFG_UART_RX_AF7)                       \
+    X_IO( IO_UART1_TX,          GPIOA,      IO_PIN_9,   IO_CFG_UART_TX_AF7)                       \
 /* SD Card IO's --------------------------------------------------------------------------------*/\
-    X_IO( IO_DETECT_SD_CARD,    GPIOC,      13,     IO_CFG_INPUT_PU_LS)                           \
+    X_IO( IO_DETECT_SD_CARD,    GPIOC,      IO_PIN_13,  IO_CFG_INPUT_PU_LS)                       \
 /* LCD IO's ------------------------------------------------------------------------------------*/\
-    X_IO( IO_LCD_TFT_DISPLAY,   GPIOI,      12,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_LCD_TFT_BL_CTRL,   GPIOK,      3,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
+    X_IO( IO_LCD_TFT_DISPLAY,   GPIOI,      IO_PIN_12,  IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_LCD_TFT_BL_CTRL,   GPIOK,      IO_PIN_3,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
 /* GRBL IO's -----------------------------------------------------------------------------------*/\
-    X_IO( IO_ENABLE_DRIVE,      GPIOI,      2,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_X,            GPIOG,      6,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_Y,            GPIOB,      5,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_Z,            GPIOG,      7,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_A,            GPIOA,      4,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_B,            GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_STEP_C,            GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_X,             GPIOI,      0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_Y,             GPIOH,      6,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_Z,             GPIOI,      3,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_A,             GPIOC,      6,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_B,             GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIR_C,             GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_LIMIT_X1,          GPIOA,      15,     IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_Y1,          GPIOA,      8,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_Z1,          GPIOB,      15,     IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_A1,          GPIOG,      9,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_B1,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_C1,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_X2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_Y2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_Z2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_A2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_B2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_LIMIT_C2,          GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_OUT_1,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_2,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_3,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_4,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_5,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_6,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_7,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_OUT_8,     GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_DIGITAL_IN_1,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_2,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_3,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_4,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_5,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_6,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_7,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_DIGITAL_IN_8,      GPIOxx,     0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_ANALOG_OUT_1,      GPIOA,      5,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_2,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_3,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_4,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_5,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_6,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_7,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_8,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_9,      GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_ANALOG_OUT_10,     GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_SPINDLE_ENABLE,    GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_SPINDLE_PWM,       GPIOxx,     0,      IO_CFG_TIM1_PP_LS)                            \
-    X_IO( IO_SPINDLE_DIRECTION, GPIOxx,     14,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_COOLANT,           GPIOC,      13,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_COOLANT_FLOOD,     GPIOF,      8,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_COOLANT_MIST,      GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF0)                     \
-    X_IO( IO_PROBE,             GPIOC,      7,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_SAFETY_DOOR,       GPIOxx,     0,      IO_CFG_INPUT_NP_LS)                           \
-    X_IO( IO_CONTROL_RESET,     GPIOA,      0,      IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_CONTROL_FEED,      GPIOF,      10,     IO_CFG_INPUT_PU_LS)                           \
-    X_IO( IO_CONTROL_START,     GPIOF,      9,      IO_CFG_INPUT_PU_LS)                           \
+    X_IO( IO_ENABLE_DRIVE,      GPIOI,      IO_PIN_2,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_X,            GPIOG,      IO_PIN_6,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_Y,            GPIOB,      IO_PIN_5,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_Z,            GPIOG,      IO_PIN_7,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_A,            GPIOA,      IO_PIN_4,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_B,            GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_STEP_C,            GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_X,             GPIOI,      IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_Y,             GPIOH,      IO_PIN_6,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_Z,             GPIOI,      IO_PIN_3,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_A,             GPIOC,      IO_PIN_6,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_B,             GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIR_C,             GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_LIMIT_X1,          GPIOA,      IO_PIN_15,  IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_Y1,          GPIOA,      IO_PIN_8,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_Z1,          GPIOB,      IO_PIN_15,  IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_A1,          GPIOG,      IO_PIN_9,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_B1,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_C1,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_X2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_Y2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_Z2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_A2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_B2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_LIMIT_C2,          GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_OUT_1,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_2,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_3,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_4,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_5,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_6,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_7,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_OUT_8,     GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_DIGITAL_IN_1,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_2,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_3,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_4,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_5,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_6,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_7,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_DIGITAL_IN_8,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_ANALOG_OUT_1,      GPIOA,      IO_PIN_5,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_2,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_3,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_4,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_5,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_6,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_7,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_8,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_9,      GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_ANALOG_OUT_10,     GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_SPINDLE_ENABLE,    GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_SPINDLE_PWM,       GPIOxx,     IO_PIN_0,   IO_CFG_TIM1_PP_LS)                        \
+    X_IO( IO_SPINDLE_DIRECTION, GPIOxx,     IO_PIN_14,  IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_COOLANT,           GPIOC,      IO_PIN_13,  IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_COOLANT_FLOOD,     GPIOF,      IO_PIN_8,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_COOLANT_MIST,      GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF0)                 \
+    X_IO( IO_PROBE,             GPIOC,      IO_PIN_7,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_SAFETY_DOOR,       GPIOxx,     IO_PIN_0,   IO_CFG_INPUT_NP_LS)                       \
+    X_IO( IO_CONTROL_RESET,     GPIOA,      IO_PIN_0,   IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_CONTROL_FEED,      GPIOF,      IO_PIN_10,  IO_CFG_INPUT_PU_LS)                       \
+    X_IO( IO_CONTROL_START,     GPIOF,      IO_PIN_9,   IO_CFG_INPUT_PU_LS)                       \
 /* Misc ----------------------------------------------------------------------------------------*/\
-    X_IO( IO_E2_WP,             GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF1)                     \
-    X_IO( IO_W5500_RESET,       GPIOxx,     0,      IO_CFG_OUTPUT_PP_LS_DEF1)                     \
-    X_IO( IO_DEBUG_PIN,         GPIOG,      13,     IO_CFG_OUTPUT_PP_LS_DEF0)                     \
+    X_IO( IO_E2_WP,             GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF1)                 \
+    X_IO( IO_W5500_RESET,       GPIOxx,     IO_PIN_0,   IO_CFG_OUTPUT_PP_LS_DEF1)                 \
+    X_IO( IO_DEBUG_PIN,         GPIOG,      IO_PIN_13,  IO_CFG_OUTPUT_PP_LS_DEF0)                 \
 /*----------------------------------------------------------------------------------------------*/
 
 

@@ -181,6 +181,11 @@ SECTIONS
 
   } >DMA_ETH_BUF_RAM
 
+  .my_gfx_display 0xC0000000 :
+  {
+    KEEP(*(.my_gfx_display))
+  } > GFX_DISPLAY
+
     .ARM.attributes 0 : { *(.ARM.attributes) }
 
     __StackLimit = _estack - _Min_Stack_Size;
