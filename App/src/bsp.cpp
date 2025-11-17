@@ -100,14 +100,10 @@ void BSP_Initialize(void)
     // Note:  The ART accelerator is available only for flash access on ITCM interface.
     FLASH->ACR |= FLASH_ACR_ARTEN;
 
-    SysTick_Config(SYSTEM_CORE_CLOCK / CFG_SYSTICK_RATE);
-
   #ifdef ARM_MATH_CM7
     //BSP_CPU_CacheEnable();
   #endif
 
-    ISR_Initialize();
-    IO_InitializeAll();         //    LED_Init(IO_LED1); //    IO_TogglePin(IO_LED1);
     DIGINI_Initialize();
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
@@ -175,10 +171,6 @@ SystemState_e BSP_PostOS_Initialize(void)
     State = DIGINI_PostInitialize();
   #if (DIGINI_USE_GRAFX == DEF_ENABLED)
     SKIN_pTask->RegisterPostLoadingCallback(BSP_PostLoadingSkinFontPatch);
-  #endif
-
-  #if (DIGINI_USE_COMM_MODULE == DEF_ENABLED)
-    pTaskCOMM->Initialize();
   #endif
 
     pTaskLoading->Initialize();
