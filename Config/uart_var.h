@@ -34,7 +34,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define UART_STANDARD_CONFIGURATION_RX ( DMA_MODE_NORMAL             | \
+#define UART_STANDARD_CONFIGURATION_RX ( DMA_MODE_CIRCULAR           | \
                                          DMA_PERIPHERAL_TO_MEMORY    | \
                                          DMA_PERIPHERAL_NO_INCREMENT | \
                                          DMA_MEMORY_INCREMENT        | \
@@ -68,6 +68,31 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         UART_Config_e(UART_CFG_N_8_1 | UART_CFG_OVER_8 | UART_CFG_ENABLE_RX_TX),
         UART_BAUD_115200,
         UART_WAIT_ON_BUSY,
+
+        // DMA_RX
+        {
+            // Other choice
+         // UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+         // DMA_LIFCR_CTCIF2,                               // RX_IT_Flag
+         // DMA2_Stream2,                                   // RX_DMA_TypeDef
+         // DMA2_Stream2_IRQn,                              // RX_IRQn
+         // 4,
+
+            UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_4, // Configuration + DMA_Channel RX
+            DMA_HIFCR_CTCIF5,                               // RX_IT_Flag
+            DMA2_Stream5,                                   // RX_DMA_TypeDef
+            DMA2_Stream5_IRQn,                              // RX_IRQn
+            4,
+        },
+
+        // DMA_TX
+        {
+            UART_STANDARD_CONFIGURATION_TX | DMA_CHANNEL_4, // Configuration + DMA_Channel TX
+            DMA_HIFCR_CTCIF7,                               // TX_IT_Flag
+            DMA2_Stream7,                                   // TX_DMA_TypeDef
+            DMA2_Stream7_IRQn,                              // TX_IRQn
+            4,
+        },
     },
   #endif
 
