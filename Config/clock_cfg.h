@@ -96,7 +96,7 @@
 #define CFG_SAI1_SOURCE_MUX                         CFG_SAI1_PLLSAIQ
 #define CFG_SAI2_SOURCE_MUX                         CFG_SAI2_PLLSAIQ
 #define CFG_SDMMC1_SOURCE_MUX                       CFG_SDMMC1_PLL48_CLOCK
-#define CFG_USART1_SOURCE_MUX                       CFG_USART1_SYS_CLOCK
+#define CFG_USART1_SOURCE_MUX                       CFG_USART1_PCLK2
 #define CFG_USART2_SOURCE_MUX                       CFG_USART2_PCLK1
 #define CFG_USART3_SOURCE_MUX                       CFG_USART3_PCLK1
 #define CFG_UART4_SOURCE_MUX                        CFG_UART4_PCLK1
