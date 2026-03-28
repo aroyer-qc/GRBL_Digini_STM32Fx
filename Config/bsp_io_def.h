@@ -400,5 +400,7 @@
 
 // IO_LIMIT_A is a fake limit switch
 
+#define IO_ETH_EXT_LED      IO_NOT_DEFINED
+
 
 //-------------------------------------------------------------------------------------------------

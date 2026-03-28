@@ -27,12 +27,6 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// Include file(s)
-//-------------------------------------------------------------------------------------------------
-
-#include "./Digini/lib_digini.h"
-
-//-------------------------------------------------------------------------------------------------
 
 #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
 
@@ -53,11 +47,8 @@
 #define TASK_WEBSERVER_STACK_SIZE            500
 #define TASK_WEBSERVER_PRIO                  6
 
-#define TASK_NETWORK_STACK_SIZE              500
-#define TASK_NETWORK_PRIO                    2
-
-//#define TASK_NETWORK_STACK_SIZE              1024
-//#define TASK_NETWORK_PRIO                    4
+#define TASK_NETWORK_STACK_SIZE              512
+#define TASK_NETWORK_PRIO                    4
 
 //-------------------------------------------------------------------------------------------------
 // Class definition(s)
@@ -70,11 +61,11 @@ class ClassNetwork
 
     // Task
     void            Network                     (void);
-    void            WebServer                   (void);
+//    void            WebServer                   (void);
 
 
 
-    nOS_Error       Initialize                  (void);
+    SystemState_e   Initialize                  (void);
 
 
   private:
@@ -85,16 +76,15 @@ class ClassNetwork
     //void            TCP_EchoServer_Initialize   (void);
     //rr_t           TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
 
-    static nOS_Thread      m_WebServerHandle;
-    static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];
+//    static nOS_Thread      m_WebServerHandle;
+    //static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];
     static nOS_Thread      m_NetworkHandle;
     static nOS_Stack       m_NetworkStack       [TASK_NETWORK_STACK_SIZE];
-    struct netconn*        m_WebServerConn;
-    struct netconn*        m_WebServerNewConn;
+    //struct netconn*        m_WebServerConn;
+//    struct netconn*        m_WebServerNewConn;
 
-
-
-
+    class IP_Manager       m_IP_Manager;
+    //class ETH_IF_Driver    m_IF_Driver;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -113,7 +103,7 @@ TASK_NETWORK_EXTERN class ClassNetwork  TaskNetwork;
 // Function prototype(s)
 //-------------------------------------------------------------------------------------------------
 
-extern "C" void TaskWebServer_Wrapper       (void* pvParameters);
+//extern "C" void TaskWebServer_Wrapper       (void* pvParameters);
 extern "C" void TaskNetwork_Wrapper         (void* pvParameters);
 
 //-------------------------------------------------------------------------------------------------

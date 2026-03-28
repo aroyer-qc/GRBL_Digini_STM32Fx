@@ -110,6 +110,7 @@
 #define DIGINI_USE_CRC_32                   DEF_ENABLED
 #define DIGINI_USE_CRC_32_AUTOSAR           DEF_DISABLED
 #define DIGINI_USE_CRC_32_BZIP2             DEF_DISABLED
+#define DIGINI_USE_CRC_32_B                 DEF_DISABLED
 #define DIGINI_USE_CRC_32_C                 DEF_DISABLED
 #define DIGINI_USE_CRC_32_CD_ROM_EDC        DEF_DISABLED
 #define DIGINI_USE_CRC_32_D                 DEF_DISABLED

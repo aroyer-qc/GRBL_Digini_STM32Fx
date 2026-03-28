@@ -34,7 +34,8 @@
 #define UART_DRIVER_RX_ERROR_CFG                DEF_DISABLED                 // need this because we need to flush buffer if any error since they are dynamically assign.
 #define UART_DRIVER_RX_IDLE_CFG                 DEF_ENABLED
 #define UART_DRIVER_TX_EMPTY_CFG                DEF_DISABLED
-#define UART_DRIVER_TX_COMPLETED_CFG            DEF_ENABLED
+#define UART_DRIVER_TX_COMPLETED_CFG            DEF_DISABLED
+#define UART_DRIVER_DMA_TX_COMPLETED_CFG        DEF_ENABLED
 
 #define UART_DRIVER_SUPPORT_UART1_CFG           DEF_ENABLED
 #define UART_DRIVER_SUPPORT_UART2_CFG           DEF_DISABLED
@@ -46,10 +47,12 @@
 #define UART_DRIVER_SUPPORT_UART8_CFG           DEF_DISABLED
 //  #define UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG    DEF_DISABLED  See H7 if it is still good
 
+
 #define UART_DRIVER_INTERNAL_RX_BUFFER_SIZE     64                                // this is very unsafe setting.. need to check with who is using this setting... it must be linked to the owner of the serial port
 
+//-------------------------------------------------------------------------------------------------
+
 #define TERMINAL_SERIAL                         UART_DRIVER_ID_1
-//#define DEBUG_SERIAL                          UART_DRIVER_ID_3
 
 #if (UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG == DEF_ENABLED)
 

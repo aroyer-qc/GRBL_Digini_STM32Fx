@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : main.cpp
+//  File :  ip_var.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2024 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -24,38 +24,15 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------
-// Include file(s)
-//-------------------------------------------------------------------------------------------------
+#ifdef LIB_IP_MANAGER_GLOBAL
 
-#include "./Digini/lib_digini.h"
-#include "bsp.h"
+class IP_Manager myWiredIP;
 
-//-------------------------------------------------------------------------------------------------
-//
-// Name:           main
-// Parameter(s):   void
-// Return:         int
-//
-// Description:    main() what more can be said
-//
-// Note(s):        Here we create the task that will start all the other
-//
-//-------------------------------------------------------------------------------------------------
-int main()
-{
-    ISR_Disable();
-    nOS_Init();
-    BSP_Initialize();                           // All hardware and system initialization
-    nOS_Start();
-    BSP_PostOS_Initialize();                    // All initialization that must be done after the OS is started
+#else
 
-    for(;;)                                     // It is the idle task..
-    {
-        nOS_Yield();
-    }
+extern class IP_Manager myWiredIP;
 
-    return 0;                                   // will never return
-}
+#endif
 
 //-------------------------------------------------------------------------------------------------
+

@@ -47,10 +47,10 @@
 
 #include "Task_grbl.h"
 #include "Task_loading.h"
-#include "Task_network.h"
 
 #if (USE_ETH_DRIVER == DEF_ENABLED) && (DIGINI_USE_ETHERNET == DEF_ENABLED)
-IP_Manager myIP_Manager;
+#include "Task_network.h"
+//IP_Manager myIP_Manager;
 #endif // (DIGINI_USE_ETHERNET == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void BSP_Initialize(void)
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
     myADC1_Driver.Initialize();
-    RNG_Initialize();
+    //RNG_Initialize();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -174,22 +174,6 @@ SystemState_e BSP_PostOS_Initialize(void)
   #endif
 
     pTaskLoading->Initialize();
-
-  #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-
-// MAC address configuration using GUID of the CPU.
-//#define MAC_ADDR0	                            (((char *)0x1FF0F420)[0])
-//#define MAC_ADDR1	                            (((char *)0x1FF0F420)[2])
-//#define MAC_ADDR2	                            (((char *)0x1FF0F420)[4])
-//#define MAC_ADDR3	                            (((char *)0x1FF0F420)[6])
-//#define MAC_ADDR4	                            (((char *)0x1FF0F420)[8])
-//#define MAC_ADDR5	                            (((char *)0x1FF0F420)[10])
-    // to debug
-    IP_MAC_Address_t MAC = {MAC_ADDR0, MAC_ADDR1, MAC_ADDR2, MAC_ADDR3, MAC_ADDR4, MAC_ADDR5};
-    myIP_Manager.Initialize(ETH_IF_GRBL, &MAC);
-
-    pTaskNetwork->Initialize();
-  #endif
    // pTaskGRBL->Initialize();
 
     Language_e Language;

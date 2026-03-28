@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File :  console_cfg.h
+//  File : menu_link_list_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -27,37 +27,15 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// Define(s)
+// Global Define(s)
 //-------------------------------------------------------------------------------------------------
-
-#define CON_USE_COMM_UART                       &myUART_Terminal
-
-#define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading number of child process.
-
-
-// This define if enabled will trap every line starting with CON_TRAP_COMMENT_CHARACTER so the peer
-// module connected to the serial port can send information for watching user or debugging purpose.
-// By enabling the feature the code will not parse a line with CON_TRAP_COMMENT_CHARACTER until the
-// CON_TRAP_COMMENT_END_OF_LINE_MARKER is detected.
-#define CON_TRAP_COMMENT_INCOMING_LINE          DEF_ENABLED
-#define CON_TRAP_COMMENT_CHARACTER              '#'
-#define CON_TRAP_COMMENT_END_OF_LINE_MARKER     '\n'
-#define CON_TRAP_COMMENT_TIME_OUT               50
-
-// TODO is it the best place to put this....???
-
-//#define CON_DEBUG_LEVEL_1 to 16
-#define SYS_DEBUG_LEVEL_SYSTEM_STATUS           SYS_DEBUG_LEVEL_1
-#define SYS_DEBUG_LEVEL_SYSTEM_ACTION           SYS_DEBUG_LEVEL_2
-#define SYS_DEBUG_LEVEL_SYSTEM_HEALTH           SYS_DEBUG_LEVEL_3
-#define SYS_DEBUG_LEVEL_MONITOR_LOGS            SYS_DEBUG_LEVEL_4
-#define SYS_DEBUG_LEVEL_STACK_WARNING           SYS_DEBUG_LEVEL_5
-#define SYS_DEBUG_LEVEL_ETHERNET                SYS_DEBUG_LEVEL_6
-#define SYS_DEBUG_LEVEL_NANO_IP                 SYS_DEBUG_LEVEL_7
-#define SYS_DEBUG_LEVEL_MEMORY_POOL             SYS_DEBUG_LEVEL_8
 
 //-------------------------------------------------------------------------------------------------
 
+//               Enum ID,                  ID1,                ID2,                ID3,                ID4,                ID5,                ID6,                 ID7,               ID8
+#define LINK_LIST_DEF(X_LINK_LIST) \
+    X_LINK_LIST( LINK_LIST_MAIN_HUB,       LINK_MAIN_PAGE_XY,  LINK_MAIN_PAGE_ZX,  LINK_MAIN_PAGE_XYZ, LINK_MAIN_PAGE_XYT, LINK_MAIN_PAGE_ZXT, LINK_MAIN_PAGE_XYZT, INVALID_LINK,      INVALID_LINK ) \
+ /* X_LINK_LIST( LINK_LIST_JOG_HUB,        LINK_JOG_PAGE_XY,   LINK_JOG_PAGE_ZX,   LINK_JOG_PAGE_XYZ,  INVALID_LINK,       INVALID_LINK,       INVALID_LINK,        INVALID_LINK,      INVALID_LINK ) \ */
 
-
+//-------------------------------------------------------------------------------------------------
 

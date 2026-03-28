@@ -28,13 +28,11 @@
 // Include file(s)
 //-------------------------------------------------------------------------------------------------
 
-#include "./Digini/lib_digini.h"
+#define TASK_NETWORK_GLOBAL
+#include "./lib_digini.h"
+#undef  TASK_NETWORK_GLOBAL
 
 #if (DIGINI_USE_ETHERNET == DEF_ENABLED)
-
-#define TASK_NETWORK_GLOBAL
-#include "task_network.h"
-#undef TASK_NETWORK_GLOBAL
 
 //-------------------------------------------------------------------------------------------------
 // Private variable(s) and constant(s)
@@ -153,10 +151,10 @@ static const unsigned char PAGE_START[] =
 //
 //-------------------------------------------------------------------------------------------------
 
-nOS_Thread ClassNetwork::m_WebServerHandle;
-nOS_Stack  ClassNetwork::m_WebServerStack[TASK_WEBSERVER_STACK_SIZE];
 nOS_Thread ClassNetwork::m_NetworkHandle;
 nOS_Stack  ClassNetwork::m_NetworkStack[TASK_NETWORK_STACK_SIZE];
+//nOS_Thread ClassNetwork::m_WebServerHandle;
+//nOS_Stack  ClassNetwork::m_WebServerStack[TASK_WEBSERVER_STACK_SIZE];
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -175,10 +173,10 @@ extern "C" void TaskNetwork_Wrapper(void* pvParameters)
     (static_cast<ClassNetwork*>(pvParameters))->Network();
 }
 
-extern "C" void TaskWebServer_Wrapper(void* pvParameters)
-{
-    (static_cast<ClassNetwork*>(pvParameters))->WebServer();
-}
+//extern "C" void TaskWebServer_Wrapper(void* pvParameters)
+//{
+//    (static_cast<ClassNetwork*>(pvParameters))->WebServer();
+//}
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -192,22 +190,25 @@ extern "C" void TaskWebServer_Wrapper(void* pvParameters)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
-nOS_Error ClassNetwork::Initialize(void)
+SystemState_e ClassNetwork::Initialize(void)
 {
-    nOS_Error Error;
+    nOS_Error Error = NOS_OK;
 
-   // Diag("Initializing ClassNetwork\n");
+    //DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET, "Initializing ClassNetwork\n");
 
-    /*Error = nOS_ThreadCreate(&m_NetworkHandle,
+  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
+    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
+ //   myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
+  #endif
+
+    Error = nOS_ThreadCreate(&m_NetworkHandle,
                              TaskNetwork_Wrapper,
                              this,
                              &m_NetworkStack[0],
                              TASK_NETWORK_STACK_SIZE,
                              TASK_NETWORK_PRIO);
 
-    */
     // Webserver task
-
     /*Error = nOS_ThreadCreate(&m_WebServerHandle,
                              TaskWebServer_Wrapper,
                              this,
@@ -219,17 +220,8 @@ nOS_Error ClassNetwork::Initialize(void)
     // tcp echo server Init
     //TCP_EchoServerInitialize();
 
-  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-memset(&m_NetworkStack[0], 0xFF, TASK_NETWORK_STACK_SIZE * 4);
-//memset(&m_WebServerStack[0], 0xFF, TASK_WEBSERVER_STACK_SIZE * 4);
-
-    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
-    myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
-  #endif
-
-
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
-    return Error;
+    return (Error != NOS_OK) ? SYS_FAIL : SYS_READY;
 }
 
 
@@ -247,18 +239,16 @@ memset(&m_NetworkStack[0], 0xFF, TASK_NETWORK_STACK_SIZE * 4);
 //-------------------------------------------------------------------------------------------------
 void ClassNetwork::Network(void)
 {
+    m_IP_Manager.Initialize(IF_WIRED);
   //  struct netconn* conn;
  //   struct netconn* newconn;
    // err_t           err;
    // err_t           accept_err;
    // struct netbuf*  buf;
-    void*           data;
+  //  void*           data;
   //  u16_t           len;
    // err_t           recv_err;
 
-
-for(;;)
-{ nOS_Sleep(100);}
 
 #if 0  // need to reenable LWIP_NETCONN    1
     // Create a new connection identifier.
@@ -330,6 +320,16 @@ for(;;)
   //      nOS_Sleep(1);
   //  }
   #endif
+
+    for(;;)
+    {
+        /* Read a received packet from the Ethernet buffers and send it
+        to the lwIP for handling */
+        //ethernetif_input(&gnetif);
+
+        nOS_Sleep(500);
+        //LED_Toggle(IO_LED_GREEN);
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -350,6 +350,7 @@ for(;;)
 //  Note(s):
 //
 //-------------------------------------------------------------------------------------------------
+#if 0
 void ClassNetwork::WebServer(void)
 {
    // err_t  err;
@@ -394,7 +395,7 @@ for(;;)
   * @param conn: pointer on connection structure
   * @retval None
   */
-void ClassNetwork::WebServer_Serve(void)
+void ClassNetwork::WebServer_Server(void)
 {
     #if 0
     struct netbuf*  inbuf;
@@ -503,7 +504,7 @@ void ClassNetwork::WebServer_DynamicPage(void)
     pMemoryPool->Free((void**)&pPageHits);
     #endif
 }
-
+#endif // if 0
 //-------------------------------------------------------------------------------------------------
 
 #endif

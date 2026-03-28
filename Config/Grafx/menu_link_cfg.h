@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : main.cpp
+//  File :  menu_link_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -24,38 +24,44 @@
 //
 //-------------------------------------------------------------------------------------------------
 
-//-------------------------------------------------------------------------------------------------
-// Include file(s)
-//-------------------------------------------------------------------------------------------------
-
-#include "./Digini/lib_digini.h"
-#include "bsp.h"
+#pragma once
 
 //-------------------------------------------------------------------------------------------------
-//
-// Name:           main
-// Parameter(s):   void
-// Return:         int
-//
-// Description:    main() what more can be said
-//
-// Note(s):        Here we create the task that will start all the other
-//
+// Global Define(s)
 //-------------------------------------------------------------------------------------------------
-int main()
-{
-    ISR_Disable();
-    nOS_Init();
-    BSP_Initialize();                           // All hardware and system initialization
-    nOS_Start();
-    BSP_PostOS_Initialize();                    // All initialization that must be done after the OS is started
 
-    for(;;)                                     // It is the idle task..
-    {
-        nOS_Yield();
-    }
+//          Enum ID,              Struct object name
+#define LINK_DEF(X_LINK)                                 \
+    X_LINK( LINK_MAIN_LOADING,    PageLoading          ) \
+    X_LINK( LINK_MAIN_HUB,        PageMainHub          ) \
+    X_LINK( LINK_JOG_HUB,         PageJogHub           ) \
+    X_LINK( LINK_MAIN_PAGE_XY,    PageMainDisplayXY    ) \
+    X_LINK( LINK_MAIN_PAGE_ZX,    PageMainDisplayXZ    ) \
+    X_LINK( LINK_MAIN_PAGE_XYZ,   PageMainDisplayXYZ   ) \
+    X_LINK( LINK_MAIN_PAGE_XYT,   PageMainDisplayXYT   ) \
+    X_LINK( LINK_MAIN_PAGE_ZXT,   PageMainDisplayXZT   ) \
+    X_LINK( LINK_MAIN_PAGE_XYZT,  PageMainDisplayXYZT  ) \
+/*    X_LINK( LINK_MAIN_PAGE_XYZAT, PageMainDisplayXYZAT ) */\
+    X_LINK( LINK_MAIN_MENU,       PageMenu             ) \
+    X_LINK( LINK_TEST_INPUT,      InputTestMenu        ) \
+    X_LINK( LINK_INPUT_DATA,      InputData            ) \
+    X_LINK( LINK_INPUT_DATA_HEX,  InputDataHexa        ) \
+    X_LINK( LINK_AXIS_X,          PageAxisX            ) \
+    X_LINK( LINK_AXIS_Y,          PageAxisY            ) \
+    X_LINK( LINK_AXIS_Z,          PageAxisZ            ) \
+    X_LINK( LINK_SPINDLE,         PageSpindle          ) \
+    X_LINK( LINK_MACHINE_SELECT,  PageMachineSelect    ) \
+    X_LINK( LINK_DIAGNOSTICS,     PageDiagnostic       ) \
+    X_LINK( LINK_PAGE_INFO,       PageInfo             ) \
+    X_LINK( LINK_PAGE_TERMINAL,   PageTerminal         ) \
 
-    return 0;                                   // will never return
-}
 
 //-------------------------------------------------------------------------------------------------
+
+//    X_LINK( LINK_SET_REF,         PageMachineSelect    )
+
+
+
+
+
+

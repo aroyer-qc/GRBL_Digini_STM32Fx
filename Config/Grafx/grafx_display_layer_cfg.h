@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File :  console_cfg.h
+//  File :  grafx_display_layer_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2021 Alain Royer.
+// Copyright(c) 2020 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -27,37 +27,18 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// Define(s)
-//-------------------------------------------------------------------------------------------------
+//           Name of the layer              Initial layer      Pixel Format            Size X                 Size Y
+#define LAYER_DEF(X_LAYER) \
+    X_LAYER( BACKGROUND_DISPLAY_LAYER_0,    LAYER_BACKGROUND,  PIXEL_FORMAT_RGB565,    GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
+    X_LAYER( FOREGROUND_DISPLAY_LAYER_0,    LAYER_FOREGROUND,  PIXEL_FORMAT_ARGB8888,  GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
+    X_LAYER( CONSTRUCTION_BACKGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
+    X_LAYER( CONSTRUCTION_FOREGROUND_LAYER, LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
+    X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
+    X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
 
-#define CON_USE_COMM_UART                       &myUART_Terminal
-
-#define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading number of child process.
-
-
-// This define if enabled will trap every line starting with CON_TRAP_COMMENT_CHARACTER so the peer
-// module connected to the serial port can send information for watching user or debugging purpose.
-// By enabling the feature the code will not parse a line with CON_TRAP_COMMENT_CHARACTER until the
-// CON_TRAP_COMMENT_END_OF_LINE_MARKER is detected.
-#define CON_TRAP_COMMENT_INCOMING_LINE          DEF_ENABLED
-#define CON_TRAP_COMMENT_CHARACTER              '#'
-#define CON_TRAP_COMMENT_END_OF_LINE_MARKER     '\n'
-#define CON_TRAP_COMMENT_TIME_OUT               50
-
-// TODO is it the best place to put this....???
-
-//#define CON_DEBUG_LEVEL_1 to 16
-#define SYS_DEBUG_LEVEL_SYSTEM_STATUS           SYS_DEBUG_LEVEL_1
-#define SYS_DEBUG_LEVEL_SYSTEM_ACTION           SYS_DEBUG_LEVEL_2
-#define SYS_DEBUG_LEVEL_SYSTEM_HEALTH           SYS_DEBUG_LEVEL_3
-#define SYS_DEBUG_LEVEL_MONITOR_LOGS            SYS_DEBUG_LEVEL_4
-#define SYS_DEBUG_LEVEL_STACK_WARNING           SYS_DEBUG_LEVEL_5
-#define SYS_DEBUG_LEVEL_ETHERNET                SYS_DEBUG_LEVEL_6
-#define SYS_DEBUG_LEVEL_NANO_IP                 SYS_DEBUG_LEVEL_7
-#define SYS_DEBUG_LEVEL_MEMORY_POOL             SYS_DEBUG_LEVEL_8
+// Reserved define name (N/U in this app)
+// BACKGROUND_DISPLAY_LAYER_1
+// FOREGROUND_DISPLAY_LAYER_1
 
 //-------------------------------------------------------------------------------------------------
-
-
-
 

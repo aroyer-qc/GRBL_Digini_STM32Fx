@@ -1206,10 +1206,7 @@ void DMA2_Stream6_IRQHandler        (void)
 */
 void DMA2_Stream7_IRQHandler        (void)
 {
-    while(1)
-    {
-        __asm("nop");
-    };
+    myUART_Terminal.DMA_TX_IRQ_Handler();
 }
 
 void USART6_IRQHandler              (void)

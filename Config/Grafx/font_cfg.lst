@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File : main.cpp
+//  File :  font_cfg.lst
 //
 //-------------------------------------------------------------------------------------------------
 //
@@ -23,39 +23,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
-
-//-------------------------------------------------------------------------------------------------
-// Include file(s)
-//-------------------------------------------------------------------------------------------------
-
-#include "./Digini/lib_digini.h"
-#include "bsp.h"
-
-//-------------------------------------------------------------------------------------------------
 //
-// Name:           main
-// Parameter(s):   void
-// Return:         int
-//
-// Description:    main() what more can be said
-//
-// Note(s):        Here we create the task that will start all the other
+//  Note: List here all the font in the order they appear in the skin file
 //
 //-------------------------------------------------------------------------------------------------
-int main()
-{
-    ISR_Disable();
-    nOS_Init();
-    BSP_Initialize();                           // All hardware and system initialization
-    nOS_Start();
-    BSP_PostOS_Initialize();                    // All initialization that must be done after the OS is started
 
-    for(;;)                                     // It is the idle task..
-    {
-        nOS_Yield();
-    }
+FT_DIGITAL_16,
+FT_DIGITAL_24,
+FT_DIGITAL_36,
+FT_DIGITAL_48,
+FT_DIGITAL_64,
+FT_ARIAL_10,
+FT_ARIAL_16,
+FT_ARIAL_24,
+FT_TERMINAL,
 
-    return 0;                                   // will never return
-}
-
-//-------------------------------------------------------------------------------------------------
