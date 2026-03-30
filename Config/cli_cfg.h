@@ -30,7 +30,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define CLI_USE_AT_PREFIX_ON_COMMAND        DEF_DISABLED              // Add 'AT' prefix in front of any command 
+#define CLI_USE_AT_PREFIX_ON_COMMAND        DEF_DISABLED              // Add 'AT' prefix in front of any command
 #define CLI_USE_PASSWORD                    DEF_DISABLED              // Command password support
 #define CLI_USE_EXTENDED_ERROR              DEF_ENABLED               // CLI return a more informative error
 #define CLI_STRING_SIZE                     32

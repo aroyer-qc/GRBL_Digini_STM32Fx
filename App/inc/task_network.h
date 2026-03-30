@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2026 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -44,11 +44,13 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define TASK_WEBSERVER_STACK_SIZE            500
-#define TASK_WEBSERVER_PRIO                  6
+//#define TASK_WEBSERVER_STACK_SIZE            500
+//#define TASK_WEBSERVER_PRIO                  6
 
-#define TASK_NETWORK_STACK_SIZE              512
+#define TASK_NETWORK_STACK_SIZE              128
 #define TASK_NETWORK_PRIO                    4
+
+#define MQTT_Q_TEST_BUFFER                   4
 
 //-------------------------------------------------------------------------------------------------
 // Class definition(s)
@@ -56,55 +58,74 @@
 
 class ClassNetwork
 {
-  public:
+    public:
 
+                        ClassNetwork                ()                      {};
+                       ~ClassNetwork                ()                      {};
 
-    // Task
-    void            Network                     (void);
-//    void            WebServer                   (void);
+        // Task
+        void            Network                     (void);
+      //void            WebServer                   (void);
 
+        SystemState_e   Initialize                  (void);
 
+        NetworkContext* GetContext                  (void)                       { return &m_NetworkContext; }
 
-    SystemState_e   Initialize                  (void);
+      #if (IP_USE_SNTP == DEF_ENABLED)
+        void            SetNTP_ResolveIP            (IP_Address_t ResolveIP)     { m_NTP_ResolveIP = ResolveIP; }
+      #endif
 
+    private:
 
-  private:
+      #if (IP_USE_SNTP == DEF_ENABLED)
+        static void     DNS_NTP_Callback            (void* pContext, bool Success, IP_Address_t IP);
+      #endif
 
-    void            WebServer_Serve             (void);
-    void            WebServer_DynamicPage       (void);
+      //void            WebServer_Serve             (void);
+      //void            WebServer_DynamicPage       (void);
 
-    //void            TCP_EchoServer_Initialize   (void);
-    //rr_t           TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
+      //void            TCP_EchoServer_Initialize   (void);
+      //rr_t            TCP_EchoServer_Accept       (void* arg, struct tcp_pcb* newpcb, err_t err);
 
-//    static nOS_Thread      m_WebServerHandle;
-    //static nOS_Stack       m_WebServerStack     [TASK_WEBSERVER_STACK_SIZE];
-    static nOS_Thread      m_NetworkHandle;
-    static nOS_Stack       m_NetworkStack       [TASK_NETWORK_STACK_SIZE];
-    //struct netconn*        m_WebServerConn;
-//    struct netconn*        m_WebServerNewConn;
+      #if (IP_USE_SNTP == DEF_ENABLED)
+        //SNTP_Client                     m_SNTP;                                                 // Simple Network Transport Protocol
+        //IP_Address_t                    m_NTP_ResolveIP;
+        //bool                            m_NTP_DNS_Resolved;
+        //TickCount_t                     m_LastDNS_Request;
+      #endif
 
-    class IP_Manager       m_IP_Manager;
-    //class ETH_IF_Driver    m_IF_Driver;
+      #if (IP_USE_SOAP == DEF_ENABLED)
+        SOAP_Client                     m_SOAP                                                  // Simple Object Access Protocol
+        uint8_t                         m_SOAP_Server_1[IP_MAX_URL_SIZE];                       // Messaging protocol specification for exchanging structured information.
+        uint8_t                         m_SOAP_Server_2[IP_MAX_URL_SIZE];
+      #endif
+
+      // nOS_Thread                     m_WebServerHandle;
+      //nOS_Stack                       m_WebServerStack            [TASK_WEBSERVER_STACK_SIZE]     NOS_STACK_LOCATION;
+        nOS_Thread                      m_Handle;
+        nOS_Stack                       m_Stack                     [TASK_NETWORK_STACK_SIZE];
+
+        nOS_Queue                       m_MQTT_TestQ_1;
+        nOS_Queue                       m_MQTT_TestQ_2;
+        nOS_Queue                       m_MQTT_TestQ_3;
+        MQTT_Message_t*                 m_pQ_Buffer1[MQTT_Q_TEST_BUFFER];
+        MQTT_Message_t*                 m_pQ_Buffer2[MQTT_Q_TEST_BUFFER];
+        MQTT_Message_t*                 m_pQ_Buffer3[MQTT_Q_TEST_BUFFER];
+
+        class NetworkContext            m_NetworkContext;
 };
 
 //-------------------------------------------------------------------------------------------------
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-TASK_NETWORK_EXTERN class ClassNetwork  TaskNetwork;
-
 #ifdef TASK_NETWORK_GLOBAL
-                 class ClassNetwork* pTaskNetwork = &TaskNetwork;
+    class ClassNetwork  TaskNetwork;
+    class ClassNetwork* pTaskNetwork = &TaskNetwork;
 #else
     extern       class ClassNetwork* pTaskNetwork;
+    extern ETH_LinkDriver* pSTM32_LinkDriver;
 #endif
-
-//-------------------------------------------------------------------------------------------------
-// Function prototype(s)
-//-------------------------------------------------------------------------------------------------
-
-//extern "C" void TaskWebServer_Wrapper       (void* pvParameters);
-extern "C" void TaskNetwork_Wrapper         (void* pvParameters);
 
 //-------------------------------------------------------------------------------------------------
 

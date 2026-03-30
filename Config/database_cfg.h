@@ -36,11 +36,6 @@
 
 //-------------------------------------------------------------------------------------------------
 // Define(s)
-//-------------------------------------------------------------------------------------------------
-
-// specific to Grafx support
-#define     DBASE_MAX_SKIN_IMAGE_QTY            256                                 // this is max the number of image in database
-#define     DBASE_MAX_SKIN_FONT_QTY             32                                  // this is max the number of font in database
 
 //-------------------------------------------------------------------------------------------------
 

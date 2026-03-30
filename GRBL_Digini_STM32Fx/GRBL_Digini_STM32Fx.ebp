@@ -98,6 +98,7 @@
 			<Add directory="..\Module\Digini\Peripheral\inc\FatFs" />
 			<Add directory="..\module\Digini\Peripheral\inc\device\port\STM32F7xx" />
 			<Add directory="..\module\Digini\Peripheral\inc\device\core" />
+			<Add directory="..\Config\Grafx" />
 		</Compiler>
 		<Cpp>
 			<Add option="-mfloat-abi=hard" />
@@ -386,6 +387,12 @@
 		<Unit filename="..\module\Digini\Database\src\port\STM32F7xx\lib_class_STM32F7_bkpreg_dbase.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\module\Digini\Digini\inc\lib_advanced_macro.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_class_cbi.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_define.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_label.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_macro.h" />
+		<Unit filename="..\module\Digini\Digini\inc\lib_typedef.h" />
 		<Unit filename="..\module\Digini\Digini\src\digini.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -395,7 +402,8 @@
 		<Unit filename="..\module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\inc\driver\generic\lib_STM32xxx_lcd_480x272 - RK043FN48H.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\driver\generic\lib_Grafx_GenDriver.h" />
+		<Unit filename="..\module\Digini\Grafx\inc\driver\generic\lib_lcd_480x272 - RK043FN48H.h" />
 		<Unit filename="..\module\Digini\Grafx\src\basic\lib_basic_alpha.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -421,10 +429,10 @@
 		<Unit filename="..\module\Digini\Grafx\src\color\lib_grafx_color.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\driver\generic\lib_STM32xxx_Grafx_GenDriver.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\driver\generic\lib_STM32xxx_lcd_480x272 - RK043FN48H.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Grafx\src\driver\generic\lib_STM32xxx_lcd_480x272 - RK043FN48H.cpp">
+		<Unit filename="..\module\Digini\Grafx\src\driver\generic\lib_STM32xxx_ltdc_Grafx_GenDriver.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Grafx\src\font\lib_class_font.cpp">
@@ -520,16 +528,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\lib_digini.h" />
+		<Unit filename="..\module\Digini\Memory\inc\lib_memory.h" />
 		<Unit filename="..\module\Digini\Memory\src\lib_memory.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Memory\src\lib_memory_node.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Memory\src\lib_node_list.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\NanoIP\src\Device\lib_class_PHY_LAN8742A.cpp">
+		<Unit filename="..\module\Digini\NanoIP\src\Driver\MAC\lib_class_PHY_LAN8742A.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\NanoIP\src\lib_class_arp.cpp">
@@ -555,7 +558,7 @@
 		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_dma.h" />
 		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_class_STM32F7_uart.h" />
 		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7.h" />
-		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_sdram.h" />
+		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_fmc_sdram.h" />
 		<Unit filename="..\module\Digini\Peripheral\inc\port\STM32F7xx\lib_STM32F7_system_clock.h" />
 		<Unit filename="..\module\Digini\Peripheral\src\device\lib_class_i2c_EEprom.cpp">
 			<Option compilerVar="CC" />
@@ -617,6 +620,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_sdio.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_sdram.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_spi.cpp">

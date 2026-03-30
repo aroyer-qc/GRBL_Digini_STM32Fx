@@ -42,33 +42,28 @@
 #define SERIAL_NUMBER_SIZE          16
 
 // Static value that is not configurable
-extern const char OUR_FIRMWARE_NAME[];
-extern const char OUR_FIRMWARE_VERSION[];
-extern const char OUR_FIRMWARE_DIGINI_NAME[];
-extern const char OUR_FIRMWARE_DIGINI_VERSION[];
-extern const char OUR_FIRMWARE_BUILD_DATE[];
+extern const char OUR_FIRMWARE_NAME             [16];
+extern const char OUR_FIRMWARE_VERSION          [];
+extern const char OUR_FIRMWARE_DIGINI_NAME      [11];
+extern const char OUR_FIRMWARE_DIGINI_VERSION   [7];
+extern const char OUR_FIRMWARE_BUILD_DATE       [24];
 
 // Configurable value
 extern char OEM_VENDOR_NAME[8];
-extern char OEM_MODEL_NAME[24];
+extern char OEM_MODEL_NAME[17];
 extern char OEM_SERIAL_NUMBER[SERIAL_NUMBER_SIZE];
 
 #ifdef BSP_GLOBAL
-const char OUR_FIRMWARE_NAME[]           = { "GRBL Controller"      };
-const char OUR_FIRMWARE_VERSION[]        = { GRBL_VERSION           };
-const char OUR_FIRMWARE_DIGINI_NAME[]    = { "Digini GUI"           };
-const char OUR_FIRMWARE_DIGINI_VERSION[] = { DIGINI_VERSION         };
-const char OUR_FIRMWARE_BUILD_DATE[]     = { __DATE__ "  " __TIME__ };
+const char OUR_FIRMWARE_NAME            [16] = { "GRBL Controller"      };
+const char OUR_FIRMWARE_VERSION         []   = { GRBL_VERSION           };
+const char OUR_FIRMWARE_DIGINI_NAME     [11] = { "Digini GUI"           };
+const char OUR_FIRMWARE_DIGINI_VERSION  [7]  = { DIGINI_VERSION         };
+const char OUR_FIRMWARE_BUILD_DATE      [24] = { __DATE__ "  " __TIME__ };
 
- #ifdef DEBUG
-char OEM_VENDOR_NAME[]                   = { "Digini"               };
-char OEM_MODEL_NAME[]                    = { "STM32F746G-DISCO"     };
-char OEM_SERIAL_NUMBER[]                 = { "00000000"             };
- #else
-char OUR_VENDOR_NAME[]                   = { "" };
-char OUR_MODEL_NAME[]                    = { "" };
-char OEM_SERIAL_NUMBER[]                 = { "" };
- #endif
+char OEM_VENDOR_NAME                    [8]  = { "Digini"               };
+char OEM_MODEL_NAME                     [17] = { "STM32F746G-DISCO"     };
+char OEM_SERIAL_NUMBER  [SERIAL_NUMBER_SIZE] = { "00000000"             };
+
 #endif
 
 //-------------------------------------------------------------------------------------------------

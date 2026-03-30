@@ -42,6 +42,7 @@
 //-------------------------------------------------------------------------------------------------
 
 #define BSP_GLOBAL
+#include "./lib_digini.h"
 #include "bsp.h"
 #undef  BSP_GLOBAL
 

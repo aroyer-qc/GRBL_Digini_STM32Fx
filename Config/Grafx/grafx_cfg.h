@@ -58,6 +58,15 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
+#define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
+#define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
+#define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED     // Enable support for Multi-touch
+#define GRAFX_PDI_INTERRUPT_IO                          DEF_DISABLED    // Pointing device (touch) IRQ is not available on DISCO746
+#define GRAFX_USE_GRAFX_CUSTOM_COLOR                    DEF_ENABLED    // Need color_cfg.h
+
+#define GRAFX_USE_RAM_DATABASE                          DEF_ENABLED
+#define GRAFX_USE_QUAD_SPI_FOR_DATABASE      			DEF_DISABLED
+
 //-------------------------------------------------------------------------------------------------
 // GRAFX Configuration for decompressing data
 //
@@ -76,7 +85,6 @@
 //-------------------------------------------------------------------------------------------------
 
 #define GRAFX_SKIN_FILENAME                             "grbl.skn"
-#define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
 
 //-------------------------------------------------------------------------------------------------
 
@@ -101,21 +109,11 @@
 #define GRAFX_PAINT_BOX_DEBUG                           DEF_DISABLED
 #define GRAFX_PAINT_BOX_DEBUG_COLOR                     RED
 
-#ifdef DIGINI_USE_QSPI
-  #ifndef DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE
-    #define DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE      DEF_DISABLED
-  #endif
-#endif
-
 #if (GRAFX_USE_POINTING_DEVICE == DEF_ENABLED)
   #define GRAFX_PDI_SWAP_XY                             DEF_ENABLED
   #define GRAFX_PDI_INVERT_X                            DEF_DISABLED    // Not existent on this setup
   #define GRAFX_PDI_INVERT_Y                            DEF_DISABLED    // Not existent on this setup
 #endif
-
-#define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
-#define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED     // Enable support for Multi-touch
-#define GRAFX_PDI_INTERRUPT_IO                          DEF_DISABLED    // Pointing device (touch) IRQ is not available on DISCO746
 
 
 //#define GRAFX_USE_TIMED_WIDGET

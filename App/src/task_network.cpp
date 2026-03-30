@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2023 Alain Royer.
+// Copyright(c) 2026 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -37,6 +37,14 @@
 //-------------------------------------------------------------------------------------------------
 // Private variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
+
+// Hardware drivers
+ETH_Driver           myETH_Driver;
+PHY_LAN8742A_Driver  myPHY_Driver;
+
+// Adapter
+ETH_STM32_Adapter    mySTM32_LinkDriver(&myETH_Driver, &myPHY_Driver, 0);
+ETH_LinkDriver*      pSTM32_LinkDriver = &mySTM32_LinkDriver;
 
 /*
 u32_t nPageHits = 0;
@@ -145,16 +153,6 @@ static const unsigned char PAGE_START[] =
 0x6e,0x61,0x3b,0x22,0x3e,0x4e,0x75,0x6d,0x62,0x65,0x72,0x20,0x6f,0x66,0x20,0x70,
 0x61,0x67,0x65,0x20,0x68,0x69,0x74,0x73,0x3a,0x0d,0x0a,0x00};
 */
-//-------------------------------------------------------------------------------------------------
-//
-//   Static Variables
-//
-//-------------------------------------------------------------------------------------------------
-
-nOS_Thread ClassNetwork::m_NetworkHandle;
-nOS_Stack  ClassNetwork::m_NetworkStack[TASK_NETWORK_STACK_SIZE];
-//nOS_Thread ClassNetwork::m_WebServerHandle;
-//nOS_Stack  ClassNetwork::m_WebServerStack[TASK_WEBSERVER_STACK_SIZE];
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -163,7 +161,7 @@ nOS_Stack  ClassNetwork::m_NetworkStack[TASK_NETWORK_STACK_SIZE];
 //  Parameter(s):   void* pvParameters
 //  Return:         void
 //
-//  Description:    main() for the taskNetwork
+//  Description:    main() for the ClassNetwork
 //
 //  Note(s):
 //
@@ -177,6 +175,27 @@ extern "C" void TaskNetwork_Wrapper(void* pvParameters)
 //{
 //    (static_cast<ClassNetwork*>(pvParameters))->WebServer();
 //}
+
+
+#if (IP_USE_SNTP == DEF_ENABLED)
+void ClassNetwork::DNS_NTP_Callback(void* pContext, bool Success, IP_Address_t IP)
+{
+    ClassNetwork* pNetwork = (ClassNetwork*)pContext;
+
+    if(Success == true)
+    {
+        pNetwork->m_NTP_DNS_Resolved = true;
+        pNetwork->m_NTP_ResolveIP    = IP;
+
+        // Clean and correct: start SNTP transaction
+        pNetwork->m_SNTP.Start(IP);
+    }
+    else
+    {
+        pNetwork->m_NTP_DNS_Resolved = false;
+    }
+}
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //
@@ -194,34 +213,52 @@ SystemState_e ClassNetwork::Initialize(void)
 {
     nOS_Error Error = NOS_OK;
 
-    //DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET, "Initializing ClassNetwork\n");
-
-  #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)
-    myStacktistic.Register(&m_NetworkStack[0],   TASK_NETWORK_STACK_SIZE,   "Network");
- //   myStacktistic.Register(&m_WebServerStack[0], TASK_WEBSERVER_STACK_SIZE, "WEB Server");
+  #if (IP_USE_SNTP == DEF_ENABLED)
+    m_NTP_DNS_Resolved = false;
+    m_LastDNS_Request  = 0;
   #endif
 
-    Error = nOS_ThreadCreate(&m_NetworkHandle,
+    DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET, "Initializing ClassNetwork\n");
+
+    Error = nOS_ThreadCreate(&m_Handle,
                              TaskNetwork_Wrapper,
                              this,
-                             &m_NetworkStack[0],
+                             &m_Stack[0],
                              TASK_NETWORK_STACK_SIZE,
-                             TASK_NETWORK_PRIO);
+                             TASK_NETWORK_PRIO,
+                             "Task Network");
+
 
     // Webserver task
-    /*Error = nOS_ThreadCreate(&m_WebServerHandle,
+
+/*    Error = nOS_ThreadCreate(&m_WebServerHandle,
                              TaskWebServer_Wrapper,
                              this,
                              &m_WebServerStack[0],
                              TASK_WEBSERVER_STACK_SIZE,
-                             TASK_WEBSERVER_PRIO);
+                             TASK_WEBSERVER_PRIO,
+                             "WEB Server"};
 */
 
-    // tcp echo server Init
-    //TCP_EchoServerInitialize();
 
-    //Error = nOS_FlagCreate(&this->m_Flag, 0);
-    return (Error != NOS_OK) ? SYS_FAIL : SYS_READY;
+  #if (IP_USE_TCP_CLIENT == DEF_ENABLED) && (IP_USE_MQTT == DEF_ENABLED)
+    static bool MQTT_Test = false;
+
+    if(MQTT_Test == false)
+    {
+        MQTT_Test = true;
+        nOS_QueueCreate(&m_MQTT_TestQ_1, m_pQ_Buffer1, sizeof(MQTT_Message_t*), MQTT_Q_TEST_BUFFER);
+        nOS_QueueCreate(&m_MQTT_TestQ_2, m_pQ_Buffer2, sizeof(MQTT_Message_t*), MQTT_Q_TEST_BUFFER);
+        nOS_QueueCreate(&m_MQTT_TestQ_3, m_pQ_Buffer3, sizeof(MQTT_Message_t*), MQTT_Q_TEST_BUFFER);
+
+        pTaskMQTT->Initialize(pTaskNetwork->GetContext(), "MQTT_Test_Client", MQTT_BROKER_IP, MQTT_BROKER_PORT);
+        pTaskMQTT->SubscribeTopic("Test1/#", &m_MQTT_TestQ_1);
+        pTaskMQTT->SubscribeTopic("Test2/#", &m_MQTT_TestQ_2);
+        pTaskMQTT->SubscribeTopic("Test3/#", &m_MQTT_TestQ_3);
+    }
+  #endif
+
+    return (Error != NOS_OK) ? SYS_ERROR : SYS_READY;  // TODO  improve error handling
 }
 
 
@@ -239,96 +276,80 @@ SystemState_e ClassNetwork::Initialize(void)
 //-------------------------------------------------------------------------------------------------
 void ClassNetwork::Network(void)
 {
-    m_IP_Manager.Initialize(IF_WIRED);
-  //  struct netconn* conn;
- //   struct netconn* newconn;
-   // err_t           err;
-   // err_t           accept_err;
-   // struct netbuf*  buf;
-  //  void*           data;
-  //  u16_t           len;
-   // err_t           recv_err;
-
-
-#if 0  // need to reenable LWIP_NETCONN    1
-    // Create a new connection identifier.
-    conn = netconn_new_with_proto_and_callback(NETCONN_TCP, 0, nullptr);            // maybe move this and not create the task if ethernet is not working
-
-    if(conn != nullptr)
-    {
-        // Bind connection to well known port number 7.
-        err = netconn_bind(conn, NULL, 7);
-
-        if(err == ERR_OK)
-        {
-            // Tell connection to go into listening mode.
-            netconn_listen(conn);
-
-            for(;;)
-            {
-                // Grab new connection.
-                accept_err = netconn_accept(conn, &newconn);
-
-                // Process the new connection.
-                if(accept_err == ERR_OK)
-                {
-                    while((recv_err = netconn_recv(newconn, &buf)) == ERR_OK)
-                    {
-                        do
-                        {
-                            netbuf_data(buf, &data, &len);
-                            netconn_write(newconn, data, len, NETCONN_COPY);
-                        }
-                        while(netbuf_next(buf) >= 0);
-
-                        netbuf_delete(buf);
-                    }
-
-                    // Close connection and discard connection identifier.
-                    netconn_close(newconn);
-                    netconn_delete(newconn);
-                }
-            }
-        }
-        else
-        {
-            netconn_delete(newconn);
-            printf(" can not bind TCP netconn");
-        }
-    }
-    else
-    {
-        printf("can not create TCP netconn");
-    }
-
-
-
-    #ifdef ETH_IF
-        // Initialize W5500
-    //argo    Ethernet_Initialize(MAC, &IP, &MyDns, &GatewayIP, &SubnetMask);
-
-        // Initialize TCP server
-    //argo    ServerTCP_Initialize(ETH_SOCK, ETH_PORT);
-    #endif
-
- //   for(;;)
-  //  {
-        /* Read a received packet from the Ethernet buffers and send it
-        to the lwIP for handling */
-        //ethernetif_input(&gnetif);
-
-  //      nOS_Sleep(1);
-  //  }
-  #endif
+    m_NetworkContext.Initialize(IF_WIRED);
 
     for(;;)
     {
-        /* Read a received packet from the Ethernet buffers and send it
-        to the lwIP for handling */
-        //ethernetif_input(&gnetif);
+        if(m_NetworkContext.IsEthernetReady() == true)
+        {
+          #if (IP_USE_DNS == DEF_ENABLED)
+           #if (IP_USE_SNTP == DEF_ENABLED)
+            TickCount_t Tick = GetTick();
 
-        nOS_Sleep(500);
-        //LED_Toggle(IO_LED_GREEN);
+            if(m_NTP_DNS_Resolved == false)
+            {
+                if((m_LastDNS_Request == 0) || TickHasTimeOut(m_LastDNS_Request, 5 * 60 * 1000))
+                {
+                    m_LastDNS_Request = Tick;
+                    m_DNS.SendQuery(IP_DEFAULT_NTP_SERVER_1, ClassNetwork::DNS_NTP_Callback, this);
+                }
+            }
+            else
+            {
+                m_SNTP.Process();
+
+                if(TickHasTimeOut(m_LastDNS_Request, 60 * 60 * 1000))
+                {
+                    m_LastDNS_Request = Tick;
+                    m_NTP_DNS_Resolved = false;
+                }
+            }
+           #endif
+          #endif
+        }
+
+      #if (IP_USE_TCP_CLIENT == DEF_ENABLED) && (IP_USE_MQTT == DEF_ENABLED)
+        MQTT_Message_t* pTopicMessage;
+
+        // Test1
+        if(nOS_QueueRead(&m_MQTT_TestQ_1, &pTopicMessage, NOS_NO_WAIT) == NOS_OK)
+        {
+            DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET,
+                                 "[MQTT][Test1] Topic: %s | Payload (%u bytes): %.*s\n",
+                                 pTopicMessage->pTopic,
+                                 (unsigned)pTopicMessage->Length,
+                                 (int)pTopicMessage->Length,
+                                 (const char*)pTopicMessage->pPayload);
+            ClassMQTT::FreeTopicMessage(pTopicMessage);
+        }
+
+        // Test2
+        if(nOS_QueueRead(&m_MQTT_TestQ_2, &pTopicMessage, NOS_NO_WAIT) == NOS_OK)
+        {
+            DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET,
+                                 "[MQTT][Test2] Topic: %s | Payload (%u bytes): %.*s\n",
+                                 pTopicMessage->pTopic,
+                                 (unsigned)pTopicMessage->Length,
+                                 (int)pTopicMessage->Length,
+                                 (const char*)pTopicMessage->pPayload);
+            ClassMQTT::FreeTopicMessage(pTopicMessage);
+        }
+
+        // Test3
+        if(nOS_QueueRead(&m_MQTT_TestQ_3, &pTopicMessage, NOS_NO_WAIT) == NOS_OK)
+        {
+            DEBUG_PrintSerialLog(SYS_DEBUG_LEVEL_ETHERNET,
+                                 "[MQTT][Test3] Topic: %s | Payload (%u bytes): %.*s\n",
+                                 pTopicMessage->pTopic,
+                                 (unsigned)pTopicMessage->Length,
+                                 (int)pTopicMessage->Length,
+                                 (const char*)pTopicMessage->pPayload);
+            ClassMQTT::FreeTopicMessage(pTopicMessage);
+        }
+      #endif
+
+
+        nOS_Sleep(10);
     }
 }
 
@@ -364,7 +385,6 @@ void ClassNetwork::WebServer(void)
 for(;;)
 { nOS_Sleep(100);}
 
-#if 0
     m_WebServerConn = netconn_new(NETCONN_TCP);                                     // Create a new TCP connection handle
 
     if(m_WebServerConn != nullptr)
@@ -387,7 +407,6 @@ for(;;)
             }
         }
     }
-#endif
 }
 
 /**
@@ -474,15 +493,15 @@ void ClassNetwork::WebServer_Server(void)
   * @param  conn pointer on connection structure
   * @retval None
   */
+#if 0
 void ClassNetwork::WebServer_DynamicPage(void)
 {
-    #if 0
     char* pPageBody;
     char* pPageHits;
 
 // TODO Add protection
-    pPageBody = (char*)pMemoryPool->AllocAndClear(512);
-    pPageHits = (char*)pMemoryPool->AllocAndClear(10);
+    pPageBody = (char*)pMemoryPool->AllocAndClear(512, MEM_DBG_TSKNET1);
+    pPageHits = (char*)pMemoryPool->AllocAndClear(10, MEM_DBG_TSKNET2);
 
     // Update the hit count
     nPageHits++;
@@ -502,8 +521,8 @@ void ClassNetwork::WebServer_DynamicPage(void)
 
     pMemoryPool->Free((void**)&pPageBody);
     pMemoryPool->Free((void**)&pPageHits);
-    #endif
 }
+    #endif
 #endif // if 0
 //-------------------------------------------------------------------------------------------------
 

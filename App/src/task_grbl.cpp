@@ -156,7 +156,8 @@ nOS_Error ClassTaskGRBL::Initialize(void)
                                  this,
                                  &m_Stack[0],
                                  TASK_GRBL_STACK_SIZE,
-                                 TASK_GRBL_PRIO);
+                                 TASK_GRBL_PRIO,
+                                 "Task GRBL");
     }
 
   #if (DIGINI_USE_STACKTISTIC == DEF_ENABLED)

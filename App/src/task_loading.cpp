@@ -89,7 +89,8 @@ nOS_Error ClassTaskLoading::Initialize(void)
                              this,
                              &m_Stack[0],
                              TASK_LOADING_STACK_SIZE,
-                             TASK_LOADING_PRIO);
+                             TASK_LOADING_PRIO,
+                             "Task Skin Loading");
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
 

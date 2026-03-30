@@ -41,14 +41,14 @@
 #define USE_CEC_DRIVER              DEF_ENABLED
 #define USE_CRC_DRIVER              DEF_ENABLED
 #define USE_DAC_DRIVER              DEF_ENABLED
-#define USE_IO_BUS_DRIVER           DEF_DISABLED
 #define USE_ETH_DRIVER              DEF_ENABLED
+#define USE_IO_BUS_DRIVER           DEF_DISABLED
 #define USE_I2C_DRIVER              DEF_ENABLED
 #define USE_I2S_DRIVER              DEF_DISABLED
 #define USE_PWM_DRIVER              DEF_DISABLED
 #define USE_QSPI_DRIVER             DEF_DISABLED
 #define USE_RNG_DRIVER              DEF_ENABLED
-#define USE_RTC_DRIVER              DEF_ENABLED
+#define USE_RTC_DRIVER              DEF_DISABLED
 #define USE_SAI_DRIVER              DEF_DISABLED                    // Serial audio out
 #define USE_SDIO_DRIVER             DEF_ENABLED
 #define USE_SDRAM_DRIVER            DEF_ENABLED
@@ -62,7 +62,7 @@
 // Driver and/or peripheral to use with this project
 
 // LCD Display
-#define GRAFX_DRIVER_INCLUDE                "./Digini/Grafx/inc/driver/generic/lib_STM32xxx_lcd_480x272 - RK043FN48H.h"
+#define GRAFX_DRIVER_INCLUDE                "./Digini/Grafx/inc/driver/generic/lib_lcd_480x272 - RK043FN48H.h"
 #define GRAFX_DRIVER_ARGUMENT               nullptr                                     // this driver does not have argument (ex. pointer on structure and/or peripheral)
 
 // Pointing device, here it is the capacitive touch screen

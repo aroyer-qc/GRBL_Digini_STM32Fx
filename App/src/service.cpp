@@ -107,7 +107,7 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
     ServiceReturn_t* pService              = nullptr;
     float            Coordinate            = 0;
     uint16_t         SubOffset;
-    struct32_t       Color;
+    uint32_t         Color;
     bool             IsItBlank;
 
     // Handling of memory allocation while service is active (Shared for all active SERV_AXIS SubService)
@@ -175,16 +175,16 @@ static ServiceReturn_t* SERV_AXIS(ServiceEvent_e* pServiceState, uint16_t SubSer
             {
                 if(BIT_IS_TRUE(Settings.flags, BITFLAG_REPORT_INCHES))
                 {
-                    snprintf(pBuffer, 20, "%c%6lX%8.4f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate * INCH_PER_MM);
+                    snprintf(pBuffer, 20, "%c%6lX%8.4f", ASCII_COLOR_OVERRIDE, Color, Coordinate * INCH_PER_MM);
                 }
                 else
                 {
-                    snprintf(pBuffer, 20, "%c%6lX%8.3f", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate);
+                    snprintf(pBuffer, 20, "%c%6lX%8.3f", ASCII_COLOR_OVERRIDE, Color, Coordinate);
                 }
             }
             else if(SubOffset <= 5)  // rotational axis
             {
-                snprintf(pBuffer, 20, "%c%6lX%7.2f%c%2X°", ASCII_COLOR_OVERRIDE, Color.u_32, Coordinate, ASCII_SINGLE_FONT_OVERRIDE, FT_ARIAL_16);
+                snprintf(pBuffer, 20, "%c%6lX%7.2f%c%2X°", ASCII_COLOR_OVERRIDE, Color, Coordinate, ASCII_SINGLE_FONT_OVERRIDE, FT_ARIAL_16);
             }
         }
         else
@@ -936,11 +936,11 @@ static ServiceReturn_t* SERV_SPIN(ServiceEvent_e* pServiceState, uint16_t SubSer
 ServiceReturn_t* ServiceCallApp(Service_t* pService, ServiceEvent_e* pServiceState)
 {
     ServiceReturn_t* pServiceReturn = nullptr;
-    struct32_t       ServiceRange;
+    uint32_t         ServiceRange;
 
-    ServiceRange.u_32 = pService->ID;
+    ServiceRange = pService->ID;
 
-    switch(ServiceRange.u8_Array[0])        // To speed up process
+    switch(U32MACRO_A(ServiceRange))        // To speed up process
     {
         case 'A':
         {
