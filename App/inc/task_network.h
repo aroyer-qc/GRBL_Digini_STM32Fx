@@ -105,12 +105,14 @@ class ClassNetwork
         nOS_Thread                      m_Handle;
         nOS_Stack                       m_Stack                     [TASK_NETWORK_STACK_SIZE];
 
+      #if (IP_USE_MQTT == DEF_ENABLED)
         nOS_Queue                       m_MQTT_TestQ_1;
         nOS_Queue                       m_MQTT_TestQ_2;
         nOS_Queue                       m_MQTT_TestQ_3;
         MQTT_Message_t*                 m_pQ_Buffer1[MQTT_Q_TEST_BUFFER];
         MQTT_Message_t*                 m_pQ_Buffer2[MQTT_Q_TEST_BUFFER];
         MQTT_Message_t*                 m_pQ_Buffer3[MQTT_Q_TEST_BUFFER];
+      #endif
 
         class NetworkContext            m_NetworkContext;
 };

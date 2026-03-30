@@ -64,17 +64,16 @@
 //-------------------------------------------------------------------------------------------------
 // Protocol supported by the application
 
-#define IP_USE_DHCP							    DEF_ENABLED           // Need UDP
+#define IP_USE_DHCP							    DEF_DISABLED           // Need UDP
 #define IP_USE_DNS							    DEF_DISABLED           // Need UDP
 #define IP_USE_HTTP                             DEF_DISABLED
-#define IP_USE_ICMP							    DEF_ENABLED
-#define IP_USE_MQTT 						    DEF_ENABLED
+#define IP_USE_ICMP							    DEF_DISABLED
+#define IP_USE_MQTT 						    DEF_DISABLED
 #define IP_USE_NTP							    DEF_DISABLED
 #define IP_USE_SNTP							    DEF_DISABLED
 #define IP_USE_SOAP 						    DEF_DISABLED
-#define IP_USE_TCP_CLIENT                       DEF_ENABLED
-#define IP_USE_TCP_SERVER                       DEF_ENABLED
-#define IP_USE_UDP 							    DEF_ENABLED
+#define IP_USE_TCP_CLIENT                       DEF_DISABLED
+#define IP_USE_TCP_SERVER                       DEF_DISABLED
 #define IP_USE_RAW                              DEF_DISABLED
 
 //---------------------------------------------------------
