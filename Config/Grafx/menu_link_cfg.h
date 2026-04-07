@@ -32,7 +32,7 @@
 
 //          Enum ID,              Struct object name
 #define LINK_DEF(X_LINK)                                 \
-    X_LINK( LINK_START_UP_LINK,   PageLoading          ) \
+    X_LINK( LINK_START_PAGE,      PageLoading          ) \
     X_LINK( LINK_MAIN_HUB,        PageMainHub          ) \
     X_LINK( LINK_JOG_HUB,         PageJogHub           ) \
     X_LINK( LINK_MAIN_PAGE_XY,    PageMainDisplayXY    ) \
