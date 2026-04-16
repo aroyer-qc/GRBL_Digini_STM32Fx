@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File :  Static_skin_image.h
+//  File :  Static_image.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2020 Alain Royer.
+// Copyright(c) 2026 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -23,22 +23,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 //-------------------------------------------------------------------------------------------------
-//
-//  Notes: X-macro Listing all the image resident in flash
-//
-//-------------------------------------------------------------------------------------------------
 
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
 
-//                  IMAGE_ID        Struct Info Image
-#define STATIC_SKIN_DEF(X_STATIC_SKIN)  \
-    X_STATIC_SKIN(  LOADING_BACK,   SII_loading         )\
-    X_STATIC_SKIN(  LOADING_CURSOR, SII_progress_cursor )\
-    X_STATIC_SKIN(  LOADING_BAR,    SII_progress_bar    )\
+extern const StaticImageInfo_t SII_loading;
+extern const StaticImageInfo_t SII_progress_cursor;
+extern const StaticImageInfo_t SII_progress_bar;
 
 //-------------------------------------------------------------------------------------------------
-
-
-

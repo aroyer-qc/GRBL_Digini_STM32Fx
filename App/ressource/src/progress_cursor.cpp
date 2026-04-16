@@ -54,17 +54,15 @@ const uint32_t progress_cursor[216] =
 
 };
 
-extern const StaticImageInfo_t SII_progress_cursor;
 const StaticImageInfo_t SII_progress_cursor =
 {
-    12,
-    18,
-    32,
-    32,
-    (uint8_t*)progress_cursor,
+    {
+        (uint8_t*)progress_cursor,
+        {12, 18},
+        PIXEL_FORMAT_ARGB8888
+    },
     144,
-    PIXEL_FORMAT_ARGB8888,
-    COMPX_COMPRESSION_NONE,
+    COMPX_COMPRESSION_NONE
 };
 
 //-------------------------------------------------------------------------------------------------

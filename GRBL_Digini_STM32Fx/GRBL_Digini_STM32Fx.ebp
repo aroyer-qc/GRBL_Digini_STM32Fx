@@ -244,6 +244,16 @@
 		<Unit filename="..\App\inc\task_loading.h" />
 		<Unit filename="..\App\inc\task_network.h" />
 		<Unit filename="..\App\inc\terminal.h" />
+		<Unit filename="..\App\ressource\inc\StaticImage.h" />
+		<Unit filename="..\App\ressource\src\loading.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\ressource\src\progress_bar.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\App\ressource\src\progress_cursor.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\App\src\bsp.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -254,15 +264,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\src\main.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\src\ressource\loading.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\src\ressource\progress_bar.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\App\src\ressource\progress_cursor.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\App\src\service.cpp">
@@ -292,7 +293,6 @@
 		<Unit filename="..\Config\bsp_io_def.h" />
 		<Unit filename="..\Config\cli_cfg.h" />
 		<Unit filename="..\Config\clock_cfg.h" />
-		<Unit filename="..\Config\color_cfg.h" />
 		<Unit filename="..\Config\console_cfg.h" />
 		<Unit filename="..\Config\crc_cfg.h" />
 		<Unit filename="..\Config\dac_cfg.h" />
@@ -310,9 +310,17 @@
 		<Unit filename="..\Config\ethernet_cfg.h" />
 		<Unit filename="..\Config\FatFs_cfg.h" />
 		<Unit filename="..\Config\ffconf.h" />
-		<Unit filename="..\Config\font_cfg.lst" />
-		<Unit filename="..\Config\grafx_cfg.h" />
-		<Unit filename="..\Config\grafx_display_layer_cfg.h" />
+		<Unit filename="..\Config\Grafx\color_cfg.h" />
+		<Unit filename="..\Config\Grafx\font_cfg.lst" />
+		<Unit filename="..\Config\Grafx\grafx_cfg.h" />
+		<Unit filename="..\Config\Grafx\grafx_display_layer_cfg.h" />
+		<Unit filename="..\Config\Grafx\menu_cfg.h" />
+		<Unit filename="..\Config\Grafx\menu_link_cfg.h" />
+		<Unit filename="..\Config\Grafx\menu_link_list_cfg.h" />
+		<Unit filename="..\Config\Grafx\Skin_cfg.lst" />
+		<Unit filename="..\Config\Grafx\static_image_def.h" />
+		<Unit filename="..\Config\Grafx\widget_cfg.h" />
+		<Unit filename="..\Config\Grafx\widget_var.h" />
 		<Unit filename="..\Config\i2c_cfg.h" />
 		<Unit filename="..\Config\i2c_var.h" />
 		<Unit filename="..\Config\i2s_cfg.h" />
@@ -322,10 +330,6 @@
 		<Unit filename="..\Config\label_cfg.h" />
 		<Unit filename="..\Config\lwipopts.h" />
 		<Unit filename="..\Config\memory_cfg.h" />
-		<Unit filename="..\Config\menu_cfg.h" />
-		<Unit filename="..\Config\menu_link_cfg.h" />
-		<Unit filename="..\Config\menu_link_list_cfg.h" />
-		<Unit filename="..\Config\mpu_cfg.h" />
 		<Unit filename="..\Config\nOSConfig.h" />
 		<Unit filename="..\Config\project_def.h" />
 		<Unit filename="..\Config\pwm_cfg.h" />
@@ -335,15 +339,12 @@
 		<Unit filename="..\Config\Skin_cfg.lst" />
 		<Unit filename="..\Config\spi_cfg.h" />
 		<Unit filename="..\Config\spi_var.h" />
-		<Unit filename="..\Config\static_skin_image.h" />
 		<Unit filename="..\Config\tim_cfg.h" />
 		<Unit filename="..\Config\tim_var.h" />
 		<Unit filename="..\Config\uart_cfg.h" />
 		<Unit filename="..\Config\uart_var.h" />
 		<Unit filename="..\Config\util_cfg.h" />
 		<Unit filename="..\Config\vt100_cfg.h" />
-		<Unit filename="..\Config\widget_cfg.h" />
-		<Unit filename="..\Config\widget_var.h" />
 		<Unit filename="stm32f746x_flash.ld" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\inc\lib_cli.h" />
 		<Unit filename="..\Module\Digini\Comm\CmdLine\src\lib_cli.cpp">

@@ -1223,17 +1223,14 @@ const uint8_t loading[18999] =
     0x28,0x00,0xA2,0x80,0x3F,0xFF,0xD9
 };
 
-
-extern const StaticImageInfo_t SII_loading;
 const StaticImageInfo_t SII_loading =
 {
-    480,
-    272,
-    0,
-    0,
-    (uint8_t*)loading,
+    {
+        (uint8_t*)loading,
+        {480, 272},
+        PIXEL_FORMAT_RGB565
+    },
     18999,
-    PIXEL_FORMAT_RGB565,
     COMPX_JPEG,
 };
 
