@@ -62,10 +62,14 @@
 #define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
 #define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED     // Enable support for Multi-touch
 #define GRAFX_PDI_INTERRUPT_IO                          DEF_DISABLED    // Pointing device (touch) IRQ is not available on DISCO746
-#define GRAFX_USE_GRAFX_CUSTOM_COLOR                    DEF_ENABLED    // Need color_cfg.h
+#define GRAFX_USE_CUSTOM_COLOR                          DEF_ENABLED    	// Need color_cfg.h
 
+//-------------------------------------------------------------------------------------------------
+
+#define GRAFX_USE_HARD_DATABASE                         DEF_ENABLED
+#define GRAFX_USE_QUAD_SPI_FOR_DATABASE                 DEF_DISABLED
 #define GRAFX_USE_RAM_DATABASE                          DEF_ENABLED
-#define GRAFX_USE_QUAD_SPI_FOR_DATABASE      			DEF_DISABLED
+#define GRAFX_USE_ROM_DATABASE                          DEF_DISABLED
 
 //-------------------------------------------------------------------------------------------------
 // GRAFX Configuration for decompressing data
@@ -90,8 +94,9 @@
 
 // Special section use in this project
 #define GRAFX_USE_DISPLAY_RAM                           DEF_ENABLED
-#define GRAFX_USE_RAM_DATA                              DEF_ENABLED     // this setting is not very clear at this point... probably for LCD with ram access
+#define GRAFX_USE_RAM_DATA                              DEF_ENABLED
 #define GRAFX_USE_ROM_DATA                              DEF_DISABLED
+#define GRAFX_USE_DISPLAY_LAYER							DEF_ENABLED    // The display is able to support layer directly in mapped memory
 
 #define GRAFX_USE_MULTI_LINE                            DEF_ENABLED
 
@@ -100,10 +105,6 @@
 #define GRAFX_USE_SLIDING_PAGE                          DEF_ENABLED
 #define GRAFX_SLIDING_PAGE_GRANULARITY                  16              // Each step is 10 Pixel wide
 #define GRAFX_TICK_WAIT_BETWEEN_SLIDE_IN_LOOP           16
-
-#define GRAFX_USE_BACKGROUND_LAYER                      DEF_ENABLED     // if you're LCD support more than 1 layer
-#define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER         DEF_ENABLED     // if there is enough memory to construct on a hidden layer. (prevent glitch)
-#define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER         DEF_ENABLED
 
 #define GRAFX_DEBUG_GUI                                 DEF_DISABLED
 #define GRAFX_PAINT_BOX_DEBUG                           DEF_DISABLED
@@ -149,5 +150,9 @@
 #define USE_SERV_XCHG                                   DEF_ENABLED     // Special service to exchange data.
 
 //-------------------------------------------------------------------------------------------------
+// Layer support configuration
 
+#define GRAFX_USE_BACKGROUND_LAYER                      DEF_ENABLED     // if you're LCD support more than 1 layer
 #define GRAFX_USE_FULL_FRAME_CONSTRUCTION_LAYER         DEF_ENABLED
+#define GRAFX_USE_FOREGROUND_LAYER           			DEF_ENABLED
+#define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER         DEF_ENABLED
