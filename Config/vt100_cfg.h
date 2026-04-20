@@ -48,6 +48,7 @@
 #define VT100_USE_TEMPERATURE_SELECTION         DEF_ENABLED
 #define VT100_USE_SERIAL_NUMBER_SETTING         DEF_ENABLED
 #define VT100_USE_TIME_AND_DATE_SETTING         DEF_ENABLED
+#define VT100_USE_SYSTEM_SETTING                DEF_ENABLED
 
 
 #define VT100_USER_LABEL_LANGUAGE_DEF(X_VT100_USER_LBL_CFG) \
@@ -57,9 +58,7 @@
     X_VT100_USER_LBL_CFG( VT100_LBL_MISCELLEANEOUS,                   "Miscelleaneous",                                           "Divers"                                                     ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_TEST_1,                           "Test 1",                                                   "Test 1"                                                     ) \
 \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING,                   "System Settings",                                          "Configuration Syst\x8ame"                                   ) \
     X_VT100_USER_LBL_CFG( VT100_LBL_MISC_CONFIG_MENU,                 "Miscellaneous Configuration Menu",                         "Menu de Configuration Divers"                               ) \
-    X_VT100_USER_LBL_CFG( VT100_LBL_SYSTEM_SETTING_MENU,              "System Settings Menu",                                     "Menu Configuration Syst\x8ame"                              ) \
 
 // Note(s) ther is standard definition in the VT100
 // Define the compare name (I did not find a way to get rid of those definition by the use of advanced macro)
