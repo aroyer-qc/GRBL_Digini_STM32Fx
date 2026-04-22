@@ -88,8 +88,7 @@
 \
                                                 ENTRY  (MENU,  MenuRedirection,   ID_REDIRECTION,                      CALLBACK_MenuRedirection,                VT100_MENU_NONE,                  INVALID_LABEL                                   )  \
 \
-                                                ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,                       CALLBACK_None,                           VT100_MENU_NONE,                  VT100_LBL_MAIN_MENU                             )  \
-    IF_USE( LABEL_USE_PRODUCT_INFO,             ENTRY  (MENU,  MenuBoot,          ID_INFO_DISPLAY,                     CALLBACK_None,                           MenuInfo,                         VT100_LBL_SYSTEM_INFO                           ) )\
+                                                ENTRY  (MENU,  MenuBoot,          ID_MAIN_TITLE,                       CALLBACK_None,                           VT100_MENU_NONE,                  VT100_LBL_MENU_TITLE                            )  \
     IF_USE( DIGINI_USE_STACKTISTIC,             ENTRY  (MENU,  MenuBoot,          ID_STACK_DISPLAY,                    CALLBACK_None,                           MenuStackUsage,                   VT100_LBL_STACKTISTIC                           ) )\
     IF_USE( DIGINI_USE_DEBUG_IN_CONSOLE,        ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,                       CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) )\
     IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY  (MENU,  MenuBoot,          ID_MEMORY_POOL_MENU,                 CALLBACK_None,                           MenuMemoryPool,                   VT100_LBL_MEMORY_POOL_STAT                      ) )\
