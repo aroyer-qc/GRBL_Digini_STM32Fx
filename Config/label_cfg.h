@@ -37,68 +37,68 @@
 #define     DIGINI_USE_LABEL_DECIMAL_KEY               DEF_ENABLED             // Enable label 0-9 and dot, del, sign, sign inversion
 #define     DIGINI_USE_LABEL_HEXADECIMAL_KEY           DEF_ENABLED             // Enable label A-F
 
-#define USER_LABEL_LANGUAGE_DEF(X_LABEL)  \
-    X_LABEL( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
-    X_LABEL( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
-    X_LABEL( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
-    X_LABEL( LBL_RANGE,                  "Ranges",                                      "Plages"                                        ) \
-    X_LABEL( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
-    X_LABEL( LBL_WARNINGS,               "Warnings",                                    "Alertes"                                       ) \
-    X_LABEL( LBL_MEASURE,                "Measure",                                     "Mesure"                                        ) \
-    X_LABEL( LBL_REFERENCE,              "Reference",                                   "R\x82" "ference"                               ) \
-    X_LABEL( LBL_FUNCTIONS,              "Functions",                                   "Fonctions"                                     ) \
-    X_LABEL( LBL_MODULES,                "Modules",                                     nullptr                                         ) \
-    X_LABEL( LBL_AXIS_MM_BACK,           "-888.888",                                    nullptr                                         ) \
-    X_LABEL( LBL_AXIS_INCH_BACK,         "-88.8888",                                    nullptr                                         ) \
-    X_LABEL( LBL_DEGREE_BACK,            "-888.88",                                     nullptr                                         ) \
-    X_LABEL( LBL_AXIS_X,                 "Axis X",                                      "Axe X"                                         ) \
-    X_LABEL( LBL_AXIS_Y,                 "Axis Y",                                      "Axe Y"                                         ) \
-    X_LABEL( LBL_AXIS_Z,                 "Axis Z",                                      "Axe Z"                                         ) \
-    X_LABEL( LBL_AXIS_A,                 "Axis A",                                      "Axe A"                                         ) \
-    X_LABEL( LBL_AXIS_B,                 "Axis B",                                      "Axe B"                                         ) \
-    X_LABEL( LBL_AXIS_C,                 "Axis C",                                      "Axe C"                                         ) \
-    X_LABEL( LBL_SPINDLE,                "Spindle",                                     "Broche"                                        ) \
-    X_LABEL( LBL_ENABLE,                 "Enabled",                                     "Activ\x82"                                     ) \
-    X_LABEL( LBL_COOLANT,                "Coolant",                                     "Coolant"                                       ) \
-    X_LABEL( LBL_MIST,                   "Mist",                                        "Mist"                                          ) \
-    X_LABEL( LBL_SPEED_BACK,             "88888",                                       nullptr                                         ) \
-    X_LABEL( LBL_SPEED,                  "%5ld",                                        nullptr                                         ) \
-    X_LABEL( LBL_SPEED_FLOAT,            "%5.0f",                                       nullptr                                         ) \
-    X_LABEL( LBL_MIN_SPINDLE,            "Minimum Spindle Speed",                       "Vitesse Minimale de la broche"                 ) \
-    X_LABEL( LBL_MAX_SPINDLE,            "Maximum Spindle Speed",                       "Vitesse Maximale de la broche"                 ) \
-    X_LABEL( LBL_RPM,                    "RPM",                                         nullptr                                         ) \
-    X_LABEL( LBL_DRO,                    "DRO",                                         nullptr                                         ) \
-    X_LABEL( LBL_TEST,                   "the quick brown fox jumps over the lazy dog", "portez ce vieux whisky au juge blond qui fume" ) \
-    X_LABEL( LBL_MAC_SELECT,             "Machine Configuration",                       "Configuration Machine"                         ) \
-    X_LABEL( LBL_XY_MAC,                 "XY",                                          nullptr                                         ) \
-    X_LABEL( LBL_ZX_MAC,                 "ZX",                                          nullptr                                         ) \
-    X_LABEL( LBL_XYZ_MAC,                "XYZ",                                         nullptr                                         ) \
-    X_LABEL( LBL_INPUT_CHECK,            "Diagnostic Input",                            "Diagnostique Entr\x82" "e"                     ) \
-    X_LABEL( LBL_LIMIT_X,                "Input Limit X",                               "Entr\x82" "e Limite X"                         ) \
-    X_LABEL( LBL_LIMIT_Y,                "Input Limit Y",                               "Entr\x82" "e Limite Y"                         ) \
-    X_LABEL( LBL_LIMIT_Z,                "Input Limit Z",                               "Entr\x82" "e Limite Z"                         ) \
-    X_LABEL( LBL_LIMIT_A,                "Input Limit A",                               "Entr\x82" "e Limite A"                         ) \
-    X_LABEL( LBL_LIMIT_B,                "Input Limit B",                               "Entr\x82" "e Limite B"                         ) \
-    X_LABEL( LBL_LIMIT_C,                "Input Limit C",                               "Entr\x82" "e Limite C"                         ) \
-    X_LABEL( LBL_INPUT_ABORT,            "Input Abort",                                 "Entr\x82" "e Avorter"                          ) \
-    X_LABEL( LBL_INPUT_RESUME,           "Input Resume",                                "Entr\x82" "e Resumer"                          ) \
-    X_LABEL( LBL_INPUT_HOLD,             "Input Hold",                                  "Entr\x82" "e Maintenir"                        ) \
-    X_LABEL( LBL_INPUT_PROBE,            "Input Probe",                                 "Entr\x82" "e Sonde"                            ) \
-    X_LABEL( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
-    X_LABEL( LBL_INFO,                   "Information",                                 nullptr                                         ) \
-    X_LABEL( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
-    X_LABEL( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \
-    X_LABEL( LBL_TEST_1,                 "Float",                                       "Flottant"                                      ) \
-    X_LABEL( LBL_TEST_2,                 "Decimal",                                     "D\x82" "cimale"                                ) \
-    X_LABEL( LBL_TEST_3,                 "Hexa",                                        nullptr                                         ) \
-    X_LABEL( LBL_TEST_4,                 "String",                                      nullptr                                         ) \
-    X_LABEL( LBL_INPUT_DOOR,             "Input Safety Door",                           "Entr\x82" "e Porte de Suret\x82"               ) \
-    X_LABEL( LBL_INPUT_FEED,             "Input Feed",                                  "Entr\x82" "e Feed"                             ) \
-    X_LABEL( LBL_INPUT_START,            "Input Start",                                 "Entr\x82" "e D\x82marrer"                      ) \
-    X_LABEL( LBL_INPUT_RESET,            "Input Reset",                                 "Entr\x82" "e Remise \x85 z\x82ro"              ) \
-    X_LABEL( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entr\x82" "e E-Stop"                           ) \
+#define USER_LABEL_LANGUAGE_DEF(X_LBL_CFG)  \
+    X_LBL_CFG( LBL_FIRMWARE_UPGRADE,       "Firmware Upgrade",                            "Mise \x85 Niveau Logiciel"                     ) \
+    X_LBL_CFG( LBL_SKIN_LOADING,           "Skin Loading        %%",                      "Th\x82matique          %%"                     ) \
+    X_LBL_CFG( LBL_SETTINGS,               "Settings",                                    "Configurations"                                ) \
+    X_LBL_CFG( LBL_RANGE,                  "Ranges",                                      "Plages"                                        ) \
+    X_LBL_CFG( LBL_LIMITS,                 "Limits",                                      "Limites"                                       ) \
+    X_LBL_CFG( LBL_WARNINGS,               "Warnings",                                    "Alertes"                                       ) \
+    X_LBL_CFG( LBL_MEASURE,                "Measure",                                     "Mesure"                                        ) \
+    X_LBL_CFG( LBL_REFERENCE,              "Reference",                                   "R\x82" "ference"                               ) \
+    X_LBL_CFG( LBL_FUNCTIONS,              "Functions",                                   "Fonctions"                                     ) \
+    X_LBL_CFG( LBL_MODULES,                "Modules",                                     nullptr                                         ) \
+    X_LBL_CFG( LBL_AXIS_MM_BACK,           "-888.888",                                    nullptr                                         ) \
+    X_LBL_CFG( LBL_AXIS_INCH_BACK,         "-88.8888",                                    nullptr                                         ) \
+    X_LBL_CFG( LBL_DEGREE_BACK,            "-888.88",                                     nullptr                                         ) \
+    X_LBL_CFG( LBL_AXIS_X,                 "Axis X",                                      "Axe X"                                         ) \
+    X_LBL_CFG( LBL_AXIS_Y,                 "Axis Y",                                      "Axe Y"                                         ) \
+    X_LBL_CFG( LBL_AXIS_Z,                 "Axis Z",                                      "Axe Z"                                         ) \
+    X_LBL_CFG( LBL_AXIS_A,                 "Axis A",                                      "Axe A"                                         ) \
+    X_LBL_CFG( LBL_AXIS_B,                 "Axis B",                                      "Axe B"                                         ) \
+    X_LBL_CFG( LBL_AXIS_C,                 "Axis C",                                      "Axe C"                                         ) \
+    X_LBL_CFG( LBL_SPINDLE,                "Spindle",                                     "Broche"                                        ) \
+    X_LBL_CFG( LBL_ENABLE,                 "Enabled",                                     "Activ\x82"                                     ) \
+    X_LBL_CFG( LBL_COOLANT,                "Coolant",                                     "Coolant"                                       ) \
+    X_LBL_CFG( LBL_MIST,                   "Mist",                                        "Mist"                                          ) \
+    X_LBL_CFG( LBL_SPEED_BACK,             "88888",                                       nullptr                                         ) \
+    X_LBL_CFG( LBL_SPEED,                  "%5ld",                                        nullptr                                         ) \
+    X_LBL_CFG( LBL_SPEED_FLOAT,            "%5.0f",                                       nullptr                                         ) \
+    X_LBL_CFG( LBL_MIN_SPINDLE,            "Minimum Spindle Speed",                       "Vitesse Minimale de la broche"                 ) \
+    X_LBL_CFG( LBL_MAX_SPINDLE,            "Maximum Spindle Speed",                       "Vitesse Maximale de la broche"                 ) \
+    X_LBL_CFG( LBL_RPM,                    "RPM",                                         nullptr                                         ) \
+    X_LBL_CFG( LBL_DRO,                    "DRO",                                         nullptr                                         ) \
+    X_LBL_CFG( LBL_TEST,                   "the quick brown fox jumps over the lazy dog", "portez ce vieux whisky au juge blond qui fume" ) \
+    X_LBL_CFG( LBL_MAC_SELECT,             "Machine Configuration",                       "Configuration Machine"                         ) \
+    X_LBL_CFG( LBL_XY_MAC,                 "XY",                                          nullptr                                         ) \
+    X_LBL_CFG( LBL_ZX_MAC,                 "ZX",                                          nullptr                                         ) \
+    X_LBL_CFG( LBL_XYZ_MAC,                "XYZ",                                         nullptr                                         ) \
+    X_LBL_CFG( LBL_INPUT_CHECK,            "Diagnostic Input",                            "Diagnostique Entr\x82" "e"                     ) \
+    X_LBL_CFG( LBL_LIMIT_X,                "Input Limit X",                               "Entr\x82" "e Limite X"                         ) \
+    X_LBL_CFG( LBL_LIMIT_Y,                "Input Limit Y",                               "Entr\x82" "e Limite Y"                         ) \
+    X_LBL_CFG( LBL_LIMIT_Z,                "Input Limit Z",                               "Entr\x82" "e Limite Z"                         ) \
+    X_LBL_CFG( LBL_LIMIT_A,                "Input Limit A",                               "Entr\x82" "e Limite A"                         ) \
+    X_LBL_CFG( LBL_LIMIT_B,                "Input Limit B",                               "Entr\x82" "e Limite B"                         ) \
+    X_LBL_CFG( LBL_LIMIT_C,                "Input Limit C",                               "Entr\x82" "e Limite C"                         ) \
+    X_LBL_CFG( LBL_INPUT_ABORT,            "Input Abort",                                 "Entr\x82" "e Avorter"                          ) \
+    X_LBL_CFG( LBL_INPUT_RESUME,           "Input Resume",                                "Entr\x82" "e Resumer"                          ) \
+    X_LBL_CFG( LBL_INPUT_HOLD,             "Input Hold",                                  "Entr\x82" "e Maintenir"                        ) \
+    X_LBL_CFG( LBL_INPUT_PROBE,            "Input Probe",                                 "Entr\x82" "e Sonde"                            ) \
+    X_LBL_CFG( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
+    X_LBL_CFG( LBL_INFO,                   "Information",                                 nullptr                                         ) \
+    X_LBL_CFG( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
+    X_LBL_CFG( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \
+    X_LBL_CFG( LBL_TEST_1,                 "Float",                                       "Flottant"                                      ) \
+    X_LBL_CFG( LBL_TEST_2,                 "Decimal",                                     "D\x82" "cimale"                                ) \
+    X_LBL_CFG( LBL_TEST_3,                 "Hexa",                                        nullptr                                         ) \
+    X_LBL_CFG( LBL_TEST_4,                 "String",                                      nullptr                                         ) \
+    X_LBL_CFG( LBL_INPUT_DOOR,             "Input Safety Door",                           "Entr\x82" "e Porte de Suret\x82"               ) \
+    X_LBL_CFG( LBL_INPUT_FEED,             "Input Feed",                                  "Entr\x82" "e Feed"                             ) \
+    X_LBL_CFG( LBL_INPUT_START,            "Input Start",                                 "Entr\x82" "e D\x82marrer"                      ) \
+    X_LBL_CFG( LBL_INPUT_RESET,            "Input Reset",                                 "Entr\x82" "e Remise \x85 z\x82ro"              ) \
+    X_LBL_CFG( LBL_INPUT_E_STOP,           "Input E-Stop",                                "Entr\x82" "e E-Stop"                           ) \
 
 //-------------------------------------------------------------------------------------------------
 
 
-//    X_LABEL(    LBL_AXIS,                   ASCII_DEVICE_CTRL2 "%3d.%04d",     ASCII_DEVICE_CTRL2 "%3d.%04d"        )
+//    X_LBL_CFG(    LBL_AXIS,                   ASCII_DEVICE_CTRL2 "%3d.%04d",     ASCII_DEVICE_CTRL2 "%3d.%04d"        )
