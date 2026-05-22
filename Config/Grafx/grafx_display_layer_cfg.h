@@ -36,9 +36,5 @@
     X_LAYER( FOREGROUND_SLIDING_LAYER,      LAYER_VIRTUAL,     PIXEL_FORMAT_ARGB8888,  GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
     X_LAYER( TOUCH_SENSE_LAYER,             LAYER_VIRTUAL,     PIXEL_FORMAT_RGB565,    GRAFX_DRIVER_SIZE_X,   GRAFX_DRIVER_SIZE_Y)\
 
-// Reserved define name (N/U in this app)
-// BACKGROUND_DISPLAY_LAYER_1
-// FOREGROUND_DISPLAY_LAYER_1
-
 //-------------------------------------------------------------------------------------------------
 

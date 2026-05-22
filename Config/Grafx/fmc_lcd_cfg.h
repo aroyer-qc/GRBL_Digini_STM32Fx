@@ -1,10 +1,10 @@
 //-------------------------------------------------------------------------------------------------
 //
-//  File :  console_cfg.h
+//  File :  fmc_lcd_cfg.h
 //
 //-------------------------------------------------------------------------------------------------
 //
-// Copyright(c) 2021 Alain Royer.
+// Copyright(c) 2026 Alain Royer.
 // Email: aroyer.qc@gmail.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -30,34 +30,18 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define CON_USE_DEBUG_LOG                       DEF_ENABLED
-#define CON_USE_CMD_HELP                        DEF_ENABLED         // Adding the help command to the command line
+//need to be adapted for this board
 
+#define CFG_FMC_LCD_BANK                                FMC_LCD_BANK1               // LCD Bank (NE1)
+#define CFG_FMC_LCD_MEM_BUS_WIDTH                       FMC_LCD_MEM_BUS_WIDTH_16    // LCD Memory Bus Width
 
-#define CON_CHILD_PROCESS_PUSH_POP_LEVEL        2   // Cascading number of child process.
+// LCD Timing
+#define CFG_FMC_LCD_TIMING_ADDRESS_SETUP_TIME           4                           // ~12 nSec
+#define CFG_FMC_LCD_TIMING_ADDRESS_HOLD_TIME            2                           // ~6  nSec
+#define CFG_FMC_LCD_TIMING_DATA_SETUP_TIME              4                           // ~12 nSec
 
-// This define if enabled will trap every line starting with CON_TRAP_COMMENT_CHARACTER so the peer
-// module connected to the serial port can send information for watching user or debugging purpose.
-// By enabling the feature the code will not parse a line with CON_TRAP_COMMENT_CHARACTER until the
-// CON_TRAP_COMMENT_END_OF_LINE_MARKER is detected.
-#define CON_TRAP_COMMENT_INCOMING_LINE          DEF_ENABLED
-#define CON_TRAP_COMMENT_CHARACTER              '#'
-#define CON_TRAP_COMMENT_END_OF_LINE_MARKER     '\n'
-#define CON_TRAP_COMMENT_TIME_OUT               50
-
-// SYS_DEBUG_LEVEL_x 1 to 16
-#define SYS_DEBUG_LEVEL_SYSTEM_STATUS           SYS_DEBUG_LEVEL_1
-#define SYS_DEBUG_LEVEL_SYSTEM_ACTION           SYS_DEBUG_LEVEL_2
-#define SYS_DEBUG_LEVEL_SYSTEM_HEALTH           SYS_DEBUG_LEVEL_3
-#define SYS_DEBUG_LEVEL_MONITOR_LOGS            SYS_DEBUG_LEVEL_4
-#define SYS_DEBUG_LEVEL_STACK_WARNING           SYS_DEBUG_LEVEL_5
-#define SYS_DEBUG_LEVEL_ETHERNET                SYS_DEBUG_LEVEL_6
-#define SYS_DEBUG_LEVEL_NANO_IP                 SYS_DEBUG_LEVEL_7
-#define SYS_DEBUG_LEVEL_MEMORY_POOL             SYS_DEBUG_LEVEL_8
-#define SYS_DEBUG_LEVEL_APPLICATION             SYS_DEBUG_LEVEL_9
+#define CFG_FMC_LCD_WRITE_TIMING_ADDRESS_SETUP_TIME     4                           // ~12 nSec
+#define CFG_FMC_LCD_WRITE_TIMING_ADDRESS_HOLD_TIME      2                           // ~6  nSec
+#define CFG_FMC_LCD_WRITE_TIMING_DATA_SETUP_TIME        6                           // ~36 nSec
 
 //-------------------------------------------------------------------------------------------------
-
-
-
-

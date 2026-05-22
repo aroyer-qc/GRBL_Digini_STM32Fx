@@ -47,9 +47,6 @@
 #define UART_DRIVER_SUPPORT_UART8_CFG           DEF_DISABLED
 //  #define UART_DRIVER_SUPPORT_VIRTUAL_UART_CFG    DEF_DISABLED  See H7 if it is still good
 
-
-#define UART_DRIVER_INTERNAL_RX_BUFFER_SIZE     64                                // this is very unsafe setting.. need to check with who is using this setting... it must be linked to the owner of the serial port
-
 //-------------------------------------------------------------------------------------------------
 
 #define TERMINAL_SERIAL                         UART_DRIVER_ID_1

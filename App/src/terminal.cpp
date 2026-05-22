@@ -208,7 +208,7 @@ size_t __write(int File, const unsigned char *pBuf, size_t Length)
                 memcpy(pQ_Data->pBuffer, pBuf, Length);
                 pQ_Data->Size = Length;
 
-                while(myUART_Terminal.SendData(pQ_Data->pBuffer, &pQ_Data->Size, pQ_Data) != SYS_READY)
+                while(UART_DebugTerminal.SendData(pQ_Data->pBuffer, &pQ_Data->Size, pQ_Data) != SYS_READY)
                 {
                     nOS_Yield();
                 };
@@ -266,12 +266,12 @@ void GRBL_Serial::Initialize(void)
     Q_RX_Data.CreateQueue(&GetQueueArray[0], TERM_RX_DATA_Q_LENGTH, TERM_RX_DATA_Q_ITEM_SIZE);
 
     // Register callback for uart RX Bytes and TX Completed
-    // TODO match with new class register type or something   myUART_Terminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
-  // myUART_Terminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
+    // TODO match with new class register type or something   UART_DebugTerminal.RegisterCallbackIdle((void*)&TERM_RX_Callback);
+  // UART_DebugTerminal.RegisterCallbackCompletedTX((void*)&TERM_TX_Callback);
 
     // Provide first RX buffer
     pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE);
-    myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
+    UART_DebugTerminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -294,7 +294,7 @@ void GRBL_Serial::ProcessRX(void)
 
     // See cli or vt100 for example
 
-    pVariable = myUART_Terminal.GetInfoRX();
+    pVariable = UART_DebugTerminal.GetInfoRX();
     Q_Data.Size    = pVariable->SizeRX;
     Q_Data.pBuffer = pVariable->pBufferRX;
 
@@ -315,7 +315,7 @@ void GRBL_Serial::ProcessRX(void)
 
     if((pBuffer = (uint8_t*)pMemoryPool->Alloc(TERM_RX_BUFFER_SIZE)) != nullptr)
     {
-        myUART_Terminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
+        UART_DebugTerminal.DMA_ConfigRX(pBuffer, TERM_RX_BUFFER_SIZE);
         return;
     }
 }

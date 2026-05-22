@@ -49,9 +49,8 @@
 #include "Task_grbl.h"
 #include "Task_loading.h"
 
-#if (USE_ETH_DRIVER == DEF_ENABLED) && (DIGINI_USE_ETHERNET == DEF_ENABLED)
+#if (DIGINI_USE_ETHERNET == DEF_ENABLED)
 #include "Task_network.h"
-//IP_Manager myIP_Manager;
 #endif // (DIGINI_USE_ETHERNET == DEF_ENABLED)
 
 //-------------------------------------------------------------------------------------------------
@@ -109,7 +108,6 @@ void BSP_Initialize(void)
     myI2C_External.Initialize();
     myI2C_Control.Initialize();
     myADC1_Driver.Initialize();
-    //RNG_Initialize();
 }
 
 //-------------------------------------------------------------------------------------------------

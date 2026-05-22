@@ -58,7 +58,7 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define GUI_TASK_STACK_SIZE                             1024
+#define GUI_TASK_STACK_SIZE                             320
 
 #define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
 #define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
@@ -80,7 +80,6 @@
 
 //-------------------------------------------------------------------------------------------------
 
-// Special section use in this project
 #define GRAFX_USE_DISPLAY_RAM                           DEF_ENABLED
 #define GRAFX_USE_RAM_DATA                              DEF_ENABLED
 #define GRAFX_USE_ROM_DATA                              DEF_DISABLED
@@ -95,12 +94,17 @@
 #define GRAFX_PAINT_BOX_DEBUG                           DEF_DISABLED
 #define GRAFX_PAINT_BOX_DEBUG_COLOR                     RED
 
+#ifdef DIGINI_USE_QSPI
+  #ifndef DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE
+    #define DIGINI_USE_QUAD_SPI_FOR_GRAFX_DATABASE      DEF_DISABLED
+  #endif
+#endif
+
 #if (GRAFX_USE_POINTING_DEVICE == DEF_ENABLED)
   #define GRAFX_PDI_SWAP_XY                             DEF_ENABLED
   #define GRAFX_PDI_INVERT_X                            DEF_DISABLED    // Not existent on this setup
   #define GRAFX_PDI_INVERT_Y                            DEF_DISABLED    // Not existent on this setup
 #endif
-
 
 #define GRAFX_USE_FONT_SIZE_8                           DEF_DISABLED    // Not used on this setup
 #define GRAFX_USE_FONT_SIZE_12                          DEF_DISABLED    // Not used on this setup
@@ -137,8 +141,9 @@
 //-------------------------------------------------------------------------------------------------
 // Layer support configuration
 
-#define GRAFX_USE_BACKGROUND_LAYER                      DEF_DISABLED
+#define GRAFX_USE_CONSTRUCTION_ON_SINGLE_LAYER          DEF_DISABLED
 #define GRAFX_USE_FULL_FRAME_CONSTRUCTION_LAYER         DEF_ENABLED
+#define GRAFX_USE_CONSTRUCTION_BACKGROUND_LAYER         DEF_ENABLED     // if there is enough memory to construct on a hidden layer. (prevent glitch)
 #define GRAFX_USE_FOREGROUND_LAYER           			DEF_ENABLED
 #define GRAFX_USE_CONSTRUCTION_FOREGROUND_LAYER         DEF_ENABLED
 #define GRAFX_DEBUG_GUI                                 DEF_DISABLED	// This option can not be set if no layer exist
