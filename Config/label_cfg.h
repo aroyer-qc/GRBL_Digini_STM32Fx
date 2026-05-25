@@ -84,7 +84,6 @@
     X_LBL_CFG( LBL_INPUT_RESUME,           "Input Resume",                                "Entr\x82" "e Resumer"                          ) \
     X_LBL_CFG( LBL_INPUT_HOLD,             "Input Hold",                                  "Entr\x82" "e Maintenir"                        ) \
     X_LBL_CFG( LBL_INPUT_PROBE,            "Input Probe",                                 "Entr\x82" "e Sonde"                            ) \
-    X_LBL_CFG( LBL_PAGE_INFO,              "Software Information",                        "Information Logiciel"                          ) \
     X_LBL_CFG( LBL_INFO,                   "Information",                                 nullptr                                         ) \
     X_LBL_CFG( LBL_DIAG,                   "Diagnostic",                                  "Diagnostique"                                  ) \
     X_LBL_CFG( LBL_CNC,                    "G90 G54 G00 X-31.500 Y32.500 S1600 M03",      nullptr                                         ) \

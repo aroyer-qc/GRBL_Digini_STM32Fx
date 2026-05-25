@@ -73,7 +73,7 @@
 			<Add option="$device=cortex-m7" />
 			<Add option="$fpu=fpv4-sp-d16" />
 			<Add option="$lscript=./stm32f746x_flash.ld" />
-			<Add option="$stack=0x2000" />
+			<Add option="$stack=0x0300" />
 			<Add option="$heap=0x5000" />
 		</Device>
 		<Compiler>
@@ -400,6 +400,18 @@
 		<Unit filename="..\module\Digini\Digini\src\Port\STM32F7xx\lib_assert.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\module\Digini\FatFs\Inc\BackEnds\lib_class_fatfs_sdio.h" />
+		<Unit filename="..\module\Digini\FatFs\Inc\BackEnds\port\STM32F7xx\lib_class_STM32F7_fatfs_sdio.h" />
+		<Unit filename="..\module\Digini\FatFs\Inc\digini_diskio.h" />
+		<Unit filename="..\module\Digini\FatFs\Inc\diskio.h" />
+		<Unit filename="..\module\Digini\FatFs\Inc\diskio_def.h" />
+		<Unit filename="..\module\Digini\FatFs\Inc\diskio_interface.h" />
+		<Unit filename="..\module\Digini\FatFs\Src\BackEnds\port\STM32F7xx\lib_class_STM32F7_fatfs_sdio.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\module\Digini\FatFs\Src\diskio.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\module\Digini\Grafx\inc\driver\generic\lib_GenericDriver.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\driver\STM32\lib_STM32_Generic.h" />
 		<Unit filename="..\module\Digini\Grafx\inc\lib_grafx.h" />
@@ -603,20 +615,6 @@
 			<Option compile="0" />
 			<Option link="0" />
 		</Unit>
-		<Unit filename="..\module\Digini\Peripheral\src\FatFS\diskio.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Peripheral\src\FatFS\lib_class_fatfs_ram_disk.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_sdio.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\fatfs\lib_class_STM32F7_fatfs_usb.cpp">
-			<Option compilerVar="CC" />
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="..\module\Digini\Peripheral\src\port\STM32F7xx\lib_class_STM32F7_adc.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -732,6 +730,9 @@
 		<Unit filename="..\module\Digini\Utility\src\lib_compression.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\module\Digini\Utility\src\lib_delay.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\module\Digini\Utility\src\lib_fast_memcpy.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -750,7 +751,7 @@
 		<Unit filename="..\module\Digini\Utility\src\lib_stacktistic.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\module\Digini\Utility\src\lib_time_and_delay.cpp">
+		<Unit filename="..\module\Digini\Utility\src\lib_time.cpp">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\module\Digini\Utility\src\lib_trigono.cpp">
@@ -837,11 +838,11 @@
 		<Extensions>
 			<code_completion />
 			<debugger>
-				<target_debugging_settings target="Debug">
-					<debug_interface description="STM32F746.svd" options="10" reg_filter="0" probe="STlink" device="stm32" speed="2000" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="8" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="true" close_eblink="true" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="2331" path="${EMBITZ}\share\EBlink" executable="EBlink.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
-				</target_debugging_settings>
 				<target_debugging_settings target="Release">
 					<debug_interface description="" options="0" reg_filter="0" probe="" device="" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="7788212" unwind="1641417720" rstType="165587660" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="false" />
+				</target_debugging_settings>
+				<target_debugging_settings target="Debug">
+					<debug_interface description="STM32F746.svd" options="10" reg_filter="0" probe="STlink" device="stm32" speed="2000" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="8" unwind="2" rstType="0" use_jtag="false" disable_cache="false" enable_semi="true" close_eblink="true" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="localhost" ip_port="2331" path="${EMBITZ}\share\EBlink" executable="EBlink.exe" start_server="false" arguments="" flash_verify="false" flash_run="false" />
 				</target_debugging_settings>
 			</debugger>
 			<envvars />

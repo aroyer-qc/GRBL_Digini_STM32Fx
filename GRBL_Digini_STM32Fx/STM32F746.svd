@@ -25,6 +25,89 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
   <resetValue>0x0</resetValue>
   <resetMask>0xFFFFFFFF</resetMask>
   <peripherals>
+	  <peripheral>
+		<name>DWT</name>
+		<description>Data Watchpoint and Trace</description>
+		<groupName>DWT</groupName>
+		<baseAddress>0xE0001000</baseAddress>
+		<addressBlock>
+			<offset>0</offset>
+			<size>0x1000</size>
+			<usage>registers</usage>
+		</addressBlock>
+		<registers>
+
+			<register>
+				<name>CTRL</name>
+				<description>Control Register</description>
+				<addressOffset>0x000</addressOffset>
+				<size>32</size>
+			</register>
+
+			<register>
+				<name>CYCCNT</name>
+				<description>Cycle Count Register</description>
+				<addressOffset>0x004</addressOffset>
+				<size>32</size>
+			</register>
+
+			<register>
+				<name>CPICNT</name>
+				<description>CPI Count Register</description>
+				<addressOffset>0x008</addressOffset>
+				<size>8</size>
+			</register>
+
+			<register>
+				<name>EXCCNT</name>
+				<description>Exception Overhead Count Register</description>
+				<addressOffset>0x00C</addressOffset>
+				<size>8</size>
+			</register>
+
+			<register>
+				<name>SLEEPCNT</name>
+				<description>Sleep Count Register</description>
+				<addressOffset>0x010</addressOffset>
+				<size>8</size>
+			</register>
+
+			<register>
+				<name>LSUCNT</name>
+				<description>LSU Count Register</description>
+				<addressOffset>0x014</addressOffset>
+				<size>8</size>
+			</register>
+
+			<register>
+				<name>FOLDCNT</name>
+				<description>Folded-instruction Count Register</description>
+				<addressOffset>0x018</addressOffset>
+				<size>8</size>
+			</register>
+
+			<register>
+				<name>PCSR</name>
+				<description>Program Counter Sample Register</description>
+				<addressOffset>0x01C</addressOffset>
+				<size>32</size>
+			</register>
+
+			<register>
+				<name>LAR</name>
+				<description>Lock Access Register</description>
+				<addressOffset>0xFB0</addressOffset>
+				<size>32</size>
+			</register>
+
+			<register>
+				<name>LSR</name>
+				<description>Lock Status Register</description>
+				<addressOffset>0xFB4</addressOffset>
+				<size>32</size>
+			</register>
+		</registers>
+	</peripheral>
     <peripheral>
       <name>RNG</name>
       <description>Random number generator</description>
