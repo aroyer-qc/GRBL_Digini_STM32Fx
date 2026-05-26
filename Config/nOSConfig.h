@@ -690,3 +690,10 @@
  *                                                                                                                    *
  **********************************************************************************************************************/
 #define NOS_CONFIG_MAX_UNSAFE_ISR_PRIO              0
+
+
+
+
+//test
+#define NOS_CONFIG_THREAD_RUNNING_STAT_ENABLE 		1           
+#define NOS_CONFIG_RUNNING_STAT_WIDTH				32			// 32 bits Counter

@@ -72,9 +72,13 @@
 //                          IO_MODE_ANALOG
 //          Parameter 3:  TYPE for the pin
 //                          IO_TYPE_PIN_DRIVE_MASK
-//                          IO_TYPE_PIN_DRIVE_SHIFT
 //                          IO_TYPE_PIN_PP
 //                          IO_TYPE_PIN_OD
+//                        then or with this IO_PULL_SHIFT
+//                          IO_TYPE_PIN_PULL_MASK
+//                          IO_TYPE_PIN_NO_PULL
+//                          IO_TYPE_PIN_PULL_UP
+//                          IO_TYPE_PIN_PULL_DOWN
 //          Parameter 4:  SPEED for the pin
 //                          IO_SPEED_FREQ_LOW
 //                          IO_SPEED_FREQ_MEDIUM
@@ -88,36 +92,37 @@
 //                          If mode is IO_MODE_ANALOG,       This is used to select the ADC input               // to be validated!!!
 //
 //-------------------------------------------------------------------------------------------------
+#define IO_TYPE_PIN_PP_PULL_UP	(IO_TYPE_PIN_PP | IO_TYPE_PIN_PULL_UP)
 
 #define IO_CFG_DEF(X_IO_CFG) \
-/*            ENUM ID IO CFG,                           Mode,               Pin type,              IO Speed,                 Pin Option           */\
-/* input IO's CFG --------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_INPUT_NP_LS,                       IO_MODE_INPUT,      IO_TYPE_PIN_NO_PULL,   IO_SPEED_FREQ_LOW,        0)                     \
-    X_IO_CFG( IO_CFG_INPUT_PU_LS,                       IO_MODE_INPUT,      IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_LOW,        0)                     \
+/*            ENUM ID IO CFG,                           Mode,               Pin type,              	IO Speed,                 Pin Option           */\
+/* input IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_INPUT_NP_LS,                       IO_MODE_INPUT,      IO_TYPE_PIN_NO_PULL,   	IO_SPEED_FREQ_LOW,        0)                     \
+    X_IO_CFG( IO_CFG_INPUT_PU_LS,                       IO_MODE_INPUT,      IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_LOW,        0)                     \
 /* Output IO's CFG -------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_OUTPUT_PP_LS_DEF0,                 IO_MODE_OUTPUT,     IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,        0)                     \
-    X_IO_CFG( IO_CFG_OUTPUT_PP_LS_DEF1,                 IO_MODE_OUTPUT,     IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,        1)                     \
-/* ETH IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_ETH_AF11,                          IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_VERY_HIGH,  IO_AF11_ETH)           \
-/* UART IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_UART_TX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
-    X_IO_CFG( IO_CFG_UART_RX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_NO_PULL,   IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
-/* I2C IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_I2C_AF4,                           IO_MODE_ALTERNATE,  IO_TYPE_PIN_OD,        IO_SPEED_FREQ_MEDIUM,     IO_AF4_I2C)            \
-/* LCD IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_LCD_AF9,                           IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_LTDC)           \
-    X_IO_CFG( IO_CFG_LCD_AF14,                          IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF14_LTDC)          \
-/* QSPI IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_QSPI_NP_AF9,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_NO_PULL,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_QSPI)           \
-    X_IO_CFG( IO_CFG_QSPI_PP_AF9,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_QSPI)           \
-    X_IO_CFG( IO_CFG_QSPI_PP_AF10,                      IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_HIGH,       IO_AF10_QSPI)          \
-/* SDMMC IO's CFG --------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_SDMMC_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_SDMMC1)        \
-/* SDRAM IO's CFG --------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_SDRAM_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,   IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_FMC)           \
-/* TIM IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
-    X_IO_CFG( IO_CFG_TIM1_PP_LS,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,        IO_SPEED_FREQ_LOW,        IO_AF1_TIM)            \
-/* -----------------------------------------------------------------------------------------------------------------------------------------------*/
+    X_IO_CFG( IO_CFG_OUTPUT_PP_LS_DEF0,                 IO_MODE_OUTPUT,     IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,        0)                     \
+    X_IO_CFG( IO_CFG_OUTPUT_PP_LS_DEF1,                 IO_MODE_OUTPUT,     IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,        1)                     \
+/* ETH IO's CFG -----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_ETH_AF11,                          IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,  IO_AF11_ETH)           \
+/* UART IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_UART_TX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,         IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
+    X_IO_CFG( IO_CFG_UART_RX_AF7,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_MEDIUM,     IO_AF7_USART1)         \
+/* I2C IO's CFG -----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_I2C_AF4,                           IO_MODE_ALTERNATE,  IO_TYPE_PIN_OD,         IO_SPEED_FREQ_MEDIUM,     IO_AF4_I2C)            \
+/* LCD IO's CFG -----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_LCD_AF9,                           IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_LTDC)           \
+    X_IO_CFG( IO_CFG_LCD_AF14,                          IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,  IO_AF14_LTDC)          \
+/* QSPI IO's CFG ----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_QSPI_NP_AF9,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_NO_PULL,    IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_QSPI)           \
+    X_IO_CFG( IO_CFG_QSPI_PP_AF9,                       IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,         IO_SPEED_FREQ_VERY_HIGH,  IO_AF9_QSPI)           \
+    X_IO_CFG( IO_CFG_QSPI_PP_AF10,                      IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,         IO_SPEED_FREQ_HIGH,       IO_AF10_QSPI)          \
+/* SDMMC IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_SDMMC_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PULL_UP,    IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_SDMMC1)        \
+/* SDRAM IO's CFG ---------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_SDRAM_AF12,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP_PULL_UP, IO_SPEED_FREQ_VERY_HIGH,  IO_AF12_FMC)           \
+/* TIM IO's CFG -----------------------------------------------------------------------------------------------------------------------------------*/\
+    X_IO_CFG( IO_CFG_TIM1_PP_LS,                        IO_MODE_ALTERNATE,  IO_TYPE_PIN_PP,         IO_SPEED_FREQ_LOW,        IO_AF1_TIM)            \
+/* -------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 //-------------------------------------------------------------------------------------------------
@@ -276,7 +281,7 @@
 #define LCD_PIN_ON_PORT_G         (IO_PIN_12)
 #define LCD_PIN_ON_PORT_I         (IO_PIN_9  | IO_PIN_10 | IO_PIN_14 | IO_PIN_15)
 #define LCD_PIN_ON_PORT_J         (IO_PIN_0  | IO_PIN_1  | IO_PIN_2  | IO_PIN_3  | IO_PIN_4  | IO_PIN_5  | IO_PIN_6  | IO_PIN_7  | \
-                                   IO_PIN_8  | IO_PIN_9  | IO_PIN_10 | IO_PIN_11 | IO_PIN_12 | IO_PIN_13 | IO_PIN_14 | IO_PIN_15)
+                                   IO_PIN_8  | IO_PIN_9  | IO_PIN_10 | IO_PIN_11 | IO_PIN_13 | IO_PIN_14 | IO_PIN_15)
 #define LCD_PIN_ON_PORT_K         (IO_PIN_0  | IO_PIN_1  | IO_PIN_2  | IO_PIN_4  | IO_PIN_5  | IO_PIN_6  | IO_PIN_7)
 
 //---------------------------------------------------------------------------------------

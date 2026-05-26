@@ -66,3 +66,7 @@ class FatFS_SDIO;
   //  X_DRIVE( DISK_SPI_FLASH,   	FatFS_SPI_Memory,     SPI_FlashDisk,        (void*)&SPI_FlashParameter)
 
 //-------------------------------------------------------------------------------------------------
+    //X_DRIVE( DISK_EEPROM,    FatFS_Eeprom,     I2C_Eeprom,  &myI2C_Eeprom))
+    //X_DRIVE( DISK_ROM,       FatFS_ROM_memory, ROM_Memory,  &myROM_Memory))
+    //X_DRIVE( DISK_ETHERNET,  FatFS_Ethernet,   ETH_File,    &myEth_File  ))
+

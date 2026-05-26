@@ -34,9 +34,9 @@
 
 //                  IMAGE_ID        Struct Info Image
 #define STATIC_IMAGE_DEF(X_STATIC_IMAGE)  \
-    X_STATIC_IMAGE(  LOADING_BACK,   &SII_loading         )\
-    X_STATIC_IMAGE(  LOADING_CURSOR, &SII_progress_cursor )\
-    X_STATIC_IMAGE(  LOADING_BAR,    &SII_progress_bar    )\
+    X_STATIC_IMAGE(  LOADING_BACK,   SII_loading         )\
+    X_STATIC_IMAGE(  LOADING_CURSOR, SII_progress_cursor )\
+    X_STATIC_IMAGE(  LOADING_BAR,    SII_progress_bar    )\
 
 //-------------------------------------------------------------------------------------------------
 

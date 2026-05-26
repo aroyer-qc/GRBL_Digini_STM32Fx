@@ -36,16 +36,16 @@
 #define CFG_SDRAM_SELF_REFRESH_TIME             4   // min = 42 nSec (4 x 11.11 nSec) max=120k(ns)	(TRAS) Minimum self-refresh period
 #define CFG_SDRAM_ROW_CYCLE_DELAY               7   // min = 63 nSec (6 x 11.11 nSec)               (TRC)  Delay between the 'refresh' command and the Activate command, as well as the delay between two consecutive 'refresh' command
 #define CFG_SDRAM_WRITE_RECOVERY_TIME           2   // 2 Clock cycles								(TWR)  Delay between a 'write' and a 'pre-charge' command
-#define CFG_SDRAM_RP_DELAY                      3   // min = 15 nSec (3 x 11.11 nSec)  				(TRP)  Delay between a pre-charge command and another command
-#define CFG_SDRAM_RCD_DELAY                     3   // min = 15 nSec (3 x 11.11 nSec)               (TRCD) Delay between the 'activate' command and a Read/Write command
+#define CFG_SDRAM_RP_DELAY                      2   // min = 15 nSec (3 x 11.11 nSec)  				(TRP)  Delay between a pre-charge command and another command
+#define CFG_SDRAM_RCD_DELAY                     2   // min = 15 nSec (3 x 11.11 nSec)               (TRCD) Delay between the 'activate' command and a Read/Write command
 
 #define CFG_SDRAM_AUTO_REFRESH_CYCLE            8   // Auto refresh cycle
 
-#define CFG_SDRAM_MRD_BURST_LENGTH              FMC_SDRAM_MRD_BURST_LENGTH_1
-#define CFG_SDRAM_MRD_BURST_TYPE                FMC_SDRAM_MRD_BURST_TYPE_SEQUENTIAL
-#define CFG_SDRAM_MRD_CAS_LATENCY               FMC_SDRAM_MRD_CAS_LATENCY_2
-#define CFG_SDRAM_MRD_OPERATION_MODE            FMC_SDRAM_MRD_OPERATION_MODE_STANDARD
 #define CFG_SDRAM_MRD_WRITE_BURST_MODE          FMC_SDRAM_MRD_WRITE_BURST_MODE_SINGLE
+#define CFG_SDRAM_MRD_OPERATION_MODE            FMC_SDRAM_MRD_OPERATION_MODE_STANDARD
+#define CFG_SDRAM_MRD_CAS_LATENCY               FMC_SDRAM_MRD_CAS_LATENCY_2
+#define CFG_SDRAM_MRD_BURST_TYPE                FMC_SDRAM_MRD_BURST_TYPE_SEQUENTIAL
+#define CFG_SDRAM_MRD_BURST_LENGTH              FMC_SDRAM_MRD_BURST_LENGTH_1
 
 // SDRAM access interface configuration
 #define CFG_SDRAM_BANK                          FMC_SDRAM_BANK1
