@@ -27,7 +27,13 @@
 #pragma once
 
 //-------------------------------------------------------------------------------------------------
-// constf(s)
+// include(s)
+//-------------------------------------------------------------------------------------------------
+
+#include "lib_class_STM32F7_sdio.h"
+
+//-------------------------------------------------------------------------------------------------
+// const(s)
 //-------------------------------------------------------------------------------------------------
 
 #ifdef DISKIO_GLOBAL
@@ -45,23 +51,12 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
-// forward declaration(s)
-//-------------------------------------------------------------------------------------------------
-
-#ifdef __cplusplus
-//class FatFS_SPI_Memory;
-class mySDIO;
-class FatFS_SDIO;
-//class FatFS_USB_Key;
-#endif
-
-//-------------------------------------------------------------------------------------------------
 // X-Macro(s)
 //-------------------------------------------------------------------------------------------------
 
 #define FAT_FS_DRIVE_DEF(X_DRIVE)\
-/*  		 ID of Disk,        Specific FatFs class, Object to create,    Parameter for     */          \
-    X_DRIVE( DISK_SDIO_SD_CARD, FatFS_SDIO,           SDIO_SD_CardDisk,    (void*)&mySDIO )		             	 \
+/*  		 ID of Disk,        Specific FatFs class, Object to create,    Parameter for     */           \
+    X_DRIVE( DISK_SDIO_SD_CARD, FatFS_SDIO,           SDIO_SD_CardDisk,    (void*)&mySDIO )		          \
 
 //    X_DRIVE( DISK_USB_KEY,      FatFS_USB_Key,        USB_KeyDisk,          nullptr )
   //  X_DRIVE( DISK_SPI_FLASH,   	FatFS_SPI_Memory,     SPI_FlashDisk,        (void*)&SPI_FlashParameter)

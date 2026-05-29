@@ -1,6 +1,4 @@
 
-//#include "diskio.h"
-
 /*---------------------------------------------------------------------------/
 /  Configurations of FatFs Module
 /---------------------------------------------------------------------------*/
@@ -278,8 +276,6 @@
 /      can be opened simultaneously under file lock control. Note that the file
 /      lock control is independent of re-entrancy. */
 
-//#include "nOS.h"
-//#define    _SYNC_t            nOS_Mutex*    /* O/S dependent sync object type. e.g. HANDLE, OS_EVENT*, ID and etc.. */
 
 #define FF_FS_REENTRANT	0
 #define FF_FS_TIMEOUT	1000
