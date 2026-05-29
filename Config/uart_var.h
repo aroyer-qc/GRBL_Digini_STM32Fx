@@ -67,7 +67,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1 | UART_CFG_OVER_8 | UART_CFG_ENABLE_RX_TX),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
@@ -104,7 +103,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
@@ -132,7 +130,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         2 * 254,                                            // RX fifo size
 
         // DMA_RX
@@ -166,7 +163,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
@@ -194,7 +190,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
@@ -222,9 +217,8 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
-        
+
         // DMA_RX
         {
             UART_STANDARD_CONFIGURATION_RX | DMA_CHANNEL_5, // Configuration + DMA_Channel RX
@@ -262,7 +256,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
@@ -290,7 +283,6 @@ const UART_Info_t UART_Info[NB_OF_UART_DRIVER] =
         7,                                                  // PreempPrio
         UART_Config_e(UART_CFG_N_8_1),
         UART_BAUD_115200,
-        UART_WAIT_ON_BUSY,
         64,                                                 // RX fifo size
 
         // DMA_RX
