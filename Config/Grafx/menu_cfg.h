@@ -32,7 +32,6 @@
 
 const PageWidget_t PageLoading          [] =  { {   BACK_LOADING,            INVALID_LINK        },
                                                 {   LABEL_SKIN_LOADING,      LINK_MAIN_HUB       },
-                                                {   BOX_2_3,                 INVALID_LINK        },      //   test
                                                 {   PROGRESS_LOADING,        INVALID_LINK        },
                                                 {   INVALID_WIDGET,          INVALID_LINK        }
                                               };

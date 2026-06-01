@@ -42,6 +42,7 @@
 #define USE_CRC_DRIVER              DEF_ENABLED
 #define USE_DAC_DRIVER              DEF_ENABLED
 #define USE_ETH_DRIVER              DEF_ENABLED
+#define USE_FMC_SDRAM_DRIVER        DEF_DISABLED
 #define USE_IO_BUS_DRIVER           DEF_DISABLED
 #define USE_I2C_DRIVER              DEF_ENABLED
 #define USE_I2S_DRIVER              DEF_DISABLED
@@ -58,6 +59,8 @@
 #define USE_USB_DRIVER              DEF_DISABLED
     #define USE_USB_OTG_FS_CODE     DEF_DISABLED
     #define USE_USB_OTG_HS_CODE     DEF_DISABLED
+
+#define USE_DWT_PERIPHERAL          DEF_ENABLED
 
 // Driver and/or peripheral to use with this project
 
