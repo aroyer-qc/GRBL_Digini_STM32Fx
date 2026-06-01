@@ -92,7 +92,7 @@
     IF_USE( DIGINI_USE_DEBUG_IN_CONSOLE,        ENTRY  (MENU,  MenuBoot,          ID_DEBUG_MENU,                       CALLBACK_None,                           MenuDebug,                        VT100_LBL_DEBUG                                 ) )\
     IF_USE( DIGINI_USE_STATIC_MEMORY_ALLOC,     ENTRY  (MENU,  MenuBoot,          ID_MEMORY_POOL_MENU,                 CALLBACK_None,                           MenuMemoryPool,                   VT100_LBL_MEMORY_POOL_STAT                      ) )\
     IF_USE( DIGINI_USE_ETHERNET,                ENTRY  (MENU,  MenuBoot,          ID_NETWORK_INFO,                     CALLBACK_None,                           MenuNetwork,                      LBL_NETWORK_INFO                                ) )\
-    IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY  (MENU,  MenuBoot,          ID_SD_CARD_MENU,                     CALLBACK_None,                           MenuSD_Card,                      LBL_SD_CARD_INFORMATION                         ) )\
+    IF_USE( DIGINI_DEBUG_SDCARD_INFO_ON_VT100,  ENTRY  (MENU,  MenuMain,          ID_SD_CARD_MENU,                     CALLBACK_None,                           MenuSD_Card,                      LBL_SD_CARD_INFORMATION                         ) )\
                                                 ENTRY  (MENU,  MenuBoot,          ID_MISC_SETTING,                     CALLBACK_None,                           MenuSystemSetting,                VT100_LBL_SYSTEM_SETTING                        )  \
 
 // ------------------------------------------------------------------------------------------------------------------

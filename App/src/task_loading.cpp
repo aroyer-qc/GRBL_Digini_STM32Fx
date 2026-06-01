@@ -113,7 +113,7 @@ void ClassTaskLoading::Run(void)
     //FRESULT  Result;
     //char*    pSavePointer;
     //char*    pToken;
-    //uint8_t* pMemory;
+    uint8_t* pMemory;
 
     //char Buffer[160];
 
@@ -123,9 +123,9 @@ void ClassTaskLoading::Run(void)
     };
 
     // We have wait for skin loading to complete... now we can use what is left from the free extended memory
-    // DB_Central.Get(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
-    // DB_Central.SetDB_Address((void**)&pMemory, DBASE_INDEX_RAM_RANGE);
-    // DB_Central.Set(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
+     DB_Central.Get(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
+     DB_Central.SetDB_Address((void**)&pMemory, DBASE_INDEX_RAM_RANGE);
+     DB_Central.Set(&pMemory, GFX_FREE_RAM_POINTER, 0,0);
     nOS_Sleep(100);
 
     // or we can create a ram disk to handle CNC file

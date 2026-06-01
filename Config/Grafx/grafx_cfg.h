@@ -58,9 +58,10 @@
 // Define(s)
 //-------------------------------------------------------------------------------------------------
 
-#define GUI_TASK_STACK_SIZE                             320
+#define GUI_TASK_STACK_SIZE                             512
 
 #define GRAFX_USE_LOAD_SKIN                             DEF_ENABLED
+#define GRAFX_USE_STATIC_IMAGE_ONLY                     DEF_DISABLED
 #define GRAFX_USE_POINTING_DEVICE                       DEF_ENABLED
 #define GRAFX_USE_PDI_MULTI_EVENT                       DEF_ENABLED     // Enable support for Multi-touch
 #define GRAFX_PDI_INTERRUPT_IO                          DEF_DISABLED    // Pointing device (touch) IRQ is not available on DISCO746

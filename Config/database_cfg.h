@@ -99,6 +99,7 @@ extern char OEM_CONFIG_VERSION[24];
 // FOR dynamic location RAM_DBASE_ADDRESS is declare NULL, you must then call set address to setup your dynamic RAM DBASE location
 extern const uint32_t __user_ram_data_base__;
 #define RAM_DBASE_ADDRESS   (uint32_t)&__user_ram_data_base__
+#define RAM_DBASE_ADDRESS   (uint32_t)&__user_ram_data_base__
 
 //               Enum ID                             Items QTY,  Items SubQTY,   Item Size
 #define RAM_DBASE_DEF(X_RAM_DBASE) \
