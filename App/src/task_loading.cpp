@@ -41,15 +41,6 @@
 
 //-------------------------------------------------------------------------------------------------
 //
-//   Static Variables
-//
-//-------------------------------------------------------------------------------------------------
-
-nOS_Thread ClassTaskLoading::m_Handle;
-nOS_Stack  ClassTaskLoading::m_Stack[TASK_LOADING_STACK_SIZE];
-
-//-------------------------------------------------------------------------------------------------
-//
 //  Name:           TaskLoading_Wrapper
 //
 //  Parameter(s):   void* pvParameters
@@ -90,7 +81,7 @@ nOS_Error ClassTaskLoading::Initialize(void)
                              &m_Stack[0],
                              TASK_LOADING_STACK_SIZE,
                              TASK_LOADING_PRIO,
-                             "Task Skin Loading");
+                             "Task Loading");
 
     //Error = nOS_FlagCreate(&this->m_Flag, 0);
     return Error;

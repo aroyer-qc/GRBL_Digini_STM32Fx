@@ -47,8 +47,6 @@
 // Global variable(s) and constant(s)
 //-------------------------------------------------------------------------------------------------
 
-//BSP_EXTERN class CTimer*                    BSP_pTimer;
-
 BSP_EXTERN SystemDebugLevel_e BSP_GlobalDebugLevel;             // this should go in Digini
 
 BSP_EXTERN int32_t     TestInput;    // TODO (Alain#1#) remove this

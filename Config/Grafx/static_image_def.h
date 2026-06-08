@@ -32,7 +32,7 @@
 
 //-------------------------------------------------------------------------------------------------
 
-//                  IMAGE_ID         Struct Info Image
+//                   IMAGE_ID        Struct Info Image
 #define STATIC_IMAGE_DEF(X_STATIC_IMAGE) \
     X_STATIC_IMAGE(  LOADING_BACK,   SII_loading         )\
     X_STATIC_IMAGE(  LOADING_CURSOR, SII_progress_cursor )\

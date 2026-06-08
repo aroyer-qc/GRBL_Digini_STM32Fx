@@ -62,8 +62,8 @@ class ClassTaskLoading
 
   private:
 
-    static nOS_Thread      m_Handle;
-    static nOS_Stack       m_Stack[TASK_LOADING_STACK_SIZE];
+    nOS_Thread      m_Handle;
+    nOS_Stack       m_Stack[TASK_LOADING_STACK_SIZE];
     //nOS_Flag        m_Flag;
    // const char*     m_pDrive;
    // FATFS           m_FS;
